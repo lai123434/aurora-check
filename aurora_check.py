@@ -1752,6 +1752,86 @@ def _detect_hidden_characters(text: str) -> float:
     return round(ai_score, 3)
 
 
+# ============================================================
+# 第 22 号引擎：句首词分布检测器（Sentence Starter Distribution）
+# 全新角度！人类写作的句首词分布很随机，AI写作的句首词分布很规律
+# ============================================================
+
+# AI 常用的句首词
+_AI_SENTENCE_STARTERS = [
+    # 过渡词开头
+    "first", "second", "third", "finally", "lastly",
+    "however", "therefore", "moreover", "furthermore", "additionally",
+    "in addition", "in contrast", "in conclusion", "in summary",
+    "on the other hand", "on one hand",
+    "as a result", "consequently", "thus", "hence",
+    "nevertheless", "nonetheless", "meanwhile",
+    # 公式化开头
+    "it is", "it's", "there are", "there is",
+    "this is", "this demonstrates", "this shows",
+    "in today's", "in the world", "in the realm",
+    "when it comes to", "let's", "let us",
+    # 其他AI常用开头
+    "one of", "another", "some", "many", "most",
+    "studies show", "research indicates", "experts believe",
+]
+
+
+def _detect_sentence_starter_distribution(text: str) -> float:
+    """
+    句首词分布检测器 - 全新角度！
+    原理：人类写作的句首词分布很随机，AI写作的句首词分布很规律
+    所以：AI句首词比例越高 = 越像 AI
+    """
+    sentences = _split_sentences(text)
+    if len(sentences) < 5:
+        return 0.5
+
+    # 统计每个句子的第一个词
+    starters = []
+    for sent in sentences:
+        words = sent.strip().split()
+        if words:
+            first_word = words[0].lower().strip(".,!?;:'\"()")
+            starters.append(first_word)
+
+    if not starters:
+        return 0.5
+
+    # 统计AI常用句首词的比例
+    ai_starter_count = 0
+    for starter in starters:
+        for ai_starter in _AI_SENTENCE_STARTERS:
+            if starter.startswith(ai_starter) or starter == ai_starter:
+                ai_starter_count += 1
+                break
+
+    ai_starter_ratio = ai_starter_count / len(starters)
+
+    # 统计重复句首词的比例（人类写作很少重复句首词）
+    from collections import Counter
+    starter_freq = Counter(starters)
+    repeated_starters = sum(count for count in starter_freq.values() if count > 1)
+    repeat_ratio = repeated_starters / len(starters)
+
+    # 统计句首词的多样性（人类写作多样性高，AI写作多样性低）
+    diversity = len(starter_freq) / len(starters)
+
+    # 综合打分
+    # ai_starter_ratio：人类 ~10-20%，AI ~30-50%
+    starter_score = min(max((ai_starter_ratio - 0.15) / 0.30, 0.0), 1.0)
+
+    # repeat_ratio：人类 ~10-20%，AI ~20-40%
+    repeat_score = min(max((repeat_ratio - 0.15) / 0.25, 0.0), 1.0)
+
+    # diversity：人类 ~0.7-0.9，AI ~0.5-0.7
+    diversity_score = min(max((0.80 - diversity) / 0.30, 0.0), 1.0)
+
+    # 加权平均
+    final_score = starter_score * 0.4 + repeat_score * 0.3 + diversity_score * 0.3
+    return round(final_score, 3)
+
+
 def _detect_with_roberta(text: str) -> Optional[float]:
     """用 RoBERTa 模型检测 AI 概率"""
     model, tokenizer, ai_idx = _load_roberta_model()
@@ -2053,6 +2133,9 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 21: 隐藏字符检测器（检测AI水印：零宽字符、不可见字符）
     engine_scores["hidden-characters"] = _detect_hidden_characters(prose_text)
 
+    # 引擎 22: 句首词分布检测器（全新角度！人类句首词随机，AI句首词规律）
+    engine_scores["sentence-starters"] = _detect_sentence_starter_distribution(prose_text)
+
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
     # 精雕细琢后的权重：强引擎权重更高，弱引擎权重更低
     weights = {
@@ -2064,6 +2147,7 @@ def run_ai_detection(text: str) -> AIResult:
         "self-references": 0.04,       # 自我引用检测器
         "logical-connectors": 0.04,    # 逻辑连接词密度检测器
         "hidden-characters": 0.02,      # 隐藏字符检测器（还需要更多验证）
+        "sentence-starters": 0.03,      # 句首词分布检测器（全新角度）
         "formulaic-patterns": 0.06,    # 公式化表达检测
         "linguistic-markers": 0.06,    # 语言标志检测
         "structural-patterns": 0.04,    # 结构特征检测
