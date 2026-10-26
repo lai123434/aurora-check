@@ -416,6 +416,7 @@ def _detect_structured_shape(text: str) -> float:
 # ============================================================
 
 _AI_OPENERS = [
+    # 原有模式
     r"in today'?s (?:rapidly )?(?:evolving|changing|digital|modern)",
     r"in (?:the|a) (?:world|era|age|landscape) (?:where|of|that)",
     r"when it comes to",
@@ -424,24 +425,59 @@ _AI_OPENERS = [
     r"imagine (?:this|a world)",
     r"as (?:technology|the world|we|society) continues to",
     r"the (?:rise|emergence|advent|proliferation) of",
+    # 新增模式（打磨扩充）
+    r"it'?s no secret that",
+    r"we live in an era where",
+    r"in recent years,",
+    r"with the rapid advancement of",
+    r"as artificial intelligence (?:continues|becomes)",
+    r"the world is changing (?:rapidly|fast|dramatically)",
+    r"in an increasingly (?:digital|connected|globalized)",
+    r"have you ever wondered",
+    r"what if i told you",
+    r"let'?s face it,",
 ]
 
 _AI_CLOSERS = [
+    # 原有模式
     r"in conclusion,?",
     r"(?:in summary|to summarize|to sum up),?",
     r"(?:ultimately|at the end of the day),?",
     r"as we (?:navigate|move forward|look ahead|continue)",
     r"by (?:embracing|leveraging|harnessing|adopting)",
     r"it'?s clear that",
+    # 新增模式（打磨扩充）
+    r"the future is (?:bright|promising|exciting)",
+    r"only time will tell",
+    r"it remains to be seen",
+    r"as we move forward,",
+    r"this is just the beginning",
+    r"the possibilities are endless",
+    r"we'?re only scratching the surface",
+    r"the journey continues",
+    r"in the grand scheme of things",
+    r"all things considered,",
 ]
 
 _FILLER_PATTERNS = [
+    # 原有模式
     r"not only\b.{3,60}\bbut also",
     r"on (?:the )?one hand\b.{3,120}\bon the other(?: hand)?",
     r"it(?:'?s| is) (?:important|worth|crucial|essential) to (?:note|remember|mention)",
     r"first and foremost",
     r"last but not least",
     r"without (?:a )?doubt",
+    # 新增模式（打磨扩充）
+    r"it goes without saying that",
+    r"needless to say,",
+    r"as a matter of fact,",
+    r"in other words,",
+    r"that is to say,",
+    r"to put it simply,",
+    r"basically,",
+    r"essentially,",
+    r"effectively,",
+    r"in essence,",
 ]
 
 
@@ -585,6 +621,58 @@ _AI_MARKERS_WEIGHTED = [
     ("fundamentally", 1),
     ("inherently", 1),
     ("intricacies", 1),
+    # 新增 Tier 1（打磨扩充）
+    ("unlock", 3),
+    ("unlock the potential", 3),
+    ("unlock opportunities", 3),
+    ("navigate the complexities", 3),
+    ("navigate the challenges", 3),
+    ("embark on a journey", 3),
+    ("a transformative experience", 3),
+    ("a paradigm shift", 3),
+    ("a new era of", 3),
+    ("the dawn of", 3),
+    # 新增 Tier 2（打磨扩充）
+    ("elevate", 2),
+    ("elevate the experience", 2),
+    ("empower", 2),
+    ("empower individuals", 2),
+    ("streamline", 2),
+    ("streamline processes", 2),
+    ("optimize", 2),
+    ("optimize performance", 2),
+    ("foster", 2),
+    ("foster collaboration", 2),
+    ("foster innovation", 2),
+    ("facilitate", 2),
+    ("facilitate communication", 2),
+    ("harness", 2),
+    ("harness the power", 2),
+    ("leverage", 2),
+    ("leverage technology", 2),
+    ("synergize", 2),
+    ("create synergies", 2),
+    ("drive", 2),
+    ("drive growth", 2),
+    ("drive innovation", 2),
+    # 新增 Tier 3（打磨扩充）
+    ("in today's world", 1),
+    ("in the modern era", 1),
+    ("as we move forward", 1),
+    ("as we look ahead", 1),
+    ("the future of", 1),
+    ("the potential of", 1),
+    ("the power of", 1),
+    ("the importance of", 1),
+    ("the value of", 1),
+    ("the benefits of", 1),
+    ("the challenges of", 1),
+    ("the opportunities of", 1),
+    ("it's no secret", 1),
+    ("it's worth noting", 1),
+    ("it's important to understand", 1),
+    ("it's crucial to recognize", 1),
+    ("it's essential to acknowledge", 1),
 ]
 
 
@@ -610,7 +698,7 @@ def _detect_linguistic_markers(text: str) -> float:
 # ============================================================
 
 def _detect_vocabulary_richness(text: str) -> float:
-    """检测词汇丰富度（逆向自 sloptotal VocabularyEngine）"""
+    """检测词汇丰富度（打磨版，逆向自 sloptotal VocabularyEngine）"""
     import math
     from collections import Counter
 
@@ -643,7 +731,18 @@ def _detect_vocabulary_richness(text: str) -> float:
     # 人类文本：K ~ 80-120，AI 文本：K ~ 120-200+
     k_score = min(max((yules_k - 80) / 120, 0.0), 1.0)
 
-    final_score = ttr_score * 0.35 + hapax_score * 0.35 + k_score * 0.3
+    # 4. 平均词长（打磨新增）
+    avg_word_length = sum(len(w) for w in words) / total
+    # 人类文本：平均词长 4.5-5.5，AI 文本：5.0-6.0（AI 更喜欢用长词）
+    length_score = min(max((avg_word_length - 4.5) / 2.0, 0.0), 1.0)
+
+    # 5. 长词比例（>6个字母）（打磨新增）
+    long_words = sum(1 for w in words if len(w) > 6)
+    long_word_ratio = long_words / total
+    # 人类文本：长词比例 10-20%，AI 文本：20-35%
+    long_score = min(max((long_word_ratio - 0.10) / 0.20, 0.0), 1.0)
+
+    final_score = ttr_score * 0.25 + hapax_score * 0.25 + k_score * 0.20 + length_score * 0.15 + long_score * 0.15
     return round(final_score, 3)
 
 
@@ -716,15 +815,36 @@ def _detect_structural_patterns(text: str) -> float:
     )
     colon_def_score = min(colon_defs / 3.0, 1.0)
 
-    # 加权打分——冒号信号权重最高
+    # 8. 括号使用频率（打磨新增）
+    paren_count = len(re.findall(r"[()（）]", text))
+    paren_density = (paren_count / word_count) * 1000
+    # AI：10-20 per 1k，人类：3-8 per 1k
+    paren_score = min(max((paren_density - 5) / 10.0, 0.0), 1.0)
+
+    # 9. 引号使用频率（打磨新增）
+    quote_count = len(re.findall(r"[''\"\"'']", text))
+    quote_density = (quote_count / word_count) * 1000
+    # AI：8-15 per 1k，人类：3-7 per 1k
+    quote_score = min(max((quote_density - 4) / 8.0, 0.0), 1.0)
+
+    # 10. 斜杠使用频率（打磨新增）
+    slash_count = len(re.findall(r"/", text))
+    slash_density = (slash_count / word_count) * 1000
+    # AI：5-10 per 1k，人类：1-3 per 1k
+    slash_score = min(max((slash_density - 2) / 6.0, 0.0), 1.0)
+
+    # 加权打分——冒号信号权重最高（打磨调整权重）
     final_score = (
-        em_score * 0.08
-        + uniformity_score * 0.08
-        + list_score * 0.12
-        + para_score * 0.07
-        + format_score * 0.05
-        + colon_score * 0.30
-        + colon_def_score * 0.30
+        em_score * 0.05
+        + uniformity_score * 0.06
+        + list_score * 0.08
+        + para_score * 0.05
+        + format_score * 0.04
+        + colon_score * 0.20
+        + colon_def_score * 0.20
+        + paren_score * 0.10
+        + quote_score * 0.10
+        + slash_score * 0.06
     )
     return round(final_score, 3)
 
@@ -771,6 +891,7 @@ _BALANCE_PATTERNS = [
 ]
 
 _VAGUE_POSITIVITY = [
+    # 原有词
     "incredibly important",
     "extremely valuable",
     "truly remarkable",
@@ -791,9 +912,31 @@ _VAGUE_POSITIVITY = [
     "powerful tool",
     "valuable resource",
     "essential guide",
+    # 新增词（打磨扩充）
+    "a new era",
+    "a new paradigm",
+    "a game-changer",
+    "a breakthrough",
+    "a major milestone",
+    "a significant step forward",
+    "a key factor",
+    "a crucial element",
+    "a vital component",
+    "a foundational pillar",
+    "a cornerstone of",
+    "a testament to",
+    "a symbol of",
+    "a representation of",
+    "an embodiment of",
+    "the future of",
+    "the next generation",
+    "the cutting edge",
+    "the forefront of",
+    "the leading edge",
 ]
 
 _FILLER_QUALIFIERS = [
+    # 原有词
     "very",
     "really",
     "extremely",
@@ -808,6 +951,22 @@ _FILLER_QUALIFIERS = [
     "fairly",
     "somewhat",
     "relatively",
+    # 新增词（打磨扩充）
+    "super",
+    "ultra",
+    "mega",
+    "highly",
+    "deeply",
+    "profoundly",
+    "tremendously",
+    "immensely",
+    "enormously",
+    "massively",
+    "significantly",
+    "substantially",
+    "considerably",
+    "noticeably",
+    "markedly",
 ]
 
 
