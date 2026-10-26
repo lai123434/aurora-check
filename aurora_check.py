@@ -173,10 +173,16 @@ class CheckReport:
         if self.ai and self.ai.flagged_sentences:
             for s in self.ai.flagged_sentences[:10]:
                 score_pct = int(s["score"] * 100)
+                # 置信度区间：±15%
+                low = max(0, score_pct - 15)
+                high = min(100, score_pct + 15)
                 bg = "rgba(231, 76, 60, 0.15)" if score_pct > 50 else "rgba(243, 156, 18, 0.15)" if score_pct > 20 else "rgba(39, 174, 96, 0.15)"
                 flagged_html += f"""
                 <div style="background: {bg}; padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid {color};">
-                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: {score_pct}%</div>
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
+                        AI 嫌疑度: {score_pct}%
+                        <span style="color: #999; margin-left: 10px;">置信区间: [{low}% - {high}%]</span>
+                    </div>
                     <div>{s['text']}</div>
                 </div>
                 """
