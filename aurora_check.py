@@ -1207,29 +1207,57 @@ def _detect_human_imperfection(text: str) -> float:
 # ============================================================
 
 _POSITIVE_WORDS = [
-    # 英文正面词（按强度分级）
+    # 英文正面词（按强度分级，精雕细琢扩充）
+    # 强正面
     "excellent", "amazing", "wonderful", "fantastic", "outstanding",
-    "great", "good", "positive", "happy", "excited", "thrilled",
-    "delighted", "impressive", "remarkable", "exceptional", "superb",
-    "brilliant", "magnificent", "phenomenal", "terrific",
-    # 中文正面词
+    "brilliant", "magnificent", "phenomenal", "terrific", "superb",
+    "exceptional", "remarkable", "impressive", "delighted", "thrilled",
+    "incredible", "awesome", "perfect", "extraordinary", "spectacular",
+    # 中等正面
+    "great", "good", "positive", "happy", "excited", "joyful",
+    "pleased", "satisfied", "grateful", "thankful", "optimistic",
+    "hopeful", "confident", "proud", "cheerful", "upbeat",
+    # 弱正面
+    "nice", "fine", "okay", "decent", "pleasant",
+    "beneficial", "helpful", "useful", "valuable", "worthwhile",
+    # 中文正面词（精雕细琢扩充）
     "优秀", "出色", "很棒", "很好", "积极", "开心", "进步",
-    "成功", "优秀", "出色", "杰出", "卓越", "优秀",
+    "成功", "杰出", "卓越", "优秀", "出色", "棒", "好",
+    "高兴", "快乐", "满意", "感谢", "乐观", "希望",
+    "自信", "自豪", "愉快", "不错", "可以",
 ]
 
 _NEGATIVE_WORDS = [
-    # 英文负面词（按强度分级）
+    # 英文负面词（按强度分级，精雕细琢扩充）
+    # 强负面
     "terrible", "awful", "horrible", "dreadful", "appalling",
+    "pathetic", "useless", "worthless", "miserable", "devastating",
+    "disgusting", "repulsive", "offensive", "vile", "abysmal",
+    # 中等负面
     "bad", "poor", "negative", "sad", "angry", "frustrated",
-    "disappointed", "disappointing", "terrible", "awful",
-    "pathetic", "useless", "worthless", "miserable",
-    # 中文负面词
+    "disappointed", "disappointing", "upset", "annoyed", "irritated",
+    "worried", "anxious", "afraid", "scared", "fearful",
+    # 弱负面
+    "mediocre", "subpar", "inferior", "unsatisfactory", "unpleasant",
+    "boring", "tedious", "dull", "monotonous", "tedious",
+    # 中文负面词（精雕细琢扩充）
     "差", "糟糕", "不好", "负面", "失望", "沮丧",
-    "失败", "糟糕", "差劲", "劣质", "糟糕",
+    "失败", "差劲", "劣质", "糟", "坏",
+    "难过", "生气", "烦躁", "担心", "焦虑",
+    "害怕", "恐惧", "一般", "普通", "无聊",
 ]
 
-# 否定词（会反转情感）
-_NEGATIONS = ["not", "no", "never", "don't", "doesn't", "isn't", "aren't", "won't"]
+# 否定词（会反转情感，精雕细琢扩充）
+_NEGATIONS = [
+    # 英文否定词
+    "not", "no", "never", "don't", "doesn't", "isn't", "aren't", "won't",
+    "can't", "cannot", "couldn't", "wouldn't", "shouldn't",
+    "haven't", "hasn't", "hadn't", "didn't", "wasn't", "weren't",
+    # 中文否定词
+    "不", "没", "无", "非", "未",
+    "不是", "没有", "不会", "不能", "不要",
+    "并非", "并非", "毫不", "绝不", "从不",
+]
 
 
 def _detect_emotion_curve(text: str) -> float:
@@ -1302,17 +1330,21 @@ def _detect_emotion_curve(text: str) -> float:
 # 创新角度：人类有很多具体数字/人名/地点，AI 很抽象
 # ============================================================
 
-# 数字模式（分类检测）
+# 数字模式（分类检测，精雕细琢扩充）
 _PERCENT_PATTERN = r"\b\d+(\.\d+)?%|百分之[一二三四五六七八九十百千万\d]+"
 _DATE_PATTERN = r"\b(19|20)\d{2}[-/年]\d{1,2}[-/月]\d{1,2}日?\b|\b\d{1,2}[-/月]\d{1,2}日?\b"
 _PRICE_PATTERN = r"\$\d+(\.\d+)?|€\d+(\.\d+)?|£\d+(\.\d+)?|¥\d+|人民币\d+|美元\d+"
+# 新增：温度、距离、重量等
+_TEMP_PATTERN = r"\b\d+(\.\d+)?°[CF]|\b\d+(\.\d+)?度\b"
+_DISTANCE_PATTERN = r"\b\d+(\.\d+)?km|\b\d+(\.\d+)?miles|\b\d+(\.\d+)?公里|\b\d+(\.\d+)?米\b"
+_WEIGHT_PATTERN = r"\b\d+(\.\d+)?kg|\b\d+(\.\d+)?lbs|\b\d+(\.\d+)?公斤|\b\d+(\.\d+)?斤\b"
 _GENERIC_NUMBER_PATTERN = r"\b\d+(\.\d+)?\b"
 
-# 人名模式（扩充版）
-_NAME_PATTERN = r"\b[A-Z][a-z]+ [A-Z][a-z]+\b|\b[A-Z][a-z]+\s+[A-Z][a-z]+\b"
+# 人名模式（精雕细琢扩充）
+_NAME_PATTERN = r"\b[A-Z][a-z]+ [A-Z][a-z]+\b|\b[A-Z][a-z]+\s+[A-Z][a-z]+\b|\b[A-Z][a-z]+\b"
 
-# 地点模式（扩充版）
-_LOCATION_PATTERN = r"\b(in|at|on|from|to|near|around) (New York|London|Paris|Beijing|Shanghai|Tokyo|San Francisco|Los Angeles|Chicago|Boston|Seattle|Austin|Toronto|Sydney|Berlin|Madrid|Rome|Moscow|Seoul|Hong Kong|Singapore)\b"
+# 地点模式（精雕细琢扩充，从25个→50个城市）
+_LOCATION_PATTERN = r"\b(in|at|on|from|to|near|around) (New York|London|Paris|Beijing|Shanghai|Tokyo|San Francisco|Los Angeles|Chicago|Boston|Seattle|Austin|Toronto|Sydney|Berlin|Madrid|Rome|Moscow|Seoul|Hong Kong|Singapore|Amsterdam|Brussels|Vienna|Stockholm|Copenhagen|Oslo|Dublin|Zurich|Geneva|Milan|Barcelona|Lisbon|Athens|Prague|Warsaw|Budapest|Dubai|Mumbai|Delhi|Bangkok|Jakarta|Manila|Kuala Lumpur|Melbourne|Auckland|Vancouver|Montreal|Mexico City|Buenos Aires|Sao Paulo)\b"
 
 
 def _detect_specific_details(text: str) -> float:
@@ -1325,14 +1357,17 @@ def _detect_specific_details(text: str) -> float:
     """
     word_count = max(len(text.split()), 1)
 
-    # 1. 数字数量（分类检测）
+    # 1. 数字数量（分类检测，精雕细琢扩充）
     percent_count = len(re.findall(_PERCENT_PATTERN, text, re.IGNORECASE))
     date_count = len(re.findall(_DATE_PATTERN, text))
     price_count = len(re.findall(_PRICE_PATTERN, text, re.IGNORECASE))
+    temp_count = len(re.findall(_TEMP_PATTERN, text, re.IGNORECASE))
+    distance_count = len(re.findall(_DISTANCE_PATTERN, text, re.IGNORECASE))
+    weight_count = len(re.findall(_WEIGHT_PATTERN, text, re.IGNORECASE))
     generic_number_count = len(re.findall(_GENERIC_NUMBER_PATTERN, text))
 
-    # 数字总分（百分比和日期权重更高）
-    number_total = percent_count * 3 + date_count * 3 + price_count * 2 + generic_number_count
+    # 数字总分（百分比、日期、温度、距离、权重更高）
+    number_total = percent_count * 3 + date_count * 3 + price_count * 2 + temp_count * 2 + distance_count * 2 + weight_count * 2 + generic_number_count
     number_density = (number_total / word_count) * 1000
 
     # 2. 人名数量
@@ -1358,16 +1393,29 @@ def _detect_specific_details(text: str) -> float:
 # ============================================================
 
 _SELF_REFERENCES = [
-    # 英文自我引用（按强度分级）
+    # 英文自我引用（按强度分级，精雕细琢扩充）
+    # 强自我引用
     "i think", "i believe", "i feel", "i mean", "in my opinion",
     "from my perspective", "personally", "i would say",
     "in my view", "from my point of view", "as far as i'm concerned",
     "i personally", "i personally think", "i personally believe",
+    "i personally feel", "i personally believe",
+    # 中等自我引用
     "i guess", "i suppose", "i imagine", "i suspect",
-    # 中文自我引用
+    "i reckon", "i assume", "i presume", "i gather",
+    "i understand", "i believe that", "i think that",
+    # 弱自我引用
+    "in my experience", "from my experience", "based on my experience",
+    "as i see it", "the way i see it", "to my mind",
+    "i'd say", "i'd say that", "i would argue",
+    # 中文自我引用（精雕细琢扩充）
     "我认为", "我觉得", "在我看来", "我个人", "我觉得吧",
-    "我认为吧", "我个人认为", "在我看来", "我觉得应该",
+    "我认为吧", "我个人认为", "我觉得应该",
     "我想", "我猜", "我估计", "我感觉",
+    "在我看来", "从我来看", "以我的经验",
+    "我觉得吧", "我认为吧", "我个人觉得",
+    "我想吧", "我猜吧", "我估计吧",
+    "依我看", "照我说", "要我说",
 ]
 
 
@@ -1401,22 +1449,41 @@ def _detect_self_references(text: str) -> float:
 # ============================================================
 
 _LOGICAL_CONNECTORS = [
-    # 英文逻辑连接词（按类型分类）
+    # 英文逻辑连接词（按类型分类，精雕细琢扩充）
     # 因果类
     "therefore", "consequently", "thus", "hence", "accordingly",
     "as a result", "for this reason", "because of this",
+    "as a consequence", "in consequence", "due to this",
+    "owing to this", "thanks to this", "on account of this",
     # 转折类
     "however", "nevertheless", "nonetheless", "on the other hand",
     "in contrast", "conversely", "yet", "but",
+    "on the contrary", "in comparison", "by contrast",
+    "while", "whereas", "although", "though",
     # 递进类
     "moreover", "furthermore", "additionally", "in addition",
     "besides", "also", "what's more",
+    "further", "furthermore", "more importantly",
+    "not only that", "on top of that", "as well as",
     # 总结类
     "in conclusion", "in summary", "to summarize", "overall",
     "in short", "in brief", "to sum up", "ultimately",
-    # 中文逻辑连接词
+    "all in all", "all things considered", "in the end",
+    "to conclude", "to wrap up", "in the final analysis",
+    # 举例类
+    "for example", "for instance", "such as",
+    "namely", "specifically", "in particular",
+    # 顺序类
+    "first", "second", "third", "finally",
+    "firstly", "secondly", "thirdly", "lastly",
+    # 中文逻辑连接词（精雕细琢扩充）
     "因此", "然而", "此外", "而且", "总之", "综上所述",
     "所以", "但是", "另外", "同时", "最后", "综上",
+    "因为", "由于", "既然", "既然如此",
+    "虽然", "尽管", "即使", "哪怕",
+    "不仅", "而且", "不但", "并且",
+    "首先", "其次", "然后", "接着",
+    "例如", "比如", "诸如", "举例来说",
 ]
 
 
