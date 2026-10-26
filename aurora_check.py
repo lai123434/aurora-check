@@ -333,15 +333,15 @@ def _detect_perplexity_burstiness(text: str) -> Optional[float]:
     std = (sum((l - avg) ** 2 for l in lengths) / len(lengths)) ** 0.5
     burstiness = std / (avg + 1)
 
-    # 突发性低 = 更像 AI
-    if burstiness < 0.3:
-        ai_prob = 0.70
-    elif burstiness < 0.5:
+    # 突发性低 = 更像 AI（精雕细琢调整参数）
+    if burstiness < 0.25:
+        ai_prob = 0.75
+    elif burstiness < 0.45:
         ai_prob = 0.55
-    elif burstiness < 0.7:
-        ai_prob = 0.40
+    elif burstiness < 0.65:
+        ai_prob = 0.35
     else:
-        ai_prob = 0.25
+        ai_prob = 0.15
 
     return ai_prob
 
