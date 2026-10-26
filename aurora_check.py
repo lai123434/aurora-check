@@ -451,7 +451,7 @@ _AI_OPENERS = [
     r"imagine (?:this|a world)",
     r"as (?:technology|the world|we|society) continues to",
     r"the (?:rise|emergence|advent|proliferation) of",
-    # 新增模式（打磨扩充）
+    # 新增模式（精雕细琢扩充）
     r"it'?s no secret that",
     r"we live in an era where",
     r"in recent years,",
@@ -462,6 +462,17 @@ _AI_OPENERS = [
     r"have you ever wondered",
     r"what if i told you",
     r"let'?s face it,",
+    # 继续扩充（精雕细琢）
+    r"in today'?s world,",
+    r"as we all know,",
+    r"it'?s widely recognized that",
+    r"there is no denying that",
+    r"it'?s undeniable that",
+    r"we'?ve all heard about",
+    r"you might be wondering",
+    r"the question is not whether",
+    r"the real question is",
+    r"let'?s start with",
 ]
 
 _AI_CLOSERS = [
@@ -472,7 +483,7 @@ _AI_CLOSERS = [
     r"as we (?:navigate|move forward|look ahead|continue)",
     r"by (?:embracing|leveraging|harnessing|adopting)",
     r"it'?s clear that",
-    # 新增模式（打磨扩充）
+    # 新增模式（精雕细琢扩充）
     r"the future is (?:bright|promising|exciting)",
     r"only time will tell",
     r"it remains to be seen",
@@ -483,6 +494,17 @@ _AI_CLOSERS = [
     r"the journey continues",
     r"in the grand scheme of things",
     r"all things considered,",
+    # 继续扩充（精雕细琢）
+    r"the bottom line is",
+    r"the key takeaway is",
+    r"the main point is",
+    r"the important thing to remember is",
+    r"in the end,",
+    r"at the end of the day,",
+    r"when all is said and done,",
+    r"to put it in a nutshell,",
+    r"in a word,",
+    r"in short,",
 ]
 
 _FILLER_PATTERNS = [
@@ -493,7 +515,7 @@ _FILLER_PATTERNS = [
     r"first and foremost",
     r"last but not least",
     r"without (?:a )?doubt",
-    # 新增模式（打磨扩充）
+    # 新增模式（精雕细琢扩充）
     r"it goes without saying that",
     r"needless to say,",
     r"as a matter of fact,",
@@ -504,6 +526,17 @@ _FILLER_PATTERNS = [
     r"essentially,",
     r"effectively,",
     r"in essence,",
+    # 继续扩充（精雕细琢）
+    r"it'?s worth mentioning that",
+    r"it'?s important to understand that",
+    r"it'?s crucial to recognize that",
+    r"it'?s essential to acknowledge that",
+    r"we must also remember that",
+    r"it should be noted that",
+    r"it can be argued that",
+    r"some might say that",
+    r"it'?s often said that",
+    r"many people believe that",
 ]
 
 
@@ -699,6 +732,27 @@ _AI_MARKERS_WEIGHTED = [
     ("it's important to understand", 1),
     ("it's crucial to recognize", 1),
     ("it's essential to acknowledge", 1),
+    # 新增中文 AI 语言标志（精雕细琢扩充）
+    ("值得注意的是", 3),
+    ("需要指出的是", 3),
+    ("至关重要的是", 3),
+    ("不可或缺的是", 3),
+    ("众所周知", 2),
+    ("毋庸置疑", 2),
+    ("不言而喻", 2),
+    ("显而易见", 2),
+    ("总而言之", 2),
+    ("综上所述", 2),
+    ("由此可见", 2),
+    ("因此", 1),
+    ("然而", 1),
+    ("此外", 1),
+    ("而且", 1),
+    ("同时", 1),
+    ("最后", 1),
+    ("首先", 1),
+    ("其次", 1),
+    ("再次", 1),
 ]
 
 
