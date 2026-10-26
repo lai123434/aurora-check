@@ -2,10 +2,10 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Engines](https://img.shields.io/badge/Engines-15-orange.svg)
+![Engines](https://img.shields.io/badge/Engines-16-orange.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
 
-**An open-source AI text detection and plagiarism toolkit integrating 15 detection engines, including a real RoBERTa machine learning classifier.**
+**An open-source AI text detection and plagiarism toolkit integrating 16 detection engines, including a real RoBERTa machine learning classifier and a novel "human imperfection detector".**
 
 ---
 
@@ -17,8 +17,9 @@ Unlike commercial software (such as Turnitin, GPTZero, or Originality.ai), Auror
 
 ### ✨ Key Features
 
-- 🤖 **15 integrated detection engines** - Statistical features + machine learning models
+- 🤖 **16 integrated detection engines** - Statistical features + machine learning models + novel human imperfection detector
 - 🧠 **RoBERTa ML classifier** - A real deep learning model, not just simple statistical rules
+- 🆕 **Human imperfection detector** - Novel angle: the "more perfect" a text is, the more likely it's AI-generated
 - 📊 **Multi-dimensional scoring** - Analyzes vocabulary, syntax, structure, sentiment, and more
 - 📄 **Beautiful HTML report** - Turnitin-style, with highlighted AI-suspect sentences
 - 🔍 **Local document comparison** - Compare similarity between two documents
@@ -84,6 +85,7 @@ Aurora Check integrates **15 detection engines**, divided into two categories:
 | **vocabulary-richness** | Vocabulary richness detection (Root TTR, Hapax ratio, Yule's K) | pablocaeg/sloptotal |
 | **structural-patterns** | Structural feature detection (colon density, list density, paragraph uniformity) | pablocaeg/sloptotal |
 | **sentiment-hedging** | Sentiment and hedging detection (over-hedging, vague positivity, filler qualifiers) | pablocaeg/sloptotal |
+| **human-imperfection** | **Novel!** Human imperfection detector: the more "perfect" a text is, the more likely it's AI | **Custom innovation** |
 | **ngram-perplexity** | N-gram language model perplexity | Custom |
 | **sliding-window** | Paragraph-level sliding window detection | Custom |
 | **burstiness-stat** | Traditional sentence length burstiness detection | Custom |

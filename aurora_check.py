@@ -879,6 +879,101 @@ def _detect_sentiment_hedging(text: str) -> float:
 
 
 # ============================================================
+# 第 16 号引擎：人类瑕疵检测器（Human Imperfection Detector）
+# 创新角度：越完美越像 AI，越有"人类的不完美"越像人
+# ============================================================
+
+# 人类口语化插入语（AI 很少用）
+_HUMAN_FILLERS = [
+    "嗯", "那个", "就是说", "然后", "反正", "对吧", "你知道",
+    "怎么说呢", "其实吧", "我觉得吧", "说真的", "说实话",
+    "basically", "actually", "like", "you know", "i mean",
+    "sort of", "kind of", "or something", "and stuff",
+]
+
+# 人类常见的"不完美"模式
+_HUMAN_IMPERFECTIONS = [
+    # 重复用词（人类会重复，AI 不会）
+    r"\b(\w+)\s+\1\b",
+    # 多余的空格（人类打字不规范）
+    r"  +",
+    # 中英文标点混用（人类常犯）
+    r"[a-zA-Z]+[，。；：]",
+    r"[，。；：][a-zA-Z]+",
+    # 句子开头小写（人类打字不注意）
+    r"(?<=[.!?]\s)[a-z]",
+    # 数字和单位之间没有空格（人类常犯）
+    r"\d+[a-zA-Z]",
+    # 两个感叹号/问号（人类情绪激动）
+    r"!{2,}",
+    r"\?{2,}",
+]
+
+
+def _detect_human_imperfection(text: str) -> float:
+    """
+    人类瑕疵检测器 - 全新角度！
+    原理：AI 写文章太完美了，人类写文章会有各种"不完美"
+    所以：越完美 = 越像 AI，越有瑕疵 = 越像人
+    """
+    text_lower = text.lower()
+    word_count = max(len(text.split()), 1)
+
+    imperfection_score = 0.0
+
+    # 1. 口语化插入语（人类用，AI 不用）
+    filler_count = 0
+    for phrase in _HUMAN_FILLERS:
+        filler_count += text_lower.count(phrase)
+    filler_density = (filler_count / word_count) * 1000
+    # 人类：5-15 per 1k，AI：0-2 per 1k
+    # 所以：filler 越少 = 越像 AI
+    filler_score = max(0, 1.0 - (filler_density / 10.0))
+    imperfection_score += filler_score * 0.30
+
+    # 2. 重复用词（人类会重复，AI 不会）
+    repeat_count = 0
+    for pattern in [r"\b(\w+)\s+\1\b"]:
+        repeat_count += len(re.findall(pattern, text_lower))
+    repeat_density = (repeat_count / word_count) * 1000
+    # 人类：3-8 per 1k，AI：0-1 per 1k
+    # 所以：repeat 越少 = 越像 AI
+    repeat_score = max(0, 1.0 - (repeat_density / 5.0))
+    imperfection_score += repeat_score * 0.25
+
+    # 3. 标点不规范（人类常犯，AI 很规范）
+    punctuation_issues = 0
+    # 中英文标点混用
+    punctuation_issues += len(re.findall(r"[a-zA-Z]+[，。；：]", text))
+    punctuation_issues += len(re.findall(r"[，。；：][a-zA-Z]+", text))
+    # 两个感叹号/问号（人类情绪激动）
+    punctuation_issues += len(re.findall(r"!{2,}", text))
+    punctuation_issues += len(re.findall(r"\?{2,}", text))
+    punct_density = (punctuation_issues / word_count) * 1000
+    # 人类：2-6 per 1k，AI：0-0.5 per 1k
+    # 所以：标点问题越少 = 越像 AI
+    punct_score = max(0, 1.0 - (punct_density / 4.0))
+    imperfection_score += punct_score * 0.25
+
+    # 4. 打字不规范（人类会犯，AI 不会）
+    typing_issues = 0
+    # 多余的空格
+    typing_issues += len(re.findall(r"  +", text))
+    # 句子开头小写
+    typing_issues += len(re.findall(r"(?<=[.!?]\s)[a-z]", text))
+    # 数字和单位之间没有空格
+    typing_issues += len(re.findall(r"\d+[a-zA-Z]", text))
+    typing_density = (typing_issues / word_count) * 1000
+    # 人类：5-15 per 1k，AI：0-1 per 1k
+    # 所以：打字问题越少 = 越像 AI
+    typing_score = max(0, 1.0 - (typing_density / 10.0))
+    imperfection_score += typing_score * 0.20
+
+    # 最终分数：越完美 = 分数越高 = 越像 AI
+    return round(imperfection_score, 3)
+
+
+# ============================================================
 # RoBERTa ChatGPT 检测器（逆向自 sloptotal ClassifierChatGPTEngine）
 # ============================================================
 
@@ -1190,23 +1285,27 @@ def run_ai_detection(text: str) -> AIResult:
     if roberta_score is not None:
         engine_scores["roberta-chatgpt"] = roberta_score
 
+    # 引擎 16: 人类瑕疵检测器（全新角度！越完美越像 AI）
+    engine_scores["human-imperfection"] = _detect_human_imperfection(prose_text)
+
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
     weights = {
-        "roberta-chatgpt": 0.30,
-        "lmscan": 0.20,
-        "formulaic-patterns": 0.12,
-        "linguistic-markers": 0.12,
-        "structural-patterns": 0.08,
-        "formulaic-markers": 0.06,
-        "vocabulary-richness": 0.04,
-        "sentiment-hedging": 0.03,
-        "transition-density": 0.02,
-        "compressibility": 0.02,
-        "structured-shape": 0.01,
-        "ngram-perplexity": 0.00,  # 太敏感，权重调到 0
-        "sliding-window": 0.00,   # 太敏感，权重调到 0
-        "burstiness-stat": 0.00,   # 太敏感，权重调到 0
-        "statistical-baseline": 0.00,  # 太敏感，权重调到 0
+        "roberta-chatgpt": 0.28,
+        "lmscan": 0.18,
+        "human-imperfection": 0.15,  # 全新引擎，权重 15%
+        "formulaic-patterns": 0.10,
+        "linguistic-markers": 0.10,
+        "structural-patterns": 0.07,
+        "formulaic-markers": 0.05,
+        "vocabulary-richness": 0.03,
+        "sentiment-hedging": 0.02,
+        "transition-density": 0.01,
+        "compressibility": 0.01,
+        "structured-shape": 0.00,
+        "ngram-perplexity": 0.00,
+        "sliding-window": 0.00,
+        "burstiness-stat": 0.00,
+        "statistical-baseline": 0.00,
     }
     total_weight = 0
     weighted_sum = 0
