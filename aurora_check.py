@@ -2054,29 +2054,29 @@ def run_ai_detection(text: str) -> AIResult:
     engine_scores["hidden-characters"] = _detect_hidden_characters(prose_text)
 
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
-    # 打磨后的权重：新引擎权重稍微降低，因为还需要更多验证
+    # 精雕细琢后的权重：强引擎权重更高，弱引擎权重更低
     weights = {
-        "roberta-chatgpt": 0.30,
-        "lmscan": 0.20,
-        "human-imperfection": 0.10,  # 打磨后权重 10%
-        "emotion-curve": 0.06,        # 打磨后权重 6%
-        "specific-details": 0.06,    # 打磨后权重 6%
-        "self-references": 0.05,     # 打磨后权重 5%
-        "logical-connectors": 0.05,   # 打磨后权重 5%
-        "hidden-characters": 0.03,     # 新引擎权重 3%（还需要更多验证）
-        "formulaic-patterns": 0.05,
-        "linguistic-markers": 0.05,
-        "structural-patterns": 0.03,
-        "formulaic-markers": 0.02,
-        "vocabulary-richness": 0.01,
-        "sentiment-hedging": 0.01,
-        "transition-density": 0.01,
-        "compressibility": 0.01,
-        "structured-shape": 0.02,
-        "ngram-perplexity": 0.03,
-        "sliding-window": 0.03,
-        "burstiness-stat": 0.02,
-        "statistical-baseline": 0.02,
+        "roberta-chatgpt": 0.25,      # 真正的 ML 分类器，权重最高
+        "lmscan": 0.15,                # 成熟的开源工具，权重第二
+        "human-imperfection": 0.08,    # 人类瑕疵检测器，很准
+        "emotion-curve": 0.05,         # 情感曲线检测器
+        "specific-details": 0.05,      # 具体细节密度检测器
+        "self-references": 0.04,       # 自我引用检测器
+        "logical-connectors": 0.04,    # 逻辑连接词密度检测器
+        "hidden-characters": 0.02,      # 隐藏字符检测器（还需要更多验证）
+        "formulaic-patterns": 0.06,    # 公式化表达检测
+        "linguistic-markers": 0.06,    # 语言标志检测
+        "structural-patterns": 0.04,    # 结构特征检测
+        "formulaic-markers": 0.02,     # lynote的公式化标志检测
+        "vocabulary-richness": 0.02,   # 词汇丰富度检测
+        "sentiment-hedging": 0.02,     # 情感与对冲检测
+        "transition-density": 0.01,    # 过渡词密度检测
+        "compressibility": 0.01,       # 压缩率检测
+        "structured-shape": 0.02,      # 结构化形状检测
+        "ngram-perplexity": 0.03,      # n-gram困惑度检测
+        "sliding-window": 0.03,        # 滑动窗口检测
+        "burstiness-stat": 0.02,       # 传统perplexity-burstiness
+        "statistical-baseline": 0.02,   # 统计基线
     }
     total_weight = 0
     weighted_sum = 0
