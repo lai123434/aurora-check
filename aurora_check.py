@@ -27,6 +27,9 @@ class AIResult:
     method: str
     engine_scores: dict = field(default_factory=dict)
     flagged_sentences: list = field(default_factory=list)
+    engine_disagreement: float = 0.0  # 引擎分歧度（标准差）
+    confident_engines: list = field(default_factory=list)  # 高度确信AI的引擎
+    conflicting_engines: list = field(default_factory=list)  # 分歧大的引擎对
 
 
 @dataclass
@@ -68,10 +71,31 @@ class CheckReport:
                 for name, score in ai.engine_scores.items():
                     lines.append(f"  - {name}：{score:.1%}")
                 lines.append("")
+            if ai.engine_disagreement > 0:
+                lines.append(f"- **引擎分歧度：** {ai.engine_disagreement:.3f}")
+                if ai.engine_disagreement > 0.2:
+                    lines.append("  - ⚠️ 引擎分歧较大，结果仅供参考")
+                lines.append("")
+            if ai.confident_engines:
+                lines.append("- **高度确信AI的引擎：**")
+                for e in ai.confident_engines:
+                    lines.append(f"  - {e['name']}：{e['score']:.1%}")
+                lines.append("")
+            if ai.conflicting_engines:
+                lines.append("- **引擎分歧：**")
+                for e in ai.conflicting_engines:
+                    if "lowest" in e:
+                        lines.append(f"  - 最低：{e['lowest']['name']}（{e['lowest']['score']:.1%}）")
+                    if "highest" in e:
+                        lines.append(f"  - 最高：{e['highest']['name']}（{e['highest']['score']:.1%}）")
+                lines.append("")
             if ai.flagged_sentences:
                 lines.append("- **高风险句（Top 5）：**")
                 for s in ai.flagged_sentences[:5]:
-                    lines.append(f"  - ({s['score']:.2f}) {s['text'][:80]}...")
+                    confidence_icon = "🟢" if s.get("confidence") == "high" else ("🟡" if s.get("confidence") == "medium" else "🔴")
+                    lines.append(f"  - {confidence_icon} ({s['score']:.2f}) {s['text'][:80]}...")
+                lines.append("")
+                lines.append("  - 🟢 高确信 | 🟡 中等确信 | 🔴 低确信（引擎分歧大）")
                 lines.append("")
 
         # 相似度
@@ -2880,13 +2904,55 @@ def run_ai_detection(text: str) -> AIResult:
     else:
         label = "mixed"
 
+    # 计算引擎分歧度（标准差）
+    scores_list = list(engine_scores.values())
+    if len(scores_list) > 1:
+        mean_score = sum(scores_list) / len(scores_list)
+        variance = sum((s - mean_score) ** 2 for s in scores_list) / len(scores_list)
+        disagreement = variance ** 0.5
+    else:
+        disagreement = 0.0
+
+    # 高度确信AI的引擎（>0.7）
+    confident_engines = [
+        {"name": name, "score": round(score, 3)}
+        for name, score in engine_scores.items()
+        if score > 0.7
+    ]
+    confident_engines.sort(key=lambda x: x["score"], reverse=True)
+
+    # 分歧大的引擎对（最高和最低分差 > 0.5）
+    sorted_engines = sorted(engine_scores.items(), key=lambda x: x[1])
+    conflicting_engines = []
+    if len(sorted_engines) >= 2:
+        lowest = sorted_engines[0]
+        highest = sorted_engines[-1]
+        if highest[1] - lowest[1] > 0.5:
+            conflicting_engines = [
+                {"lowest": {"name": lowest[0], "score": round(lowest[1], 3)}},
+                {"highest": {"name": highest[0], "score": round(highest[1], 3)}},
+            ]
+
     # 用滑动窗口的逐句分数做高风险句
     flagged_sentences = []
     for i, s in enumerate(sentences):
         if i < len(window_scores) and window_scores[i] > 0.5:
+            # 计算句子级不确定性（基于窗口分数的标准差）
+            window_start = max(0, i - 2)
+            window_end = min(len(window_scores), i + 3)
+            local_window = window_scores[window_start:window_end]
+            if len(local_window) > 1:
+                local_mean = sum(local_window) / len(local_window)
+                local_var = sum((x - local_mean) ** 2 for x in local_window) / len(local_window)
+                uncertainty = local_var ** 0.5
+            else:
+                uncertainty = 0.0
+            
             flagged_sentences.append({
                 "text": s[:100],
-                "score": round(window_scores[i], 3)
+                "score": round(window_scores[i], 3),
+                "uncertainty": round(uncertainty, 3),
+                "confidence": "high" if uncertainty < 0.1 else ("medium" if uncertainty < 0.2 else "low"),
             })
     flagged_sentences.sort(key=lambda x: x["score"], reverse=True)
 
@@ -2896,6 +2962,9 @@ def run_ai_detection(text: str) -> AIResult:
         method=f"ensemble ({len(engine_scores)} engines, references excluded)",
         engine_scores=engine_scores,
         flagged_sentences=flagged_sentences[:10],
+        engine_disagreement=round(disagreement, 4),
+        confident_engines=confident_engines[:5],
+        conflicting_engines=conflicting_engines,
     )
 
 
