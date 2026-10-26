@@ -816,13 +816,19 @@ def _detect_vocabulary_richness(text: str) -> float:
     # 人类文本：平均词长 4.5-5.5，AI 文本：5.0-6.0（AI 更喜欢用长词）
     length_score = min(max((avg_word_length - 4.5) / 2.0, 0.0), 1.0)
 
-    # 5. 长词比例（>6个字母）（打磨新增）
+    # 5. 长词比例（>6个字母）（精雕细琢）
     long_words = sum(1 for w in words if len(w) > 6)
     long_word_ratio = long_words / total
     # 人类文本：长词比例 10-20%，AI 文本：20-35%
     long_score = min(max((long_word_ratio - 0.10) / 0.20, 0.0), 1.0)
 
-    final_score = ttr_score * 0.25 + hapax_score * 0.25 + k_score * 0.20 + length_score * 0.15 + long_score * 0.15
+    # 6. 短词比例（<3个字母）（精雕细琢新增）
+    short_words = sum(1 for w in words if len(w) < 3)
+    short_word_ratio = short_words / total
+    # 人类文本：短词比例 20-30%，AI 文本：15-25%（AI 更喜欢用中等长度的词）
+    short_score = min(max((0.30 - short_word_ratio) / 0.15, 0.0), 1.0)
+
+    final_score = ttr_score * 0.20 + hapax_score * 0.20 + k_score * 0.15 + length_score * 0.15 + long_score * 0.15 + short_score * 0.15
     return round(final_score, 3)
 
 
@@ -907,24 +913,38 @@ def _detect_structural_patterns(text: str) -> float:
     # AI：8-15 per 1k，人类：3-7 per 1k
     quote_score = min(max((quote_density - 4) / 8.0, 0.0), 1.0)
 
-    # 10. 斜杠使用频率（打磨新增）
+    # 10. 斜杠使用频率（精雕细琢）
     slash_count = len(re.findall(r"/", text))
     slash_density = (slash_count / word_count) * 1000
     # AI：5-10 per 1k，人类：1-3 per 1k
     slash_score = min(max((slash_density - 2) / 6.0, 0.0), 1.0)
 
-    # 加权打分——冒号信号权重最高（打磨调整权重）
+    # 11. 分号使用频率（精雕细琢新增）
+    semicolon_count = len(re.findall(r";", text))
+    semicolon_density = (semicolon_count / word_count) * 1000
+    # AI：3-8 per 1k，人类：0-2 per 1k
+    semicolon_score = min(max((semicolon_density - 1) / 5.0, 0.0), 1.0)
+
+    # 12. 破折号使用频率（精雕细琢新增）
+    dash_count = len(re.findall(r"--|—", text))
+    dash_density = (dash_count / word_count) * 1000
+    # AI：2-5 per 1k，人类：0-1 per 1k
+    dash_score = min(max((dash_density - 0.5) / 3.0, 0.0), 1.0)
+
+    # 加权打分——冒号信号权重最高（精雕细琢调整权重）
     final_score = (
-        em_score * 0.05
-        + uniformity_score * 0.06
-        + list_score * 0.08
-        + para_score * 0.05
-        + format_score * 0.04
-        + colon_score * 0.20
-        + colon_def_score * 0.20
-        + paren_score * 0.10
-        + quote_score * 0.10
-        + slash_score * 0.06
+        em_score * 0.04
+        + uniformity_score * 0.05
+        + list_score * 0.06
+        + para_score * 0.04
+        + format_score * 0.03
+        + colon_score * 0.15
+        + colon_def_score * 0.15
+        + paren_score * 0.08
+        + quote_score * 0.08
+        + slash_score * 0.05
+        + semicolon_score * 0.15
+        + dash_score * 0.12
     )
     return round(final_score, 3)
 
