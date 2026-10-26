@@ -296,21 +296,21 @@ def _detect_with_baseline(text: str) -> tuple[float, list]:
     # 打分：AI 文本倾向于句长均匀（方差小）、词型丰富度适中
     burstiness = variance / (avg_len ** 2 + 1)  # 越大越像人
 
-    # 基于 burstiness 的线性打分：0.3 → 0.7, 0.6 → 0.4, 0.9 → 0.1
-    if burstiness < 0.3:
-        ai_score = 0.70
-    elif burstiness < 0.5:
+    # 基于 burstiness 的线性打分（精雕细琢调整参数）：0.25 → 0.75, 0.55 → 0.45, 0.85 → 0.15
+    if burstiness < 0.25:
+        ai_score = 0.75
+    elif burstiness < 0.50:
         ai_score = 0.55
-    elif burstiness < 0.7:
-        ai_score = 0.40
+    elif burstiness < 0.75:
+        ai_score = 0.35
     else:
-        ai_score = 0.25
+        ai_score = 0.15
 
-    # TTR 微调：TTR 太高（>0.65）可能是 AI 堆砌词汇，加一点分
-    if ttr > 0.65:
-        ai_score += 0.05
-    elif ttr < 0.45:
-        ai_score -= 0.05
+    # TTR 微调（精雕细琢调整参数）：TTR 太高（>0.60）可能是 AI 堆砌词汇，加一点分
+    if ttr > 0.60:
+        ai_score += 0.08
+    elif ttr < 0.40:
+        ai_score -= 0.08
 
     # 高风险句：最短或最长的句子
     flagged = []
