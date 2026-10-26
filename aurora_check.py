@@ -1777,58 +1777,56 @@ _AI_SENTENCE_STARTERS = [
 ]
 
 
-def _detect_sentence_starter_distribution(text: str) -> float:
+def _detect_starter_patterns(text: str) -> float:
     """
-    句首词分布检测器 - 全新角度！
+    开头模式检测器（合并句首词分布 + 段落开头模式）
     原理：人类写作的句首词分布很随机，AI写作的句首词分布很规律
-    所以：AI句首词比例越高 = 越像 AI
     """
+    # 句子开头检测
     sentences = _split_sentences(text)
-    if len(sentences) < 5:
-        return 0.5
+    if len(sentences) >= 5:
+        starters = []
+        for sent in sentences:
+            words = sent.strip().split()
+            if words:
+                first_word = words[0].lower().strip(".,!?;:'\"()")
+                starters.append(first_word)
 
-    # 统计每个句子的第一个词
-    starters = []
-    for sent in sentences:
-        words = sent.strip().split()
-        if words:
-            first_word = words[0].lower().strip(".,!?;:'\"()")
-            starters.append(first_word)
+        if starters:
+            ai_starter_count = 0
+            for starter in starters:
+                for ai_starter in _AI_SENTENCE_STARTERS:
+                    if starter.startswith(ai_starter) or starter == ai_starter:
+                        ai_starter_count += 1
+                        break
 
-    if not starters:
-        return 0.5
+            ai_starter_ratio = ai_starter_count / len(starters)
+            starter_score = min(max((ai_starter_ratio - 0.15) / 0.30, 0.0), 1.0)
+        else:
+            starter_score = 0.5
+    else:
+        starter_score = 0.5
 
-    # 统计AI常用句首词的比例
-    ai_starter_count = 0
-    for starter in starters:
-        for ai_starter in _AI_SENTENCE_STARTERS:
-            if starter.startswith(ai_starter) or starter == ai_starter:
-                ai_starter_count += 1
-                break
+    # 段落开头检测
+    paragraphs = [p.strip() for p in text.split("\n\n") if len(p.strip().split()) >= 5]
+    if len(paragraphs) >= 3:
+        opener_count = 0
+        for para in paragraphs:
+            words = para.split()
+            if words:
+                first_word = words[0].lower().strip(".,!?;:'\"()")
+                for opener in _AI_SENTENCE_STARTERS:
+                    if first_word.startswith(opener) or first_word == opener:
+                        opener_count += 1
+                        break
 
-    ai_starter_ratio = ai_starter_count / len(starters)
-
-    # 统计重复句首词的比例（人类写作很少重复句首词）
-    from collections import Counter
-    starter_freq = Counter(starters)
-    repeated_starters = sum(count for count in starter_freq.values() if count > 1)
-    repeat_ratio = repeated_starters / len(starters)
-
-    # 统计句首词的多样性（人类写作多样性高，AI写作多样性低）
-    diversity = len(starter_freq) / len(starters)
-
-    # 综合打分
-    # ai_starter_ratio：人类 ~10-20%，AI ~30-50%
-    starter_score = min(max((ai_starter_ratio - 0.15) / 0.30, 0.0), 1.0)
-
-    # repeat_ratio：人类 ~10-20%，AI ~20-40%
-    repeat_score = min(max((repeat_ratio - 0.15) / 0.25, 0.0), 1.0)
-
-    # diversity：人类 ~0.7-0.9，AI ~0.5-0.7
-    diversity_score = min(max((0.80 - diversity) / 0.30, 0.0), 1.0)
+        opener_ratio = opener_count / len(paragraphs)
+        paragraph_score = min(max((opener_ratio - 0.25) / 0.40, 0.0), 1.0)
+    else:
+        paragraph_score = 0.5
 
     # 加权平均
-    final_score = starter_score * 0.4 + repeat_score * 0.3 + diversity_score * 0.3
+    final_score = starter_score * 0.6 + paragraph_score * 0.4
     return round(final_score, 3)
 
 
@@ -1838,21 +1836,28 @@ def _detect_sentence_starter_distribution(text: str) -> float:
 # ============================================================
 
 def _detect_punctuation_patterns(text: str) -> float:
-    """标点符号使用模式检测器"""
+    """标点使用模式检测器（合并感叹句/疑问句 + 标点符号使用）"""
     word_count = max(len(text.split()), 1)
 
-    # 统计各种标点的密度
-    comma_density = (text.count(",") / word_count) * 1000
-    period_density = (text.count(".") / word_count) * 1000
+    # 统计感叹号和问号的密度
     exclamation_density = (text.count("!") / word_count) * 1000
     question_density = (text.count("?") / word_count) * 1000
 
-    # 人类：逗号多，感叹号和问号少
-    # AI：逗号适中，感叹号和问号极少
+    # 人类：感叹号和问号多，AI：感叹号和问号少
     exclamation_score = min(max((5.0 - exclamation_density) / 5.0, 0.0), 1.0)
     question_score = min(max((8.0 - question_density) / 8.0, 0.0), 1.0)
 
-    final_score = exclamation_score * 0.5 + question_score * 0.5
+    # 统计感叹句和疑问句的比例
+    sentences = _split_sentences(text)
+    if len(sentences) >= 5:
+        exclamation_count = sum(1 for s in sentences if "!" in s)
+        question_count = sum(1 for s in sentences if "?" in s)
+        ratio = (exclamation_count + question_count) / len(sentences)
+        sentence_score = min(max((0.10 - ratio) / 0.08, 0.0), 1.0)
+    else:
+        sentence_score = 0.5
+
+    final_score = exclamation_score * 0.3 + question_score * 0.3 + sentence_score * 0.4
     return round(final_score, 3)
 
 
@@ -1945,8 +1950,8 @@ def _detect_synonym_usage(text: str) -> float:
 # 全新角度！人类写作有长短句交替
 # ============================================================
 
-def _detect_long_short_alternation(text: str) -> float:
-    """长句/短句交替模式检测器"""
+def _detect_sentence_length_distribution(text: str) -> float:
+    """句子长度分布检测器（合并长句/短句交替 + 滑动窗口）"""
     sentences = _split_sentences(text)
     if len(sentences) < 5:
         return 0.5
@@ -1954,16 +1959,22 @@ def _detect_long_short_alternation(text: str) -> float:
     # 统计每个句子的长度
     lengths = [len(s.split()) for s in sentences]
 
-    # 统计相邻句子的长度差
+    # 统计相邻句子的长度差（长句/短句交替）
     diffs = []
     for i in range(len(lengths) - 1):
         diffs.append(abs(lengths[i] - lengths[i+1]))
-
     avg_diff = sum(diffs) / len(diffs) if diffs else 0
+    alternation_score = min(max((7.0 - avg_diff) / 5.0, 0.0), 1.0)
 
-    # 人类：平均长度差 ~8-12，AI：平均长度差 ~3-5
-    ai_score = min(max((7.0 - avg_diff) / 5.0, 0.0), 1.0)
-    return round(ai_score, 3)
+    # 统计句子长度的变异系数（滑动窗口）
+    import statistics
+    mean_len = statistics.mean(lengths)
+    stdev = statistics.stdev(lengths)
+    cv = stdev / mean_len if mean_len > 0 else 0
+    uniformity_score = max(0, 1.0 - (cv / 0.6))
+
+    final_score = alternation_score * 0.5 + uniformity_score * 0.5
+    return round(final_score, 3)
 
 
 # ============================================================
@@ -1971,23 +1982,30 @@ def _detect_long_short_alternation(text: str) -> float:
 # 全新角度！AI写作会重复使用某些词
 # ============================================================
 
-def _detect_repeated_words(text: str) -> float:
-    """重复词检测器"""
+def _detect_vocabulary_diversity(text: str) -> float:
+    """词汇多样性检测器（合并重复词 + 词汇丰富度）"""
+    import math
     words = text.lower().split()
     if len(words) < 20:
         return 0.5
 
-    # 统计词频
     from collections import Counter
     word_freq = Counter(words)
 
-    # 找出出现次数最多的词
+    # 重复词检测
     top_words = word_freq.most_common(10)
     top_freq = sum(count for word, count in top_words) / len(words)
+    repeated_score = min(max((top_freq - 0.15) / 0.15, 0.0), 1.0)
 
-    # 人类：top 10 词频率 ~15-20%，AI：top 10 词频率 ~20-30%
-    ai_score = min(max((top_freq - 0.15) / 0.15, 0.0), 1.0)
-    return round(ai_score, 3)
+    # 词汇丰富度检测
+    unique = len(word_freq)
+    total = len(words)
+    root_ttr = unique / math.sqrt(total)
+    ttr_score = max(0, 1.0 - ((root_ttr - 3.5) / 4.0))
+    ttr_score = min(max(ttr_score, 0.0), 1.0)
+
+    final_score = repeated_score * 0.4 + ttr_score * 0.6
+    return round(final_score, 3)
 
 
 # ============================================================
@@ -1995,23 +2013,26 @@ def _detect_repeated_words(text: str) -> float:
 # 全新角度！AI更喜欢用数字和百分比
 # ============================================================
 
-def _detect_numbers_percentages(text: str) -> float:
-    """数字/百分比使用检测器"""
+def _detect_specific_details(text: str) -> float:
+    """具体细节密度检测器（合并数字/百分比 + 具体细节）"""
     word_count = max(len(text.split()), 1)
 
-    # 统计数字数量
+    # 数字检测
     numbers = len(re.findall(r'\b\d+\b', text))
     percentages = len(re.findall(r'\b\d+(\.\d+)?%', text))
-
-    # 数字密度
     number_density = (numbers / word_count) * 1000
     percentage_density = (percentages / word_count) * 1000
-
-    # 人类：数字密度 ~20-40 per 1k words，AI：数字密度 ~40-80 per 1k words
     number_score = min(max((number_density - 30) / 40.0, 0.0), 1.0)
     percentage_score = min(max((percentage_density - 5) / 10.0, 0.0), 1.0)
 
-    final_score = number_score * 0.6 + percentage_score * 0.4
+    # 具体细节检测（人名、地名、组织名等）
+    # 简单检测：大写字母开头的词
+    proper_nouns = len(re.findall(r'\b[A-Z][a-z]+\b', text))
+    proper_noun_density = (proper_nouns / word_count) * 1000
+    # 人类：~50-100 per 1k words，AI：~20-50 per 1k words
+    proper_noun_score = min(max((80 - proper_noun_density) / 60.0, 0.0), 1.0)
+
+    final_score = number_score * 0.3 + percentage_score * 0.2 + proper_noun_score * 0.5
     return round(final_score, 3)
 
 
@@ -2031,20 +2052,26 @@ _CITATION_PATTERNS = [
 ]
 
 
-def _detect_citation_patterns(text: str) -> float:
-    """引用模式检测器"""
+def _detect_formulaic_patterns(text: str) -> float:
+    """公式化模式检测器（合并引用模式 + 公式化表达）"""
     word_count = max(len(text.split()), 1)
 
+    # 引用模式检测
     citation_count = 0
     for pattern in _CITATION_PATTERNS:
         citation_count += len(re.findall(pattern, text, re.IGNORECASE))
-
-    # 引用密度
     citation_density = (citation_count / word_count) * 1000
+    citation_score = min(max((citation_density - 2.0) / 5.0, 0.0), 1.0)
 
-    # 人类：~1-3 per 1k words，AI：~5-10 per 1k words
-    ai_score = min(max((citation_density - 2.0) / 5.0, 0.0), 1.0)
-    return round(ai_score, 3)
+    # 公式化表达检测（检测AI常用短语）
+    formulaic_count = 0
+    for phrase in _AI_FORMULAIC_MARKERS:
+        formulaic_count += len(re.findall(phrase, text, re.IGNORECASE))
+    formulaic_density = (formulaic_count / word_count) * 1000
+    formulaic_score = min(max((formulaic_density - 5.0) / 15.0, 0.0), 1.0)
+
+    final_score = citation_score * 0.4 + formulaic_score * 0.6
+    return round(final_score, 3)
 
 
 # ============================================================
@@ -2428,57 +2455,52 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 21: 隐藏字符检测器（检测AI水印：零宽字符、不可见字符）
     engine_scores["hidden-characters"] = _detect_hidden_characters(prose_text)
 
-    # 引擎 22: 句首词分布检测器（全新角度！人类句首词随机，AI句首词规律）
-    engine_scores["sentence-starters"] = _detect_sentence_starter_distribution(prose_text)
+    # 引擎 22: 开头模式检测器（合并句首词分布 + 段落开头模式）
+    engine_scores["starter-patterns"] = _detect_starter_patterns(prose_text)
 
-    # 引擎 23-32: 10个全新角度的引擎
+    # 引擎 23: 标点使用模式检测器（合并感叹句/疑问句 + 标点符号使用）
     engine_scores["punctuation-patterns"] = _detect_punctuation_patterns(prose_text)
-    engine_scores["paragraph-length"] = _detect_paragraph_length_distribution(prose_text)
-    engine_scores["exclamation-question"] = _detect_exclamation_question_ratio(prose_text)
-    engine_scores["synonym-usage"] = _detect_synonym_usage(prose_text)
-    engine_scores["long-short-alternation"] = _detect_long_short_alternation(prose_text)
-    engine_scores["repeated-words"] = _detect_repeated_words(prose_text)
-    engine_scores["numbers-percentages"] = _detect_numbers_percentages(prose_text)
-    engine_scores["citation-patterns"] = _detect_citation_patterns(prose_text)
-    engine_scores["paragraph-openers"] = _detect_paragraph_openers(prose_text)
-    engine_scores["sentence-endings"] = _detect_sentence_ending_distribution(prose_text)
+
+    # 引擎 24: 句子长度分布检测器（合并长句/短句交替 + 滑动窗口）
+    engine_scores["sentence-length"] = _detect_sentence_length_distribution(prose_text)
+
+    # 引擎 25: 词汇多样性检测器（合并重复词 + 词汇丰富度）
+    engine_scores["vocabulary-diversity"] = _detect_vocabulary_diversity(prose_text)
+
+    # 引擎 26: 具体细节密度检测器（合并数字/百分比 + 具体细节）
+    engine_scores["specific-details"] = _detect_specific_details(prose_text)
+
+    # 引擎 27: 公式化模式检测器（合并引用模式 + 公式化表达）
+    engine_scores["formulaic-patterns"] = _detect_formulaic_patterns(prose_text)
 
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
-    # 统合后的权重：强引擎权重更高，弱引擎权重更低，确保不互相冲突
+    # 合并后的权重：强引擎权重更高，弱引擎权重更低，确保不互相冲突
     weights = {
         # 强引擎（ML分类器、成熟工具）- 权重最高
-        "roberta-chatgpt": 0.20,
-        "lmscan": 0.12,
+        "roberta-chatgpt": 0.25,
+        "lmscan": 0.15,
         # 中等引擎（创新引擎、老牌引擎）
-        "human-imperfection": 0.06,
-        "emotion-curve": 0.04,
-        "specific-details": 0.04,
-        "self-references": 0.03,
-        "logical-connectors": 0.03,
+        "human-imperfection": 0.08,
+        "emotion-curve": 0.05,
+        "specific-details": 0.05,
+        "self-references": 0.04,
+        "logical-connectors": 0.04,
+        "linguistic-markers": 0.06,
+        "structural-patterns": 0.04,
+        # 合并后的引擎
+        "starter-patterns": 0.03,
+        "punctuation-patterns": 0.02,
+        "sentence-length": 0.02,
+        "vocabulary-diversity": 0.02,
         "formulaic-patterns": 0.05,
-        "linguistic-markers": 0.05,
-        "structural-patterns": 0.03,
-        # 弱引擎（新引擎、小指标）
+        # 弱引擎（小指标）
         "hidden-characters": 0.01,
-        "sentence-starters": 0.02,
-        "punctuation-patterns": 0.01,
-        "paragraph-length": 0.01,
-        "exclamation-question": 0.01,
-        "synonym-usage": 0.005,
-        "long-short-alternation": 0.01,
-        "repeated-words": 0.005,
-        "numbers-percentages": 0.01,
-        "citation-patterns": 0.01,
-        "paragraph-openers": 0.01,
-        "sentence-endings": 0.005,
         "formulaic-markers": 0.01,
-        "vocabulary-richness": 0.01,
         "sentiment-hedging": 0.01,
-        "transition-density": 0.005,
-        "compressibility": 0.005,
+        "transition-density": 0.01,
+        "compressibility": 0.01,
         "structured-shape": 0.01,
-        "ngram-perplexity": 0.02,
-        "sliding-window": 0.02,
+        "ngram-perplexity": 0.03,
         "burstiness-stat": 0.01,
         "statistical-baseline": 0.01,
     }
