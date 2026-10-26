@@ -2212,6 +2212,55 @@ def _detect_statistical_watermark(text: str) -> float:
 
 
 # ============================================================
+# 第 33 号引擎：SpecDetect 信号处理检测器（简化版）
+# 对困惑度序列做频域分析，捕捉AI文本在频谱上的异常模式
+# ============================================================
+
+def _detect_spec_detect(text: str) -> float:
+    """SpecDetect 信号处理检测器（简化版）"""
+    import math
+    from collections import Counter
+
+    words = text.lower().split()
+    if len(words) < 30:
+        return 0.5
+
+    # 计算每个词的log概率（困惑度序列）
+    word_freq = Counter(words)
+    total_words = len(words)
+
+    log_probs = []
+    for word in words:
+        freq = word_freq.get(word, 0)
+        prob = (freq + 0.5) / (total_words + 0.5 * len(word_freq))
+        log_probs.append(math.log(prob))
+
+    # 简化版频域分析：计算序列的方差和自相关性
+    # AI文本的困惑度序列更平滑（方差小，自相关性高）
+    # 人类文本的困惑度序列更随机（方差大，自相关性低）
+
+    # 1. 计算方差
+    mean = sum(log_probs) / len(log_probs)
+    variance = sum((lp - mean) ** 2 for lp in log_probs) / len(log_probs)
+
+    # 2. 计算自相关性（相邻词的相关性）
+    autocorr = 0
+    for i in range(len(log_probs) - 1):
+        autocorr += (log_probs[i] - mean) * (log_probs[i+1] - mean)
+    autocorr = autocorr / (variance * len(log_probs)) if variance > 0 else 0
+
+    # 归一化：方差越小、自相关性越高 = 越像AI
+    # 人类：方差 ~2-4，AI：方差 ~1-2
+    variance_score = min(max((3.0 - variance) / 2.0, 0.0), 1.0)
+
+    # 人类：自相关性 ~0.1-0.3，AI：自相关性 ~0.3-0.5
+    autocorr_score = min(max((autocorr - 0.2) / 0.3, 0.0), 1.0)
+
+    final_score = variance_score * 0.5 + autocorr_score * 0.5
+    return round(final_score, 3)
+
+
+# ============================================================
 # 第 28 号引擎：重复词检测器（Repeated Words Detector）
 # 全新角度！AI写作会重复使用某些词
 # ============================================================
@@ -2719,6 +2768,9 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 31: 统计水印检测器（统计水印）
     engine_scores["statistical-watermark"] = _detect_statistical_watermark(prose_text)
 
+    # 引擎 32: SpecDetect 信号处理检测器（零样本范式）
+    engine_scores["spec-detect"] = _detect_spec_detect(prose_text)
+
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
     # 合并后的权重：强引擎权重更高，弱引擎权重更低，确保不互相冲突
     weights = {
@@ -2751,6 +2803,7 @@ def run_ai_detection(text: str) -> AIResult:
         "adversarial-perturbation": 0.03,  # 对抗扰动检测器
         "chinese-ai": 0.02,  # 中文AI检测器
         "statistical-watermark": 0.02,  # 统计水印检测器
+        "spec-detect": 0.03,  # SpecDetect 信号处理检测器
         "burstiness-stat": 0.01,
         "statistical-baseline": 0.01,
     }
