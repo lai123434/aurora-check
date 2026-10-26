@@ -437,26 +437,28 @@ def _detect_transition_density(text: str) -> float:
 
 
 def _detect_compressibility(text: str) -> float:
-    """检测压缩率（逆向自 lynote，打磨版）- 可压缩性越高 = 越像 AI"""
+    """检测压缩率（逆向自 lynote，精雕细琢版）- 可压缩性越高 = 越像 AI"""
     import zlib
     compressed = len(zlib.compress(text.encode("utf-8")))
     original = len(text.encode("utf-8"))
     ratio = compressed / max(1, original)
-    # 打磨：典型值调整
+    # 精雕细琢：典型值调整
     # ratio 越低 = 越可压缩 = 越重复 = 越像 AI
     # 归一化：ratio=0.25 → 0.9 AI，ratio=0.65 → 0.1 AI
-    return max(0.0, min(1.0, (0.55 - ratio) / 0.30))
+    return max(0.0, min(1.0, (0.50 - ratio) / 0.25))
 
 
 def _detect_structured_shape(text: str) -> float:
-    """检测结构化答案形状（逆向自 lynote，打磨版）"""
+    """检测结构化答案形状（逆向自 lynote，精雕细琢版）"""
     listish_lines = len(re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text))
     headingish_lines = len(re.findall(r"(?m)^\s{0,3}#{1,3}\s+|^\s{0,3}[A-Z][A-Za-z ]{3,}:\s*$", text))
-    # 打磨：加了加粗检测
+    # 精雕细琢：加了加粗检测
     boldish_lines = len(re.findall(r"\*\*[^*]+\*\*", text))
-    total = listish_lines + headingish_lines + boldish_lines
-    # 打磨：10 个以上结构化行 = 0.9
-    return max(0.0, min(1.0, total / 10.0))
+    # 精雕细琢：加了表格检测
+    tableish_lines = len(re.findall(r"(?m)^\s*\|.*\|\s*$", text))
+    total = listish_lines + headingish_lines + boldish_lines + tableish_lines
+    # 精雕细琢：8 个以上结构化行 = 0.9
+    return max(0.0, min(1.0, total / 8.0))
 
 
 # ============================================================
