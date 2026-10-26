@@ -1263,12 +1263,23 @@ _HUMAN_FILLERS = [
     "怎么说呢", "其实吧", "我觉得吧", "说真的", "说实话",
     "说白了", "你想想", "你懂的", "你明白吧", "我跟你说",
     "害", "哎", "哦", "啊", "呃",
+    # 继续扩充（精雕细琢）
+    "怎么说呢", "其实吧", "我觉得吧", "说真的", "说实话",
+    "说白了", "你想想", "你懂的", "你明白吧", "我跟你说",
+    "讲真", "说句实在话", "不瞒你说", "你猜怎么着",
+    "我跟你讲", "我跟你讲", "你说是不是", "对吧", "是吧",
     # 英文（真正人类才会说的，去掉了太常见的 so/well/right/okay）
     "you know", "i mean", "sort of", "kind of",
     "or something", "and stuff", "let's see", "anyway",
     "you know what", "guess what", "believe it or not",
     "to be honest", "honestly", "frankly",
     "i guess", "i suppose", "i imagine",
+    # 继续扩充（精雕细琢）
+    "as i was saying", "like i said", "you see",
+    "the thing is", "here's the thing", "what i mean is",
+    "let's be real", "let's face it", "to tell you the truth",
+    "off the top of my head", "from what i remember",
+    "as far as i know", "if i remember correctly",
 ]
 
 # 人类常见的"不完美"模式（扩充版）
