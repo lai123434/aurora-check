@@ -2,10 +2,10 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Engines](https://img.shields.io/badge/Engines-21-orange.svg)
+![Engines](https://img.shields.io/badge/Engines-25-orange.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
 
-**An open-source AI text detection and plagiarism toolkit integrating 21 detection engines, including a real RoBERTa machine learning classifier, 6 novel innovation engines, and a hidden watermark detector.**
+**An open-source AI text detection and plagiarism toolkit integrating 25 detection engines, including a real RoBERTa machine learning classifier, 6 novel innovation engines, and a hidden watermark detector.**
 
 ---
 
@@ -17,7 +17,7 @@ Unlike commercial software (such as Turnitin, GPTZero, or Originality.ai), Auror
 
 ### ✨ Key Features
 
-- 🤖 **21 integrated detection engines** - Statistical features + machine learning models + 6 novel innovation engines
+- 🤖 **25 integrated detection engines** - Statistical features + machine learning models + 6 novel innovation engines
 - 🧠 **RoBERTa ML classifier** - A real deep learning model, not just simple statistical rules
 - 🆕 **6 novel innovation engines** - Human imperfection detector, emotion curve detector, specific details detector, self-reference detector, logical connectors detector, hidden watermark detector
 - 🔍 **Hidden watermark detection** - Detects zero-width characters and invisible AI watermarks
