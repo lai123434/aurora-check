@@ -1931,16 +1931,16 @@ def _compute_perplexity_ngram(text: str, n: int = 3) -> float:
 
     avg_log_prob = log_prob_sum / count
 
-    # 归一化（打磨：调整范围）
+    # 归一化（精雕细琢：调整范围）
     # 低困惑度（2-3）= 可预测 = AI 写的
     # 高困惑度（5-7）= 不可预测 = 人写的
     # 我们输出 AI 概率：困惑度越低，AI 概率越高
-    ai_prob = max(0.1, min(0.9, (5.0 - avg_log_prob) / 2.5 + 0.3))
+    ai_prob = max(0.1, min(0.9, (4.5 - avg_log_prob) / 2.0 + 0.3))
     return round(ai_prob, 3)
 
 
-def _sliding_window_detection(sentences: list, window_size: int = 5) -> list:
-    """段落级滑动窗口检测（打磨版）：5句为一个窗口，带上下文"""
+def _sliding_window_detection(sentences: list, window_size: int = 7) -> list:
+    """段落级滑动窗口检测（精雕细琢版）：7句为一个窗口，带上下文"""
     if len(sentences) < window_size:
         return [0.5] * len(sentences)
 
@@ -1957,19 +1957,19 @@ def _sliding_window_detection(sentences: list, window_size: int = 5) -> list:
         std = (sum((l - avg) ** 2 for l in lengths) / len(lengths)) ** 0.5
         burstiness = std / (avg + 1)
 
-        # 打磨：加了句长均匀度检测
+        # 精雕细琢：加了句长均匀度检测
         if avg > 0:
             uniformity = 1 - (std / avg)
         else:
             uniformity = 0
 
-        # 窗口内的 AI 概率（打磨：结合 burstiness 和 uniformity）
-        if burstiness < 0.4 and uniformity > 0.6:
-            window_ai = 0.70
-        elif burstiness < 0.6:
-            window_ai = 0.50
+        # 窗口内的 AI 概率（精雕细琢：结合 burstiness 和 uniformity）
+        if burstiness < 0.35 and uniformity > 0.65:
+            window_ai = 0.75
+        elif burstiness < 0.55:
+            window_ai = 0.55
         else:
-            window_ai = 0.30
+            window_ai = 0.25
 
         window_scores.append(window_ai)
 
