@@ -954,6 +954,7 @@ def _detect_structural_patterns(text: str) -> float:
 # ============================================================
 
 _HEDGING_PHRASES = [
+    # 原有词
     "it's worth noting",
     "it is worth noting",
     "it's important to remember",
@@ -981,6 +982,34 @@ _HEDGING_PHRASES = [
     "be that as it may",
     "regardless",
     "irrespective of",
+    # 新增词（精雕细琢扩充）
+    "it's important to understand",
+    "it is important to understand",
+    "it's crucial to recognize",
+    "it is crucial to recognize",
+    "it's essential to acknowledge",
+    "it is essential to acknowledge",
+    "it should be mentioned",
+    "it should be pointed out",
+    "one could argue",
+    "one may argue",
+    "it can be argued",
+    "some would say",
+    "many would argue",
+    "there are those who believe",
+    "many experts suggest",
+    "studies indicate",
+    "research suggests",
+    "while it is true that",
+    "although it is true that",
+    "having said this",
+    "that being this",
+    "with that being this",
+    "be that as it may",
+    "nevertheless",
+    "nonetheless",
+    "in any case",
+    "at any rate",
 ]
 
 _BALANCE_PATTERNS = [
@@ -1033,6 +1062,26 @@ _VAGUE_POSITIVITY = [
     "the cutting edge",
     "the forefront of",
     "the leading edge",
+    # 继续扩充（精雕细琢）
+    "a powerful force",
+    "a driving force",
+    "a catalyst for change",
+    "a catalyst for growth",
+    "a catalyst for innovation",
+    "a beacon of hope",
+    "a beacon of light",
+    "a ray of hope",
+    "a breath of fresh air",
+    "a world of possibilities",
+    "a world of opportunities",
+    "a world of potential",
+    "a world of difference",
+    "a positive impact",
+    "a lasting impact",
+    "a profound impact",
+    "a significant impact",
+    "a meaningful impact",
+    "a transformative impact",
 ]
 
 _FILLER_QUALIFIERS = [
