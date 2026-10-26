@@ -2,10 +2,10 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Engines](https://img.shields.io/badge/Engines-25-orange.svg)
+![Engines](https://img.shields.io/badge/Engines-31-orange.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
 
-**An open-source AI text detection and plagiarism toolkit integrating 25 detection engines, including a real RoBERTa machine learning classifier, 6 novel innovation engines, and a hidden watermark detector.**
+**An open-source AI text detection and plagiarism toolkit integrating 31 detection engines, including a real RoBERTa machine learning classifier, 6 novel innovation engines, zero-shot detection paradigms (PAWN, SpecDetect, DNA-DetectLLM), adversarial robustness, statistical watermark detection, and engine disagreement analysis.**
 
 ---
 
@@ -17,12 +17,16 @@ Unlike commercial software (such as Turnitin, GPTZero, or Originality.ai), Auror
 
 ### ✨ Key Features
 
-- 🤖 **25 integrated detection engines** - Statistical features + machine learning models + 6 novel innovation engines
+- 🤖 **31 integrated detection engines** - Statistical features + machine learning models + 6 novel innovation engines + zero-shot paradigms
 - 🧠 **RoBERTa ML classifier** - A real deep learning model, not just simple statistical rules
 - 🆕 **6 novel innovation engines** - Human imperfection detector, emotion curve detector, specific details detector, self-reference detector, logical connectors detector, hidden watermark detector
-- 🔍 **Hidden watermark detection** - Detects zero-width characters and invisible AI watermarks
-- 📊 **Multi-dimensional scoring** - Analyzes vocabulary, syntax, structure, sentiment, and more
-- 📄 **Beautiful HTML report** - Turnitin-style, with highlighted AI-suspect sentences
+- 🔬 **Zero-shot detection paradigms** - PAWN perplexity weighting, SpecDetect signal processing, DNA-DetectLLM repair-based detection
+- 🛡️ **Adversarial robustness** - Adversarial perturbation detector to resist paraphrasing attacks
+- 🌐 **Multi-language support** - Chinese AI detection engine
+- 🔍 **Statistical watermark detection** - Detects green/red-list statistical watermarks (not just zero-width characters)
+- 📊 **Engine disagreement analysis** - Shows how much engines agree/disagree, identifies confident vs conflicting engines
+- 📈 **Sentence-level uncertainty** - Visual confidence levels (high/medium/low) for each high-risk sentence
+- 🎨 **Beautiful HTML report** - Turnitin-style, with highlighted AI-suspect sentences and confidence indicators
 - 🔍 **Local document comparison** - Compare similarity between two documents
 - 📚 **Automatic citation exclusion** - Automatically detects and excludes reference sections
 - 🎓 **Academic-friendly** - Optimized specifically for academic papers
