@@ -360,7 +360,7 @@ _AI_FORMULAIC_MARKERS = [
     r"\bin today's (rapidly )?(changing|evolving)\b",
     r"\bplays a (crucial|vital|pivotal) role\b",
     r"\blandscape\b", r"\brealm\b", r"\btapestry\b",
-    # 新增模式（打磨扩充）
+    # 新增模式（精雕细琢扩充）
     r"\bit is worth noting\b", r"\bit is crucial to\b", r"\bit is essential to\b",
     r"\bit is important to understand\b", r"\bit is worth considering\b",
     r"\blet's dive in\b", r"\blet's explore\b", r"\blet's take a look\b",
@@ -370,6 +370,16 @@ _AI_FORMULAIC_MARKERS = [
     r"\bseamless integration\b", r"\bseamless experience\b",
     r"\buser-friendly\b", r"\bcutting-edge technology\b",
     r"\bstate-of-the-art\b", r"\bnext-generation\b",
+    # 继续扩充（精雕细琢）
+    r"\bit is no secret that\b", r"\bit is widely recognized that\b",
+    r"\bit is undeniable that\b", r"\bit is clear that\b",
+    r"\bit is obvious that\b", r"\bit is evident that\b",
+    r"\bwe live in an era\b", r"\bin today's world\b",
+    r"\bas we all know\b", r"\bas you may know\b",
+    r"\bhave you ever wondered\b", r"\bwhat if i told you\b",
+    r"\blet's face it\b", r"\blet's be honest\b",
+    r"\bthe future is\b", r"\bthe possibilities are\b",
+    r"\bthe journey continues\b", r"\bthe story unfolds\b",
 ]
 
 # 过渡词列表（来自 lynote 逆向，打磨扩充）
@@ -378,7 +388,7 @@ _TRANSITION_WORDS = [
     "first", "second", "third", "moreover", "furthermore", "however", "therefore",
     "ultimately", "additionally", "in summary", "in conclusion", "on the other hand",
     "consequently", "nevertheless", "nonetheless", "thus", "hence",
-    # 新增词（打磨扩充）
+    # 新增词（精雕细琢扩充）
     "in addition", "besides", "also", "what's more",
     "in contrast", "conversely", "on the contrary",
     "as a result", "for this reason", "because of this",
@@ -390,6 +400,18 @@ _TRANSITION_WORDS = [
     "finally", "lastly", "to sum up",
     "overall", "all things considered",
     "in short", "in brief",
+    # 继续扩充（精雕细琢）
+    "firstly", "secondly", "thirdly",
+    "furthermore", "moreover", "additionally",
+    "consequently", "therefore", "thus", "hence",
+    "nevertheless", "nonetheless", "however",
+    "meanwhile", "meantime", "in the meantime",
+    "subsequently", "afterwards", "after that",
+    "previously", "before that", "earlier",
+    "currently", "at present", "nowadays",
+    "eventually", "ultimately", "in the end",
+    "luckily", "unfortunately", "sadly",
+    "thankfully", "hopefully", "fortunately",
 ]
 
 
