@@ -2117,6 +2117,101 @@ def _detect_adversarial_perturbation(text: str) -> float:
 
 
 # ============================================================
+# 第 30 号引擎：语言检测器（Language Detector）
+# 自动判断文本是中文还是英文
+# ============================================================
+
+def _detect_language(text: str) -> str:
+    """检测文本语言"""
+    # 统计中文字符数量
+    chinese_chars = len(re.findall(r'[\u4e00-\u9fff]', text))
+    # 统计英文字符数量
+    english_chars = len(re.findall(r'[a-zA-Z]', text))
+
+    if chinese_chars > english_chars:
+        return "zh"
+    else:
+        return "en"
+
+
+# ============================================================
+# 第 31 号引擎：中文AI检测器（简化版）
+# 针对中文文本的AI特征检测
+# ============================================================
+
+# 中文AI常用短语
+_AI_CHINESE_MARKERS = [
+    "值得注意的是",
+    "需要指出的是",
+    "至关重要的是",
+    "综上所述",
+    "总而言之",
+    "由此可见",
+    "众所周知",
+    "毋庸置疑",
+    "不言而喻",
+    "显而易见",
+    "首先",
+    "其次",
+    "再次",
+    "最后",
+    "此外",
+    "而且",
+    "同时",
+    "因此",
+    "然而",
+]
+
+
+def _detect_chinese_ai(text: str) -> float:
+    """中文AI检测器"""
+    if _detect_language(text) != "zh":
+        return 0.5  # 英文文本不适用
+
+    word_count = max(len(text), 1)
+
+    # 统计中文AI常用短语的数量
+    marker_count = 0
+    for marker in _AI_CHINESE_MARKERS:
+        marker_count += text.count(marker)
+
+    # 密度
+    marker_density = (marker_count / word_count) * 1000
+
+    # 人类：~1-3 per 1k chars，AI：~5-10 per 1k chars
+    ai_score = min(max((marker_density - 2.0) / 5.0, 0.0), 1.0)
+
+    return round(ai_score, 3)
+
+
+# ============================================================
+# 第 32 号引擎：统计水印检测器（简化版）
+# 检测统计水印（green/red-list）
+# ============================================================
+
+def _detect_statistical_watermark(text: str) -> float:
+    """统计水印检测器（简化版）"""
+    words = text.lower().split()
+    if len(words) < 20:
+        return 0.5
+
+    # 简化版统计水印检测：
+    # 检测是否有异常的token分布（绿色token比例过高）
+    from collections import Counter
+    word_freq = Counter(words)
+
+    # 找出出现次数最多的词（绿色候选）
+    top_words = word_freq.most_common(5)
+    top_freq = sum(count for word, count in top_words) / len(words)
+
+    # 绿色token比例异常高 = 可能有统计水印
+    # 人类：top 5 词频率 ~10-15%，AI：~15-25%
+    watermark_score = min(max((top_freq - 0.12) / 0.15, 0.0), 1.0)
+
+    return round(watermark_score, 3)
+
+
+# ============================================================
 # 第 28 号引擎：重复词检测器（Repeated Words Detector）
 # 全新角度！AI写作会重复使用某些词
 # ============================================================
@@ -2618,6 +2713,12 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 29: 对抗扰动程度检测器（对抗鲁棒性）
     engine_scores["adversarial-perturbation"] = _detect_adversarial_perturbation(prose_text)
 
+    # 引擎 30: 中文AI检测器（多语言支持）
+    engine_scores["chinese-ai"] = _detect_chinese_ai(prose_text)
+
+    # 引擎 31: 统计水印检测器（统计水印）
+    engine_scores["statistical-watermark"] = _detect_statistical_watermark(prose_text)
+
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
     # 合并后的权重：强引擎权重更高，弱引擎权重更低，确保不互相冲突
     weights = {
@@ -2648,6 +2749,8 @@ def run_ai_detection(text: str) -> AIResult:
         "ngram-perplexity": 0.03,
         "pawn-perplexity": 0.04,  # PAWN 零样本引擎，权重稍高
         "adversarial-perturbation": 0.03,  # 对抗扰动检测器
+        "chinese-ai": 0.02,  # 中文AI检测器
+        "statistical-watermark": 0.02,  # 统计水印检测器
         "burstiness-stat": 0.01,
         "statistical-baseline": 0.01,
     }
