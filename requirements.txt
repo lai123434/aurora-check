@@ -1,0 +1,15 @@
+# Aurora Check - 依赖列表
+
+# 核心
+torch>=2.0.0
+transformers>=4.30.0
+
+# 文档处理
+python-docx>=0.8.11
+
+# HTTP 请求（可选，用于未来联网功能）
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+
+# 其他
+numpy>=1.21.0

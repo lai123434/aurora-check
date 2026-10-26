@@ -1,0 +1,1404 @@
+"""
+极光查重核心模块
+用法：
+    from aurora_check import run_check
+    result = run_check(text="你的文章内容")
+    print(result["report"])
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import re
+import subprocess
+from dataclasses import dataclass, field, asdict
+from typing import List, Optional
+
+
+# ============================================================
+# 数据结构
+# ============================================================
+
+@dataclass
+class AIResult:
+    ai_probability: float       # 0~1
+    label: str                 # human / mixed / ai
+    method: str
+    engine_scores: dict = field(default_factory=dict)
+    flagged_sentences: list = field(default_factory=list)
+
+
+@dataclass
+class PlagiarismResult:
+    external_similarity: float  # 0~1
+    self_overlap: float          # 0~1
+    matched_excerpts: list = field(default_factory=list)
+
+
+@dataclass
+class CitationResult:
+    total_extracted: int = 0
+    resolved: int = 0
+    failed: list = field(default_factory=list)
+    bibtex: str = ""
+
+
+@dataclass
+class CheckReport:
+    text_length: int = 0
+    ai: Optional[AIResult] = None
+    plagiarism: Optional[PlagiarismResult] = None
+    citations: Optional[CitationResult] = None
+
+    def to_markdown(self) -> str:
+        lines = ["# 极光查重报告\n"]
+        lines.append(f"- **正文长度：** {self.text_length} 字符\n")
+
+        # AI 检测
+        if self.ai:
+            ai = self.ai
+            lines.append("## AI 检测\n")
+            lines.append(f"- **综合判定：** {_label_to_cn(ai.label)}")
+            lines.append(f"- **AI 概率：** {ai.ai_probability:.1%}")
+            lines.append(f"- **人工概率：** {1 - ai.ai_probability:.1%}")
+            lines.append(f"- **检测方法：** {ai.method}\n")
+            if ai.engine_scores:
+                lines.append("- **各引擎单独评分：**")
+                for name, score in ai.engine_scores.items():
+                    lines.append(f"  - {name}：{score:.1%}")
+                lines.append("")
+            if ai.flagged_sentences:
+                lines.append("- **高风险句（Top 5）：**")
+                for s in ai.flagged_sentences[:5]:
+                    lines.append(f"  - ({s['score']:.2f}) {s['text'][:80]}...")
+                lines.append("")
+
+        # 相似度
+        if self.plagiarism:
+            p = self.plagiarism
+            lines.append("## 相似度 / 查重\n")
+            lines.append(f"- **外部相似度：** {p.external_similarity:.2%}")
+            lines.append(f"- **章节自重叠：** {p.self_overlap:.2%}\n")
+
+        # 引用验证
+        if self.citations:
+            c = self.citations
+            lines.append("## 引用验证\n")
+            lines.append(f"- **总共提取：** {c.total_extracted} 条")
+            lines.append(f"- **解析成功：** {c.resolved} 条")
+            if c.failed:
+                lines.append(f"- **失败：** {len(c.failed)} 条")
+                for f in c.failed[:5]:
+                    lines.append(f"  - {f}")
+            lines.append("")
+            if c.bibtex:
+                lines.append("<details><summary>规范 BibTeX</summary>\n")
+                lines.append("```bibtex")
+                lines.append(c.bibtex)
+                lines.append("```\n</details>\n")
+
+        lines.append("---\n_由极光查重 (Aurora Check) 生成_")
+        return "\n".join(lines)
+
+    def to_html(self, output_path: str = "") -> str:
+        """生成 Turnitin 风格的 HTML 报告"""
+        ai_prob = self.ai.ai_probability if self.ai else 0
+        ai_pct = int(ai_prob * 100)
+
+        # 颜色：红 > 50%, 黄 20-50%, 绿 < 20%
+        if ai_pct > 50:
+            color = "#e74c3c"
+            label = "大概率 AI 生成"
+        elif ai_pct > 20:
+            color = "#f39c12"
+            label = "混合（人机各半）"
+        else:
+            color = "#27ae60"
+            label = "大概率人工写作"
+
+        # 引擎评分行
+        engine_rows = ""
+        if self.ai and self.ai.engine_scores:
+            for name, score in self.ai.engine_scores.items():
+                pct = int(score * 100)
+                bar_color = "#e74c3c" if pct > 50 else "#f39c12" if pct > 20 else "#27ae60"
+                engine_rows += f"""
+                <tr>
+                    <td>{name}</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: {bar_color}; width: {pct}%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">{pct}%</td>
+                </tr>
+                """
+
+        # 高风险句
+        flagged_html = ""
+        if self.ai and self.ai.flagged_sentences:
+            for s in self.ai.flagged_sentences[:10]:
+                score_pct = int(s["score"] * 100)
+                bg = "rgba(231, 76, 60, 0.15)" if score_pct > 50 else "rgba(243, 156, 18, 0.15)" if score_pct > 20 else "rgba(39, 174, 96, 0.15)"
+                flagged_html += f"""
+                <div style="background: {bg}; padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid {color};">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: {score_pct}%</div>
+                    <div>{s['text']}</div>
+                </div>
+                """
+
+        html = f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极光查重报告 - Aurora Check</title>
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }}
+        .container {{ max-width: 900px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.1); overflow: hidden; }}
+        .header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }}
+        .header h1 {{ font-size: 32px; margin-bottom: 8px; }}
+        .header p {{ opacity: 0.9; }}
+        .score-section {{ padding: 40px; text-align: center; }}
+        .big-score {{ font-size: 72px; font-weight: bold; color: {color}; }}
+        .score-label {{ font-size: 20px; color: #666; margin-top: 8px; }}
+        .section {{ padding: 30px 40px; border-top: 1px solid #eee; }}
+        .section h2 {{ font-size: 20px; margin-bottom: 20px; color: #333; }}
+        table {{ width: 100%; border-collapse: collapse; }}
+        th, td {{ padding: 10px; text-align: left; border-bottom: 1px solid #eee; }}
+        th {{ font-weight: 600; color: #666; font-size: 14px; }}
+        .footer {{ padding: 20px 40px; background: #f9f9f9; text-align: center; color: #999; font-size: 12px; }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>极光查重报告</h1>
+            <p>Aurora Check - AI 文本检测</p>
+        </div>
+
+        <div class="score-section">
+            <div class="big-score">{ai_pct}%</div>
+            <div class="score-label">{label}</div>
+            <p style="margin-top: 20px; color: #666; font-size: 14px;">正文长度: {self.text_length} 字符</p>
+        </div>
+
+        <div class="section">
+            <h2>各引擎详细评分</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>引擎名称</th>
+                        <th>评分</th>
+                        <th style="text-align: right;">百分比</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {engine_rows}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>高风险句（AI 嫌疑）</h2>
+            {flagged_html if flagged_html else '<p style="color: #999;">没有检测到高风险句子</p>'}
+        </div>
+
+        <div class="footer">
+            由极光查重 (Aurora Check) 生成 · 14 引擎集成检测
+        </div>
+    </div>
+</body>
+</html>
+"""
+        if output_path:
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(html)
+        return html
+
+
+def _label_to_cn(label: str) -> str:
+    return {
+        "human": "大概率人工写作",
+        "mixed": "混合（人机各半）",
+        "ai": "大概率 AI 生成",
+    }.get(label, label)
+
+
+# ============================================================
+# 文本提取
+# ============================================================
+
+def extract_text_from_file(file_path: str) -> str:
+    """从 txt / md / docx 文件提取纯文本"""
+    ext = os.path.splitext(file_path)[1].lower()
+
+    if ext in (".txt", ".md"):
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            return f.read()
+
+    if ext == ".docx":
+        try:
+            from docx import Document
+            doc = Document(file_path)
+            return "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+        except ImportError:
+            # fallback: 直接读（会乱码，但至少不崩）
+            with open(file_path, "rb") as f:
+                return f.read().decode("utf-8", errors="ignore")
+
+    # 默认按文本读
+    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        return f.read()
+
+
+# ============================================================
+# AI 检测引擎
+# ============================================================
+
+def _detect_with_lmscan(text: str) -> Optional[float]:
+    """调用 lmscan CLI，返回 AI 概率"""
+    try:
+        result = subprocess.run(
+            ["lmscan", "-", "--format", "json"],
+            input=text,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        if result.returncode == 0:
+            data = json.loads(result.stdout)
+            return float(data.get("ai_probability", 0.5))
+    except Exception:
+        pass
+    return None
+
+
+def _detect_with_baseline(text: str) -> tuple[float, list]:
+    """纯 Python 统计基线：句长方差 + 词型丰富度"""
+    sentences = _split_sentences(text)
+    if not sentences:
+        return 0.5, []
+
+    # 句长
+    sent_lengths = [len(s.split()) for s in sentences]
+    avg_len = sum(sent_lengths) / len(sent_lengths)
+    variance = sum((l - avg_len) ** 2 for l in sent_lengths) / len(sent_lengths)
+
+    # 词型丰富度
+    words = text.lower().split()
+    if not words:
+        return 0.5, []
+    ttr = len(set(words)) / len(words)
+
+    # 打分：AI 文本倾向于句长均匀（方差小）、词型丰富度适中
+    burstiness = variance / (avg_len ** 2 + 1)  # 越大越像人
+
+    # 基于 burstiness 的线性打分：0.3 → 0.7, 0.6 → 0.4, 0.9 → 0.1
+    if burstiness < 0.3:
+        ai_score = 0.70
+    elif burstiness < 0.5:
+        ai_score = 0.55
+    elif burstiness < 0.7:
+        ai_score = 0.40
+    else:
+        ai_score = 0.25
+
+    # TTR 微调：TTR 太高（>0.65）可能是 AI 堆砌词汇，加一点分
+    if ttr > 0.65:
+        ai_score += 0.05
+    elif ttr < 0.45:
+        ai_score -= 0.05
+
+    # 高风险句：最短或最长的句子
+    flagged = []
+    for s in sorted(sentences, key=len)[:3]:
+        flagged.append({"text": s, "score": round(ai_score, 2)})
+    for s in sorted(sentences, key=len, reverse=True)[:2]:
+        flagged.append({"text": s, "score": round(ai_score * 0.8, 2)})
+
+    return min(max(ai_score, 0), 1), flagged
+
+
+def _detect_perplexity_burstiness(text: str) -> Optional[float]:
+    """困惑度 + 突发性近似（纯 Python）"""
+    sentences = _split_sentences(text)
+    if len(sentences) < 3:
+        return None
+
+    lengths = [len(s.split()) for s in sentences]
+    avg = sum(lengths) / len(lengths)
+    std = (sum((l - avg) ** 2 for l in lengths) / len(lengths)) ** 0.5
+    burstiness = std / (avg + 1)
+
+    # 突发性低 = 更像 AI
+    if burstiness < 0.3:
+        ai_prob = 0.70
+    elif burstiness < 0.5:
+        ai_prob = 0.55
+    elif burstiness < 0.7:
+        ai_prob = 0.40
+    else:
+        ai_prob = 0.25
+
+    return ai_prob
+
+
+# ============================================================
+# lynote 逆向集成的 4 个新信号
+# ============================================================
+
+# AI 常用短语列表（来自 lynote-ai/ai-text-detector 逆向）
+_AI_FORMULAIC_MARKERS = [
+    r"\bas an ai\b", r"\bi cannot\b", r"\bit is important to note\b",
+    r"\bdelve\b", r"\bnuanced\b", r"\btestament to\b", r"\bunlock\b",
+    r"\bcomprehensive\b", r"\bin conclusion\b", r"\boverall\b",
+    r"\bnot only .* but also\b", r"\bwhile .* it is also\b",
+    r"\bin today's (rapidly )?(changing|evolving)\b",
+    r"\bplays a (crucial|vital|pivotal) role\b",
+    r"\blandscape\b", r"\brealm\b", r"\btapestry\b",
+]
+
+# 过渡词列表（来自 lynote 逆向）
+_TRANSITION_WORDS = [
+    "first", "second", "third", "moreover", "furthermore", "however", "therefore",
+    "ultimately", "additionally", "in summary", "in conclusion", "on the other hand",
+    "consequently", "nevertheless", "nonetheless", "thus", "hence",
+]
+
+
+def _detect_formulaic_markers(text: str) -> float:
+    """检测 AI 常用短语（逆向自 lynote）"""
+    text_lower = text.lower()
+    marker_hits = sum(1 for pat in _AI_FORMULAIC_MARKERS if re.search(pat, text_lower, re.I | re.S))
+    # 5 个以上标记 = 0.9 AI 概率
+    return max(0.0, min(1.0, marker_hits / 5.0))
+
+
+def _detect_transition_density(text: str) -> float:
+    """检测过渡词密度（逆向自 lynote）"""
+    words = text.lower().split()
+    word_count = len(words)
+    if word_count < 50:
+        return 0.3
+
+    transition_hits = sum(text.lower().count(t) for t in _TRANSITION_WORDS)
+    # 每 100 词 2 个过渡词 = 0.5
+    density = transition_hits / word_count * 100
+    return max(0.0, min(1.0, density / 4.0))
+
+
+def _detect_compressibility(text: str) -> float:
+    """检测压缩率（逆向自 lynote）- 可压缩性越高 = 越像 AI"""
+    import zlib
+    compressed = len(zlib.compress(text.encode("utf-8")))
+    original = len(text.encode("utf-8"))
+    ratio = compressed / max(1, original)
+    # 典型值：英文文本 ratio ≈ 0.4~0.6
+    # ratio 越低 = 越可压缩 = 越重复 = 越像 AI
+    # 我们归一化：ratio=0.3 → 0.9 AI，ratio=0.7 → 0.1 AI
+    return max(0.0, min(1.0, (0.65 - ratio) / 0.35))
+
+
+def _detect_structured_shape(text: str) -> float:
+    """检测结构化答案形状（逆向自 lynote）"""
+    listish_lines = len(re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text))
+    headingish_lines = len(re.findall(r"(?m)^\s{0,3}#{1,3}\s+|^\s{0,3}[A-Z][A-Za-z ]{3,}:\s*$", text))
+    total = listish_lines + headingish_lines
+    # 8 个以上结构化行 = 0.9
+    return max(0.0, min(1.0, total / 8.0))
+
+
+# ============================================================
+# sloptotal 逆向集成：Formulaic 公式化表达检测
+# ============================================================
+
+_AI_OPENERS = [
+    r"in today'?s (?:rapidly )?(?:evolving|changing|digital|modern)",
+    r"in (?:the|a) (?:world|era|age|landscape) (?:where|of|that)",
+    r"when it comes to",
+    r"in the realm of",
+    r"let'?s (?:dive|explore|take a (?:closer )?look|unpack|break down)",
+    r"imagine (?:this|a world)",
+    r"as (?:technology|the world|we|society) continues to",
+    r"the (?:rise|emergence|advent|proliferation) of",
+]
+
+_AI_CLOSERS = [
+    r"in conclusion,?",
+    r"(?:in summary|to summarize|to sum up),?",
+    r"(?:ultimately|at the end of the day),?",
+    r"as we (?:navigate|move forward|look ahead|continue)",
+    r"by (?:embracing|leveraging|harnessing|adopting)",
+    r"it'?s clear that",
+]
+
+_FILLER_PATTERNS = [
+    r"not only\b.{3,60}\bbut also",
+    r"on (?:the )?one hand\b.{3,120}\bon the other(?: hand)?",
+    r"it(?:'?s| is) (?:important|worth|crucial|essential) to (?:note|remember|mention)",
+    r"first and foremost",
+    r"last but not least",
+    r"without (?:a )?doubt",
+]
+
+
+def _detect_formulaic(text: str) -> float:
+    """检测 AI 公式化表达（逆向自 sloptotal FormulaicEngine）"""
+    text_lower = text.lower()
+    word_count = max(len(text.split()), 1)
+
+    # 检测开头套路（前 300 字符）
+    opener_score = 0.0
+    opener_text = text_lower[:300]
+    for pattern in _AI_OPENERS:
+        if re.search(pattern, opener_text):
+            opener_score = 1.0
+            break
+
+    # 检测结尾套路（后 400 字符）
+    closer_score = 0.0
+    closer_text = text_lower[-400:]
+    for pattern in _AI_CLOSERS:
+        if re.search(pattern, closer_text):
+            closer_score = 1.0
+            break
+
+    # 检测填充模式
+    filler_count = 0
+    for pattern in _FILLER_PATTERNS:
+        filler_count += len(re.findall(pattern, text_lower))
+    filler_density = (filler_count / word_count) * 1000
+    filler_score = min(filler_density / 5.0, 1.0)
+
+    # 加权打分
+    final_score = (
+        opener_score * 0.20
+        + closer_score * 0.15
+        + filler_score * 0.65
+    )
+    return round(final_score, 3)
+
+
+# ============================================================
+# sloptotal 逆向集成：Linguistic 语言标志检测
+# ============================================================
+
+_AI_MARKERS_WEIGHTED = [
+    # Tier 1: Very strong AI signals (weight 3)
+    ("delve", 3),
+    ("tapestry", 3),
+    ("multifaceted", 3),
+    ("ever-evolving", 3),
+    ("thought-provoking", 3),
+    ("it's important to note", 3),
+    ("it's worth noting", 3),
+    ("in today's digital age", 3),
+    ("in today's rapidly evolving", 3),
+    ("let's dive in", 3),
+    # Tier 2: Strong signals (weight 2)
+    ("landscape", 2),
+    ("navigate", 2),
+    ("leverage", 2),
+    ("foster", 2),
+    ("pivotal", 2),
+    ("nuanced", 2),
+    ("robust", 2),
+    ("holistic", 2),
+    ("synergy", 2),
+    ("paradigm", 2),
+    ("encompass", 2),
+    ("intricate", 2),
+    ("comprehensive", 2),
+    ("underscores", 2),
+    ("underscore", 2),
+    ("realm", 2),
+    ("cornerstone", 2),
+    ("underpinning", 2),
+    ("facilitating", 2),
+    ("harnessing", 2),
+    ("spearheading", 2),
+    ("revolutionize", 2),
+    ("groundbreaking", 2),
+    ("cutting-edge", 2),
+    ("game-changer", 2),
+    ("deep dive", 2),
+    ("at the forefront", 2),
+    ("at its core", 2),
+    ("in the realm of", 2),
+    ("it is crucial", 2),
+    ("it is essential", 2),
+    ("plays a crucial role", 2),
+    ("serves as a testament", 2),
+    ("is a testament to", 2),
+    ("a myriad of", 2),
+    ("plethora", 2),
+    # Tier 3: Moderate signals (weight 1)
+    ("crucial", 1),
+    ("enhance", 1),
+    ("dynamic", 1),
+    ("innovative", 1),
+    ("streamline", 1),
+    ("optimize", 1),
+    ("elevate", 1),
+    ("empower", 1),
+    ("stakeholder", 1),
+    ("ecosystem", 1),
+    ("actionable", 1),
+    ("seamless", 1),
+    ("seamlessly", 1),
+    ("furthermore", 1),
+    ("moreover", 1),
+    ("consequently", 1),
+    ("nevertheless", 1),
+    ("in conclusion", 1),
+    ("ultimately", 1),
+    ("in essence", 1),
+    ("it is important to", 1),
+    ("not only", 1),
+    ("but also", 1),
+    ("on the other hand", 1),
+    ("having said that", 1),
+    ("that being said", 1),
+    ("with that in mind", 1),
+    ("in this context", 1),
+    ("in light of", 1),
+    ("as we navigate", 1),
+    ("when it comes to", 1),
+    ("it goes without saying", 1),
+    ("needless to say", 1),
+    ("at the end of the day", 1),
+    ("the bottom line", 1),
+    ("key takeaway", 1),
+    ("food for thought", 1),
+    ("resonate", 1),
+    ("aligns with", 1),
+    ("bolster", 1),
+    ("catalyst", 1),
+    ("testament", 1),
+    ("arguably", 1),
+    ("notably", 1),
+    ("specifically", 1),
+    ("essentially", 1),
+    ("fundamentally", 1),
+    ("inherently", 1),
+    ("intricacies", 1),
+]
+
+
+def _detect_linguistic_markers(text: str) -> float:
+    """检测 AI 语言标志（逆向自 sloptotal LinguisticEngine）"""
+    text_lower = text.lower()
+    word_count = max(len(text.split()), 1)
+
+    total_weight = 0
+    for marker, weight in _AI_MARKERS_WEIGHTED:
+        count = len(re.findall(r"\b" + re.escape(marker) + r"\b", text_lower))
+        total_weight += count * weight
+
+    # Density: weighted hits per 1000 words
+    density = (total_weight / word_count) * 1000
+    # Score mapping: 0 density = 0.0, 15+ density = 1.0
+    score = min(density / 15.0, 1.0)
+    return round(score, 3)
+
+
+# ============================================================
+# sloptotal 逆向集成：Vocabulary 词汇丰富度检测
+# ============================================================
+
+def _detect_vocabulary_richness(text: str) -> float:
+    """检测词汇丰富度（逆向自 sloptotal VocabularyEngine）"""
+    import math
+    from collections import Counter
+
+    words = re.findall(r"[a-zA-Z]+", text.lower())
+    if len(words) < 20:
+        return 0.0
+
+    total = len(words)
+    freq = Counter(words)
+    unique = len(freq)
+
+    # 1. Root TTR（词型丰富度）
+    root_ttr = unique / math.sqrt(total)
+    # 人类文本：root_ttr 通常 5-8+，AI 倾向 4-6
+    ttr_score = max(0, 1.0 - ((root_ttr - 3.5) / 4.0))
+    ttr_score = min(max(ttr_score, 0.0), 1.0)
+
+    # 2. Hapax legomena ratio（只出现一次的词的比例）
+    hapax = sum(1 for w, c in freq.items() if c == 1)
+    hapax_ratio = hapax / unique if unique > 0 else 0
+    # 人类文本：hapax ratio 通常 0.5-0.7，AI 文本：0.3-0.5
+    hapax_score = max(0, 1.0 - ((hapax_ratio - 0.3) / 0.4))
+    hapax_score = min(max(hapax_score, 0.0), 1.0)
+
+    # 3. Yule's K（词汇多样性）
+    freq_of_freq = Counter(freq.values())
+    m1 = total
+    m2 = sum(i * i * v for i, v in freq_of_freq.items())
+    yules_k = 10000 * (m2 - m1) / (m1 * m1) if m1 > 0 else 0
+    # 人类文本：K ~ 80-120，AI 文本：K ~ 120-200+
+    k_score = min(max((yules_k - 80) / 120, 0.0), 1.0)
+
+    final_score = ttr_score * 0.35 + hapax_score * 0.35 + k_score * 0.3
+    return round(final_score, 3)
+
+
+# ============================================================
+# sloptotal 逆向集成：Structural 结构特征检测
+# ============================================================
+
+def _detect_structural_patterns(text: str) -> float:
+    """检测结构特征（逆向自 sloptotal StructuralEngine）"""
+    import statistics
+
+    signals = []
+    word_count = max(len(text.split()), 1)
+
+    # 1. Em-dash 频率
+    em_dashes = len(re.findall(r"\w—\w", text))
+    em_dash_rate = (em_dashes / word_count) * 1000
+    em_score = min(em_dash_rate / 6.0, 1.0)
+
+    # 2. 句长均匀度
+    sentences = re.split(r"[.!?]+", text)
+    sentences = [s.strip() for s in sentences if len(s.strip().split()) >= 3]
+    if len(sentences) >= 3:
+        lengths = [len(s.split()) for s in sentences]
+        mean_len = statistics.mean(lengths)
+        stdev = statistics.stdev(lengths)
+        cv = stdev / mean_len if mean_len > 0 else 0
+        uniformity_score = max(0, 1.0 - (cv / 0.6))
+    else:
+        uniformity_score = 0.0
+
+    # 3. 列表密度
+    lines = text.split("\n")
+    list_lines = sum(
+        1
+        for l in lines
+        if re.match(r"\s*[-•*]\s", l) or re.match(r"\s*\d+[.)]\s", l)
+    )
+    list_per_1k = (list_lines / word_count) * 1000
+    list_score = min(list_per_1k / 30.0, 1.0)
+
+    # 4. 段落长度均匀度
+    paragraphs = [
+        p.strip() for p in text.split("\n\n") if len(p.strip().split()) >= 5
+    ]
+    if len(paragraphs) >= 3:
+        para_lengths = [len(p.split()) for p in paragraphs]
+        para_mean = statistics.mean(para_lengths)
+        para_stdev = statistics.stdev(para_lengths)
+        para_cv = para_stdev / para_mean if para_mean > 0 else 0
+        para_score = max(0, 1.0 - (para_cv / 0.5))
+    else:
+        para_score = 0.0
+
+    # 5. 加粗/标题密度
+    bold_count = len(re.findall(r"\*\*[^*]+\*\*", text))
+    heading_count = len(re.findall(r"^#{1,6}\s", text, re.MULTILINE))
+    format_density = ((bold_count + heading_count) / word_count) * 1000
+    format_score = min(format_density / 10.0, 1.0)
+
+    # 6. 冒号密度（最强 AI 信号）
+    colon_count = text.count(":")
+    colon_density = (colon_count / word_count) * 1000
+    # AI: 18-39/1k，人类：0-17/1k
+    colon_score = min(max(colon_density - 8, 0) / 15.0, 1.0)
+
+    # 7. 冒号定义模式（"术语：解释"）
+    colon_defs = len(
+        re.findall(r"[A-Z][a-z]+(?:\s[A-Z]?[a-z]+){0,3}:\s[A-Z]", text)
+    )
+    colon_def_score = min(colon_defs / 3.0, 1.0)
+
+    # 加权打分——冒号信号权重最高
+    final_score = (
+        em_score * 0.08
+        + uniformity_score * 0.08
+        + list_score * 0.12
+        + para_score * 0.07
+        + format_score * 0.05
+        + colon_score * 0.30
+        + colon_def_score * 0.30
+    )
+    return round(final_score, 3)
+
+
+# ============================================================
+# sloptotal 逆向集成：Sentiment & Hedging 情感与对冲检测
+# ============================================================
+
+_HEDGING_PHRASES = [
+    "it's worth noting",
+    "it is worth noting",
+    "it's important to remember",
+    "it is important to remember",
+    "it's important to note",
+    "it is important to note",
+    "it's crucial to",
+    "it is crucial to",
+    "it's essential to",
+    "it is essential to",
+    "it should be noted",
+    "one might argue",
+    "it could be argued",
+    "some might say",
+    "there are those who",
+    "many experts believe",
+    "studies suggest",
+    "research indicates",
+    "while there are",
+    "although there are",
+    "that said",
+    "having said that",
+    "that being said",
+    "with that being said",
+    "be that as it may",
+    "regardless",
+    "irrespective of",
+]
+
+_BALANCE_PATTERNS = [
+    r"on (?:the )?one hand\b.{5,150}\bon the other(?: hand)?",
+    r"while .{5,80}, (?:it |there |we |they )",
+    r"although .{5,80}, (?:it |there |we |they )",
+    r"(?:pros|advantages|benefits) .{5,200}(?:cons|disadvantages|drawbacks)",
+]
+
+_VAGUE_POSITIVITY = [
+    "incredibly important",
+    "extremely valuable",
+    "truly remarkable",
+    "absolutely essential",
+    "deeply meaningful",
+    "truly transformative",
+    "game-changing",
+    "world-class",
+    "best-in-class",
+    "make a difference",
+    "positive impact",
+    "meaningful change",
+    "better future",
+    "brighter future",
+    "greater good",
+    "incredible potential",
+    "exciting opportunity",
+    "powerful tool",
+    "valuable resource",
+    "essential guide",
+]
+
+_FILLER_QUALIFIERS = [
+    "very",
+    "really",
+    "extremely",
+    "incredibly",
+    "absolutely",
+    "definitely",
+    "certainly",
+    "undoubtedly",
+    "undeniably",
+    "quite",
+    "rather",
+    "fairly",
+    "somewhat",
+    "relatively",
+]
+
+
+def _detect_sentiment_hedging(text: str) -> float:
+    """检测情感与对冲模式（逆向自 sloptotal SentimentEngine）"""
+    text_lower = text.lower()
+    word_count = max(len(text.split()), 1)
+
+    # 1. 过度对冲短语
+    hedge_count = 0
+    for phrase in _HEDGING_PHRASES:
+        hedge_count += text_lower.count(phrase)
+    hedge_density = (hedge_count / word_count) * 1000
+    hedge_score = min(hedge_density / 4.0, 1.0)
+
+    # 2. 强制平衡结构
+    balance_count = 0
+    for pattern in _BALANCE_PATTERNS:
+        balance_count += len(re.findall(pattern, text_lower, re.DOTALL))
+    balance_score = min(balance_count / 3.0, 1.0)
+
+    # 3. 模糊积极表达
+    vague_count = 0
+    for phrase in _VAGUE_POSITIVITY:
+        vague_count += text_lower.count(phrase)
+    vague_density = (vague_count / word_count) * 1000
+    vague_score = min(vague_density / 3.0, 1.0)
+
+    # 4. 填充限定词滥用
+    qualifier_count = 0
+    for word in _FILLER_QUALIFIERS:
+        qualifier_count += len(re.findall(r"\b" + word + r"\b", text_lower))
+    qualifier_density = (qualifier_count / word_count) * 1000
+    # 人类用 ~5-10 per 1k，AI ~15-25+
+    qualifier_score = max(0, min((qualifier_density - 8) / 15.0, 1.0))
+
+    # 5. 解释性 this/these 模式
+    explanatory_verbs = len(
+        re.findall(
+            r"\bThis (?:means|ensures|allows|enables|helps|provides|creates|offers|makes|includes|involves|requires)\b",
+            text,
+        )
+    )
+    explanatory_nouns = len(
+        re.findall(
+            r"\b[Tt]his (?:approach|method|process|tool|feature|system|framework|strategy|solution)\b",
+            text,
+        )
+    )
+    explanatory_these = len(
+        re.findall(
+            r"\b[Tt]hese (?:tools|features|systems|methods|approaches|strategies|solutions|techniques|elements|factors|components|resources)\b",
+            text,
+        )
+    )
+    explanatory_count = explanatory_verbs + explanatory_nouns + explanatory_these
+    # AI: 3-8 per article，人类：0-1
+    explanatory_score = min(explanatory_count / 4.0, 1.0)
+
+    # 加权打分
+    final_score = (
+        hedge_score * 0.30
+        + balance_score * 0.15
+        + vague_score * 0.20
+        + qualifier_score * 0.15
+        + explanatory_score * 0.20
+    )
+    return round(final_score, 3)
+
+
+# ============================================================
+# RoBERTa ChatGPT 检测器（逆向自 sloptotal ClassifierChatGPTEngine）
+# ============================================================
+
+_roberta_model = None
+_roberta_tokenizer = None
+_roberta_ai_idx = None
+
+
+def _load_roberta_model():
+    """懒加载 RoBERTa ChatGPT 检测器"""
+    global _roberta_model, _roberta_tokenizer, _roberta_ai_idx
+    if _roberta_model is None:
+        try:
+            from transformers import AutoModelForSequenceClassification, AutoTokenizer
+            import torch
+
+            model_name = "Hello-SimpleAI/chatgpt-detector-roberta"
+            _roberta_tokenizer = AutoTokenizer.from_pretrained(model_name)
+            _roberta_model = AutoModelForSequenceClassification.from_pretrained(model_name)
+            _roberta_model.eval()
+
+            # 自动检测哪个标签是 AI
+            id2label = _roberta_model.config.id2label
+            for idx, label in id2label.items():
+                label_lower = str(label).lower()
+                if "chatgpt" in label_lower or "ai" in label_lower or "fake" in label_lower:
+                    _roberta_ai_idx = int(idx)
+                    break
+            if _roberta_ai_idx is None:
+                _roberta_ai_idx = max(int(k) for k in id2label.keys())
+        except Exception as e:
+            print(f"RoBERTa model load failed: {e}")
+            return None, None, None
+    return _roberta_model, _roberta_tokenizer, _roberta_ai_idx
+
+
+def _detect_with_roberta(text: str) -> Optional[float]:
+    """用 RoBERTa 模型检测 AI 概率"""
+    model, tokenizer, ai_idx = _load_roberta_model()
+    if model is None:
+        return None
+
+    import torch
+
+    # 分块处理（每块 512 token）
+    chunks = []
+    words = text.split()
+    chunk_size = 80  # 约 80 词一块
+    for i in range(0, len(words), chunk_size):
+        chunk = " ".join(words[i:i + chunk_size])
+        if len(chunk.strip()) > 10:
+            chunks.append(chunk)
+
+    if not chunks:
+        return None
+
+    scores = []
+    for chunk in chunks:
+        inputs = tokenizer(chunk, return_tensors="pt", truncation=True, max_length=512)
+        with torch.no_grad():
+            logits = model(**inputs).logits
+        probs = torch.softmax(logits, dim=-1)[0]
+        scores.append(probs[ai_idx].item())
+
+    return sum(scores) / len(scores) if scores else None
+
+
+# ============================================================
+# 本地文档相似度比对
+# ============================================================
+
+def _compute_text_similarity(text1: str, text2: str) -> float:
+    """计算两段文本的相似度（基于 n-gram 重叠）"""
+    def get_ngrams(text, n=3):
+        words = text.lower().split()
+        ngrams = set()
+        for i in range(len(words) - n + 1):
+            ngrams.add(" ".join(words[i:i+n]))
+        return ngrams
+
+    ngrams1 = get_ngrams(text1)
+    ngrams2 = get_ngrams(text2)
+
+    if not ngrams1 or not ngrams2:
+        return 0.0
+
+    intersection = ngrams1.intersection(ngrams2)
+    # Jaccard 相似度
+    similarity = len(intersection) / len(ngrams1.union(ngrams2))
+    return similarity
+
+
+def compare_with_reference(doc_path: str, ref_path: str) -> dict:
+    """比对当前文档和参考文档的相似度"""
+    doc_text = extract_text_from_file(doc_path)
+    ref_text = extract_text_from_file(ref_path)
+
+    # 提取正文（排除引用）
+    doc_prose, _ = _extract_prose_only(doc_text)
+    ref_prose, _ = _extract_prose_only(ref_text)
+
+    # 计算整体相似度
+    overall_similarity = _compute_text_similarity(doc_prose, ref_prose)
+
+    # 找出高重叠的句子
+    doc_sentences = _split_sentences(doc_prose)
+    ref_sentences = _split_sentences(ref_prose)
+
+    overlapping_sentences = []
+    for doc_sent in doc_sentences:
+        for ref_sent in ref_sentences:
+            sim = _compute_text_similarity(doc_sent, ref_sent)
+            if sim > 0.5:
+                overlapping_sentences.append({
+                    "doc_sentence": doc_sent,
+                    "ref_sentence": ref_sent,
+                    "similarity": sim,
+                })
+                break  # 每个文档句子只匹配一次
+
+    return {
+        "overall_similarity": overall_similarity,
+        "overlapping_count": len(overlapping_sentences),
+        "overlapping_sentences": overlapping_sentences[:10],
+    }
+
+
+def _split_sentences(text: str) -> list:
+    """简单的句子切分"""
+    text = re.sub(r'\n+', ' ', text)
+    sentences = re.split(r'[.!?。！？]+', text)
+    return [s.strip() for s in sentences if len(s.strip()) > 10]
+
+
+def _extract_prose_only(text: str) -> tuple:
+    """自动排除引用/参考文献部分，只返回正文（prose）"""
+    # 找到 References / Bibliography / Works Cited 的位置
+    ref_patterns = [
+        r'\n\s*References\s*\n',
+        r'\n\s*Bibliography\s*\n',
+        r'\n\s*Works\s+Cited\s*\n',
+        r'\n\s*Reference\s+List\s*\n',
+    ]
+    ref_start = len(text)
+    for pat in ref_patterns:
+        m = re.search(pat, text, re.IGNORECASE)
+        if m:
+            ref_start = min(ref_start, m.start())
+
+    prose = text[:ref_start]
+    references = text[ref_start:]
+
+    # 也排除 DOI 行、URL 行
+    prose_lines = []
+    for line in prose.split('\n'):
+        line = line.strip()
+        if not line:
+            continue
+        # 排除 DOI 行
+        if re.match(r'^https?://doi\.org', line, re.IGNORECASE):
+            continue
+        if re.match(r'^doi:', line, re.IGNORECASE):
+            continue
+        # 排除标题行（短的、全大写的）
+        if len(line) < 60 and line.isupper():
+            continue
+        prose_lines.append(line)
+
+    return '\n'.join(prose_lines), references
+
+
+def _compute_perplexity_ngram(text: str, n: int = 2) -> float:
+    """基于 n-gram 的简化困惑度计算（不需要下载大模型）"""
+    words = text.lower().split()
+    if len(words) < n + 5:
+        return 0.5
+
+    # 构建 bigram 频率表（用 2-gram 更稳定）
+    from collections import Counter
+    bigrams = Counter()
+    unigrams = Counter()
+
+    for w in words:
+        unigrams[w] += 1
+    for i in range(len(words) - 1):
+        bigrams[(words[i], words[i+1])] += 1
+
+    # 计算平均负对数似然
+    import math
+    log_prob_sum = 0.0
+    count = 0
+    total_words = len(words)
+
+    for i in range(len(words) - 1):
+        prev = words[i]
+        curr = words[i+1]
+        bigram_count = bigrams.get((prev, curr), 0)
+        unigram_count = unigrams.get(prev, 0)
+
+        if unigram_count > 0:
+            # 加 0.5 平滑
+            prob = (bigram_count + 0.5) / (unigram_count + 0.5 * len(unigrams))
+        else:
+            prob = 1.0 / total_words
+
+        log_prob_sum -= math.log(prob)
+        count += 1
+
+    if count == 0:
+        return 0.5
+
+    avg_log_prob = log_prob_sum / count
+
+    # 归一化：典型值范围 3~8
+    # 低困惑度（3-4）= 可预测 = AI 写的
+    # 高困惑度（6-8）= 不可预测 = 人写的
+    # 我们输出 AI 概率：困惑度越低，AI 概率越高
+    ai_prob = max(0.1, min(0.9, (6.0 - avg_log_prob) / 3.0 + 0.3))
+    return round(ai_prob, 3)
+
+
+def _sliding_window_detection(sentences: list, window_size: int = 5) -> list:
+    """段落级滑动窗口检测：5句为一个窗口，带上下文"""
+    if len(sentences) < window_size:
+        return [0.5] * len(sentences)
+
+    window_scores = []
+    for i in range(len(sentences)):
+        start = max(0, i - window_size // 2)
+        end = min(len(sentences), i + window_size // 2 + 1)
+        window = sentences[start:end]
+        window_text = ' '.join(window)
+
+        # 计算这个窗口的 burstiness
+        lengths = [len(s.split()) for s in window]
+        avg = sum(lengths) / len(lengths)
+        std = (sum((l - avg) ** 2 for l in lengths) / len(lengths)) ** 0.5
+        burstiness = std / (avg + 1)
+
+        # 窗口内的 AI 概率
+        if burstiness < 0.4:
+            window_ai = 0.65
+        elif burstiness < 0.7:
+            window_ai = 0.45
+        else:
+            window_ai = 0.25
+
+        window_scores.append(window_ai)
+
+    return window_scores
+
+
+def run_ai_detection(text: str) -> AIResult:
+    """跑所有可用的 AI 检测引擎，返回综合结果"""
+    engine_scores = {}
+
+    # 步骤 0: 自动排除引用/参考文献部分
+    prose_text, references = _extract_prose_only(text)
+    if len(prose_text.strip()) < 50:
+        prose_text = text  # 如果提取后太短，就用原文
+
+    # 引擎 1: lmscan（对正文跑）
+    lmscan_score = _detect_with_lmscan(prose_text)
+    if lmscan_score is not None:
+        engine_scores["lmscan"] = lmscan_score
+
+    # 引擎 2: n-gram 困惑度（新增，真正的语言模型困惑度）
+    pp_ngram_score = _compute_perplexity_ngram(prose_text, n=3)
+    engine_scores["ngram-perplexity"] = pp_ngram_score
+
+    # 引擎 3: 滑动窗口突发度（新增，段落级上下文检测）
+    sentences = _split_sentences(prose_text)
+    window_scores = _sliding_window_detection(sentences, window_size=5)
+    avg_window_score = sum(window_scores) / len(window_scores) if window_scores else 0.5
+    engine_scores["sliding-window"] = avg_window_score
+
+    # 引擎 4: 传统 perplexity-burstiness（保留）
+    pp_score = _detect_perplexity_burstiness(prose_text)
+    if pp_score is not None:
+        engine_scores["burstiness-stat"] = pp_score
+
+    # 引擎 5: baseline（保留兜底）
+    baseline_score, flagged = _detect_with_baseline(prose_text)
+    engine_scores["statistical-baseline"] = baseline_score
+
+    # 引擎 6-9: lynote 逆向集成的 4 个新信号
+    engine_scores["formulaic-markers"] = _detect_formulaic_markers(prose_text)
+    engine_scores["transition-density"] = _detect_transition_density(prose_text)
+    engine_scores["compressibility"] = _detect_compressibility(prose_text)
+    engine_scores["structured-shape"] = _detect_structured_shape(prose_text)
+
+    # 引擎 10: sloptotal 逆向集成的 Formulaic 公式化检测
+    engine_scores["formulaic-patterns"] = _detect_formulaic(prose_text)
+
+    # 引擎 11: sloptotal 逆向集成的 Linguistic 语言标志检测
+    engine_scores["linguistic-markers"] = _detect_linguistic_markers(prose_text)
+
+    # 引擎 12: sloptotal 逆向集成的 Vocabulary 词汇丰富度检测
+    engine_scores["vocabulary-richness"] = _detect_vocabulary_richness(prose_text)
+
+    # 引擎 13: sloptotal 逆向集成的 Structural 结构特征检测
+    engine_scores["structural-patterns"] = _detect_structural_patterns(prose_text)
+
+    # 引擎 14: sloptotal 逆向集成的 Sentiment & Hedging 情感与对冲检测
+    engine_scores["sentiment-hedging"] = _detect_sentiment_hedging(prose_text)
+
+    # 引擎 15: RoBERTa ChatGPT 检测器（真正的 ML 分类器）
+    roberta_score = _detect_with_roberta(prose_text)
+    if roberta_score is not None:
+        engine_scores["roberta-chatgpt"] = roberta_score
+
+    # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
+    weights = {
+        "roberta-chatgpt": 0.30,
+        "lmscan": 0.20,
+        "formulaic-patterns": 0.12,
+        "linguistic-markers": 0.12,
+        "structural-patterns": 0.08,
+        "formulaic-markers": 0.06,
+        "vocabulary-richness": 0.04,
+        "sentiment-hedging": 0.03,
+        "transition-density": 0.02,
+        "compressibility": 0.02,
+        "structured-shape": 0.01,
+        "ngram-perplexity": 0.00,  # 太敏感，权重调到 0
+        "sliding-window": 0.00,   # 太敏感，权重调到 0
+        "burstiness-stat": 0.00,   # 太敏感，权重调到 0
+        "statistical-baseline": 0.00,  # 太敏感，权重调到 0
+    }
+    total_weight = 0
+    weighted_sum = 0
+    for name, score in engine_scores.items():
+        w = weights.get(name, 0.1)
+        weighted_sum += score * w
+        total_weight += w
+    final_score = weighted_sum / total_weight if total_weight > 0 else 0.5
+
+    # 判定
+    if final_score > 0.6:
+        label = "ai"
+    elif final_score < 0.4:
+        label = "human"
+    else:
+        label = "mixed"
+
+    # 用滑动窗口的逐句分数做高风险句
+    flagged_sentences = []
+    for i, s in enumerate(sentences):
+        if i < len(window_scores) and window_scores[i] > 0.5:
+            flagged_sentences.append({
+                "text": s[:100],
+                "score": round(window_scores[i], 3)
+            })
+    flagged_sentences.sort(key=lambda x: x["score"], reverse=True)
+
+    return AIResult(
+        ai_probability=round(final_score, 4),
+        label=label,
+        method=f"ensemble ({len(engine_scores)} engines, references excluded)",
+        engine_scores=engine_scores,
+        flagged_sentences=flagged_sentences[:10],
+    )
+
+
+# ============================================================
+# 相似度检测
+# ============================================================
+
+def run_plagiarism_check(text: str) -> PlagiarismResult:
+    """检测文本自重叠（简单版，没有外部语料库）"""
+    paragraphs = [p.strip() for p in text.split("\n\n") if len(p.strip()) > 50]
+
+    if len(paragraphs) < 2:
+        return PlagiarismResult(external_similarity=0.0, self_overlap=0.0)
+
+    # 简单的词袋余弦相似度
+    max_overlap = 0.0
+    matched = []
+
+    for i in range(len(paragraphs)):
+        for j in range(i + 1, len(paragraphs)):
+            sim = _cosine_sim(paragraphs[i], paragraphs[j])
+            if sim > max_overlap:
+                max_overlap = sim
+                matched = [
+                    {"para1": paragraphs[i][:80] + "...", "sim": round(sim, 3)},
+                    {"para2": paragraphs[j][:80] + "..."},
+                ]
+
+    return PlagiarismResult(
+        external_similarity=0.0,  # 没有外部语料库
+        self_overlap=round(max_overlap, 4),
+        matched_excerpts=matched[:5],
+    )
+
+
+def _cosine_sim(text1: str, text2: str) -> float:
+    """简单的词袋余弦相似度"""
+    words1 = set(text1.lower().split())
+    words2 = set(text2.lower().split())
+
+    if not words1 or not words2:
+        return 0.0
+
+    intersection = words1 & words2
+    union = words1 | words2
+
+    # Jaccard 相似度（比余弦更简单，效果差不多）
+    return len(intersection) / len(union)
+
+
+# ============================================================
+# 引用验证（onecite）
+# ============================================================
+
+def run_citation_check(text: str) -> CitationResult:
+    """提取引用并调用 onecite 验证"""
+    # 提取 DOI
+    dois = re.findall(r'10\.\d{4,}/[^\s\]>\)]+', text)
+    dois = list(set(dois))  # 去重
+
+    if not dois:
+        return CitationResult(total_extracted=0, resolved=0)
+
+    resolved = 0
+    failed = []
+    bibtex_entries = []
+
+    for doi in dois[:20]:  # 最多处理 20 条
+        try:
+            result = subprocess.run(
+                ["onecite", "process", doi, "--quiet"],
+                capture_output=True,
+                text=True,
+                timeout=15,
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                resolved += 1
+                bibtex_entries.append(result.stdout.strip())
+            else:
+                failed.append(doi)
+        except Exception:
+            failed.append(doi)
+
+    return CitationResult(
+        total_extracted=len(dois),
+        resolved=resolved,
+        failed=failed,
+        bibtex="\n\n".join(bibtex_entries),
+    )
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+def run_check(text: str = "", file_path: str = "") -> CheckReport:
+    """
+    一键跑完整查重流程
+
+    参数：
+        text: 直接传入的文本（和 file_path 二选一）
+        file_path: 从文件读取（txt/md/docx）
+
+    返回：
+        CheckReport 对象，用 .to_markdown() 转报告
+    """
+    # 获取文本
+    if file_path:
+        text = extract_text_from_file(file_path)
+
+    if not text or len(text.strip()) < 50:
+        return CheckReport(text_length=0)
+
+    # 跑各模块
+    ai_result = run_ai_detection(text)
+    plagiarism_result = run_plagiarism_check(text)
+    citation_result = run_citation_check(text)
+
+    return CheckReport(
+        text_length=len(text),
+        ai=ai_result,
+        plagiarism=plagiarism_result,
+        citations=citation_result,
+    )
+
+
+# CLI 入口
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) < 2:
+        print("用法:")
+        print("  AI 检测: python aurora_check.py <文件路径>")
+        print("  文档比对: python aurora_check.py compare <当前文档> <参考文档>")
+        sys.exit(1)
+
+    # 文档比对模式
+    if sys.argv[1] == "compare" and len(sys.argv) >= 4:
+        result = compare_with_reference(sys.argv[2], sys.argv[3])
+        print("=" * 50)
+        print("文档比对结果")
+        print("=" * 50)
+        print(f"整体相似度: {result['overall_similarity']:.1%}")
+        print(f"重叠句子数: {result['overlapping_count']}")
+        print()
+        if result["overlapping_sentences"]:
+            print("高重叠句子 (Top 10):")
+            for i, s in enumerate(result["overlapping_sentences"][:10]):
+                print(f"  {i+1}. 相似度 {s['similarity']:.1%}")
+                print(f"     当前文档: {s['doc_sentence'][:80]}...")
+                print(f"     参考文档: {s['ref_sentence'][:80]}...")
+                print()
+        sys.exit(0)
+
+    # 普通 AI 检测模式
+    report = run_check(file_path=sys.argv[1])
+    print(report.to_markdown())
+
+    # 生成 HTML 报告
+    base_name = os.path.splitext(sys.argv[1])[0]
+    html_path = base_name + "_aurora_report.html"
+    report.to_html(output_path=html_path)
+    print(f"\nHTML 报告已生成: {html_path}")

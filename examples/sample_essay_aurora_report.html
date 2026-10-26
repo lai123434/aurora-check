@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极光查重报告 - Aurora Check</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 32px; margin-bottom: 8px; }
+        .header p { opacity: 0.9; }
+        .score-section { padding: 40px; text-align: center; }
+        .big-score { font-size: 72px; font-weight: bold; color: #f39c12; }
+        .score-label { font-size: 20px; color: #666; margin-top: 8px; }
+        .section { padding: 30px 40px; border-top: 1px solid #eee; }
+        .section h2 { font-size: 20px; margin-bottom: 20px; color: #333; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
+        th { font-weight: 600; color: #666; font-size: 14px; }
+        .footer { padding: 20px 40px; background: #f9f9f9; text-align: center; color: #999; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>极光查重报告</h1>
+            <p>Aurora Check - AI 文本检测</p>
+        </div>
+
+        <div class="score-section">
+            <div class="big-score">34%</div>
+            <div class="score-label">混合（人机各半）</div>
+            <p style="margin-top: 20px; color: #666; font-size: 14px;">正文长度: 2848 字符</p>
+        </div>
+
+        <div class="section">
+            <h2>各引擎详细评分</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>引擎名称</th>
+                        <th>评分</th>
+                        <th style="text-align: right;">百分比</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                <tr>
+                    <td>lmscan</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #f39c12; width: 35%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">35%</td>
+                </tr>
+                
+                <tr>
+                    <td>ngram-perplexity</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #e74c3c; width: 82%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">82%</td>
+                </tr>
+                
+                <tr>
+                    <td>sliding-window</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #e74c3c; width: 52%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">52%</td>
+                </tr>
+                
+                <tr>
+                    <td>burstiness-stat</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #e74c3c; width: 55%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">55%</td>
+                </tr>
+                
+                <tr>
+                    <td>statistical-baseline</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #e74c3c; width: 70%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">70%</td>
+                </tr>
+                
+                <tr>
+                    <td>formulaic-markers</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #27ae60; width: 20%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">20%</td>
+                </tr>
+                
+                <tr>
+                    <td>transition-density</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #27ae60; width: 11%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">11%</td>
+                </tr>
+                
+                <tr>
+                    <td>compressibility</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #f39c12; width: 48%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">48%</td>
+                </tr>
+                
+                <tr>
+                    <td>structured-shape</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #27ae60; width: 0%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">0%</td>
+                </tr>
+                
+                <tr>
+                    <td>formulaic-patterns</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #f39c12; width: 45%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">45%</td>
+                </tr>
+                
+                <tr>
+                    <td>linguistic-markers</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #f39c12; width: 30%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">30%</td>
+                </tr>
+                
+                <tr>
+                    <td>vocabulary-richness</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #27ae60; width: 0%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">0%</td>
+                </tr>
+                
+                <tr>
+                    <td>structural-patterns</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #27ae60; width: 2%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">2%</td>
+                </tr>
+                
+                <tr>
+                    <td>sentiment-hedging</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #27ae60; width: 20%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">20%</td>
+                </tr>
+                
+                <tr>
+                    <td>roberta-chatgpt</td>
+                    <td style="width: 200px;">
+                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #f39c12; width: 50%; height: 100%;"></div>
+                        </div>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">50%</td>
+                </tr>
+                
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>高风险句（AI 嫌疑）</h2>
+            
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>The Impact of Artificial Intelligence on Modern Education Artificial intelligence has transformed ma</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>In recent years, AI-powered tools have begun to change how students learn, how teachers teach, and h</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>This essay explores some of the key ways AI is reshaping education today</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>One of the most visible changes is the rise of personalized learning platforms</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>These systems use algorithms to adapt to each student's pace and style of learning</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>For example, an AI tutor can identify when a student is struggling with a particular concept and pro</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>Another important development is automated grading</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>Not all schools and students have equal access to AI-powered educational tools</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>Wealthier schools can afford the latest technology, while poorer schools may still be using outdated</div>
+                </div>
+                
+                <div style="background: rgba(231, 76, 60, 0.15); padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">AI 嫌疑度: 65%</div>
+                    <div>This digital divide could widen existing educational inequalities if not addressed properly</div>
+                </div>
+                
+        </div>
+
+        <div class="footer">
+            由极光查重 (Aurora Check) 生成 · 14 引擎集成检测
+        </div>
+    </div>
+</body>
+</html>
