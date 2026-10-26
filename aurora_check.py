@@ -350,8 +350,9 @@ def _detect_perplexity_burstiness(text: str) -> Optional[float]:
 # lynote 逆向集成的 4 个新信号
 # ============================================================
 
-# AI 常用短语列表（来自 lynote-ai/ai-text-detector 逆向）
+# AI 常用短语列表（来自 lynote-ai/ai-text-detector 逆向，打磨扩充）
 _AI_FORMULAIC_MARKERS = [
+    # 原有模式
     r"\bas an ai\b", r"\bi cannot\b", r"\bit is important to note\b",
     r"\bdelve\b", r"\bnuanced\b", r"\btestament to\b", r"\bunlock\b",
     r"\bcomprehensive\b", r"\bin conclusion\b", r"\boverall\b",
@@ -359,56 +360,81 @@ _AI_FORMULAIC_MARKERS = [
     r"\bin today's (rapidly )?(changing|evolving)\b",
     r"\bplays a (crucial|vital|pivotal) role\b",
     r"\blandscape\b", r"\brealm\b", r"\btapestry\b",
+    # 新增模式（打磨扩充）
+    r"\bit is worth noting\b", r"\bit is crucial to\b", r"\bit is essential to\b",
+    r"\bit is important to understand\b", r"\bit is worth considering\b",
+    r"\blet's dive in\b", r"\blet's explore\b", r"\blet's take a look\b",
+    r"\bwhen it comes to\b", r"\bin the realm of\b", r"\bin the world of\b",
+    r"\bparadigm shift\b", r"\bgame-changer\b", r"\bcutting-edge\b",
+    r"\bgroundbreaking\b", r"\brevolutionary\b", r"\btransformative\b",
+    r"\bseamless integration\b", r"\bseamless experience\b",
+    r"\buser-friendly\b", r"\bcutting-edge technology\b",
+    r"\bstate-of-the-art\b", r"\bnext-generation\b",
 ]
 
-# 过渡词列表（来自 lynote 逆向）
+# 过渡词列表（来自 lynote 逆向，打磨扩充）
 _TRANSITION_WORDS = [
+    # 原有词
     "first", "second", "third", "moreover", "furthermore", "however", "therefore",
     "ultimately", "additionally", "in summary", "in conclusion", "on the other hand",
     "consequently", "nevertheless", "nonetheless", "thus", "hence",
+    # 新增词（打磨扩充）
+    "in addition", "besides", "also", "what's more",
+    "in contrast", "conversely", "on the contrary",
+    "as a result", "for this reason", "because of this",
+    "in other words", "that is", "namely",
+    "for example", "for instance", "such as",
+    "in particular", "specifically", "notably",
+    "generally", "typically", "usually",
+    "essentially", "basically", "effectively",
+    "finally", "lastly", "to sum up",
+    "overall", "all things considered",
+    "in short", "in brief",
 ]
 
 
 def _detect_formulaic_markers(text: str) -> float:
-    """检测 AI 常用短语（逆向自 lynote）"""
+    """检测 AI 常用短语（逆向自 lynote，打磨版）"""
     text_lower = text.lower()
     marker_hits = sum(1 for pat in _AI_FORMULAIC_MARKERS if re.search(pat, text_lower, re.I | re.S))
-    # 5 个以上标记 = 0.9 AI 概率
-    return max(0.0, min(1.0, marker_hits / 5.0))
+    # 打磨：10 个以上标记 = 0.9 AI 概率
+    return max(0.0, min(1.0, marker_hits / 10.0))
 
 
 def _detect_transition_density(text: str) -> float:
-    """检测过渡词密度（逆向自 lynote）"""
+    """检测过渡词密度（逆向自 lynote，打磨版）"""
     words = text.lower().split()
     word_count = len(words)
     if word_count < 50:
         return 0.3
 
     transition_hits = sum(text.lower().count(t) for t in _TRANSITION_WORDS)
-    # 每 100 词 2 个过渡词 = 0.5
+    # 打磨：每 100 词 3 个过渡词 = 0.5
     density = transition_hits / word_count * 100
-    return max(0.0, min(1.0, density / 4.0))
+    return max(0.0, min(1.0, density / 6.0))
 
 
 def _detect_compressibility(text: str) -> float:
-    """检测压缩率（逆向自 lynote）- 可压缩性越高 = 越像 AI"""
+    """检测压缩率（逆向自 lynote，打磨版）- 可压缩性越高 = 越像 AI"""
     import zlib
     compressed = len(zlib.compress(text.encode("utf-8")))
     original = len(text.encode("utf-8"))
     ratio = compressed / max(1, original)
-    # 典型值：英文文本 ratio ≈ 0.4~0.6
+    # 打磨：典型值调整
     # ratio 越低 = 越可压缩 = 越重复 = 越像 AI
-    # 我们归一化：ratio=0.3 → 0.9 AI，ratio=0.7 → 0.1 AI
-    return max(0.0, min(1.0, (0.65 - ratio) / 0.35))
+    # 归一化：ratio=0.25 → 0.9 AI，ratio=0.65 → 0.1 AI
+    return max(0.0, min(1.0, (0.55 - ratio) / 0.30))
 
 
 def _detect_structured_shape(text: str) -> float:
-    """检测结构化答案形状（逆向自 lynote）"""
+    """检测结构化答案形状（逆向自 lynote，打磨版）"""
     listish_lines = len(re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text))
     headingish_lines = len(re.findall(r"(?m)^\s{0,3}#{1,3}\s+|^\s{0,3}[A-Z][A-Za-z ]{3,}:\s*$", text))
-    total = listish_lines + headingish_lines
-    # 8 个以上结构化行 = 0.9
-    return max(0.0, min(1.0, total / 8.0))
+    # 打磨：加了加粗检测
+    boldish_lines = len(re.findall(r"\*\*[^*]+\*\*", text))
+    total = listish_lines + headingish_lines + boldish_lines
+    # 打磨：10 个以上结构化行 = 0.9
+    return max(0.0, min(1.0, total / 10.0))
 
 
 # ============================================================
@@ -1580,21 +1606,21 @@ def _extract_prose_only(text: str) -> tuple:
     return '\n'.join(prose_lines), references
 
 
-def _compute_perplexity_ngram(text: str, n: int = 2) -> float:
-    """基于 n-gram 的简化困惑度计算（不需要下载大模型）"""
+def _compute_perplexity_ngram(text: str, n: int = 3) -> float:
+    """基于 n-gram 的简化困惑度计算（打磨版，不需要下载大模型）"""
     words = text.lower().split()
     if len(words) < n + 5:
         return 0.5
 
-    # 构建 bigram 频率表（用 2-gram 更稳定）
+    # 构建 n-gram 频率表（打磨：用 trigram 更准）
     from collections import Counter
-    bigrams = Counter()
+    ngrams = Counter()
     unigrams = Counter()
 
     for w in words:
         unigrams[w] += 1
-    for i in range(len(words) - 1):
-        bigrams[(words[i], words[i+1])] += 1
+    for i in range(len(words) - n + 1):
+        ngrams[tuple(words[i:i+n])] += 1
 
     # 计算平均负对数似然
     import math
@@ -1602,15 +1628,17 @@ def _compute_perplexity_ngram(text: str, n: int = 2) -> float:
     count = 0
     total_words = len(words)
 
-    for i in range(len(words) - 1):
+    for i in range(len(words) - n + 1):
+        ngram = tuple(words[i:i+n])
         prev = words[i]
         curr = words[i+1]
-        bigram_count = bigrams.get((prev, curr), 0)
+
+        ngram_count = ngrams.get(ngram, 0)
         unigram_count = unigrams.get(prev, 0)
 
         if unigram_count > 0:
-            # 加 0.5 平滑
-            prob = (bigram_count + 0.5) / (unigram_count + 0.5 * len(unigrams))
+            # 加 0.5 平滑（打磨：改进平滑算法）
+            prob = (ngram_count + 0.5) / (unigram_count + 0.5 * len(unigrams))
         else:
             prob = 1.0 / total_words
 
@@ -1622,16 +1650,16 @@ def _compute_perplexity_ngram(text: str, n: int = 2) -> float:
 
     avg_log_prob = log_prob_sum / count
 
-    # 归一化：典型值范围 3~8
-    # 低困惑度（3-4）= 可预测 = AI 写的
-    # 高困惑度（6-8）= 不可预测 = 人写的
+    # 归一化（打磨：调整范围）
+    # 低困惑度（2-3）= 可预测 = AI 写的
+    # 高困惑度（5-7）= 不可预测 = 人写的
     # 我们输出 AI 概率：困惑度越低，AI 概率越高
-    ai_prob = max(0.1, min(0.9, (6.0 - avg_log_prob) / 3.0 + 0.3))
+    ai_prob = max(0.1, min(0.9, (5.0 - avg_log_prob) / 2.5 + 0.3))
     return round(ai_prob, 3)
 
 
 def _sliding_window_detection(sentences: list, window_size: int = 5) -> list:
-    """段落级滑动窗口检测：5句为一个窗口，带上下文"""
+    """段落级滑动窗口检测（打磨版）：5句为一个窗口，带上下文"""
     if len(sentences) < window_size:
         return [0.5] * len(sentences)
 
@@ -1648,13 +1676,19 @@ def _sliding_window_detection(sentences: list, window_size: int = 5) -> list:
         std = (sum((l - avg) ** 2 for l in lengths) / len(lengths)) ** 0.5
         burstiness = std / (avg + 1)
 
-        # 窗口内的 AI 概率
-        if burstiness < 0.4:
-            window_ai = 0.65
-        elif burstiness < 0.7:
-            window_ai = 0.45
+        # 打磨：加了句长均匀度检测
+        if avg > 0:
+            uniformity = 1 - (std / avg)
         else:
-            window_ai = 0.25
+            uniformity = 0
+
+        # 窗口内的 AI 概率（打磨：结合 burstiness 和 uniformity）
+        if burstiness < 0.4 and uniformity > 0.6:
+            window_ai = 0.70
+        elif burstiness < 0.6:
+            window_ai = 0.50
+        else:
+            window_ai = 0.30
 
         window_scores.append(window_ai)
 
@@ -1753,11 +1787,11 @@ def run_ai_detection(text: str) -> AIResult:
         "sentiment-hedging": 0.01,
         "transition-density": 0.01,
         "compressibility": 0.01,
-        "structured-shape": 0.00,
-        "ngram-perplexity": 0.00,
-        "sliding-window": 0.00,
-        "burstiness-stat": 0.00,
-        "statistical-baseline": 0.00,
+        "structured-shape": 0.02,
+        "ngram-perplexity": 0.03,
+        "sliding-window": 0.03,
+        "burstiness-stat": 0.02,
+        "statistical-baseline": 0.02,
     }
     total_weight = 0
     weighted_sum = 0
