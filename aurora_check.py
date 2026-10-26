@@ -974,6 +974,171 @@ def _detect_human_imperfection(text: str) -> float:
 
 
 # ============================================================
+# 第 17 号引擎：情感曲线检测器（Emotion Curve Detector）
+# 创新角度：AI 情感很平，人类有起伏
+# ============================================================
+
+_POSITIVE_WORDS = [
+    "good", "great", "excellent", "amazing", "wonderful", "fantastic",
+    "positive", "happy", "excited", "thrilled", "delighted", "impressive",
+    "进步", "优秀", "出色", "很棒", "很好", "积极", "开心",
+]
+
+_NEGATIVE_WORDS = [
+    "bad", "terrible", "awful", "horrible", "poor", "negative",
+    "sad", "angry", "frustrated", "disappointed", "disappointing",
+    "差", "糟糕", "不好", "负面", "失望", "沮丧",
+]
+
+
+def _detect_emotion_curve(text: str) -> float:
+    """
+    情感曲线检测器 - 全新角度！
+    原理：AI 写文章情感很平，人类写文章情感有起伏
+    """
+    sentences = _split_sentences(text)
+    if len(sentences) < 5:
+        return 0.5
+
+    # 计算每句话的情感分
+    emotion_scores = []
+    for sent in sentences:
+        sent_lower = sent.lower()
+        pos_count = sum(1 for w in _POSITIVE_WORDS if w in sent_lower)
+        neg_count = sum(1 for w in _NEGATIVE_WORDS if w in sent_lower)
+        # 情感分：-1 到 1
+        if pos_count + neg_count > 0:
+            emotion = (pos_count - neg_count) / (pos_count + neg_count)
+        else:
+            emotion = 0.0
+        emotion_scores.append(emotion)
+
+    # 计算情感曲线的标准差（起伏程度）
+    import statistics
+    if len(emotion_scores) < 2:
+        return 0.5
+
+    mean_emotion = statistics.mean(emotion_scores)
+    std_emotion = statistics.stdev(emotion_scores)
+
+    # 标准差越小 = 情感越平 = 越像 AI
+    # 标准差越大 = 情感起伏越大 = 越像人
+    # 所以：std_emotion 越小 = AI 分数越高
+    # 归一化：std=0 → 1.0（很平，像 AI），std=0.5 → 0.0（起伏大，像人）
+    ai_score = max(0.0, min(1.0, 1.0 - (std_emotion / 0.5)))
+    return round(ai_score, 3)
+
+
+# ============================================================
+# 第 18 号引擎：具体细节密度检测器（Specific Details Detector）
+# 创新角度：人类有很多具体数字/人名/地点，AI 很抽象
+# ============================================================
+
+_NUMBER_PATTERN = r"\b\d+(\.\d+)?%?\b"
+_NAME_PATTERN = r"\b[A-Z][a-z]+ [A-Z][a-z]+\b"
+_LOCATION_PATTERN = r"\b(in|at|on|from|to) (New York|London|Paris|Beijing|Shanghai|Tokyo)\b"
+
+
+def _detect_specific_details(text: str) -> float:
+    """
+    具体细节密度检测器 - 全新角度！
+    原理：人类写文章会有很多具体的细节（数字、人名、地点）
+    AI 写文章比较抽象，很少有具体细节
+    所以：具体细节越少 = 越像 AI
+    """
+    word_count = max(len(text.split()), 1)
+
+    # 数字数量
+    number_count = len(re.findall(_NUMBER_PATTERN, text))
+    number_density = (number_count / word_count) * 1000
+
+    # 人名数量
+    name_count = len(re.findall(_NAME_PATTERN, text))
+    name_density = (name_count / word_count) * 1000
+
+    # 具体地点数量
+    location_count = len(re.findall(_LOCATION_PATTERN, text, re.IGNORECASE))
+    location_density = (location_count / word_count) * 1000
+
+    # 总具体细节密度
+    total_density = number_density + name_density + location_density
+
+    # 人类：10-20 per 1k，AI：2-5 per 1k
+    # 所以：density 越低 = 越像 AI
+    ai_score = max(0.0, min(1.0, 1.0 - (total_density / 15.0)))
+    return round(ai_score, 3)
+
+
+# ============================================================
+# 第 19 号引擎：自我引用检测器（Self-Reference Detector）
+# 创新角度：人类会说"我认为"、"我觉得"，AI 很少
+# ============================================================
+
+_SELF_REFERENCES = [
+    "i think", "i believe", "i feel", "i mean", "in my opinion",
+    "from my perspective", "personally", "i would say",
+    "我认为", "我觉得", "在我看来", "我个人", "我觉得吧",
+]
+
+
+def _detect_self_references(text: str) -> float:
+    """
+    自我引用检测器 - 全新角度！
+    原理：人类写文章会有很多自我表达（"我认为"、"我觉得"）
+    AI 写文章比较客观，很少有自我表达
+    所以：自我引用越少 = 越像 AI
+    """
+    text_lower = text.lower()
+    word_count = max(len(text.split()), 1)
+
+    self_ref_count = 0
+    for phrase in _SELF_REFERENCES:
+        self_ref_count += text_lower.count(phrase)
+
+    self_ref_density = (self_ref_count / word_count) * 1000
+
+    # 人类：3-8 per 1k，AI：0-1 per 1k
+    # 所以：density 越低 = 越像 AI
+    ai_score = max(0.0, min(1.0, 1.0 - (self_ref_density / 5.0)))
+    return round(ai_score, 3)
+
+
+# ============================================================
+# 第 20 号引擎：逻辑连接词密度检测器（Logical Connectors Detector）
+# 创新角度：AI 用很多 therefore/however，人类用得少
+# ============================================================
+
+_LOGICAL_CONNECTORS = [
+    "therefore", "however", "moreover", "furthermore", "consequently",
+    "nevertheless", "nonetheless", "thus", "hence", "accordingly",
+    "in conclusion", "in summary", "to summarize", "overall",
+    "因此", "然而", "此外", "而且", "总之", "综上所述",
+]
+
+
+def _detect_logical_connectors(text: str) -> float:
+    """
+    逻辑连接词密度检测器 - 全新角度！
+    原理：AI 写文章会用很多逻辑连接词（therefore, however, moreover）
+    人类写文章用得比较少
+    所以：逻辑连接词越多 = 越像 AI
+    """
+    text_lower = text.lower()
+    word_count = max(len(text.split()), 1)
+
+    connector_count = 0
+    for phrase in _LOGICAL_CONNECTORS:
+        connector_count += text_lower.count(phrase)
+
+    connector_density = (connector_count / word_count) * 1000
+
+    # AI：8-15 per 1k，人类：2-5 per 1k
+    # 所以：density 越高 = 越像 AI
+    ai_score = min(connector_density / 10.0, 1.0)
+    return round(ai_score, 3)
+
+
+# ============================================================
 # RoBERTa ChatGPT 检测器（逆向自 sloptotal ClassifierChatGPTEngine）
 # ============================================================
 
@@ -1288,16 +1453,32 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 16: 人类瑕疵检测器（全新角度！越完美越像 AI）
     engine_scores["human-imperfection"] = _detect_human_imperfection(prose_text)
 
+    # 引擎 17: 情感曲线检测器（AI 情感很平，人类有起伏）
+    engine_scores["emotion-curve"] = _detect_emotion_curve(prose_text)
+
+    # 引擎 18: 具体细节密度检测器（人类有很多具体数字/人名/地点）
+    engine_scores["specific-details"] = _detect_specific_details(prose_text)
+
+    # 引擎 19: 自我引用检测器（人类会说"我认为"、"我觉得"）
+    engine_scores["self-references"] = _detect_self_references(prose_text)
+
+    # 引擎 20: 逻辑连接词密度检测器（AI 用很多 therefore/however）
+    engine_scores["logical-connectors"] = _detect_logical_connectors(prose_text)
+
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
     weights = {
-        "roberta-chatgpt": 0.28,
-        "lmscan": 0.18,
-        "human-imperfection": 0.15,  # 全新引擎，权重 15%
-        "formulaic-patterns": 0.10,
-        "linguistic-markers": 0.10,
-        "structural-patterns": 0.07,
-        "formulaic-markers": 0.05,
-        "vocabulary-richness": 0.03,
+        "roberta-chatgpt": 0.25,
+        "lmscan": 0.15,
+        "human-imperfection": 0.12,
+        "emotion-curve": 0.08,
+        "specific-details": 0.08,
+        "self-references": 0.07,
+        "logical-connectors": 0.07,
+        "formulaic-patterns": 0.06,
+        "linguistic-markers": 0.06,
+        "structural-patterns": 0.04,
+        "formulaic-markers": 0.03,
+        "vocabulary-richness": 0.02,
         "sentiment-hedging": 0.02,
         "transition-density": 0.01,
         "compressibility": 0.01,
