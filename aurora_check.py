@@ -2261,6 +2261,48 @@ def _detect_spec_detect(text: str) -> float:
 
 
 # ============================================================
+# 第 34 号引擎：DNA-DetectLLM（简化版）
+# 把检测看作"修复"过程：计算文本与"理想AI序列"的距离
+# ============================================================
+
+def _detect_dna_detect(text: str) -> float:
+    """DNA-DetectLLM 简化版"""
+    import math
+    from collections import Counter
+
+    words = text.lower().split()
+    if len(words) < 30:
+        return 0.5
+
+    # 计算词频
+    word_freq = Counter(words)
+    total_words = len(words)
+
+    # 构造"理想AI序列"：最常见的词排列
+    # 理想AI序列的特点：词频分布更平滑，没有罕见词
+    # 计算修复代价：每个词与理想分布的偏离程度
+
+    repair_cost = 0
+    for word in words:
+        freq = word_freq.get(word, 0)
+        # 理想概率：平滑分布
+        ideal_prob = 1.0 / len(word_freq)
+        # 实际概率
+        actual_prob = freq / total_words
+        # 修复代价：实际概率与理想概率的差异
+        repair_cost += abs(actual_prob - ideal_prob)
+
+    # 平均修复代价
+    avg_repair_cost = repair_cost / len(words)
+
+    # 归一化：修复代价越低 = 越像AI（越接近理想分布）
+    # 人类：修复代价 ~0.02-0.04，AI：修复代价 ~0.01-0.02
+    ai_score = max(0.0, min(1.0, (0.03 - avg_repair_cost) / 0.02))
+
+    return round(ai_score, 3)
+
+
+# ============================================================
 # 第 28 号引擎：重复词检测器（Repeated Words Detector）
 # 全新角度！AI写作会重复使用某些词
 # ============================================================
@@ -2771,6 +2813,9 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 32: SpecDetect 信号处理检测器（零样本范式）
     engine_scores["spec-detect"] = _detect_spec_detect(prose_text)
 
+    # 引擎 33: DNA-DetectLLM（零样本范式）
+    engine_scores["dna-detect"] = _detect_dna_detect(prose_text)
+
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
     # 合并后的权重：强引擎权重更高，弱引擎权重更低，确保不互相冲突
     weights = {
@@ -2804,6 +2849,7 @@ def run_ai_detection(text: str) -> AIResult:
         "chinese-ai": 0.02,  # 中文AI检测器
         "statistical-watermark": 0.02,  # 统计水印检测器
         "spec-detect": 0.03,  # SpecDetect 信号处理检测器
+        "dna-detect": 0.03,  # DNA-DetectLLM 零样本检测器
         "burstiness-stat": 0.01,
         "statistical-baseline": 0.01,
     }
