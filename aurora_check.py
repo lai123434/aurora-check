@@ -1069,18 +1069,19 @@ def _detect_sentiment_hedging(text: str) -> float:
 # 打磨版：扩充词表、改进检测模式、调整权重
 # ============================================================
 
-# 人类口语化插入语（AI 很少用，中英文都有）
+# 人类口语化插入语（精雕细琢版：只保留真正人类专属的，AI 很少用的）
 _HUMAN_FILLERS = [
-    # 中文
-    "嗯", "那个", "就是说", "然后", "反正", "对吧", "你知道",
+    # 中文（真正人类才会说的）
+    "嗯", "那个", "就是说", "反正", "对吧", "你知道",
     "怎么说呢", "其实吧", "我觉得吧", "说真的", "说实话",
-    "说白了", "简单来说", "总而言之", "综上所述", "对吧",
-    "你想想", "你懂的", "你明白吧", "我跟你说",
-    # 英文
-    "basically", "actually", "like", "you know", "i mean",
-    "sort of", "kind of", "or something", "and stuff", "you know",
-    "let's see", "well", "right", "okay", "so", "anyway",
-    "in my opinion", "personally", "i think", "i feel",
+    "说白了", "你想想", "你懂的", "你明白吧", "我跟你说",
+    "害", "哎", "哦", "啊", "呃",
+    # 英文（真正人类才会说的，去掉了太常见的 so/well/right/okay）
+    "you know", "i mean", "sort of", "kind of",
+    "or something", "and stuff", "let's see", "anyway",
+    "you know what", "guess what", "believe it or not",
+    "to be honest", "honestly", "frankly",
+    "i guess", "i suppose", "i imagine",
 ]
 
 # 人类常见的"不完美"模式（扩充版）
@@ -1104,7 +1105,7 @@ _HUMAN_IMPERFECTION_PATTERNS = [
     # 8. 多余的句号（人类常犯）
     r"\.{3,}",
     # 9. 中英文引号混用（人类常犯）
-    r"[''"'"'][a-zA-Z]+[a-zA-Z]+[''"'"']",
+    r"['‘’“”][a-zA-Z]+[a-zA-Z]+['‘’“”]",
     # 10. 句末没有标点（人类常犯）
     r"\n[a-z].*[a-z]$\n",
 ]
@@ -1131,51 +1132,59 @@ def _detect_human_imperfection(text: str) -> float:
     filler_score = max(0, 1.0 - (filler_density / 12.0))
     imperfection_score += filler_score * 0.25
 
-    # 2. 重复用词（人类会重复，AI 不会）- 权重 20%
+    # 2. 重复用词（精雕细琢：人类会重复，AI 很少重复）- 权重 15%（降低权重，因为这个信号不够强）
     repeat_count = 0
-    for pattern in [r"\b(\w+)\s+\1\b"]:
-        repeat_count += len(re.findall(pattern, text_lower))
+    # 相邻重复用词（比如 "the the"）
+    repeat_count += len(re.findall(r"\b(\w+)\s+\1\b", text_lower))
+    # 中间隔了1-2个词的重复（比如 "the cat the"）
+    repeat_count += len(re.findall(r"\b(\w+)\s+\w+\s+\1\b", text_lower)) * 0.5
     repeat_density = (repeat_count / word_count) * 1000
-    # 人类：5-10 per 1k，AI：0-1 per 1k
+    # 人类：3-8 per 1k，AI：0-0.5 per 1k
     # 所以：repeat 越少 = 越像 AI
-    repeat_score = max(0, 1.0 - (repeat_density / 6.0))
-    imperfection_score += repeat_score * 0.20
+    repeat_score = max(0, 1.0 - (repeat_density / 4.0))
+    imperfection_score += repeat_score * 0.15
 
-    # 3. 标点不规范（人类常犯，AI 很规范）- 权重 25%
+    # 3. 标点不规范（精雕细琢：人类常犯，AI 很规范）- 权重 20%（降低权重，因为很多检测对纯英文没用）
     punctuation_issues = 0
-    # 中英文标点混用
-    punctuation_issues += len(re.findall(r"[a-zA-Z]+[，。；：、]", text))
-    punctuation_issues += len(re.findall(r"[，。；：、][a-zA-Z]+", text))
-    # 两个感叹号/问号（人类情绪激动）
+    # 中英文标点混用（只对中文文章有用）
+    punctuation_issues += len(re.findall(r"[a-zA-Z]+[，。；：、]", text)) * 0.5
+    punctuation_issues += len(re.findall(r"[，。；：、][a-zA-Z]+", text)) * 0.5
+    # 两个感叹号/问号（人类情绪激动，中英文都有用）
     punctuation_issues += len(re.findall(r"!{2,}", text))
     punctuation_issues += len(re.findall(r"\?{2,}", text))
-    # 多余的逗号
+    # 多余的逗号（中英文都有用）
     punctuation_issues += len(re.findall(r",{2,}", text))
-    # 多余的句号
+    # 多余的句号（中英文都有用）
     punctuation_issues += len(re.findall(r"\.{3,}", text))
+    # 新增：逗号后面没有空格（人类常犯，AI 很规范）
+    punctuation_issues += len(re.findall(r",[a-zA-Z]", text)) * 0.3
+    # 新增：句号后面没有空格（人类常犯，AI 很规范）
+    punctuation_issues += len(re.findall(r"\.[a-zA-Z]", text)) * 0.3
     punct_density = (punctuation_issues / word_count) * 1000
     # 人类：3-8 per 1k，AI：0-0.5 per 1k
     # 所以：标点问题越少 = 越像 AI
-    punct_score = max(0, 1.0 - (punct_density / 5.0))
-    imperfection_score += punct_score * 0.25
+    punct_score = max(0, 1.0 - (punct_density / 4.0))
+    imperfection_score += punct_score * 0.20
 
-    # 4. 打字不规范（人类会犯，AI 不会）- 权重 20%
+    # 4. 打字不规范（精雕细琢：人类会犯，AI 不会）- 权重 20%
     typing_issues = 0
-    # 多余的空格
+    # 多余的空格（中英文都有用）
     typing_issues += len(re.findall(r"  +", text))
-    # 句子开头小写
+    # 句子开头小写（中英文都有用）
     typing_issues += len(re.findall(r"(?<=[.!?。！？]\s)[a-z]", text))
-    # 数字和单位之间没有空格
-    typing_issues += len(re.findall(r"\d+[a-zA-Z]", text))
-    # 中英文引号混用
-    typing_issues += len(re.findall(r"[''"'"'][a-zA-Z]+[a-zA-Z]+[''"'"']", text))
+    # 数字和单位之间没有空格（中英文都有用）
+    typing_issues += len(re.findall(r"\d+[a-zA-Z]", text)) * 0.5
+    # 中英文引号混用（只对中文有用，降低权重）
+    typing_issues += len(re.findall(r"['‘’“”][a-zA-Z]+[a-zA-Z]+['‘’“”]", text)) * 0.3
+    # 新增：小写 "i"（人类常犯，AI 不会）
+    typing_issues += len(re.findall(r"\bi\b", text)) * 0.2
     typing_density = (typing_issues / word_count) * 1000
     # 人类：8-20 per 1k，AI：0-1 per 1k
     # 所以：打字问题越少 = 越像 AI
-    typing_score = max(0, 1.0 - (typing_density / 12.0))
+    typing_score = max(0, 1.0 - (typing_density / 10.0))
     imperfection_score += typing_score * 0.20
 
-    # 5. 句末没有标点（人类常犯）- 权重 10%
+    # 5. 句末没有标点（人类常犯）- 权重 20%（提高权重，因为这个信号很强）
     no_punct_end = 0
     lines = text.split("\n")
     for line in lines:
@@ -1185,8 +1194,8 @@ def _detect_human_imperfection(text: str) -> float:
     no_punct_density = (no_punct_end / len(lines)) * 100 if len(lines) > 0 else 0
     # 人类：10-30 per 100 lines，AI：0-5 per 100 lines
     # 所以：句末没标点越少 = 越像 AI
-    no_punct_score = max(0, 1.0 - (no_punct_density / 20.0))
-    imperfection_score += no_punct_score * 0.10
+    no_punct_score = max(0, 1.0 - (no_punct_density / 15.0))
+    imperfection_score += no_punct_score * 0.20
 
     # 最终分数：越完美 = 分数越高 = 越像 AI
     return round(imperfection_score, 3)
