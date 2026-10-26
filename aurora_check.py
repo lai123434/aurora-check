@@ -1480,6 +1480,46 @@ def _load_roberta_model():
     return _roberta_model, _roberta_tokenizer, _roberta_ai_idx
 
 
+# ============================================================
+# 第 21 号引擎：隐藏字符检测器（Hidden Characters Detector）
+# 创新角度：AI生成的文本可能会有水印（零宽字符、不可见字符）
+# 原理：检测文本里有没有隐藏的、不可见的字符
+# ============================================================
+
+# 常见的隐藏字符（AI水印）
+_HIDDEN_CHARACTERS = [
+    "\u200b",  # 零宽空格
+    "\u200c",  # 零宽非连接符
+    "\u200d",  # 零宽连接符
+    "\u2060",  # 字连接符
+    "\ufeff",  # 零宽非断空格
+    "\u00ad",  # 软连字符
+]
+
+
+def _detect_hidden_characters(text: str) -> float:
+    """
+    隐藏字符检测器 - 全新角度！
+    原理：AI生成的文本可能会有水印（零宽字符、不可见字符）
+    人类写的文本不会有这些隐藏字符
+    所以：隐藏字符越多 = 越像 AI
+    """
+    word_count = max(len(text.split()), 1)
+
+    # 统计隐藏字符数量
+    hidden_count = 0
+    for char in _HIDDEN_CHARACTERS:
+        hidden_count += text.count(char)
+
+    # 隐藏字符密度
+    hidden_density = (hidden_count / word_count) * 1000
+
+    # 人类：0 per 1k，AI：1-5 per 1k（如果有水印的话）
+    # 所以：隐藏字符越多 = 越像 AI
+    ai_score = min(hidden_density / 3.0, 1.0)
+    return round(ai_score, 3)
+
+
 def _detect_with_roberta(text: str) -> Optional[float]:
     """用 RoBERTa 模型检测 AI 概率"""
     model, tokenizer, ai_idx = _load_roberta_model()
@@ -1778,6 +1818,9 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 20: 逻辑连接词密度检测器（AI 用很多 therefore/however）
     engine_scores["logical-connectors"] = _detect_logical_connectors(prose_text)
 
+    # 引擎 21: 隐藏字符检测器（检测AI水印：零宽字符、不可见字符）
+    engine_scores["hidden-characters"] = _detect_hidden_characters(prose_text)
+
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
     # 打磨后的权重：新引擎权重稍微降低，因为还需要更多验证
     weights = {
@@ -1788,6 +1831,7 @@ def run_ai_detection(text: str) -> AIResult:
         "specific-details": 0.06,    # 打磨后权重 6%
         "self-references": 0.05,     # 打磨后权重 5%
         "logical-connectors": 0.05,   # 打磨后权重 5%
+        "hidden-characters": 0.03,     # 新引擎权重 3%（还需要更多验证）
         "formulaic-patterns": 0.05,
         "linguistic-markers": 0.05,
         "structural-patterns": 0.03,
