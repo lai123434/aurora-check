@@ -120,6 +120,16 @@ class CheckReport:
         # 引擎评分行
         engine_rows = ""
         if self.ai and self.ai.engine_scores:
+            scores = list(self.ai.engine_scores.values())
+            avg_score = sum(scores) / len(scores) if scores else 0
+            variance = sum((s - avg_score) ** 2 for s in scores) / len(scores) if scores else 0
+            std_dev = variance ** 0.5
+
+            # 引擎分歧统计
+            high_confidence = sum(1 for s in scores if s > 0.7 or s < 0.3)
+            low_confidence = len(scores) - high_confidence
+            consensus = "高共识" if std_dev < 0.2 else "中分歧" if std_dev < 0.35 else "高分歧"
+
             for name, score in self.ai.engine_scores.items():
                 pct = int(score * 100)
                 bar_color = "#e74c3c" if pct > 50 else "#f39c12" if pct > 20 else "#27ae60"
@@ -134,6 +144,29 @@ class CheckReport:
                     <td style="text-align: right; font-weight: bold;">{pct}%</td>
                 </tr>
                 """
+
+            # 引擎分歧面板
+            divergence_panel = f"""
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <h3 style="font-size: 14px; color: #666; margin-bottom: 10px;">引擎分歧分析</h3>
+                <div style="display: flex; gap: 20px; font-size: 13px;">
+                    <div>
+                        <span style="color: #666;">共识强度:</span>
+                        <span style="font-weight: bold; color: {color};">{consensus}</span>
+                    </div>
+                    <div>
+                        <span style="color: #666;">标准差:</span>
+                        <span style="font-weight: bold;">{std_dev:.3f}</span>
+                    </div>
+                    <div>
+                        <span style="color: #666;">高确信引擎:</span>
+                        <span style="font-weight: bold;">{high_confidence}/{len(scores)}</span>
+                    </div>
+                </div>
+            </div>
+            """
+        else:
+            divergence_panel = ""
 
         # 高风险句
         flagged_html = ""
@@ -187,6 +220,7 @@ class CheckReport:
 
         <div class="section">
             <h2>各引擎详细评分</h2>
+            {divergence_panel}
             <table>
                 <thead>
                     <tr>
@@ -1978,6 +2012,105 @@ def _detect_sentence_length_distribution(text: str) -> float:
 
 
 # ============================================================
+# 第 28 号引擎：PAWN 困惑度注意力加权检测器
+# 参考 PAWN 方法：对困惑度进行注意力加权，低困惑度token权重更高
+# ============================================================
+
+def _detect_pawn_perplexity(text: str) -> float:
+    """PAWN 困惑度注意力加权检测器"""
+    import math
+    from collections import Counter
+
+    words = text.lower().split()
+    if len(words) < 20:
+        return 0.5
+
+    # 计算词频
+    word_freq = Counter(words)
+    total_words = len(words)
+
+    # 计算每个词的log概率（简化版）
+    log_probs = []
+    for word in words:
+        freq = word_freq.get(word, 0)
+        # 加平滑
+        prob = (freq + 0.5) / (total_words + 0.5 * len(word_freq))
+        log_prob = math.log(prob)
+        log_probs.append(log_prob)
+
+    if not log_probs:
+        return 0.5
+
+    # PAWN：对低困惑度（高log概率）的token赋予更高权重
+    # 也就是说，那些"太常见"的词对AI检测的贡献更大
+    avg_log_prob = sum(log_probs) / len(log_probs)
+
+    # 注意力权重：每个token的权重 = exp(log_prob) / sum(exp(log_prob))
+    # 简化版：直接用log_prob作为权重
+    weights = [max(0, lp - avg_log_prob) for lp in log_probs]  # 只取高于平均的部分
+    total_weight = sum(weights)
+
+    if total_weight == 0:
+        return 0.5
+
+    # 加权平均困惑度
+    weighted_avg = sum(lp * w for lp, w in zip(log_probs, weights)) / total_weight
+
+    # 归一化：加权困惑度越高（越负）= 越像人；加权困惑度越低（越接近0）= 越像AI
+    ai_score = max(0.0, min(1.0, (-2.0 - weighted_avg) / 3.0))
+
+    return round(ai_score, 3)
+
+
+# ============================================================
+# 第 29 号引擎：对抗扰动程度检测器（Adversarial Perturbation Detector）
+# 参考"Modeling the Attack"思路：计算文本距离"原始AI版本"的扰动程度
+# 扰动越小、越"顺滑"，AI嫌疑反而越高
+# ============================================================
+
+def _detect_adversarial_perturbation(text: str) -> float:
+    """对抗扰动程度检测器"""
+    import math
+    from collections import Counter
+
+    words = text.lower().split()
+    if len(words) < 20:
+        return 0.5
+
+    # 1. 检测词汇多样性（扰动会增加词汇多样性）
+    word_freq = Counter(words)
+    unique_ratio = len(word_freq) / len(words)
+
+    # 2. 检测句子长度方差（扰动会让句子更随机）
+    sentences = _split_sentences(text)
+    if len(sentences) >= 5:
+        sent_lengths = [len(s.split()) for s in sentences]
+        mean_len = sum(sent_lengths) / len(sent_lengths)
+        variance = sum((l - mean_len) ** 2 for l in sent_lengths) / len(sent_lengths)
+        cv = math.sqrt(variance) / mean_len if mean_len > 0 else 0
+    else:
+        cv = 0.5
+
+    # 3. 检测标点符号多样性（扰动会增加标点多样性）
+    punct_types = set()
+    for char in text:
+        if char in ".,!?;:()[]{}\"'":
+            punct_types.add(char)
+    punct_diversity = len(punct_types) / 10.0  # 最多10种标点
+
+    # 综合扰动程度：多样性越高 = 扰动越大 = AI嫌疑越低
+    # 扰动程度 = 词汇多样性 * 0.4 + 句子长度方差 * 0.3 + 标点多样性 * 0.3
+    perturbation = (unique_ratio * 0.4 + cv * 0.3 + punct_diversity * 0.3)
+
+    # 归一化：扰动程度越高 = 越像人 = AI嫌疑越低
+    # 扰动程度 0.2 → AI嫌疑 0.8（没扰动，很顺滑）
+    # 扰动程度 0.6 → AI嫌疑 0.2（扰动很大，像人写的）
+    ai_score = max(0.0, min(1.0, (0.5 - perturbation) / 0.3))
+
+    return round(ai_score, 3)
+
+
+# ============================================================
 # 第 28 号引擎：重复词检测器（Repeated Words Detector）
 # 全新角度！AI写作会重复使用某些词
 # ============================================================
@@ -2473,6 +2606,12 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 27: 公式化模式检测器（合并引用模式 + 公式化表达）
     engine_scores["formulaic-patterns"] = _detect_formulaic_patterns(prose_text)
 
+    # 引擎 28: PAWN 困惑度注意力加权检测器（零样本范式）
+    engine_scores["pawn-perplexity"] = _detect_pawn_perplexity(prose_text)
+
+    # 引擎 29: 对抗扰动程度检测器（对抗鲁棒性）
+    engine_scores["adversarial-perturbation"] = _detect_adversarial_perturbation(prose_text)
+
     # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
     # 合并后的权重：强引擎权重更高，弱引擎权重更低，确保不互相冲突
     weights = {
@@ -2501,6 +2640,8 @@ def run_ai_detection(text: str) -> AIResult:
         "compressibility": 0.01,
         "structured-shape": 0.01,
         "ngram-perplexity": 0.03,
+        "pawn-perplexity": 0.04,  # PAWN 零样本引擎，权重稍高
+        "adversarial-perturbation": 0.03,  # 对抗扰动检测器
         "burstiness-stat": 0.01,
         "statistical-baseline": 0.01,
     }
