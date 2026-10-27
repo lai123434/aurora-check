@@ -1,15 +1,8 @@
-# Aurora Check - 依赖列表
-
-# 核心
-torch>=2.0.0
-transformers>=4.30.0
-
-# 文档处理
+# Aurora Check 核心依赖（无需 GPU、无需下载模型）
+# 安装： pip install -r requirements.txt
+numpy>=1.21.0
 python-docx>=0.8.11
 
-# HTTP 请求（可选，用于未来联网功能）
-requests>=2.28.0
-beautifulsoup4>=4.11.0
-
-# 其他
-numpy>=1.21.0
+# 可选：RoBERTa 语义分类器（需要额外约 2GB 磁盘 + 联网下载模型）
+# 不装也能跑，会自动降级为 29 个统计引擎。
+# 安装： pip install -r requirements-ml.txt

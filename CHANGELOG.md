@@ -1,56 +1,402 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## [3.2.1] — 段落节奏引擎不再误伤「段落数少」的体裁
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### 问题
+三篇 Annotated Bibliography 的 `paragraph-rhythm` 全部报 100%，其中朋友那篇
+段落长度是 295/299/309 词——三段的词数差不到 5%。这个体裁按评分要求
+本来就要「每篇文献一个长度相当的注释段」，长度整齐是体裁特征，不是 AI 特征。
 
-## [Unreleased]
+### 根因
+`paragraph-rhythm` 用段落长度的变异系数（CV）判分，阈值 0.55 来自长文样本。
+段落只有 3~4 段时，样本少 → 极值少 → CV 天然偏小，任何合规的短结构文本
+都会被判成「高度均匀」。实测 CV：0.020 / 0.055 / 0.155，全部低于阈值。
+
+### 修复
+段落数 < 5 时返回中性值 0.5，不参与判断（原为 < 3 才回退）。
+
+### 影响
+- 90 分版 36.9% → 34.9%（该文排除参考文献后只剩 4 段，此前被误判为高均匀）
+- B2 版 20.1% → 20.4%，朋友版 21.6% → 21.8%
+- 回归测试分离度 +0.554 不变，基准 AUC 1.000 不变
+
+## [3.2.0] — 修复「同一篇文章换个排版就换一个分数」
+
+### 问题
+同一份 Annotated Bibliography，两次检测得到 18.3% 和 23.2%，差 5 个百分点。
+逐段比对确认文字一字未改，只是重新保存过。
+
+### 根因（两处，都是"段落"判错）
+1. **参考文献只认标题**：`_extract_prose_only` 靠 `\nReferences\n` 定位参考文献起点。
+   annotated bibliography 这类作业直接列条目、没有标题，于是 3 条参考文献
+   被当成正文段落参与计算——一个 295 词的注释段挨着一个 33 词的文献条目，
+   段落长度方差被人为拉大，`paragraph-rhythm` 从 1.00 掉到 0.01。
+2. **段落阈值按字符算**：`len(p) > 40` 字符。封皮行（"Marking Criteria"，16 字符）
+   和小标题（13 词 / 80 字符）都能通过筛选，和 300 词的正文段混在一起。
+
+### 修复
+- 新增 `_looks_like_reference_line()`：按条目自身特征识别参考文献，
+  与文档排版无关——含 DOI 链接、APA 作者格式（Surname, A. B. ... (2020).）、
+  卷(期)页码模式，任一命中即排除。
+- `paragraph-rhythm` 的段落筛选改为 `len(p.split()) >= 40`（按词，不按字符）。
+
+### 验证
+同一份文本，四种排版：
+
+| 排版 | 修复前 | 修复后 |
+|---|---|---|
+| 原样（无 References 标题） | 18.3% | 21.6% |
+| 只给三段注释 | 19.8% | 23.2% |
+| 混排无空行 | 18.3% | 21.6% |
+
+修复前最大差 4.9 个点，修复后 1.6 个点（剩余差异来自封皮行参与其他引擎的统计）。
+
+### 连带修正
+原始稿 v4 的真实分数由 24.2% 修正为 **30.6%**——之前的低分同样是参考文献
+被当成正文段落造成的假象。修复后它与 T 版（30.6%）一致，印证了两篇文字特征本就相同。
+
+回归测试 3/3 通过，人写/AI 分离度 0.554 不变。
+
+
+## [3.1.0] — 分档逻辑重做 + 撤稿检测
+
+### 发现的问题：分档在骗人
+用 13 个已知期刊测旧版 A/B/C/D 分档，**12 个被判 A**：
+
+| 期刊 | 旧判级 | 问题 |
+|---|---|---|
+| Nature | A | — |
+| Sustainability (MDPI) | A | 与 Nature 同级 |
+| IJERPH（已被 SCI 剔除） | A | 仍被判国际主流 |
+| PLOS ONE | A | 与 Annals of Mathematics 同级 |
+
+根因：h-index 本质是「发文量 × 影响力」的混合量，发文量大的刊必然高。
+Annals of Mathematics（数学四大顶刊）h=325，PLOS ONE（只查技术正确性）h=594 ——
+排序完全颠倒。**这个分档没有区分度，却看起来很有区分度。**
+
+### Changed — 改用发文量曲线
+| 信号 | 为什么比 h-index 好 |
+|---|---|
+| 年发文量曲线 | h-index 只涨不跌，看不出"办好刊"还是"多收稿"；曲线能 |
+| 增长倍数 | Heliyon 3 年从 11078 涨到 17555 再跌到 2812，h-index 完全看不出来 |
+| 见顶回落形态 | 被数据库 on hold / 整改的典型曲线，只有曲线能识别 |
+| 撤稿状态 | 唯一能让"所有指标正常"的论文作废的信号 |
+
+新判例（同一批期刊）：
+
+```text
+Nature            4564 篇 1.1x  未见异常
+Annals of Math      31 篇 0.9x  未见异常
+PLOS ONE         19594 篇 1.1x  审稿强度存疑
+Sustainability   11562 篇 0.9x  审稿强度存疑
+IJERPH            1896 篇 0.2x  需注意（发文骤降 80%，疑被数据库剔除）
+Heliyon           2812 篇 3.2x  审稿强度存疑（曾达 17555 篇后回落 84%）
+```
 
 ### Added
-- Hidden watermark detector engine (21st engine)
-  - Detects zero-width characters, invisible characters, and AI watermarks
-  - Supports 20+ types of hidden characters
-- English and Chinese AI language markers expansion
-- Chinese transition words support
+- **撤稿检测**：OpenAlex `is_retracted` + Crossref 标题 `RETRACTED:` 前缀双确认。
+  实测 Wakefield 1998 麻疹疫苗论文（被引 3011 次）：DOI 有效、The Lancet 为顶刊、
+  所有指标正常，但已撤稿——旧版会给它"✅ 已注册 · A 档 · 国际主流"的正面背书。
+- 论文级被引百分位（同年同领域），**发表不足 2 年不显示**——新文章样本少，
+  OpenAlex 常直接给 100，看起来像"前 1%"，实际只是还没被引够久。
+- 年发文量曲线直接写进报告。
+
+### Fixed
+- Nature 曾被判"需注意"，因为 APC 12690 USD。APC 单独不构成风险：
+  Nature / Cell / Lancet 的 OA 费用都在 1 万美元以上。改为只有「高费用 + 放量收稿」
+  同时出现才算问题。
+- OpenAlex 返回的当年数据不完整，混进增长率会制造"暴跌"假象，已剔除。
+- 「格式不合法」曾与「查过但不存在」共用"未注册"，会让人以为真的查过 doi.org。
+
+
+## [3.0.0] — 学术核查：DOI 验真 + 期刊分级
+
+从"文本检测工具"变成"论文核查工具"。三个能力串成一条链：
+拿到一篇论文 → 提取 DOI → 验真伪 → 查期刊档案 → 检测 AI 痕迹。
+
+### Added
+- `verify.py`：DOI 与期刊核验
+  - `doi.org/api/handles` 判断是否注册（编造的 DOI 一定查不到）
+  - `api.crossref.org` 取标题/作者/卷期/页码
+  - `api.openalex.org/sources/issn:` 取期刊档案（h-index、2 年均被引、发文量、DOAJ、版面费）
+  - `doaj.org` 交叉验证开放获取白名单
+- `check.py`：统一入口，四种模式
+  ```bash
+  python check.py paper 论文.docx   # 完整链
+  python check.py doi  10.xxx/yyy
+  python check.py text 文稿.txt
+  python check.py batch ./目录/
+  ```
+- 期刊分档：A（h≥100）/ B（45-99）/ C（12-44）/ D（<12），**必须带理由输出**。
+
+### 实测
+| 期刊 | h-index | 2 年均被引 | 档位 |
+|---|---|---|---|
+| Frontiers in Artificial Intelligence | 89 | 6.2 | B |
+| Heliyon | 193 | 9.6 | A（APC 2270 USD） |
+| Education + Training | 128 | 3.7 | A |
+
+假 DOI `10.9999/fake.2025.999999` 正确判为「未注册」。
+
+### 设计原则
+- 网络失败时返回"无法确认"，不猜。
+- 档位只反映影响力，不等于质量；报告永远附带判定依据。
+- 期刊名与 DOI 指向不一致时只提示，不下结论（页眉可能省略刊名）。
+
+
+## [2.6.0] — 误判风险与统计诚实
+
+用「统计审慎」的视角重审整个判定逻辑。这一版没有提升检出率，反而主动给结论
+打了折扣——因为在这个场景里，冤枉一个真人的代价远大于漏放一篇 AI 稿。
+
+### 实测：留出集误判率
+另抓 16 篇全新人类文本（未参与任何调参）：
+
+```text
+判 AI    0 篇
+mixed    2 篇（0.395 / 0.384）
+human   14 篇
+```
+
+看起来完美。但 0/16 的 95% 置信上界是 **18.75%**（rule of three），
+合并训练集的 40 篇后上界仍有 7.5%。**样本量不足以宣称"零误判"。**
+
+### 关键改动：报告里加贝叶斯提示
+FPR 只有 7.5%，但低基准率会把假阳性放大：
+
+| 场景中 AI 稿占比 | 判 AI 时确实为真 | 冤枉比例 |
+|---|---|---|
+| 2% | 20% | **80%** |
+| 5% | 39% | **61%** |
+| 10% | 57% | 43% |
+| 20% | 75% | 25% |
+
+现在判为 AI 时，报告会直接写出「若据此认定，命中率约 57%，也就是说
+被判 AI 的稿子里约 43% 其实是人写的」。
+
+### 措辞修正 — 不替用户下结论
+- 「AI 概率」→「AI 特征强度（非发生概率）」
+- 「大概率 AI 生成」→「AI 特征显著」
+- 「大概率人工写作」→「未见明显 AI 特征」
+
+工具只能描述文本特征，不能断定作者是谁。原来的措辞越过了这条线。
+
+
+## [2.5.0] — 四视角代码审查与重构
+
+用四种互不相同的工程哲学审了一遍代码，每一条批评都落到具体行，改完跑全量验证。
+
+### Linus（数据结构优先）
+> "你的 ENGINE_SPEC 是个 dict of tuple，第三个元素是注释字符串，从来没人读。"
+
+- 裸三元组 `(+1, 0.25, "备注")` → `EngineSpec(direction, weight, note)`。
+  第三位原本写进去却无任何地方读取，属于"注释伪装成数据"；改的时候还得数位置。
+  共 23 条权重改为具名结构，解包写法保持兼容。
+
+### Rob Pike（简洁）
+> "`import statistics` 出现在三个不同函数里，暴露了作者没想清楚依赖。"
+
+- 清除 26 处函数内标准库 import，统一提到模块顶部。
+- 保留 `docx` / `transformers` 的懒加载——它们是可选依赖，不能上提。
+
+### Rich Hickey（避免 complecting）
+> "你把'测量'和'判断'搅在一起了。改一个阈值要重跑全部计算。"
+
+- `run_ai_detection` 326 行 → 拆出 `_compute_engine_scores`（121 行）
+  + `run_ai_detection`（218 行）。
+  前者只负责"测到什么"，权重与聚合留在后者。现在可以单独测某个引擎。
+
+### Carmack（先实测）
+> "1.3 秒里 1.28 秒是模型前向。如果用户感知不到，优化它就是 premature optimization。"
+
+- 实测：英文 23ms，中文 1302ms（Qwen 推理占 1279ms）。
+- 结论：**不做优化**。1.3 秒在单文档场景下可接受，为省这点时间牺牲准确率不划算。
+- 但把耗时写进 `benchmark.py` 的输出，防止未来悄悄退化。
+
+### 验证
+重构前后逐样本对照，分数完全一致：
+
+```text
+H1 0.1367  A1 0.7290  T1 0.2559  T2 0.3318  T3 0.2578
+中文 AI 0.7481  对抗稿 0.4850  人类 0.2747
+```
+
+回归 3/3，边界拦截 6/6。
+
+
+## [2.4.0] — 接入语言模型困惑度（中文）
+
+### Added
+- **`lm-perplexity`**：本地 Qwen2.5-0.5B 计算语言模型困惑度。这是目前对改写
+  最鲁棒的信号——统计特征测"用了什么词"，困惑度测"这段文字有多可预测"。
+
+  实测（41 篇语料）：
+
+  | 组别 | 困惑度 | 说明 |
+  |---|---|---|
+  | 标准 AI | 6.3 ~ 13.0 | 与人类完全分离 |
+  | 伪装成人类的 AI | 14.4 ~ 59.7 | 部分重叠 |
+  | 真实人类 | 22.9 ~ 116.5 | |
+
+- `download_model.py`：可选模型下载器（ModelScope / hf-mirror 双源，带进度）。
+
+### 设计要点 — 单边证据
+困惑度高**不能**反证"人写的"：人写得好一样很顺。第一版按双边映射，
+结果给人类文本也打了高分，还把对抗样本的分数拉低（检出从 3/4 掉到 1/4）。
+改为单边：困惑度 > 25 时该引擎直接返回 None 不参与，只在"太顺"时构成证据。
+
+### Fixed
+- 模型对英文不可靠：Qwen2.5 是中文模型，实测英文人类文本同样被判"很顺"。
+  限制为仅中文启用，英文侧维持原统计信号。
+
+
+## [2.3.0] — 引入公开语料验证过的中文特征
+
+### Changed — 中文特征库换用有据可依的版本
+原词表是凭经验凑的。本版改用 [DW-Studio/sloplint](https://github.com/DW-Studio/sloplint)
+公开的特征清单（283 万字人机对照语料，每项带 R 值 = AI 频率 ÷ 人类频率），
+并在本项目语料上逐项复核，只保留方向一致的：
+
+| 特征 | 原作者 R | 本项目复核 | 处置 |
+|---|---|---|---|
+| 万能开头（随着…的发展/在当今/近年来） | — | AI 5.59 vs 人类 0.05（R≈108） | 采纳 |
+| 套话收尾（综上所述/总而言之/由此可见） | — | AI 11.54 vs 人类 0 | 采纳 |
+| 空形容词（显著提升/深远影响/有力支撑） | — | AI 2.76 vs 人类 0 | 采纳 |
+| 翻译腔（当…时/对于…来说/这意味着） | 2.6~5.3 | 8.44 vs 4.84（R≈1.7） | 部分采纳 |
+| 破折号过密 | 3.0 | AI 12.4 vs 人类 10.4（方向相反） | **未采纳** |
+| 顿号成串 | 1.8 | AI 6.2 vs 人类 9.1（方向相反） | **未采纳** |
+
+最后两项在本语料上方向与原作者相反——人类样本是网页长文，破折号和顿号本来就多。
+这说明**特征的有效性依赖语料域**，直接照搬会误伤，必须复核。
+
+### Note
+- 未采用 [EVIL-Detect](https://github.com/bbbbhrrrr/evildetect)（NLPCC 2026 共享任务
+  第一名，macro-F1 0.8888）的方案：其核心是 Binoculars 双模型困惑度对比，
+  需要同时加载两个 7B 级语言模型，与"本地轻量运行"的定位冲突。但其
+  "冲突感知融合"（信号分歧大时降置信度而非强行判定）的思路已被本项目的
+  `confidence` 机制吸收。
+
+
+## [2.2.0] — 对抗测试与抗改写信号
+
+### Added
+- **`zh-char-entropy`**：字符级 3-gram 熵。在 4 篇刻意伪装成人类的 AI 文本上
+  做了对抗测试，六组表层特征（模板词/官腔/口语/数字/引号）有 3 组可被
+  一句提示词绕过；字符熵是唯一稳定项（AI 8.4~8.7，人类 10.5）。
+  加入后对抗样本检出率 50% → 75%。
+
+### Measured — 中文三组对照
+
+| 组别 | 均值 | 区间 | 检出率(≥0.5) |
+|---|---|---|---|
+| 标准 AI 输出 | 0.667 | 0.585~0.775 | 8/8 |
+| 伪装成人类的 AI | 0.611 | 0.494~0.672 | 3/4 |
+| 真实人类 | 0.249 | 0.129~0.375 | 0/24 |
+
+### Known gap
+- 对抗样本仍有 1/4 完全漏检（0.494 判 mixed）。统计特征的天花板在此：
+  只要写手愿意逐句控制长度、植入无关细节，任何基于表层分布的检测器都会失效。
+  商业产品同样如此，只是不写进文档。本工具在报告里用 `confidence` 标注
+  不确定性，而不是假装确定。
+
+## [2.1.0] — 中文支持与真实语料校准
+
+### Fixed — 中文完全不可用（致命）
+- **分词假设错误**：22 处密度计算用 `text.split()` 当词数。中文没有空格，
+  一篇 1600 字的中文只算成 18 个"词"，导致：
+  ① 校验环节把正常中文稿判为"篇幅过短"直接拒绝（16/24 篇）；
+  ② 所有「每千词密度」指标虚高几十倍。
+  新增 `_word_count()`，中文按 1.6 字/词折算，全量替换。
+- **句子切分丢标点**：`re.split` 把 。！？ 当分隔符丢弃，中文报告里句子连成一片。
+- **改写提示误报**：判据基于英文词表，中文文本稳定误报，改为仅英文启用。
+- **中文 AI 检测形同虚设**：原引擎十余个短语、权重 0，实测中文 AI 与人类
+  区间完全重叠（AI 0.241 / 人类 0.143）。重写为六信号模型，权重按实测
+  Cohen's d 分配。
+- **语言自适应权重**：检测到中文时，11 个英文词表类引擎自动降至 20% 权重，
+  避免噪声盖过唯一有效的中文引擎。
+
+### Added
+- `_detect_paragraph_rhythm`：段落长度均匀度。不依赖词表，跨语言有效
+  （AI 段落 CV 0.15~0.47，人类 0.39~2.51）。
+- `benchmark.py`：AUC / 区间 / 误判率，样本量不足时主动告警。
 
 ### Changed
-- Engine weights adjusted for better accuracy
-- All 21 engines have been polished and refined
-- n-gram perplexity algorithm improved
-- Sliding window detection window size increased from 5 to 7
-- Burstiness thresholds adjusted
-- Statistical baseline parameters optimized
-- Compressibility algorithm refined
-- Structured shape detection enhanced with table detection
+- 判定阈值按 41 篇真实语料重标定：`>0.58 = ai`，`<0.33 = human`。
+- 中文实测：人类 0.086~0.379，AI 0.600~0.814，双向误判均为 0。
 
-### Polished Engines
-1. **human-imperfection** - Expanded typo patterns, added punctuation patterns
-2. **emotion-curve** - Improved emotional word lists, adjusted thresholds
-3. **specific-details** - Expanded number patterns, added date patterns
-4. **self-references** - Expanded first-person phrases, added patterns
-5. **logical-connectors** - Expanded connector lists, added patterns
-6. **formulaic-patterns** - Expanded opener lists, added patterns
-7. **linguistic-markers** - Expanded marker lists, added Chinese support
-8. **vocabulary-richness** - Added short word ratio metric
-9. **structural-patterns** - Added semicolon and dash frequency metrics
-10. **sentiment-hedging** - Expanded hedging phrases, expanded vague positivity lists
-11. **formulaic-markers** - Expanded marker lists significantly
-12. **transition-density** - Expanded transition words list
-13. **compressibility** - Adjusted normalization parameters
-14. **structured-shape** - Added table detection
-15. **hidden-characters** - Expanded hidden character list to 20+ types
-16. **ngram-perplexity** - Adjusted normalization parameters
-17. **sliding-window** - Increased window size, adjusted thresholds
-18. **burstiness-stat** - Adjusted thresholds
-19. **statistical-baseline** - Adjusted thresholds
+## [2.0.0] — 集成逻辑重构
 
-## [1.0.0] - 2026-10-26
+### Fixed — 致命逻辑错误
+- **权重表默认值**：`weights.get(name, 0.1)` 会给未注册引擎 0.1 权重，
+  使 `sliding-window` / `vocabulary-richness` / `vocabulary-diversity`
+  三个噪声引擎压过大多数显式引擎，是此前所有分数收敛在 41%~45% 的根因。
+  改为显式注册表，未注册权重为 0。
+- **`human-imperfection` 重写**：原实现只统计打字错误（双空格、小写 i、
+  缺句末标点），Word 导出的规范文本恒得满分，导致一切文本被判"完美=AI"。
+  改为语篇级特征：句长变异系数、过渡词密度、实词重复率、模糊限定语、
+  句首多样性。
+- **`logical-connectors` 重写**：原词表含 but / also / while / yet / though，
+  密度必然超过阈值，输出恒为 1.0。改为只保留学术语域低频连接词 + 词边界匹配。
+- **`self-references` 重写**：原实现按绝对密度判断，AI 生成 "In my opinion"
+  模板句即拿满分。改为「强自反 / 弱模板」两级，强自反指
+  "I do not understand" / "I found that" 这类具体认知表述。
+- **`specific-details` 重复定义**：文件中存在两个同名函数，后一个覆盖前一个，
+  且方向相反（把"数字越多"当作越像 AI）。删除后一版，重写正则：
+  原 `\b[A-Z][a-z]+ [A-Z][a-z]+\b` 会把句首大写词对全算作人名
+  （700 词匹配出 382 例）。
+- **HTML 与 Markdown 口径不一致**：同一份结果在 Markdown 中标"人工写作"、
+  在 HTML 中标"混合"。现统一使用 `ai.label`。
+- **引擎 26/27 重复赋值**：`specific-details` / `formulaic-patterns` 被赋值两次。
+
+### Removed — 死代码清理
+- 删除 6 个从未被调用的检测函数（`_detect_paragraph_length_distribution`、
+  `_detect_exclamation_question_ratio`、`_detect_synonym_usage`、
+  `_detect_formulaic_patterns`、`_detect_paragraph_openers`、
+  `_detect_sentence_ending_distribution`）。实测它们在全部样本上恒为 0.5
+  或方向相反，是"合并进其他引擎"后遗留的旧实现。
+- 删除 16 个失去引用的常量（`_NAME_PATTERN`、`_SELF_REFERENCES`、
+  `_LOGICAL_CONNECTORS`、`_SYNONYM_PAIRS` 等）。
+- 去掉手写引擎编号（编号已与实际注册顺序脱节，且 28 出现两次）。
+- 移除 docstring 中的口语化后缀与感叹号。
+- 净减 362 行（3330 → 2968），清理后六样本分数完全不变。
 
 ### Added
-- Initial release with 20 detection engines
-- RoBERTa ML classifier integration
-- 5 novel innovation engines
-- HTML report generation
-- Local document comparison
-- Automatic citation exclusion
+- 输入质量校验 `validate_text()`：过短、重复、非自然语言文本直接拒绝判定，
+  避免对噪声输出伪精确分数。
+- 置信度 `ai.confidence`（high/medium/low），基于采纳引擎的加权标准差。
+- 改写嫌疑 `ai.rewrite_hint`：检测"词汇层像 AI、句式层像人"的信号分裂。
+- `--json` / `--no-html` 命令行参数；`CheckReport.to_dict()`。
+- 报告分「参与加权 / 已弃用」两区，并显示引擎权重。
+
+### Changed
+- 判定阈值重标定：`>0.62 = ai`，`<0.35 = human`。
+- 加权均值加入一次离群剔除（偏离 >0.45 的引擎不参与）。
+- 恒定输出引擎（0 / 0.5 / 1）自动降权至 15%。
+- `requirements.txt` 拆分为核心 + `requirements-ml.txt`（torch 可选）。
+
+### Performance
+- 离线时 HuggingFace 连接重试导致单次检测 **2 分 12 秒** → 加入 0.6 秒 TCP
+  探测，直连不通即跳过模型引擎 → **0.7 秒**。
+
+### Fixed（迭代中发现的回归）
+- **饱和值被误判为失效引擎**：v2 早期把"恰好等于 1.0"的引擎也当作恒定输出，
+  权重乘以 0.15。但 1.0 是合法的满分信号——`linguistic-markers` 与
+  `emotion-curve` 在典型 AI 文本上都会给 1.0，反而被压到 0.015。
+  修正为只对"精确 0.5"（多数引擎的未触发默认值）降权。
+  修正后分离度由 0.324 提升至 **0.566**。
+
+### Measured
+8 份已知来源文本（含 2 份新造盲测样本）：
+
+| 来源 | 得分 |
+|---|---|
+| 人写（口语化随感） | 0.106 |
+| 人写（母语者学术范文） | 0.142 |
+| 人写（差生初稿） | 0.258 |
+| 人写（可疑稿） | 0.274 |
+| 人写（良好学生版） | 0.313 |
+| AI 生成后改写 | 0.337 ⚠️命中改写提示 |
+| AI 原创（盲测） | 0.705 |
+| AI 原创 | 0.708 |
+
+人写上界 0.313，AI 下界 0.705，**间隔 0.566，盲测样本全部判定正确**。

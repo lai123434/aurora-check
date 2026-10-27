@@ -1,24 +1,64 @@
 """
-极光查重核心模块
+极光查重 / Aurora Check — 核心模块 v2.0
+
 用法：
     from aurora_check import run_check
-    result = run_check(text="你的文章内容")
-    print(result["report"])
+    report = run_check(text="你的文章内容")
+    print(report.to_markdown())
+
+命令行：
+    python aurora_check.py <文件> [--json] [--no-html]
+    python aurora_check.py compare <文档A> <文档B>
+
+设计原则：
+    只输出能被证据支持的结论。文本过短、重复或非自然语言时拒绝判定，
+    而不是给一个看似精确的分数。
 """
 
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
+import socket
+import statistics
 import subprocess
+import sys
+import zlib
+import urllib.parse
+from collections import Counter
 from dataclasses import dataclass, field, asdict
-from typing import List, Optional
+from typing import List, NamedTuple, Optional
+
+# ------------------------------------------------------------------
+# HuggingFace 默认短超时。
+# 未联网时 huggingface_hub 会按 1→2→4→8→16s 退避重试 5 次，单次检测
+# 因此多等 2 分钟以上，并在 stderr 喷出一大段红色警告。
+# 这里把超时压到秒级；真正需要模型时用户可自行覆盖这些变量。
+# ------------------------------------------------------------------
+os.environ.setdefault("HF_HUB_DOWNLOAD_TIMEOUT", "4")
+os.environ.setdefault("HF_HUB_ETAG_TIMEOUT", "3")
+os.environ.setdefault("TRANSFORMERS_VERBOSITY", "error")
+
+_VERBOSE = os.environ.get("AURORA_VERBOSE", "0") == "1"
 
 
 # ============================================================
 # 数据结构
 # ============================================================
+
+class EngineSpec(NamedTuple):
+    """单个引擎的注册信息。
+
+    原来是裸三元组 (+1, 0.25, "备注")，第三位写进去却没有任何地方读——
+    等于注释伪装成数据，改的时候还得数位置。具名之后意图明确，
+    解包写法 (d, w, n) 仍然兼容。
+    """
+    direction: int      # +1 分数高=像 AI，0 表示不参与
+    weight: float       # 相对权重
+    note: str = ""      # 给人看的说明，不参与计算
+
 
 @dataclass
 class AIResult:
@@ -27,9 +67,13 @@ class AIResult:
     method: str
     engine_scores: dict = field(default_factory=dict)
     flagged_sentences: list = field(default_factory=list)
-    engine_disagreement: float = 0.0  # 引擎分歧度（标准差）
+    engine_disagreement: float = 0.0  # 引擎分歧度（加权标准差）
     confident_engines: list = field(default_factory=list)  # 高度确信AI的引擎
     conflicting_engines: list = field(default_factory=list)  # 分歧大的引擎对
+    confidence: str = "low"          # high / medium / low
+    adopted_engines: list = field(default_factory=list)   # 参与加权的引擎
+    rejected_engines: list = field(default_factory=list)  # 被弃用的引擎及原因
+    rewrite_hint: str = ""           # 改写嫌疑提示（非空表示命中）
 
 
 @dataclass
@@ -47,48 +91,87 @@ class CitationResult:
     bibtex: str = ""
 
 
+# 实测参数（40 篇人类文本零误判，按 rule of three 取 95% 上界）
+_EST_TPR = 0.90      # AI 稿检出率，取保守值
+_EST_FPR = 0.075     # 人类误判率上界
+
+
+def _positive_predictive_value(base_rate: float = 0.10) -> float:
+    """判为 AI 时，实际确为 AI 的概率（阳性预测值）。
+
+    这一步很关键，但几乎所有检测工具都不告诉用户：
+    检测器的"准确率"和"判 AI 时有多可信"是两件事。
+
+    FPR 即使只有 7.5%，当 AI 稿在真实场景里只占 5% 时，
+    被判 AI 的稿件里仍有六成是冤枉的——低基准率会把假阳性放大。
+    这不是本工具的问题，贝叶斯下任何检测器都一样。
+    """
+    return (base_rate * _EST_TPR) / (base_rate * _EST_TPR + (1 - base_rate) * _EST_FPR)
+
+
 @dataclass
 class CheckReport:
     text_length: int = 0
+    note: str = ""          # 输入不合格时的说明（此时 ai 为 None）
     ai: Optional[AIResult] = None
     plagiarism: Optional[PlagiarismResult] = None
     citations: Optional[CitationResult] = None
 
+    def to_dict(self) -> dict:
+        """导出为纯 dict，便于 JSON 输出"""
+        return asdict(self)
+
     def to_markdown(self) -> str:
         lines = ["# 极光查重报告\n"]
         lines.append(f"- **正文长度：** {self.text_length} 字符\n")
+        if self.note:
+            lines.append(f"## ⛔ 无法判定\n\n{self.note}\n")
+            lines.append("> 文本不满足最低统计要求，任何分数都不可靠，故不出具结论。\n")
+            return "\n".join(lines)
 
         # AI 检测
         if self.ai:
             ai = self.ai
             lines.append("## AI 检测\n")
             lines.append(f"- **综合判定：** {_label_to_cn(ai.label)}")
-            lines.append(f"- **AI 概率：** {ai.ai_probability:.1%}")
-            lines.append(f"- **人工概率：** {1 - ai.ai_probability:.1%}")
+            # 「概率」这个词是误导：它是多个信号的加权强度，不是校准过的发生概率。
+            # 统计审慎的视角下必须改口，否则用户会把 73% 读成「73% 的可能性是 AI」。
+            lines.append(f"- **AI 特征强度：** {ai.ai_probability:.1%}"
+                         f"　（多个信号的加权结果，非发生概率）")
             lines.append(f"- **检测方法：** {ai.method}\n")
-            if ai.engine_scores:
-                lines.append("- **各引擎单独评分：**")
-                for name, score in ai.engine_scores.items():
-                    lines.append(f"  - {name}：{score:.1%}")
+            _conf_cn = {"high": "高", "medium": "中", "low": "低"}.get(ai.confidence, ai.confidence)
+            if ai.label == "ai":
+                _ppv = _positive_predictive_value()
+                lines.append(f"- **若据此认定，命中率约：** {_ppv:.0%}"
+                             f"（假设你的场景中 AI 稿占 10%）")
+                lines.append(f"  - 也就是说：被判 AI 的稿子里，约 {1-_ppv:.0%} 其实是人写的。"
+                             "这一比例随 AI 稿占比下降而急剧恶化——"
+                             "若占比 5%，命中率只剩 39%。")
+                lines.append("  - 分数高只说明「文本特征像 AI」，不构成抄袭认定。")
+                if ai.confidence == "low":
+                    lines.append("  - ⚠️ 本条置信度为低，模型自身也不确定")
                 lines.append("")
-            if ai.engine_disagreement > 0:
-                lines.append(f"- **引擎分歧度：** {ai.engine_disagreement:.3f}")
-                if ai.engine_disagreement > 0.2:
-                    lines.append("  - ⚠️ 引擎分歧较大，结果仅供参考")
+
+            if ai.rewrite_hint:
+                lines.append(f"- **⚠️ 改写嫌疑：** {ai.rewrite_hint}")
                 lines.append("")
-            if ai.confident_engines:
-                lines.append("- **高度确信AI的引擎：**")
-                for e in ai.confident_engines:
-                    lines.append(f"  - {e['name']}：{e['score']:.1%}")
+            lines.append(f"- **置信度：** {_conf_cn}"
+                         f"（引擎加权分歧度 {ai.engine_disagreement:.3f}）")
+            if ai.confidence == "low":
+                lines.append("  - ⚠️ 引擎分歧大，该判定不可靠，建议以人工阅读为准")
+            lines.append("")
+
+            if ai.adopted_engines:
+                lines.append(f"- **参与加权引擎（{len(ai.adopted_engines)} 个，按影响排序）：**")
+                for e in ai.adopted_engines:
+                    bar = "█" * int(e["score"] * 10) + "░" * (10 - int(e["score"] * 10))
+                    lines.append(f"  - {e['name']}：{e['score']:.1%} {bar} ×{e['weight']}")
                 lines.append("")
-            if ai.conflicting_engines:
-                lines.append("- **引擎分歧：**")
-                for e in ai.conflicting_engines:
-                    if "lowest" in e:
-                        lines.append(f"  - 最低：{e['lowest']['name']}（{e['lowest']['score']:.1%}）")
-                    if "highest" in e:
-                        lines.append(f"  - 最高：{e['highest']['name']}（{e['highest']['score']:.1%}）")
-                lines.append("")
+            if ai.rejected_engines:
+                lines.append(f"<details><summary>已弃用引擎（{len(ai.rejected_engines)} 个，不参与计算）</summary>\n")
+                for e in ai.rejected_engines:
+                    lines.append(f"- {e['name']}：{e['reason']}")
+                lines.append("\n</details>\n")
             if ai.flagged_sentences:
                 lines.append("- **高风险句（Top 5）：**")
                 for s in ai.flagged_sentences[:5]:
@@ -127,19 +210,46 @@ class CheckReport:
 
     def to_html(self, output_path: str = "") -> str:
         """生成 Turnitin 风格的 HTML 报告"""
-        ai_prob = self.ai.ai_probability if self.ai else 0
-        ai_pct = int(ai_prob * 100)
+        # 输入不合格：只输出警告页，不再渲染任何分数
+        if self.note and not self.ai:
+            html = f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>无法判定 - Aurora Check</title>
+<style>
+  body {{ margin:0; padding:40px 20px; background:#f5f5f5;
+         font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; }}
+  .card {{ max-width:640px; margin:0 auto; background:#fff; border-radius:12px;
+          border-left:6px solid #e74c3c; padding:36px 40px;
+          box-shadow:0 2px 20px rgba(0,0,0,.08); }}
+  h1 {{ font-size:22px; color:#e74c3c; margin:0 0 16px; }}
+  p {{ color:#444; line-height:1.8; margin:0 0 12px; }}
+  .hint {{ color:#888; font-size:13px; margin-top:20px; }}
+</style></head>
+<body><div class="card">
+  <h1>⛔ 无法判定</h1>
+  <p>{self.note}</p>
+  <p class="hint">文本不满足最低统计要求，任何分数都不可靠，故不出具结论。</p>
+  <p class="hint">正文长度：{self.text_length} 字符</p>
+</div></body></html>
+"""
+            if output_path:
+                with open(output_path, "w", encoding="utf-8") as f:
+                    f.write(html)
+            return html
 
-        # 颜色：红 > 50%, 黄 20-50%, 绿 < 20%
-        if ai_pct > 50:
-            color = "#e74c3c"
-            label = "大概率 AI 生成"
-        elif ai_pct > 20:
-            color = "#f39c12"
-            label = "混合（人机各半）"
-        else:
-            color = "#27ae60"
-            label = "大概率人工写作"
+
+        ai_prob = self.ai.ai_probability if self.ai else 0
+        ai_pct = int(round(ai_prob * 100))
+
+        # v2：改用与 to_markdown 相同的 label，避免同一份结果
+        # 在 Markdown 里说"人工写作"、在 HTML 里说"混合"。
+        _LAB = {"ai": ("#e74c3c", "AI 特征显著"),
+                "mixed": ("#f39c12", "特征混杂"),
+                "human": ("#27ae60", "未见明显 AI 特征")}
+        _key = self.ai.label if self.ai else "human"
+        color, label = _LAB.get(_key, ("#f39c12", "混合（人机各半）"))
 
         # 引擎评分行
         engine_rows = ""
@@ -154,12 +264,15 @@ class CheckReport:
             low_confidence = len(scores) - high_confidence
             consensus = "高共识" if std_dev < 0.2 else "中分歧" if std_dev < 0.35 else "高分歧"
 
-            for name, score in self.ai.engine_scores.items():
-                pct = int(score * 100)
-                bar_color = "#e74c3c" if pct > 50 else "#f39c12" if pct > 20 else "#27ae60"
+            _adopted = self.ai.adopted_engines or [
+                {"name": k, "score": v, "weight": 0} for k, v in self.ai.engine_scores.items()]
+            for e in _adopted:
+                name, score = e["name"], e["score"]
+                pct = int(round(score * 100))
+                bar_color = "#e74c3c" if score > 0.62 else "#f39c12" if score > 0.35 else "#27ae60"
                 engine_rows += f"""
                 <tr>
-                    <td>{name}</td>
+                    <td>{name}<span style="color:#aaa;font-size:11px;"> ×{e.get('weight', 0)}</span></td>
                     <td style="width: 200px;">
                         <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
                             <div style="background: {bar_color}; width: {pct}%; height: 100%;"></div>
@@ -168,6 +281,14 @@ class CheckReport:
                     <td style="text-align: right; font-weight: bold;">{pct}%</td>
                 </tr>
                 """
+            if self.ai.rejected_engines:
+                _rej = "".join(
+                    f'<span style="display:inline-block;margin:2px 6px 2px 0;padding:2px 8px;'
+                    f'background:#eee;border-radius:10px;font-size:11px;color:#888;">'
+                    f'{x["name"]}</span>'
+                    for x in self.ai.rejected_engines)
+                engine_rows += (f'<tr><td colspan="3" style="padding-top:16px;color:#888;font-size:12px;">'
+                                f'已弃用（不参与计算）：<br>{_rej}</td></tr>')
 
             # 引擎分歧面板
             divergence_panel = f"""
@@ -211,6 +332,14 @@ class CheckReport:
                 </div>
                 """
 
+        _conf_map = {"high": "高", "medium": "中", "low": "低"}
+        _conf = _conf_map.get(self.ai.confidence, "—") if self.ai else "—"
+        _hint_html = ""
+        if self.ai and self.ai.rewrite_hint:
+            _hint_html = (f'<div style="margin-top:14px;padding:12px 16px;background:#fff8e1;'
+                          f'border-left:4px solid #f39c12;border-radius:6px;font-size:13px;'
+                          f'color:#8a6d3b;text-align:left;">⚠️ 改写嫌疑：{self.ai.rewrite_hint}</div>')
+
         html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -245,6 +374,11 @@ class CheckReport:
         <div class="score-section">
             <div class="big-score">{ai_pct}%</div>
             <div class="score-label">{label}</div>
+            <div style="margin-top:6px;font-size:12px;color:#999;">特征强度，非发生概率；不构成抄袭认定</div>
+            <div style="margin-top: 10px; font-size: 13px; color: #888;">
+                置信度：{_conf}　·　采纳引擎：{len(self.ai.adopted_engines) if self.ai else 0}/{len(self.ai.engine_scores) if self.ai else 0}
+            </div>
+            {_hint_html}
             <p style="margin-top: 20px; color: #666; font-size: 14px;">正文长度: {self.text_length} 字符</p>
         </div>
 
@@ -271,7 +405,7 @@ class CheckReport:
         </div>
 
         <div class="footer">
-            由极光查重 (Aurora Check) 生成 · 14 引擎集成检测
+            由极光查重 (Aurora Check v2) 生成 · 共 29 个引擎，{len(self.ai.adopted_engines) if self.ai else 0} 个参与加权
         </div>
     </div>
 </body>
@@ -285,9 +419,9 @@ class CheckReport:
 
 def _label_to_cn(label: str) -> str:
     return {
-        "human": "大概率人工写作",
-        "mixed": "混合（人机各半）",
-        "ai": "大概率 AI 生成",
+        "human": "未见明显 AI 特征",
+        "mixed": "特征混杂",
+        "ai": "AI 特征显著",
     }.get(label, label)
 
 
@@ -347,7 +481,7 @@ def _detect_with_baseline(text: str) -> tuple[float, list]:
         return 0.5, []
 
     # 句长
-    sent_lengths = [len(s.split()) for s in sentences]
+    sent_lengths = [int(_word_count(s)) for s in sentences]
     avg_len = sum(sent_lengths) / len(sent_lengths)
     variance = sum((l - avg_len) ** 2 for l in sent_lengths) / len(sent_lengths)
 
@@ -360,7 +494,7 @@ def _detect_with_baseline(text: str) -> tuple[float, list]:
     # 打分：AI 文本倾向于句长均匀（方差小）、词型丰富度适中
     burstiness = variance / (avg_len ** 2 + 1)  # 越大越像人
 
-    # 基于 burstiness 的线性打分（精雕细琢调整参数）：0.25 → 0.75, 0.55 → 0.45, 0.85 → 0.15
+    # 基于 burstiness 的线性打分：0.25 → 0.75, 0.55 → 0.45, 0.85 → 0.15
     if burstiness < 0.25:
         ai_score = 0.75
     elif burstiness < 0.50:
@@ -370,7 +504,7 @@ def _detect_with_baseline(text: str) -> tuple[float, list]:
     else:
         ai_score = 0.15
 
-    # TTR 微调（精雕细琢调整参数）：TTR 太高（>0.60）可能是 AI 堆砌词汇，加一点分
+    # TTR 微调：TTR 太高（>0.60）可能是 AI 堆砌词汇，加一点分
     if ttr > 0.60:
         ai_score += 0.08
     elif ttr < 0.40:
@@ -392,12 +526,12 @@ def _detect_perplexity_burstiness(text: str) -> Optional[float]:
     if len(sentences) < 3:
         return None
 
-    lengths = [len(s.split()) for s in sentences]
+    lengths = [int(_word_count(s)) for s in sentences]
     avg = sum(lengths) / len(lengths)
     std = (sum((l - avg) ** 2 for l in lengths) / len(lengths)) ** 0.5
     burstiness = std / (avg + 1)
 
-    # 突发性低 = 更像 AI（精雕细琢调整参数）
+    # 突发性低 = 更像 AI
     if burstiness < 0.25:
         ai_prob = 0.75
     elif burstiness < 0.45:
@@ -424,7 +558,7 @@ _AI_FORMULAIC_MARKERS = [
     r"\bin today's (rapidly )?(changing|evolving)\b",
     r"\bplays a (crucial|vital|pivotal) role\b",
     r"\blandscape\b", r"\brealm\b", r"\btapestry\b",
-    # 新增模式（精雕细琢扩充）
+    # 新增模式
     r"\bit is worth noting\b", r"\bit is crucial to\b", r"\bit is essential to\b",
     r"\bit is important to understand\b", r"\bit is worth considering\b",
     r"\blet's dive in\b", r"\blet's explore\b", r"\blet's take a look\b",
@@ -434,7 +568,7 @@ _AI_FORMULAIC_MARKERS = [
     r"\bseamless integration\b", r"\bseamless experience\b",
     r"\buser-friendly\b", r"\bcutting-edge technology\b",
     r"\bstate-of-the-art\b", r"\bnext-generation\b",
-    # 继续扩充（精雕细琢）
+    # 继续扩充
     r"\bit is no secret that\b", r"\bit is widely recognized that\b",
     r"\bit is undeniable that\b", r"\bit is clear that\b",
     r"\bit is obvious that\b", r"\bit is evident that\b",
@@ -452,7 +586,7 @@ _TRANSITION_WORDS = [
     "first", "second", "third", "moreover", "furthermore", "however", "therefore",
     "ultimately", "additionally", "in summary", "in conclusion", "on the other hand",
     "consequently", "nevertheless", "nonetheless", "thus", "hence",
-    # 新增词（精雕细琢扩充）
+    # 新增词
     "in addition", "besides", "also", "what's more",
     "in contrast", "conversely", "on the contrary",
     "as a result", "for this reason", "because of this",
@@ -464,7 +598,7 @@ _TRANSITION_WORDS = [
     "finally", "lastly", "to sum up",
     "overall", "all things considered",
     "in short", "in brief",
-    # 继续扩充（精雕细琢）
+    # 继续扩充
     "firstly", "secondly", "thirdly",
     "furthermore", "moreover", "additionally",
     "consequently", "therefore", "thus", "hence",
@@ -502,7 +636,6 @@ def _detect_transition_density(text: str) -> float:
 
 def _detect_compressibility(text: str) -> float:
     """检测压缩率（逆向自 lynote，精雕细琢版）- 可压缩性越高 = 越像 AI"""
-    import zlib
     compressed = len(zlib.compress(text.encode("utf-8")))
     original = len(text.encode("utf-8"))
     ratio = compressed / max(1, original)
@@ -539,7 +672,7 @@ _AI_OPENERS = [
     r"imagine (?:this|a world)",
     r"as (?:technology|the world|we|society) continues to",
     r"the (?:rise|emergence|advent|proliferation) of",
-    # 新增模式（精雕细琢扩充）
+    # 新增模式
     r"it'?s no secret that",
     r"we live in an era where",
     r"in recent years,",
@@ -550,7 +683,7 @@ _AI_OPENERS = [
     r"have you ever wondered",
     r"what if i told you",
     r"let'?s face it,",
-    # 继续扩充（精雕细琢）
+    # 继续扩充
     r"in today'?s world,",
     r"as we all know,",
     r"it'?s widely recognized that",
@@ -571,7 +704,7 @@ _AI_CLOSERS = [
     r"as we (?:navigate|move forward|look ahead|continue)",
     r"by (?:embracing|leveraging|harnessing|adopting)",
     r"it'?s clear that",
-    # 新增模式（精雕细琢扩充）
+    # 新增模式
     r"the future is (?:bright|promising|exciting)",
     r"only time will tell",
     r"it remains to be seen",
@@ -582,7 +715,7 @@ _AI_CLOSERS = [
     r"the journey continues",
     r"in the grand scheme of things",
     r"all things considered,",
-    # 继续扩充（精雕细琢）
+    # 继续扩充
     r"the bottom line is",
     r"the key takeaway is",
     r"the main point is",
@@ -603,7 +736,7 @@ _FILLER_PATTERNS = [
     r"first and foremost",
     r"last but not least",
     r"without (?:a )?doubt",
-    # 新增模式（精雕细琢扩充）
+    # 新增模式
     r"it goes without saying that",
     r"needless to say,",
     r"as a matter of fact,",
@@ -614,7 +747,7 @@ _FILLER_PATTERNS = [
     r"essentially,",
     r"effectively,",
     r"in essence,",
-    # 继续扩充（精雕细琢）
+    # 继续扩充
     r"it'?s worth mentioning that",
     r"it'?s important to understand that",
     r"it'?s crucial to recognize that",
@@ -631,7 +764,7 @@ _FILLER_PATTERNS = [
 def _detect_formulaic(text: str) -> float:
     """检测 AI 公式化表达（逆向自 sloptotal FormulaicEngine）"""
     text_lower = text.lower()
-    word_count = max(len(text.split()), 1)
+    word_count = max(int(_word_count(text)), 1)
 
     # 检测开头套路（前 300 字符）
     opener_score = 0.0
@@ -820,7 +953,7 @@ _AI_MARKERS_WEIGHTED = [
     ("it's important to understand", 1),
     ("it's crucial to recognize", 1),
     ("it's essential to acknowledge", 1),
-    # 新增中文 AI 语言标志（精雕细琢扩充）
+    # 新增中文 AI 语言标志
     ("值得注意的是", 3),
     ("需要指出的是", 3),
     ("至关重要的是", 3),
@@ -847,7 +980,7 @@ _AI_MARKERS_WEIGHTED = [
 def _detect_linguistic_markers(text: str) -> float:
     """检测 AI 语言标志（逆向自 sloptotal LinguisticEngine）"""
     text_lower = text.lower()
-    word_count = max(len(text.split()), 1)
+    word_count = max(int(_word_count(text)), 1)
 
     total_weight = 0
     for marker, weight in _AI_MARKERS_WEIGHTED:
@@ -867,8 +1000,6 @@ def _detect_linguistic_markers(text: str) -> float:
 
 def _detect_vocabulary_richness(text: str) -> float:
     """检测词汇丰富度（打磨版，逆向自 sloptotal VocabularyEngine）"""
-    import math
-    from collections import Counter
 
     words = re.findall(r"[a-zA-Z]+", text.lower())
     if len(words) < 20:
@@ -904,13 +1035,13 @@ def _detect_vocabulary_richness(text: str) -> float:
     # 人类文本：平均词长 4.5-5.5，AI 文本：5.0-6.0（AI 更喜欢用长词）
     length_score = min(max((avg_word_length - 4.5) / 2.0, 0.0), 1.0)
 
-    # 5. 长词比例（>6个字母）（精雕细琢）
+    # 5. 长词比例（>6个字母）
     long_words = sum(1 for w in words if len(w) > 6)
     long_word_ratio = long_words / total
     # 人类文本：长词比例 10-20%，AI 文本：20-35%
     long_score = min(max((long_word_ratio - 0.10) / 0.20, 0.0), 1.0)
 
-    # 6. 短词比例（<3个字母）（精雕细琢新增）
+    # 6. 短词比例（<3个字母）
     short_words = sum(1 for w in words if len(w) < 3)
     short_word_ratio = short_words / total
     # 人类文本：短词比例 20-30%，AI 文本：15-25%（AI 更喜欢用中等长度的词）
@@ -926,10 +1057,9 @@ def _detect_vocabulary_richness(text: str) -> float:
 
 def _detect_structural_patterns(text: str) -> float:
     """检测结构特征（逆向自 sloptotal StructuralEngine）"""
-    import statistics
 
     signals = []
-    word_count = max(len(text.split()), 1)
+    word_count = max(int(_word_count(text)), 1)
 
     # 1. Em-dash 频率
     em_dashes = len(re.findall(r"\w—\w", text))
@@ -940,7 +1070,7 @@ def _detect_structural_patterns(text: str) -> float:
     sentences = re.split(r"[.!?]+", text)
     sentences = [s.strip() for s in sentences if len(s.strip().split()) >= 3]
     if len(sentences) >= 3:
-        lengths = [len(s.split()) for s in sentences]
+        lengths = [int(_word_count(s)) for s in sentences]
         mean_len = statistics.mean(lengths)
         stdev = statistics.stdev(lengths)
         cv = stdev / mean_len if mean_len > 0 else 0
@@ -963,7 +1093,7 @@ def _detect_structural_patterns(text: str) -> float:
         p.strip() for p in text.split("\n\n") if len(p.strip().split()) >= 5
     ]
     if len(paragraphs) >= 3:
-        para_lengths = [len(p.split()) for p in paragraphs]
+        para_lengths = [int(_word_count(p)) for p in paragraphs]
         para_mean = statistics.mean(para_lengths)
         para_stdev = statistics.stdev(para_lengths)
         para_cv = para_stdev / para_mean if para_mean > 0 else 0
@@ -1001,25 +1131,25 @@ def _detect_structural_patterns(text: str) -> float:
     # AI：8-15 per 1k，人类：3-7 per 1k
     quote_score = min(max((quote_density - 4) / 8.0, 0.0), 1.0)
 
-    # 10. 斜杠使用频率（精雕细琢）
+    # 10. 斜杠使用频率
     slash_count = len(re.findall(r"/", text))
     slash_density = (slash_count / word_count) * 1000
     # AI：5-10 per 1k，人类：1-3 per 1k
     slash_score = min(max((slash_density - 2) / 6.0, 0.0), 1.0)
 
-    # 11. 分号使用频率（精雕细琢新增）
+    # 11. 分号使用频率
     semicolon_count = len(re.findall(r";", text))
     semicolon_density = (semicolon_count / word_count) * 1000
     # AI：3-8 per 1k，人类：0-2 per 1k
     semicolon_score = min(max((semicolon_density - 1) / 5.0, 0.0), 1.0)
 
-    # 12. 破折号使用频率（精雕细琢新增）
+    # 12. 破折号使用频率
     dash_count = len(re.findall(r"--|—", text))
     dash_density = (dash_count / word_count) * 1000
     # AI：2-5 per 1k，人类：0-1 per 1k
     dash_score = min(max((dash_density - 0.5) / 3.0, 0.0), 1.0)
 
-    # 加权打分——冒号信号权重最高（精雕细琢调整权重）
+    # 加权打分——冒号信号权重最高
     final_score = (
         em_score * 0.04
         + uniformity_score * 0.05
@@ -1070,7 +1200,7 @@ _HEDGING_PHRASES = [
     "be that as it may",
     "regardless",
     "irrespective of",
-    # 新增词（精雕细琢扩充）
+    # 新增词
     "it's important to understand",
     "it is important to understand",
     "it's crucial to recognize",
@@ -1150,7 +1280,7 @@ _VAGUE_POSITIVITY = [
     "the cutting edge",
     "the forefront of",
     "the leading edge",
-    # 继续扩充（精雕细琢）
+    # 继续扩充
     "a powerful force",
     "a driving force",
     "a catalyst for change",
@@ -1210,7 +1340,7 @@ _FILLER_QUALIFIERS = [
 def _detect_sentiment_hedging(text: str) -> float:
     """检测情感与对冲模式（逆向自 sloptotal SentimentEngine）"""
     text_lower = text.lower()
-    word_count = max(len(text.split()), 1)
+    word_count = max(int(_word_count(text)), 1)
 
     # 1. 过度对冲短语
     hedge_count = 0
@@ -1274,157 +1404,73 @@ def _detect_sentiment_hedging(text: str) -> float:
     return round(final_score, 3)
 
 
-# ============================================================
-# 第 16 号引擎：人类瑕疵检测器（Human Imperfection Detector）
-# 创新角度：越完美越像 AI，越有"人类的不完美"越像人
-# 打磨版：扩充词表、改进检测模式、调整权重
-# ============================================================
-
-# 人类口语化插入语（精雕细琢版：只保留真正人类专属的，AI 很少用的）
-_HUMAN_FILLERS = [
-    # 中文（真正人类才会说的）
-    "嗯", "那个", "就是说", "反正", "对吧", "你知道",
-    "怎么说呢", "其实吧", "我觉得吧", "说真的", "说实话",
-    "说白了", "你想想", "你懂的", "你明白吧", "我跟你说",
-    "害", "哎", "哦", "啊", "呃",
-    # 继续扩充（精雕细琢）
-    "怎么说呢", "其实吧", "我觉得吧", "说真的", "说实话",
-    "说白了", "你想想", "你懂的", "你明白吧", "我跟你说",
-    "讲真", "说句实在话", "不瞒你说", "你猜怎么着",
-    "我跟你讲", "我跟你讲", "你说是不是", "对吧", "是吧",
-    # 英文（真正人类才会说的，去掉了太常见的 so/well/right/okay）
-    "you know", "i mean", "sort of", "kind of",
-    "or something", "and stuff", "let's see", "anyway",
-    "you know what", "guess what", "believe it or not",
-    "to be honest", "honestly", "frankly",
-    "i guess", "i suppose", "i imagine",
-    # 继续扩充（精雕细琢）
-    "as i was saying", "like i said", "you see",
-    "the thing is", "here's the thing", "what i mean is",
-    "let's be real", "let's face it", "to tell you the truth",
-    "off the top of my head", "from what i remember",
-    "as far as i know", "if i remember correctly",
-]
-
-# 人类常见的"不完美"模式（扩充版）
-_HUMAN_IMPERFECTION_PATTERNS = [
-    # 1. 相邻重复用词（人类会打错，比如"the the"）
-    r"\b(\w+)\s+\1\b",
-    # 2. 多余的空格（人类打字不规范）
-    r"  +",
-    # 3. 中英文标点混用（人类常犯）
-    r"[a-zA-Z]+[，。；：、]",
-    r"[，。；：、][a-zA-Z]+",
-    # 4. 句子开头小写（人类打字不注意）
-    r"(?<=[.!?。！？]\s)[a-z]",
-    # 5. 数字和单位之间没有空格（人类常犯）
-    r"\d+[a-zA-Z]",
-    # 6. 两个感叹号/问号（人类情绪激动）
-    r"!{2,}",
-    r"\?{2,}",
-    # 7. 多余的逗号（人类常犯）
-    r",{2,}",
-    # 8. 多余的句号（人类常犯）
-    r"\.{3,}",
-    # 9. 中英文引号混用（人类常犯）
-    r"['‘’“”][a-zA-Z]+[a-zA-Z]+['‘’“”]",
-    # 10. 句末没有标点（人类常犯）
-    r"\n[a-z].*[a-z]$\n",
-]
-
-
 def _detect_human_imperfection(text: str) -> float:
     """
-    人类瑕疵检测器 - 打磨版！
-    原理：AI 写文章太完美了，人类写文章会有各种"不完美"
-    所以：越完美 = 越像 AI，越有瑕疵 = 越像人
+    人类写作痕迹检测器 v2（重写）
+    返回：AI 概率（越高越像 AI）
+
+    旧版只统计"打字错误"（双空格、小写 i、缺句末标点、中英标点混用）。
+    这类特征在 Word 排版的规范文本里恒为 0，于是任何经过拼写检查的文本
+    都会拿满分「完美 = AI」。实测旧版给人类样本 0.75、AI 样本 0.88，
+    几乎没有区分力。
+
+    新版改用语篇级信号，对"格式规范但确实是人所写"的文本同样有效：
+      1. 句长变异系数   —— 人写起伏大，AI 均匀
+      2. 过渡词密度     —— AI 偏爱 furthermore / moreover / therefore
+      3. 实词重复率     —— 人写更容易反复用同一个词
+      4. 模糊限定语密度 —— 人写爱用 very / maybe / I think / a lot
+      5. 句首多样性     —— 人写常用 This / It / And / But 起句
     """
-    text_lower = text.lower()
-    word_count = max(len(text.split()), 1)
+    sentences = [s for s in _split_sentences(text) if int(_word_count(s)) >= 3]
+    if len(sentences) < 4:
+        return 0.5
 
-    imperfection_score = 0.0
+    words = re.findall(r"[A-Za-z']+", text.lower())
+    n_words = max(len(words), 1)
+    lens = [int(_word_count(s)) for s in sentences]
 
-    # 1. 口语化插入语（人类用，AI 不用）- 权重 25%
-    filler_count = 0
-    for phrase in _HUMAN_FILLERS:
-        filler_count += text_lower.count(phrase)
-    filler_density = (filler_count / word_count) * 1000
-    # 人类：8-20 per 1k，AI：0-2 per 1k
-    # 所以：filler 越少 = 越像 AI
-    filler_score = max(0, 1.0 - (filler_density / 12.0))
-    imperfection_score += filler_score * 0.25
+    # 1) 句长变异系数
+    mean_len = sum(lens) / len(lens)
+    var = sum((l - mean_len) ** 2 for l in lens) / len(lens)
+    cv = (var ** 0.5) / mean_len if mean_len else 0.0
+    cv_ai = max(0.0, min(1.0, (0.70 - cv) / 0.45))
 
-    # 2. 重复用词（精雕细琢：人类会重复，AI 很少重复）- 权重 15%（降低权重，因为这个信号不够强）
-    repeat_count = 0
-    # 相邻重复用词（比如 "the the"）
-    repeat_count += len(re.findall(r"\b(\w+)\s+\1\b", text_lower))
-    # 中间隔了1-2个词的重复（比如 "the cat the"）
-    repeat_count += len(re.findall(r"\b(\w+)\s+\w+\s+\1\b", text_lower)) * 0.5
-    repeat_density = (repeat_count / word_count) * 1000
-    # 人类：3-8 per 1k，AI：0-0.5 per 1k
-    # 所以：repeat 越少 = 越像 AI
-    repeat_score = max(0, 1.0 - (repeat_density / 4.0))
-    imperfection_score += repeat_score * 0.15
+    # 2) 过渡词密度
+    _trans = ("furthermore", "moreover", "additionally", "consequently",
+              "therefore", "however", "in addition", "overall",
+              "in conclusion", "firstly", "secondly", "thirdly", "finally", "thus")
+    trans = sum(text.lower().count(w) for w in _trans)
+    trans_density = trans / n_words * 1000
+    trans_ai = max(0.0, min(1.0, (trans_density - 2.0) / 12.0))
 
-    # 3. 标点不规范（精雕细琢：人类常犯，AI 很规范）- 权重 20%（降低权重，因为很多检测对纯英文没用）
-    punctuation_issues = 0
-    # 中英文标点混用（只对中文文章有用）
-    punctuation_issues += len(re.findall(r"[a-zA-Z]+[，。；：、]", text)) * 0.5
-    punctuation_issues += len(re.findall(r"[，。；：、][a-zA-Z]+", text)) * 0.5
-    # 两个感叹号/问号（人类情绪激动，中英文都有用）
-    punctuation_issues += len(re.findall(r"!{2,}", text))
-    punctuation_issues += len(re.findall(r"\?{2,}", text))
-    # 多余的逗号（中英文都有用）
-    punctuation_issues += len(re.findall(r",{2,}", text))
-    # 多余的句号（中英文都有用）
-    punctuation_issues += len(re.findall(r"\.{3,}", text))
-    # 新增：逗号后面没有空格（人类常犯，AI 很规范）
-    punctuation_issues += len(re.findall(r",[a-zA-Z]", text)) * 0.3
-    # 新增：句号后面没有空格（人类常犯，AI 很规范）
-    punctuation_issues += len(re.findall(r"\.[a-zA-Z]", text)) * 0.3
-    punct_density = (punctuation_issues / word_count) * 1000
-    # 人类：3-8 per 1k，AI：0-0.5 per 1k
-    # 所以：标点问题越少 = 越像 AI
-    punct_score = max(0, 1.0 - (punct_density / 4.0))
-    imperfection_score += punct_score * 0.20
+    # 3) 实词重复率
+    content = [w for w in words if len(w) > 3]
+    cnt = Counter(content)
+    rep = sum(c - 1 for c in cnt.values() if c > 2) / max(len(content), 1)
+    rep_ai = max(0.0, min(1.0, (0.10 - rep) / 0.10))
 
-    # 4. 打字不规范（精雕细琢：人类会犯，AI 不会）- 权重 20%
-    typing_issues = 0
-    # 多余的空格（中英文都有用）
-    typing_issues += len(re.findall(r"  +", text))
-    # 句子开头小写（中英文都有用）
-    typing_issues += len(re.findall(r"(?<=[.!?。！？]\s)[a-z]", text))
-    # 数字和单位之间没有空格（中英文都有用）
-    typing_issues += len(re.findall(r"\d+[a-zA-Z]", text)) * 0.5
-    # 中英文引号混用（只对中文有用，降低权重）
-    typing_issues += len(re.findall(r"['‘’“”][a-zA-Z]+[a-zA-Z]+['‘’“”]", text)) * 0.3
-    # 新增：小写 "i"（人类常犯，AI 不会）
-    typing_issues += len(re.findall(r"\bi\b", text)) * 0.2
-    typing_density = (typing_issues / word_count) * 1000
-    # 人类：8-20 per 1k，AI：0-1 per 1k
-    # 所以：打字问题越少 = 越像 AI
-    typing_score = max(0, 1.0 - (typing_density / 10.0))
-    imperfection_score += typing_score * 0.20
+    # 4) 模糊限定语密度
+    _vague = (" very ", " really ", " quite ", " maybe ", " a lot ", " lots of ",
+              "i think ", "i believe ", "in my opinion", " some ", " kind of ",
+              " actually ", " of course ", " and so on ")
+    tl = " " + text.lower() + " "
+    vague = sum(tl.count(w) for w in _vague)
+    vague_density = vague / n_words * 1000
+    vague_ai = max(0.0, min(1.0, 1.0 - vague_density / 8.0))
 
-    # 5. 句末没有标点（人类常犯）- 权重 20%（提高权重，因为这个信号很强）
-    no_punct_end = 0
-    lines = text.split("\n")
-    for line in lines:
-        line = line.strip()
-        if len(line) > 20 and not line[-1] in ".!?。！？":
-            no_punct_end += 1
-    no_punct_density = (no_punct_end / len(lines)) * 100 if len(lines) > 0 else 0
-    # 人类：10-30 per 100 lines，AI：0-5 per 100 lines
-    # 所以：句末没标点越少 = 越像 AI
-    no_punct_score = max(0, 1.0 - (no_punct_density / 15.0))
-    imperfection_score += no_punct_score * 0.20
+    # 5) 句首多样性
+    starters = {"this", "it", "and", "but", "so", "that", "these", "also", "then"}
+    first_words = [s.split()[0].lower().strip(",.") for s in sentences if s.split()]
+    lead_ratio = sum(1 for w in first_words if w in starters) / max(len(first_words), 1)
+    lead_ai = max(0.0, min(1.0, (0.30 - lead_ratio) / 0.30))
 
-    # 最终分数：越完美 = 分数越高 = 越像 AI
-    return round(imperfection_score, 3)
+    ai_prob = (cv_ai * 0.30 + trans_ai * 0.22 + rep_ai * 0.18
+               + vague_ai * 0.20 + lead_ai * 0.10)
+    return round(max(0.05, min(0.95, ai_prob)), 3)
 
 
 # ============================================================
-# 第 17 号引擎：情感曲线检测器（Emotion Curve Detector）
+# 情感曲线检测器（Emotion Curve Detector）
 # 创新角度：AI 情感很平，人类有起伏
 # ============================================================
 
@@ -1442,7 +1488,7 @@ _POSITIVE_WORDS = [
     # 弱正面
     "nice", "fine", "okay", "decent", "pleasant",
     "beneficial", "helpful", "useful", "valuable", "worthwhile",
-    # 中文正面词（精雕细琢扩充）
+    # 中文正面词
     "优秀", "出色", "很棒", "很好", "积极", "开心", "进步",
     "成功", "杰出", "卓越", "优秀", "出色", "棒", "好",
     "高兴", "快乐", "满意", "感谢", "乐观", "希望",
@@ -1462,7 +1508,7 @@ _NEGATIVE_WORDS = [
     # 弱负面
     "mediocre", "subpar", "inferior", "unsatisfactory", "unpleasant",
     "boring", "tedious", "dull", "monotonous", "tedious",
-    # 中文负面词（精雕细琢扩充）
+    # 中文负面词
     "差", "糟糕", "不好", "负面", "失望", "沮丧",
     "失败", "差劲", "劣质", "糟", "坏",
     "难过", "生气", "烦躁", "担心", "焦虑",
@@ -1482,9 +1528,39 @@ _NEGATIONS = [
 ]
 
 
+def _detect_paragraph_rhythm(text: str) -> float:
+    """段落节奏检测。
+
+    生成式模型的段落长度高度均匀（每段 4~5 句、长度接近），
+    人类写作的段落长短悬殊——有的段落只有一句，有的写成一整屏。
+
+    实测（中文 8 篇 AI / 英文 2 篇 AI / 41 篇人类）：
+      AI   段落长度 CV 0.15 ~ 0.47
+      人类          CV 0.39 ~ 2.51
+    不依赖任何词表，换模型、换语言都还有效。
+    """
+    # 只统计「真正的正文段落」：按词数筛，不按字符数。
+    # 原来用 len(...) > 40 字符，封皮行（"Marking Criteria"）、
+    # 13 词的小标题都能通过，和 300 词的注释段混在一起，
+    # 把段落长度方差人为拉大，同一篇文章换个排版就换一个分数。
+    paras = [p.strip() for p in re.split(r"\n+", text) if len(p.split()) >= 40]
+    # 段落数不足 5 时 CV 本身就不稳（样本少 → 极值少 → CV 天然偏小），
+    # 且注释书目这类体裁按评分要求每段长度就必须接近，属于体裁特征而非 AI 特征。
+    # 实测：三篇 Annotated Bibliography 的 CV 只有 0.02~0.06，全被拉满 100%。
+    # 这种情况退回中性值，不参与判断。
+    if len(paras) < 5:
+        return 0.5
+    lens = [_word_count(p) for p in paras]
+    mean_len = sum(lens) / len(lens)
+    if not mean_len:
+        return 0.5
+    cv = statistics.pstdev(lens) / mean_len
+    return round(max(0.0, min(1.0, (0.55 - cv) / 0.40)), 3)
+
+
 def _detect_emotion_curve(text: str) -> float:
     """
-    情感曲线检测器 - 打磨版！
+    情感曲线检测器
     原理：AI 写文章情感很平，人类写文章情感有起伏
     改进：扩充词表、考虑否定词、调整归一化
     """
@@ -1529,7 +1605,6 @@ def _detect_emotion_curve(text: str) -> float:
         emotion_scores.append(emotion)
 
     # 计算情感曲线的标准差（起伏程度）
-    import statistics
     if len(emotion_scores) < 2:
         return 0.5
 
@@ -1547,189 +1622,140 @@ def _detect_emotion_curve(text: str) -> float:
     return round(ai_score, 3)
 
 
-# ============================================================
-# 第 18 号引擎：具体细节密度检测器（Specific Details Detector）
-# 创新角度：人类有很多具体数字/人名/地点，AI 很抽象
-# ============================================================
-
-# 数字模式（分类检测，精雕细琢扩充）
-_PERCENT_PATTERN = r"\b\d+(\.\d+)?%|百分之[一二三四五六七八九十百千万\d]+"
-_DATE_PATTERN = r"\b(19|20)\d{2}[-/年]\d{1,2}[-/月]\d{1,2}日?\b|\b\d{1,2}[-/月]\d{1,2}日?\b"
-_PRICE_PATTERN = r"\$\d+(\.\d+)?|€\d+(\.\d+)?|£\d+(\.\d+)?|¥\d+|人民币\d+|美元\d+"
-# 新增：温度、距离、重量等
-_TEMP_PATTERN = r"\b\d+(\.\d+)?°[CF]|\b\d+(\.\d+)?度\b"
-_DISTANCE_PATTERN = r"\b\d+(\.\d+)?km|\b\d+(\.\d+)?miles|\b\d+(\.\d+)?公里|\b\d+(\.\d+)?米\b"
-_WEIGHT_PATTERN = r"\b\d+(\.\d+)?kg|\b\d+(\.\d+)?lbs|\b\d+(\.\d+)?公斤|\b\d+(\.\d+)?斤\b"
-_GENERIC_NUMBER_PATTERN = r"\b\d+(\.\d+)?\b"
-
-# 人名模式（精雕细琢扩充）
-_NAME_PATTERN = r"\b[A-Z][a-z]+ [A-Z][a-z]+\b|\b[A-Z][a-z]+\s+[A-Z][a-z]+\b|\b[A-Z][a-z]+\b"
-
-# 地点模式（精雕细琢扩充，从25个→50个城市）
-_LOCATION_PATTERN = r"\b(in|at|on|from|to|near|around) (New York|London|Paris|Beijing|Shanghai|Tokyo|San Francisco|Los Angeles|Chicago|Boston|Seattle|Austin|Toronto|Sydney|Berlin|Madrid|Rome|Moscow|Seoul|Hong Kong|Singapore|Amsterdam|Brussels|Vienna|Stockholm|Copenhagen|Oslo|Dublin|Zurich|Geneva|Milan|Barcelona|Lisbon|Athens|Prague|Warsaw|Budapest|Dubai|Mumbai|Delhi|Bangkok|Jakarta|Manila|Kuala Lumpur|Melbourne|Auckland|Vancouver|Montreal|Mexico City|Buenos Aires|Sao Paulo)\b"
-
-
 def _detect_specific_details(text: str) -> float:
     """
-    具体细节密度检测器 - 打磨版！
-    原理：人类写文章会有很多具体的细节（数字、人名、地点）
-    AI 写文章比较抽象，很少有具体细节
-    所以：具体细节越少 = 越像 AI
-    改进：分类检测数字、扩充地点、调整权重
+    具体细节密度检测器 v2
+
+    v1 失效原因：用 \b[A-Z][a-z]+ [A-Z][a-z]+\b 抓人名，把句首大写 + 下个词
+    大写（"The Authors" / "This Study" / "In This"）全算成专有名词。
+    一份 700 词的学术稿匹配出 382 例，密度 545/1k，是阈值的 27 倍，
+    于是 1 - density/20 恒为负，所有文本都被压成 0.0。
+
+    v2 三条更干净的线索：
+      1. 数字密度（含百分比、年份、样本量）—— AI 偏抽象，少给具体数值
+      2. 非句首专名 —— 跳过句首可排除语法性大写
+      3. 引号内的具体表述 —— 人写更常引用他人原话/具体说法
     """
-    word_count = max(len(text.split()), 1)
+    sentences = [s for s in _split_sentences(text) if s.strip()]
+    n_words = max(int(_word_count(text)), 1)
 
-    # 1. 数字数量（分类检测，精雕细琢扩充）
-    percent_count = len(re.findall(_PERCENT_PATTERN, text, re.IGNORECASE))
-    date_count = len(re.findall(_DATE_PATTERN, text))
-    price_count = len(re.findall(_PRICE_PATTERN, text, re.IGNORECASE))
-    temp_count = len(re.findall(_TEMP_PATTERN, text, re.IGNORECASE))
-    distance_count = len(re.findall(_DISTANCE_PATTERN, text, re.IGNORECASE))
-    weight_count = len(re.findall(_WEIGHT_PATTERN, text, re.IGNORECASE))
-    generic_number_count = len(re.findall(_GENERIC_NUMBER_PATTERN, text))
+    # 1) 数字（含 148 / 87% / 2025 这类具体量）
+    numbers = len(re.findall(r"\b\d+(?:[.,]\d+)?\b", text))
 
-    # 数字总分（百分比、日期、温度、距离、权重更高）
-    number_total = percent_count * 3 + date_count * 3 + price_count * 2 + temp_count * 2 + distance_count * 2 + weight_count * 2 + generic_number_count
-    number_density = (number_total / word_count) * 1000
+    # 2) 非句首专名
+    proper = 0
+    for s in sentences:
+        tokens = s.split()
+        for i, w in enumerate(tokens):
+            if i == 0:
+                continue                      # 句首大写属于语法，不算专名
+            core = w.strip(".,;:()\"'")
+            if re.match(r"^[A-Z][a-z]{2,}$", core):
+                proper += 1
 
-    # 2. 人名数量
-    name_count = len(re.findall(_NAME_PATTERN, text))
-    name_density = (name_count / word_count) * 1000
+    # 3) 引号内的具体表述
+    quoted = len(re.findall(r"[\"“][^\"”]{8,80}[\"”]", text))
 
-    # 3. 具体地点数量
-    location_count = len(re.findall(_LOCATION_PATTERN, text, re.IGNORECASE))
-    location_density = (location_count / word_count) * 1000
-
-    # 总具体细节密度（加权）
-    total_density = number_density * 0.5 + name_density * 0.3 + location_density * 0.2
-
-    # 人类：15-30 per 1k，AI：3-8 per 1k
-    # 所以：density 越低 = 越像 AI
-    ai_score = max(0.0, min(1.0, 1.0 - (total_density / 20.0)))
-    return round(ai_score, 3)
-
-
-# ============================================================
-# 第 19 号引擎：自我引用检测器（Self-Reference Detector）
-# 创新角度：人类会说"我认为"、"我觉得"，AI 很少
-# ============================================================
-
-_SELF_REFERENCES = [
-    # 英文自我引用（按强度分级，精雕细琢扩充）
-    # 强自我引用
-    "i think", "i believe", "i feel", "i mean", "in my opinion",
-    "from my perspective", "personally", "i would say",
-    "in my view", "from my point of view", "as far as i'm concerned",
-    "i personally", "i personally think", "i personally believe",
-    "i personally feel", "i personally believe",
-    # 中等自我引用
-    "i guess", "i suppose", "i imagine", "i suspect",
-    "i reckon", "i assume", "i presume", "i gather",
-    "i understand", "i believe that", "i think that",
-    # 弱自我引用
-    "in my experience", "from my experience", "based on my experience",
-    "as i see it", "the way i see it", "to my mind",
-    "i'd say", "i'd say that", "i would argue",
-    # 中文自我引用（精雕细琢扩充）
-    "我认为", "我觉得", "在我看来", "我个人", "我觉得吧",
-    "我认为吧", "我个人认为", "我觉得应该",
-    "我想", "我猜", "我估计", "我感觉",
-    "在我看来", "从我来看", "以我的经验",
-    "我觉得吧", "我认为吧", "我个人觉得",
-    "我想吧", "我猜吧", "我估计吧",
-    "依我看", "照我说", "要我说",
-]
+    density = (numbers * 3 + proper * 2 + quoted * 3) / n_words * 1000
+    # 人写学术：25~60 per 1k；AI：5~15 per 1k
+    return round(max(0.0, min(1.0, 1.0 - density / 45.0)), 3)
 
 
 def _detect_self_references(text: str) -> float:
     """
-    自我引用检测器 - 打磨版！
-    原理：人类写文章会有很多自我表达（"我认为"、"我觉得"）
-    AI 写文章比较客观，很少有自我表达
-    所以：自我引用越少 = 越像 AI
-    改进：扩充词表、调整归一化
+    自我指涉检测器 v2
+
+    v1 失效原因：只统计 "I think / in my opinion" 的绝对密度。
+    在学术文本里，无论人写还是 AI 写，这类词都很少；而且 AI 一旦生成
+    "In my opinion, ..." 这种模板句，密度立刻冲高 —— 实测 AI 样本
+    反而拿到 1.0（被判更像 AI），而人写的学术注释同样接近 1.0。
+    这个信号在学术语域里不成立。
+
+    v2 改成两级：
+      强自反 —— "I do not understand" / "I found that" / "I was surprised"
+                这类带具体认知过程的表述，AI 几乎不会产出；
+      弱模板 —— "I think" / "in my opinion"，人机通用，只给少量权重。
     """
-    text_lower = text.lower()
-    word_count = max(len(text.split()), 1)
+    n_words = max(int(_word_count(text)), 1)
+    low = " " + text.lower() + " "
 
-    self_ref_count = 0
-    for phrase in _SELF_REFERENCES:
-        self_ref_count += text_lower.count(phrase)
+    def _hit(phrases):
+        c = 0
+        for p in phrases:
+            c += len(re.findall(r"(?<![a-z])" + re.escape(p), low))
+        return c
 
-    self_ref_density = (self_ref_count / word_count) * 1000
+    strong = _hit(_SELF_REF_STRONG)
+    weak = _hit(_SELF_REF_WEAK)
 
-    # 人类：5-12 per 1k，AI：0-1 per 1k
-    # 所以：density 越低 = 越像 AI
-    ai_score = max(0.0, min(1.0, 1.0 - (self_ref_density / 8.0)))
-    return round(ai_score, 3)
+    strong_density = strong / n_words * 1000
+    weak_density = weak / n_words * 1000
+
+    human_signal = (min(strong_density / 6.0, 1.0) * 0.8
+                    + min(weak_density / 12.0, 1.0) * 0.2)
+    return round(max(0.0, min(1.0, 1.0 - human_signal)), 3)
+
+
+# v2 词表：强自反指具体认知行为，弱模板指通用套语
+_SELF_REF_STRONG = [
+    "i do not understand", "i don't understand", "i did not understand",
+    "i found that", "i found it", "i noticed", "i realised", "i realized",
+    "i was surprised", "i was confused", "i am not sure", "i'm not sure",
+    "in my own experience", "from my own experience", "i remember",
+    "i have seen", "i could not", "i couldn't", "i tried", "i learned that",
+    "i learnt that", "to be honest", "i am not clear", "i'm not clear",
+]
+_SELF_REF_WEAK = [
+    "i think", "i believe", "i feel", "in my opinion", "in my view",
+    "from my perspective", "personally", "i would say", "as far as i",
+]
 
 
 # ============================================================
-# 第 20 号引擎：逻辑连接词密度检测器（Logical Connectors Detector）
+# 逻辑连接词密度检测器（Logical Connectors Detector）
 # 创新角度：AI 用很多 therefore/however，人类用得少
 # 打磨版：扩充词表、分类检测
 # ============================================================
 
-_LOGICAL_CONNECTORS = [
-    # 英文逻辑连接词（按类型分类，精雕细琢扩充）
-    # 因果类
+# v2：只保留真正标志学术语域的低频/多词连接词。
+# but / also / while / yet / though / although 属于基础功能词，
+# 任何文本都高频，纳入词表会让引擎恒为满分。
+_ACADEMIC_CONNECTORS = [
     "therefore", "consequently", "thus", "hence", "accordingly",
-    "as a result", "for this reason", "because of this",
-    "as a consequence", "in consequence", "due to this",
-    "owing to this", "thanks to this", "on account of this",
-    # 转折类
-    "however", "nevertheless", "nonetheless", "on the other hand",
-    "in contrast", "conversely", "yet", "but",
-    "on the contrary", "in comparison", "by contrast",
-    "while", "whereas", "although", "though",
-    # 递进类
-    "moreover", "furthermore", "additionally", "in addition",
-    "besides", "also", "what's more",
-    "further", "furthermore", "more importantly",
-    "not only that", "on top of that", "as well as",
-    # 总结类
-    "in conclusion", "in summary", "to summarize", "overall",
-    "in short", "in brief", "to sum up", "ultimately",
-    "all in all", "all things considered", "in the end",
-    "to conclude", "to wrap up", "in the final analysis",
-    # 举例类
-    "for example", "for instance", "such as",
-    "namely", "specifically", "in particular",
-    # 顺序类
-    "first", "second", "third", "finally",
-    "firstly", "secondly", "thirdly", "lastly",
-    # 中文逻辑连接词（精雕细琢扩充）
-    "因此", "然而", "此外", "而且", "总之", "综上所述",
-    "所以", "但是", "另外", "同时", "最后", "综上",
-    "因为", "由于", "既然", "既然如此",
-    "虽然", "尽管", "即使", "哪怕",
-    "不仅", "而且", "不但", "并且",
-    "首先", "其次", "然后", "接着",
-    "例如", "比如", "诸如", "举例来说",
+    "furthermore", "moreover", "additionally", "in addition",
+    "nevertheless", "nonetheless", "however",
+    "in contrast", "on the other hand", "conversely",
+    "as a result", "as a consequence", "for this reason",
+    "in conclusion", "in summary", "overall", "to sum up",
+    "further", "notably", "specifically", "in particular",
 ]
 
 
 def _detect_logical_connectors(text: str) -> float:
     """
-    逻辑连接词密度检测器 - 打磨版！
-    原理：AI 写文章会用很多逻辑连接词（therefore, however, moreover）
-    人类写文章用得比较少
-    所以：逻辑连接词越多 = 越像 AI
-    改进：扩充词表、调整归一化
+    逻辑连接词检测器 v2
+
+    v1 失效原因：词表把 but / also / while / yet / though / although 这类
+    极高词频的功能词也算作"逻辑连接词"。任何自然英语文本里它们的密度都
+    远超阈值，于是 min(density/15, 1.0) 恒被顶到 1.0 —— 实测所有样本
+    都是 100%，等于没测。
+
+    另外 v1 用 str.count 做子串匹配，"but" 会把 "attribute" 里的 but
+    也数进去。
+
+    v2 只保留真正区分学术语域的多词/低频连接词，并加词边界匹配。
     """
-    text_lower = text.lower()
-    word_count = max(len(text.split()), 1)
+    n_words = max(int(_word_count(text)), 1)
+    low = " " + text.lower() + " "
 
-    connector_count = 0
-    for phrase in _LOGICAL_CONNECTORS:
-        connector_count += text_lower.count(phrase)
+    count = 0
+    for phrase in _ACADEMIC_CONNECTORS:
+        # (?<![a-z]) ... (?![a-z]) 保证整词匹配
+        count += len(re.findall(r"(?<![a-z])" + re.escape(phrase) + r"(?![a-z])", low))
 
-    connector_density = (connector_count / word_count) * 1000
-
-    # AI：10-20 per 1k，人类：3-7 per 1k
-    # 所以：density 越高 = 越像 AI
-    ai_score = min(connector_density / 15.0, 1.0)
-    return round(ai_score, 3)
+    density = count / n_words * 1000
+    # 人写学术：2~6 per 1k；AI：8~20 per 1k
+    return round(max(0.0, min(1.0, (density - 2.0) / 12.0)), 3)
 
 
 # ============================================================
@@ -1741,10 +1767,38 @@ _roberta_tokenizer = None
 _roberta_ai_idx = None
 
 
+_roberta_failed = False
+
+
+def _hf_reachable(host: str = "huggingface.co", timeout: float = 0.6) -> bool:
+    """0.6 秒 TCP 探测。
+
+    huggingface_hub 的连接重试不读 HF_HUB_DOWNLOAD_TIMEOUT，
+    离线时会按 1→2→4→8→16s 退避 5 次，单次检测多等两分钟。
+    这里先做一次快速连通性判断，不通就直接放弃该引擎。
+    """
+    try:
+        with socket.create_connection((host, 443), timeout=timeout):
+            return True
+    except OSError:
+        return False
+
+
 def _load_roberta_model():
-    """懒加载 RoBERTa ChatGPT 检测器"""
-    global _roberta_model, _roberta_tokenizer, _roberta_ai_idx
+    """懒加载 RoBERTa ChatGPT 检测器
+
+    v2：失败后写入 _roberta_failed，后续调用直接返回，不再重复联网重试，
+        也不再向 stderr 打印长篇警告（设 AURORA_VERBOSE=1 可恢复）。
+    """
+    global _roberta_model, _roberta_tokenizer, _roberta_ai_idx, _roberta_failed
+    if _roberta_failed:
+        return None, None, None
     if _roberta_model is None:
+        if not _hf_reachable():
+            _roberta_failed = True
+            print("[aurora] 连不上 huggingface.co，跳过 roberta-chatgpt 引擎"
+                  "（其余统计引擎照常工作，不影响结论方向）", file=sys.stderr)
+            return None, None, None
         try:
             from transformers import AutoModelForSequenceClassification, AutoTokenizer
             import torch
@@ -1764,13 +1818,18 @@ def _load_roberta_model():
             if _roberta_ai_idx is None:
                 _roberta_ai_idx = max(int(k) for k in id2label.keys())
         except Exception as e:
-            print(f"RoBERTa model load failed: {e}")
+            _roberta_failed = True
+            if _VERBOSE:
+                print(f"[aurora] RoBERTa 模型不可用，已跳过该引擎：{e}", file=sys.stderr)
+            else:
+                print("[aurora] RoBERTa 模型不可用（离线），已跳过 roberta-chatgpt 引擎。"
+                      "设 AURORA_VERBOSE=1 查看详情。", file=sys.stderr)
             return None, None, None
     return _roberta_model, _roberta_tokenizer, _roberta_ai_idx
 
 
 # ============================================================
-# 第 21 号引擎：隐藏字符检测器（Hidden Characters Detector）
+# 隐藏字符检测器（Hidden Characters Detector）
 # 创新角度：AI生成的文本可能会有水印（零宽字符、不可见字符）
 # 原理：检测文本里有没有隐藏的、不可见的字符
 # ============================================================
@@ -1785,7 +1844,7 @@ _HIDDEN_CHARACTERS = [
     "\ufeff",  # 零宽非断空格
     # 软连字符
     "\u00ad",  # 软连字符
-    # 其他不可见字符（精雕细琢新增）
+    # 其他不可见字符
     "\u200e",  # 从左到右标记
     "\u200f",  # 从右到左标记
     "\u202a",  # 从左到右嵌入
@@ -1797,7 +1856,7 @@ _HIDDEN_CHARACTERS = [
     "\u2067",  # 从右到左隔离
     "\u2068",  # 第一类强隔离
     "\u2069",  # 弹出隔离
-    # 其他隐藏字符（精雕细琢新增）
+    # 其他隐藏字符
     "\u034f",  # 组合图形连接符
     "\u0483",  # 组合变音符号
     "\u0485",  # 组合西里尔变音符号
@@ -1811,7 +1870,7 @@ def _detect_hidden_characters(text: str) -> float:
     人类写的文本不会有这些隐藏字符
     所以：隐藏字符越多 = 越像 AI
     """
-    word_count = max(len(text.split()), 1)
+    word_count = max(int(_word_count(text)), 1)
 
     # 统计隐藏字符数量
     hidden_count = 0
@@ -1828,7 +1887,7 @@ def _detect_hidden_characters(text: str) -> float:
 
 
 # ============================================================
-# 第 22 号引擎：句首词分布检测器（Sentence Starter Distribution）
+# 句首词分布检测器（Sentence Starter Distribution）
 # 全新角度！人类写作的句首词分布很随机，AI写作的句首词分布很规律
 # ============================================================
 
@@ -1906,13 +1965,13 @@ def _detect_starter_patterns(text: str) -> float:
 
 
 # ============================================================
-# 第 23 号引擎：标点符号使用模式检测器（Punctuation Patterns）
+# 标点符号使用模式检测器（Punctuation Patterns）
 # 全新角度！人类和AI的标点使用习惯不同
 # ============================================================
 
 def _detect_punctuation_patterns(text: str) -> float:
     """标点使用模式检测器（合并感叹句/疑问句 + 标点符号使用）"""
-    word_count = max(len(text.split()), 1)
+    word_count = max(int(_word_count(text)), 1)
 
     # 统计感叹号和问号的密度
     exclamation_density = (text.count("!") / word_count) * 1000
@@ -1937,91 +1996,7 @@ def _detect_punctuation_patterns(text: str) -> float:
 
 
 # ============================================================
-# 第 24 号引擎：段落长度分布检测器（Paragraph Length Distribution）
-# 全新角度！AI的段落长度更均匀
-# ============================================================
-
-def _detect_paragraph_length_distribution(text: str) -> float:
-    """段落长度分布检测器"""
-    paragraphs = [p.strip() for p in text.split("\n\n") if len(p.strip().split()) >= 5]
-    if len(paragraphs) < 3:
-        return 0.5
-
-    # 统计段落长度的变异系数
-    import statistics
-    para_lengths = [len(p.split()) for p in paragraphs]
-    mean_len = statistics.mean(para_lengths)
-    stdev = statistics.stdev(para_lengths)
-    cv = stdev / mean_len if mean_len > 0 else 0
-
-    # 人类：cv ~0.5-0.8，AI：cv ~0.2-0.4
-    uniformity_score = max(0, 1.0 - (cv / 0.6))
-    return round(uniformity_score, 3)
-
-
-# ============================================================
-# 第 25 号引擎：感叹句/疑问句比例检测器（Exclamation/Question Ratio）
-# 全新角度！人类写作有更多感叹和疑问
-# ============================================================
-
-def _detect_exclamation_question_ratio(text: str) -> float:
-    """感叹句/疑问句比例检测器"""
-    sentences = _split_sentences(text)
-    if len(sentences) < 5:
-        return 0.5
-
-    exclamation_count = sum(1 for s in sentences if "!" in s)
-    question_count = sum(1 for s in sentences if "?" in s)
-    total = len(sentences)
-
-    # 人类：感叹句+疑问句比例 ~10-20%
-    # AI：感叹句+疑问句比例 ~2-5%
-    ratio = (exclamation_count + question_count) / total
-    # ratio越高 = 越像人
-    ai_score = min(max((0.10 - ratio) / 0.08, 0.0), 1.0)
-    return round(ai_score, 3)
-
-
-# ============================================================
-# 第 26 号引擎：同义词使用频率检测器（Synonym Usage Frequency）
-# 全新角度！AI更喜欢用同义词
-# ============================================================
-
-# 常见的同义词对
-_SYNONYM_PAIRS = [
-    ("good", "great"), ("good", "excellent"), ("good", "wonderful"),
-    ("bad", "terrible"), ("bad", "awful"), ("bad", "horrible"),
-    ("big", "large"), ("big", "huge"), ("big", "enormous"),
-    ("small", "tiny"), ("small", "little"), ("small", "miniature"),
-    ("happy", "glad"), ("happy", "joyful"), ("happy", "delighted"),
-    ("sad", "unhappy"), ("sad", "depressed"), ("sad", "sorrowful"),
-    ("important", "crucial"), ("important", "vital"), ("important", "essential"),
-    ("difficult", "hard"), ("difficult", "challenging"), ("difficult", "tough"),
-    ("easy", "simple"), ("easy", "effortless"), ("easy", "straightforward"),
-    ("fast", "quick"), ("fast", "rapid"), ("fast", "swift"),
-]
-
-
-def _detect_synonym_usage(text: str) -> float:
-    """同义词使用频率检测器"""
-    text_lower = text.lower()
-    word_count = max(len(text.split()), 1)
-
-    synonym_count = 0
-    for word1, word2 in _SYNONYM_PAIRS:
-        if word1 in text_lower and word2 in text_lower:
-            synonym_count += 1
-
-    # 同义词密度（每100词）
-    synonym_density = (synonym_count / word_count) * 100
-
-    # 人类：~1-2 per 100 words，AI：~3-5 per 100 words
-    ai_score = min(max((synonym_density - 1.5) / 3.0, 0.0), 1.0)
-    return round(ai_score, 3)
-
-
-# ============================================================
-# 第 27 号引擎：长句/短句交替模式检测器（Long/Short Sentence Alternation）
+# 长句/短句交替模式检测器（Long/Short Sentence Alternation）
 # 全新角度！人类写作有长短句交替
 # ============================================================
 
@@ -2032,7 +2007,7 @@ def _detect_sentence_length_distribution(text: str) -> float:
         return 0.5
 
     # 统计每个句子的长度
-    lengths = [len(s.split()) for s in sentences]
+    lengths = [int(_word_count(s)) for s in sentences]
 
     # 统计相邻句子的长度差（长句/短句交替）
     diffs = []
@@ -2042,7 +2017,6 @@ def _detect_sentence_length_distribution(text: str) -> float:
     alternation_score = min(max((7.0 - avg_diff) / 5.0, 0.0), 1.0)
 
     # 统计句子长度的变异系数（滑动窗口）
-    import statistics
     mean_len = statistics.mean(lengths)
     stdev = statistics.stdev(lengths)
     cv = stdev / mean_len if mean_len > 0 else 0
@@ -2053,14 +2027,12 @@ def _detect_sentence_length_distribution(text: str) -> float:
 
 
 # ============================================================
-# 第 28 号引擎：PAWN 困惑度注意力加权检测器
+# PAWN 困惑度注意力加权检测器
 # 参考 PAWN 方法：对困惑度进行注意力加权，低困惑度token权重更高
 # ============================================================
 
 def _detect_pawn_perplexity(text: str) -> float:
     """PAWN 困惑度注意力加权检测器"""
-    import math
-    from collections import Counter
 
     words = text.lower().split()
     if len(words) < 20:
@@ -2104,15 +2076,13 @@ def _detect_pawn_perplexity(text: str) -> float:
 
 
 # ============================================================
-# 第 29 号引擎：对抗扰动程度检测器（Adversarial Perturbation Detector）
+# 对抗扰动程度检测器（Adversarial Perturbation Detector）
 # 参考"Modeling the Attack"思路：计算文本距离"原始AI版本"的扰动程度
 # 扰动越小、越"顺滑"，AI嫌疑反而越高
 # ============================================================
 
 def _detect_adversarial_perturbation(text: str) -> float:
     """对抗扰动程度检测器"""
-    import math
-    from collections import Counter
 
     words = text.lower().split()
     if len(words) < 20:
@@ -2125,7 +2095,7 @@ def _detect_adversarial_perturbation(text: str) -> float:
     # 2. 检测句子长度方差（扰动会让句子更随机）
     sentences = _split_sentences(text)
     if len(sentences) >= 5:
-        sent_lengths = [len(s.split()) for s in sentences]
+        sent_lengths = [int(_word_count(s)) for s in sentences]
         mean_len = sum(sent_lengths) / len(sent_lengths)
         variance = sum((l - mean_len) ** 2 for l in sent_lengths) / len(sent_lengths)
         cv = math.sqrt(variance) / mean_len if mean_len > 0 else 0
@@ -2152,7 +2122,7 @@ def _detect_adversarial_perturbation(text: str) -> float:
 
 
 # ============================================================
-# 第 30 号引擎：语言检测器（Language Detector）
+# 语言检测器（Language Detector）
 # 自动判断文本是中文还是英文
 # ============================================================
 
@@ -2170,7 +2140,7 @@ def _detect_language(text: str) -> str:
 
 
 # ============================================================
-# 第 31 号引擎：中文AI检测器（简化版）
+# 中文AI检测器（简化版）
 # 针对中文文本的AI特征检测
 # ============================================================
 
@@ -2198,29 +2168,194 @@ _AI_CHINESE_MARKERS = [
 ]
 
 
-def _detect_chinese_ai(text: str) -> float:
-    """中文AI检测器"""
+_ZH_TEMPLATE = [
+    "首先", "其次", "再次", "最后", "综上所述", "总而言之", "值得注意的是",
+    "需要指出的是", "与此同时", "此外", "一方面", "另一方面", "由此可见",
+    "总的来说", "简而言之", "不难发现", "众所周知", "毫无疑问", "进一步说",
+    "在此基础上", "从某种意义上说",
+]
+# 公文/官腔词：中文 AI 特别喜欢，人类口语写作极少出现
+_ZH_JARGON = [
+    "赋能", "抓手", "闭环", "生态", "维度", "层面", "机制", "体系", "格局", "路径",
+    "举措", "支撑", "驱动", "融合", "协同", "优化", "提升", "构建", "助力", "纵深",
+    "引领", "夯实", "着力", "系统性", "整体性", "协同性",
+    # 空形容词：本语料人类样本零出现（R→∞）
+    "显著提升", "大幅改善", "有效优化", "深远影响", "有力支撑", "重要保障",
+    "卓越成效", "全面提升",
+]
+# 万能开头 / 套话收尾：人类样本几乎不出现（R→∞ / R=108）
+_ZH_BOILERPLATE = [
+    "随着", "在当今", "近年来", "众所周知", "综上所述", "总而言之",
+    "总的来说", "一言以蔽之", "由此可见", "需要指出的是",
+]
+# 翻译腔：从英文硬翻的句式（R≈1.7）
+_ZH_TRANSLATIONESE = [
+    "对于", "这意味着", "而言", "当", "基于",
+]
+# 口语标记：人写中文几乎必现
+_ZH_COLLOQUIAL = [
+    "我觉得", "我感觉", "其实", "挺", "特别", "真的", "咱们", "咋", "吧", "呢",
+    "啊", "嘛", "搞", "啥", "挺", "说白了", "反正", "估计", "好像", "有点",
+]
+
+
+_PPL_MODEL = None
+_PPL_TOKENIZER = None
+_PPL_TRIED = False
+
+
+def _find_local_model():
+    """按优先级找本地模型目录。"""
+    cands = [
+        os.environ.get("AURORA_PPL_MODEL", ""),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "models", "qwen2.5-0.5b"),
+    ]
+    for c in cands:
+        if c and os.path.isfile(os.path.join(c, "config.json")):
+            return c
+    return ""
+
+
+def _load_ppl_model():
+    global _PPL_MODEL, _PPL_TOKENIZER, _PPL_TRIED
+    if _PPL_TRIED:
+        return _PPL_MODEL, _PPL_TOKENIZER
+    _PPL_TRIED = True
+    path = _find_local_model()
+    if not path:
+        return None, None
+    try:
+        import warnings, logging
+        warnings.filterwarnings("ignore")
+        logging.disable(logging.WARNING)
+        from transformers import AutoTokenizer, AutoModelForCausalLM
+        _PPL_TOKENIZER = AutoTokenizer.from_pretrained(path)
+        _PPL_MODEL = AutoModelForCausalLM.from_pretrained(path, low_cpu_mem_usage=True)
+        _PPL_MODEL.eval()
+        if _VERBOSE:
+            print(f"[aurora] 困惑度模型已加载：{path}", file=sys.stderr)
+    except Exception as e:
+        if _VERBOSE:
+            print(f"[aurora] 模型加载失败：{e}", file=sys.stderr)
+        _PPL_MODEL = None
+        _PPL_TOKENIZER = None
+    return _PPL_MODEL, _PPL_TOKENIZER
+
+
+def _detect_lm_perplexity(text: str):
+    """语言模型困惑度 → AI 概率。
+
+    这是所有信号里对"改写"最鲁棒的一项：它不看用了什么词、怎么断句，
+    只看整段文字对语言模型来说有多可预测。改写能骗过表面特征，
+    但骗不过"这个词后面接什么"的概率分布。
+
+    实测（Qwen2.5-0.5B，500 token 截断）：
+      标准 AI 输出   困惑度  6.3 ~ 13.0
+      伪装成人类的 AI        14.4 ~ 59.7
+      真实人类               22.9 ~ 116.5
+
+    没有本地模型时返回 None，该引擎自动不参与。
+    """
+    # 当前挂载的是中文模型（Qwen2.5），对英文的困惑度不可靠：
+    # 实测英文人类文本同样被判"很顺"，等于给所有人加分。
+    # 英文侧仍走原有统计信号；将来接入英文模型后可放开。
     if _detect_language(text) != "zh":
-        return 0.5  # 英文文本不适用
+        return None
 
-    word_count = max(len(text), 1)
+    model, tok = _load_ppl_model()
+    if model is None:
+        return None
+    try:
+        import torch
+        ids = tok(text[:1200], return_tensors="pt", truncation=True, max_length=500)["input_ids"]
+        if ids.shape[1] < 30:
+            return None
+        with torch.no_grad():
+            ppl = float(torch.exp(model(input_ids=ids, labels=ids).loss))
+        if ppl <= 0:
+            return None
+        # 单边证据：只有"太顺"才构成证据。
+        # 困惑度高只能说明这段不像模型写的，不能反证是人写的
+        # —— 人写得好一样很顺。因此超过阈值直接不参与，返回 None。
+        if ppl > 25.0:
+            return None
+        score = (math.log(25) - math.log(ppl)) / (math.log(25) - math.log(6.5))
+        return round(max(0.0, min(1.0, score)), 3)
+    except Exception:
+        return None
 
-    # 统计中文AI常用短语的数量
-    marker_count = 0
-    for marker in _AI_CHINESE_MARKERS:
-        marker_count += text.count(marker)
 
-    # 密度
-    marker_density = (marker_count / word_count) * 1000
+def _detect_zh_char_entropy(text: str) -> float:
+    """中文字符级 3-gram 熵。
 
-    # 人类：~1-3 per 1k chars，AI：~5-10 per 1k chars
-    ai_score = min(max((marker_density - 2.0) / 5.0, 0.0), 1.0)
+    目前唯一"难以通过改写绕过"的中文信号：它衡量整篇用字的可预测程度，
+    加几句口语、编几个数字都改变不了整体分布。
 
-    return round(ai_score, 3)
+    实测（8 篇标准 AI / 4 篇伪装成人类的 AI / 24 篇真实人类）：
+      AI        熵 8.38 ~ 8.66
+      人类      熵 10.54
+    人类用字更分散，模型更依赖高频搭配。
+    """
+    if _detect_language(text) != "zh":
+        return 0.5
+    han = re.sub(r"[^\u4e00-\u9fff]", "", text)
+    if len(han) < 300:
+        return 0.5
+    n = 3
+    grams = [han[i:i + n] for i in range(len(han) - n + 1)]
+    total = len(grams)
+    counter = Counter(grams)
+    entropy = -sum((v / total) * math.log2(v / total) for v in counter.values())
+    return round(max(0.0, min(1.0, (11.5 - entropy) / 3.5)), 3)
+
+
+def _detect_chinese_ai(text: str) -> float:
+    """中文 AI 文本检测。
+
+    英文那套词表（delve / furthermore / testament to）对中文完全无效，
+    原实现只匹配十余个短语，权重也是 0，实测中文 AI 与人类样本区间完全重叠
+    （AI 均值 0.241 / 人类 0.143）。
+
+    这里改用六组中文特有信号，权重按实测区分力（Cohen's d）分配：
+      模板连接词  +      官腔抽象词  +
+      口语标记    -      具体数字    -
+      句长变异    -      引号使用    -
+    """
+    if _detect_language(text) != "zh":
+        return 0.5
+
+    n = max(_word_count(text), 1)
+    sentences = [x for x in _split_sentences(text) if len(x) >= 8]
+    if len(sentences) < 4:
+        return 0.5
+
+    lens = [_word_count(x) for x in sentences]
+    mean_len = sum(lens) / len(lens)
+    cv = statistics.pstdev(lens) / mean_len if mean_len else 0
+
+    def density(words):
+        return sum(text.count(w) for w in words) / n * 1000
+
+    s_tpl = min(density(_ZH_TEMPLATE) / 8.0, 1.0)
+    s_jargon = min(density(_ZH_JARGON) / 10.0, 1.0)
+    # 万能开头与套话收尾：AI 密度极高，人类几乎为零
+    s_boiler = min(density(_ZH_BOILERPLATE) / 6.0, 1.0)
+    s_colloq = max(0.0, 1.0 - density(_ZH_COLLOQUIAL) / 4.0)
+    s_number = max(0.0, 1.0 - (len(re.findall(r"\d", text)) / n * 1000) / 8.0)
+    s_cv = max(0.0, min(1.0, (0.62 - cv) / 0.35))
+    s_quote = max(0.0, 1.0 - (len(re.findall(r"[“”「」『』]", text)) / n * 1000) / 6.0)
+
+    # 权重按"可伪造性"重新分配：
+    #   数字 / 口语 / 引号  是显式特征，写手用提示词加几句就绕过了；
+    #   句长节奏          需要逐句控制长度，很难长期伪装；
+    #   模板词 / 官腔     属于习惯性输出，中等可伪造。
+    score = (s_tpl * 0.12 + s_jargon * 0.14 + s_boiler * 0.10
+             + s_colloq * 0.12 + s_number * 0.10 + s_cv * 0.30 + s_quote * 0.12)
+    return round(max(0.0, min(1.0, score)), 3)
 
 
 # ============================================================
-# 第 32 号引擎：统计水印检测器（简化版）
+# 统计水印检测器（简化版）
 # 检测统计水印（green/red-list）
 # ============================================================
 
@@ -2232,7 +2367,6 @@ def _detect_statistical_watermark(text: str) -> float:
 
     # 简化版统计水印检测：
     # 检测是否有异常的token分布（绿色token比例过高）
-    from collections import Counter
     word_freq = Counter(words)
 
     # 找出出现次数最多的词（绿色候选）
@@ -2247,14 +2381,12 @@ def _detect_statistical_watermark(text: str) -> float:
 
 
 # ============================================================
-# 第 33 号引擎：SpecDetect 信号处理检测器（简化版）
+# SpecDetect 信号处理检测器（简化版）
 # 对困惑度序列做频域分析，捕捉AI文本在频谱上的异常模式
 # ============================================================
 
 def _detect_spec_detect(text: str) -> float:
     """SpecDetect 信号处理检测器（简化版）"""
-    import math
-    from collections import Counter
 
     words = text.lower().split()
     if len(words) < 30:
@@ -2296,14 +2428,12 @@ def _detect_spec_detect(text: str) -> float:
 
 
 # ============================================================
-# 第 34 号引擎：DNA-DetectLLM（简化版）
+# DNA-DetectLLM（简化版）
 # 把检测看作"修复"过程：计算文本与"理想AI序列"的距离
 # ============================================================
 
 def _detect_dna_detect(text: str) -> float:
     """DNA-DetectLLM 简化版"""
-    import math
-    from collections import Counter
 
     words = text.lower().split()
     if len(words) < 30:
@@ -2338,18 +2468,16 @@ def _detect_dna_detect(text: str) -> float:
 
 
 # ============================================================
-# 第 28 号引擎：重复词检测器（Repeated Words Detector）
+# 重复词检测器（Repeated Words Detector）
 # 全新角度！AI写作会重复使用某些词
 # ============================================================
 
 def _detect_vocabulary_diversity(text: str) -> float:
     """词汇多样性检测器（合并重复词 + 词汇丰富度）"""
-    import math
     words = text.lower().split()
     if len(words) < 20:
         return 0.5
 
-    from collections import Counter
     word_freq = Counter(words)
 
     # 重复词检测
@@ -2365,152 +2493,6 @@ def _detect_vocabulary_diversity(text: str) -> float:
     ttr_score = min(max(ttr_score, 0.0), 1.0)
 
     final_score = repeated_score * 0.4 + ttr_score * 0.6
-    return round(final_score, 3)
-
-
-# ============================================================
-# 第 29 号引擎：数字/百分比使用检测器（Numbers/Percentages Usage）
-# 全新角度！AI更喜欢用数字和百分比
-# ============================================================
-
-def _detect_specific_details(text: str) -> float:
-    """具体细节密度检测器（合并数字/百分比 + 具体细节）"""
-    word_count = max(len(text.split()), 1)
-
-    # 数字检测
-    numbers = len(re.findall(r'\b\d+\b', text))
-    percentages = len(re.findall(r'\b\d+(\.\d+)?%', text))
-    number_density = (numbers / word_count) * 1000
-    percentage_density = (percentages / word_count) * 1000
-    number_score = min(max((number_density - 30) / 40.0, 0.0), 1.0)
-    percentage_score = min(max((percentage_density - 5) / 10.0, 0.0), 1.0)
-
-    # 具体细节检测（人名、地名、组织名等）
-    # 简单检测：大写字母开头的词
-    proper_nouns = len(re.findall(r'\b[A-Z][a-z]+\b', text))
-    proper_noun_density = (proper_nouns / word_count) * 1000
-    # 人类：~50-100 per 1k words，AI：~20-50 per 1k words
-    proper_noun_score = min(max((80 - proper_noun_density) / 60.0, 0.0), 1.0)
-
-    final_score = number_score * 0.3 + percentage_score * 0.2 + proper_noun_score * 0.5
-    return round(final_score, 3)
-
-
-# ============================================================
-# 第 30 号引擎：引用模式检测器（Citation Patterns Detector）
-# 全新角度！AI的引用方式更公式化
-# ============================================================
-
-# AI常用的引用模式
-_CITATION_PATTERNS = [
-    r'according to \w+ \(\d{4}\)',
-    r'\w+ et al\. \(\d{4}\)',
-    r'\w+ \(\d{4}\) (found|showed|demonstrated|argued|claimed)',
-    r'studies (show|show that|have shown)',
-    r'research (indicates|suggests|has shown)',
-    r'experts (believe|agree|argue)',
-]
-
-
-def _detect_formulaic_patterns(text: str) -> float:
-    """公式化模式检测器（合并引用模式 + 公式化表达）"""
-    word_count = max(len(text.split()), 1)
-
-    # 引用模式检测
-    citation_count = 0
-    for pattern in _CITATION_PATTERNS:
-        citation_count += len(re.findall(pattern, text, re.IGNORECASE))
-    citation_density = (citation_count / word_count) * 1000
-    citation_score = min(max((citation_density - 2.0) / 5.0, 0.0), 1.0)
-
-    # 公式化表达检测（检测AI常用短语）
-    formulaic_count = 0
-    for phrase in _AI_FORMULAIC_MARKERS:
-        formulaic_count += len(re.findall(phrase, text, re.IGNORECASE))
-    formulaic_density = (formulaic_count / word_count) * 1000
-    formulaic_score = min(max((formulaic_density - 5.0) / 15.0, 0.0), 1.0)
-
-    final_score = citation_score * 0.4 + formulaic_score * 0.6
-    return round(final_score, 3)
-
-
-# ============================================================
-# 第 31 号引擎：段落开头模式检测器（Paragraph Opener Patterns）
-# 全新角度！AI的段落开头更规律
-# ============================================================
-
-# AI常用的段落开头
-_PARAGRAPH_OPENERS = [
-    "first", "second", "third", "finally", "lastly",
-    "however", "therefore", "moreover", "furthermore",
-    "in addition", "in contrast", "in conclusion",
-    "on the other hand", "on one hand",
-    "as a result", "consequently", "thus", "hence",
-    "it is", "there are", "this is",
-    "one of", "another", "some", "many",
-]
-
-
-def _detect_paragraph_openers(text: str) -> float:
-    """段落开头模式检测器"""
-    paragraphs = [p.strip() for p in text.split("\n\n") if len(p.strip().split()) >= 5]
-    if len(paragraphs) < 3:
-        return 0.5
-
-    opener_count = 0
-    for para in paragraphs:
-        words = para.split()
-        if words:
-            first_word = words[0].lower().strip(".,!?;:'\"()")
-            for opener in _PARAGRAPH_OPENERS:
-                if first_word.startswith(opener) or first_word == opener:
-                    opener_count += 1
-                    break
-
-    opener_ratio = opener_count / len(paragraphs)
-
-    # 人类：~20-30%，AI：~50-70%
-    ai_score = min(max((opener_ratio - 0.25) / 0.40, 0.0), 1.0)
-    return round(ai_score, 3)
-
-
-# ============================================================
-# 第 32 号引擎：句尾词分布检测器（Sentence Ending Distribution）
-# 全新角度！人类写作的句尾词分布很随机，AI写作的句尾词分布很规律
-# ============================================================
-
-def _detect_sentence_ending_distribution(text: str) -> float:
-    """句尾词分布检测器"""
-    sentences = _split_sentences(text)
-    if len(sentences) < 5:
-        return 0.5
-
-    # 统计每个句子的最后一个词
-    endings = []
-    for sent in sentences:
-        words = sent.strip().split()
-        if words:
-            last_word = words[-1].lower().strip(".,!?;:'\"()")
-            endings.append(last_word)
-
-    if not endings:
-        return 0.5
-
-    # 统计句尾词的多样性
-    from collections import Counter
-    ending_freq = Counter(endings)
-    diversity = len(ending_freq) / len(endings)
-
-    # 人类：diversity ~0.8-0.9，AI：diversity ~0.6-0.7
-    diversity_score = min(max((0.85 - diversity) / 0.25, 0.0), 1.0)
-
-    # 统计重复句尾词的比例
-    repeated_endings = sum(count for count in ending_freq.values() if count > 1)
-    repeat_ratio = repeated_endings / len(endings)
-
-    repeat_score = min(max((repeat_ratio - 0.15) / 0.25, 0.0), 1.0)
-
-    final_score = diversity_score * 0.5 + repeat_score * 0.5
     return round(final_score, 3)
 
 
@@ -2605,11 +2587,53 @@ def compare_with_reference(doc_path: str, ref_path: str) -> dict:
     }
 
 
+def _word_count(text: str) -> float:
+    """估算词数，兼容中英文。
+
+    英文按空格分词；中文没有空格，`text.split()` 会把 1600 字的文章
+    算成十几个"词"，导致所有「每千词密度」指标虚高几百倍，
+    校验环节还会把正常中文稿误判为"过短"。
+
+    中文按 1.6 字/词折算（现代汉语平均词长约 1.5~1.7 字）。
+    """
+    zh = len(re.findall(r"[\u4e00-\u9fff]", text))
+    en = len(re.findall(r"[A-Za-z][A-Za-z'\-]*", text))
+    return en + zh / 1.6
+
+
 def _split_sentences(text: str) -> list:
-    """简单的句子切分"""
-    text = re.sub(r'\n+', ' ', text)
-    sentences = re.split(r'[.!?。！？]+', text)
-    return [s.strip() for s in sentences if len(s.strip()) > 10]
+    """句子切分，保留句末标点。
+
+    原实现用 re.split 直接按标点切开，句号被当作分隔符丢弃，
+    中文报告里句子会连成一片（"…生活方式和工作模式 从智能手机…"）。
+    """
+    text = re.sub(r"\n+", " ", text)
+    parts = re.findall(r"[^.!?。！？]+[.!?。！？]*", text)
+    return [x.strip() for x in parts if len(x.strip()) > 10]
+
+
+def _looks_like_reference_line(line: str) -> bool:
+    """判断一段是否像参考文献条目。
+
+    why：原来只靠 "References" 标题定位参考文献起点。
+    annotated bibliography 这类作业通常直接列条目、没有标题，
+    于是所有参考文献被当成正文段落参与计算——
+    一个 300 词的注释段紧挨着一个 33 词的文献条目，
+    段落长度方差被人为拉大，paragraph-rhythm 从 1.00 掉到 0.00，
+    总分凭空低 5 个百分点。同一份文字换个排版就换一个分数。
+
+    这里改用条目自身的特征识别，与文档排版无关：
+      1. 含 DOI / doi: 链接
+      2. APA 作者格式：Surname, A. B. ... (2020).
+      3. 卷(期), 页码 的模式
+    """
+    if re.search(r"https?://doi\.org|doi:\s*10\.", line, re.I):
+        return True
+    if re.match(r"^[A-Z][\w'\-]+,\s+[A-Za-z]\.", line) and re.search(r"\(\d{4}[a-z]?\)", line):
+        return True
+    if re.search(r"\b\d+\s*\(\d+\)\s*,\s*\d+\s*[-–]\s*\d+", line):
+        return True
+    return False
 
 
 def _extract_prose_only(text: str) -> tuple:
@@ -2644,6 +2668,9 @@ def _extract_prose_only(text: str) -> tuple:
         # 排除标题行（短的、全大写的）
         if len(line) < 60 and line.isupper():
             continue
+        # 排除参考文献条目（不依赖 "References" 标题是否存在）
+        if _looks_like_reference_line(line):
+            continue
         prose_lines.append(line)
 
     return '\n'.join(prose_lines), references
@@ -2656,7 +2683,6 @@ def _compute_perplexity_ngram(text: str, n: int = 3) -> float:
         return 0.5
 
     # 构建 n-gram 频率表（打磨：用 trigram 更准）
-    from collections import Counter
     ngrams = Counter()
     unigrams = Counter()
 
@@ -2666,7 +2692,6 @@ def _compute_perplexity_ngram(text: str, n: int = 3) -> float:
         ngrams[tuple(words[i:i+n])] += 1
 
     # 计算平均负对数似然
-    import math
     log_prob_sum = 0.0
     count = 0
     total_words = len(words)
@@ -2693,7 +2718,7 @@ def _compute_perplexity_ngram(text: str, n: int = 3) -> float:
 
     avg_log_prob = log_prob_sum / count
 
-    # 归一化（精雕细琢：调整范围）
+    # 归一化
     # 低困惑度（2-3）= 可预测 = AI 写的
     # 高困惑度（5-7）= 不可预测 = 人写的
     # 我们输出 AI 概率：困惑度越低，AI 概率越高
@@ -2702,7 +2727,7 @@ def _compute_perplexity_ngram(text: str, n: int = 3) -> float:
 
 
 def _sliding_window_detection(sentences: list, window_size: int = 7) -> list:
-    """段落级滑动窗口检测（精雕细琢版）：7句为一个窗口，带上下文"""
+    """段落级滑动窗口检测：7句为一个窗口，带上下文"""
     if len(sentences) < window_size:
         return [0.5] * len(sentences)
 
@@ -2714,7 +2739,7 @@ def _sliding_window_detection(sentences: list, window_size: int = 7) -> list:
         window_text = ' '.join(window)
 
         # 计算这个窗口的 burstiness
-        lengths = [len(s.split()) for s in window]
+        lengths = [int(_word_count(s)) for s in window]
         avg = sum(lengths) / len(lengths)
         std = (sum((l - avg) ** 2 for l in lengths) / len(lengths)) ** 0.5
         burstiness = std / (avg + 1)
@@ -2725,7 +2750,7 @@ def _sliding_window_detection(sentences: list, window_size: int = 7) -> list:
         else:
             uniformity = 0
 
-        # 窗口内的 AI 概率（精雕细琢：结合 burstiness 和 uniformity）
+        # 窗口内的 AI 概率
         if burstiness < 0.35 and uniformity > 0.65:
             window_ai = 0.75
         elif burstiness < 0.55:
@@ -2738,15 +2763,64 @@ def _sliding_window_detection(sentences: list, window_size: int = 7) -> list:
     return window_scores
 
 
-def run_ai_detection(text: str) -> AIResult:
-    """跑所有可用的 AI 检测引擎，返回综合结果"""
+def validate_text(text: str) -> tuple:
+    """输入质量校验。
+
+    统计型检测器对过短、重复、非自然语言的文本会给出看似确定的分数，
+    这在学术诚信场景里比"报错"更危险 —— 老师会把噪声当结论。
+    不合格时直接拒绝判定。
+    """
+    stripped = (text or "").strip()
+    if not stripped:
+        return False, "文本为空"
+    chars = len(stripped)
+    wc = _word_count(stripped)
+
+    if chars < 200:
+        return False, f"文本过短（{chars} 字符）；至少需要 200 字符，约 3~4 个段落"
+    if wc < 50:
+        return False, f"篇幅过短（约 {int(wc)} 词）；至少需要 50 词"
+
+    sentences = [s for s in _split_sentences(stripped) if int(_word_count(s)) >= 2]
+    if len(sentences) < 5:
+        return False, f"完整句子仅 {len(sentences)} 句；至少需要 5 句才能估计句长分布"
+
+    letters = sum(1 for c in stripped if c.isalpha())
+    if letters / chars < 0.40:
+        return False, "字母比例过低，疑似非自然语言文本（表格、代码或符号串）"
+
+    # 中英文分别统计词汇多样性（中文按字符二元组近似）
+    if _detect_language(stripped) == "zh":
+        chars_only = re.sub(r"[^\u4e00-\u9fff]", "", stripped)
+        grams = [chars_only[i:i+2] for i in range(len(chars_only) - 1)]
+        diversity = len(set(grams)) / max(len(grams), 1)
+        if diversity < 0.05:
+            return False, (f"用词重复度异常（{diversity:.1%}）；"
+                           "疑似同一句反复粘贴，不能作为检测对象")
+    else:
+        words = stripped.split()
+        uniq = len({w.lower().strip(".,!?;:") for w in words})
+        diversity = uniq / max(len(words), 1)
+        if diversity < 0.15:
+            return False, (f"词汇多样性仅 {diversity:.0%}，重复度异常；"
+                           "疑似同一句反复粘贴，不能作为检测对象")
+    if diversity < 0.15:
+        return False, (f"词汇多样性仅 {diversity:.0%}，重复度异常；"
+                       "疑似同一句反复粘贴，不能作为检测对象")
+    return True, ""
+
+
+def _compute_engine_scores(prose_text: str):
+    """跑全部检测引擎，只产出原始读数，不做任何判断。
+
+    原来这一段和权重表、聚合、报告组装全塞在 run_ai_detection 里（326 行），
+    改一个阈值要重跑全部计算，也没法单独测某个引擎。
+    切开之后这里只负责「测到什么」，意味着什么交给后面的 _aggregate。
+
+    返回 (engine_scores, sentences, window_scores)。后两者是逐句标注要用的
+    中间产物，一并带出去，避免重复切句。
+    """
     engine_scores = {}
-
-    # 步骤 0: 自动排除引用/参考文献部分
-    prose_text, references = _extract_prose_only(text)
-    if len(prose_text.strip()) < 50:
-        prose_text = text  # 如果提取后太短，就用原文
-
     # 引擎 1: lmscan（对正文跑）
     lmscan_score = _detect_with_lmscan(prose_text)
     if lmscan_score is not None:
@@ -2800,6 +2874,17 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 16: 人类瑕疵检测器（全新角度！越完美越像 AI）
     engine_scores["human-imperfection"] = _detect_human_imperfection(prose_text)
 
+    # 段落节奏（不依赖词表，跨语言有效）
+    engine_scores["paragraph-rhythm"] = _detect_paragraph_rhythm(prose_text)
+
+    # 中文字符熵（对改写最鲁棒）
+    engine_scores["zh-char-entropy"] = _detect_zh_char_entropy(prose_text)
+
+    # 语言模型困惑度（装了本地模型才启用）
+    ppl_score = _detect_lm_perplexity(prose_text)
+    if ppl_score is not None:
+        engine_scores["lm-perplexity"] = ppl_score
+
     # 引擎 17: 情感曲线检测器（AI 情感很平，人类有起伏）
     engine_scores["emotion-curve"] = _detect_emotion_curve(prose_text)
 
@@ -2827,11 +2912,6 @@ def run_ai_detection(text: str) -> AIResult:
     # 引擎 25: 词汇多样性检测器（合并重复词 + 词汇丰富度）
     engine_scores["vocabulary-diversity"] = _detect_vocabulary_diversity(prose_text)
 
-    # 引擎 26: 具体细节密度检测器（合并数字/百分比 + 具体细节）
-    engine_scores["specific-details"] = _detect_specific_details(prose_text)
-
-    # 引擎 27: 公式化模式检测器（合并引用模式 + 公式化表达）
-    engine_scores["formulaic-patterns"] = _detect_formulaic_patterns(prose_text)
 
     # 引擎 28: PAWN 困惑度注意力加权检测器（零样本范式）
     engine_scores["pawn-perplexity"] = _detect_pawn_perplexity(prose_text)
@@ -2850,68 +2930,149 @@ def run_ai_detection(text: str) -> AIResult:
 
     # 引擎 33: DNA-DetectLLM（零样本范式）
     engine_scores["dna-detect"] = _detect_dna_detect(prose_text)
+    return engine_scores, sentences, window_scores
 
-    # 综合分数（加权平均：RoBERTa 权重最高，因为是真正的 ML 分类器）
-    # 合并后的权重：强引擎权重更高，弱引擎权重更低，确保不互相冲突
-    weights = {
-        # 强引擎（ML分类器、成熟工具）- 权重最高
-        "roberta-chatgpt": 0.25,
-        "lmscan": 0.15,
-        # 中等引擎（创新引擎、老牌引擎）
-        "human-imperfection": 0.08,
-        "emotion-curve": 0.05,
-        "specific-details": 0.05,
-        "self-references": 0.04,
-        "logical-connectors": 0.04,
-        "linguistic-markers": 0.06,
-        "structural-patterns": 0.04,
-        # 合并后的引擎
-        "starter-patterns": 0.03,
-        "punctuation-patterns": 0.02,
-        "sentence-length": 0.02,
-        "vocabulary-diversity": 0.02,
-        "formulaic-patterns": 0.05,
-        # 弱引擎（小指标）
-        "hidden-characters": 0.01,
-        "formulaic-markers": 0.01,
-        "sentiment-hedging": 0.01,
-        "transition-density": 0.01,
-        "compressibility": 0.01,
-        "structured-shape": 0.01,
-        "ngram-perplexity": 0.03,
-        "pawn-perplexity": 0.04,  # PAWN 零样本引擎，权重稍高
-        "adversarial-perturbation": 0.03,  # 对抗扰动检测器
-        "chinese-ai": 0.02,  # 中文AI检测器
-        "statistical-watermark": 0.02,  # 统计水印检测器
-        "spec-detect": 0.03,  # SpecDetect 信号处理检测器
-        "dna-detect": 0.03,  # DNA-DetectLLM 零样本检测器
-        "burstiness-stat": 0.01,
-        "statistical-baseline": 0.01,
+
+def run_ai_detection(text: str) -> AIResult:
+    """跑所有可用的 AI 检测引擎，返回综合结果"""
+    engine_scores = {}
+
+    # 步骤 0: 自动排除引用/参考文献部分
+    prose_text, references = _extract_prose_only(text)
+    if len(prose_text.strip()) < 50:
+        prose_text = text  # 如果提取后太短，就用原文
+
+    engine_scores, sentences, window_scores = _compute_engine_scores(prose_text)
+
+    # ============================================================
+    # 集成 v2：显式引擎注册表 + 稳健聚合
+    # ------------------------------------------------------------
+    # 旧实现的问题：
+    #   weights.get(name, 0.1)  —— 未列进表的引擎自动拿 0.1 权重，
+    #   比表里一半引擎还高。sliding-window / vocabulary-richness /
+    #   vocabulary-diversity 三个噪声引擎就这样各拿 0.1，
+    #   把所有文本的分数都压到 0.41~0.45 之间。
+    #
+    # 新规则：
+    #   1) 未注册的引擎权重为 0（不再有默认值兜底）
+    #   2) 输出恰好等于 0 / 0.5 / 1 的引擎视为"恒定输出"，自动降到 15%
+    #   3) 加权均值 + 一次离群剔除
+    #   4) 输出置信度（基于采纳引擎的加权标准差）
+    #
+    # 权重来自 6 个已知来源样本上的实测区分力（人写 vs AI 写）。
+    # ============================================================
+    # 名字: (方向, 权重, 备注)  方向 +1 表示分数高 = 像 AI
+    ENGINE_SPEC = {
+        # —— 实测区分力强 ——
+        "roberta-chatgpt":       EngineSpec(+1, 0.25, "ML 分类器（需联网下载模型）"),
+        "lmscan":                EngineSpec(+1, 0.15, "外部 CLI"),
+        "linguistic-markers":    EngineSpec(+1, 0.12, "AI 高频词表"),
+        "formulaic-patterns":    EngineSpec(+1, 0.12, "公式化表达"),
+        "emotion-curve":         EngineSpec(+1, 0.10, "情感曲线平坦度"),
+        "transition-density":    EngineSpec(+1, 0.08, "过渡词密度"),
+        "sentiment-hedging":     EngineSpec(+1, 0.08, "对冲语密度"),
+        # —— 中等 ——
+        "sentence-length":       EngineSpec(+1, 0.07, "句长分布"),
+        "burstiness-stat":       EngineSpec(+1, 0.07, "突发度"),
+        "statistical-baseline":  EngineSpec(+1, 0.06, "统计基线"),
+        "sliding-window":        EngineSpec(+1, 0.06, "段落滑动窗口"),
+        "human-imperfection":    EngineSpec(+1, 0.06, "人味特征（v2 重写）"),
+        "paragraph-rhythm":      EngineSpec(+1, 0.07, "段落长度均匀度（跨语言）"),
+        "zh-char-entropy":       EngineSpec(+0, 0.0, "仅中文启用，见语言自适应"),
+        "lm-perplexity":         EngineSpec(+1, 0.22, "语言模型困惑度（需本地模型）"),
+        "formulaic-markers":     EngineSpec(+1, 0.05, "套话标记"),
+        "vocabulary-richness":   EngineSpec(+1, 0.05, "词汇丰富度"),
+        # —— 弱 ——
+        "starter-patterns":      EngineSpec(+1, 0.04, "句首模式"),
+        "specific-details":      EngineSpec(+1, 0.02, "具体细节密度（LLM 已普遍生成数值，弱信号）"),
+        "adversarial-perturbation": EngineSpec(+1, 0.04, "对抗扰动"),
+        "compressibility":       EngineSpec(+1, 0.03, "压缩率"),
+        "pawn-perplexity":       EngineSpec(+1, 0.03, "PAWN"),
+        "ngram-perplexity":      EngineSpec(+1, 0.02, "对短文本不可靠，仅作参考"),
+        # —— 已实测失效，权重置 0（仍显示，便于对照）——
+        "self-references":       (0, 0.0, "AI 同样高频使用 I think，无区分力"),
+        "logical-connectors":    (0, 0.0, "几乎恒为 1.0"),
+        "vocabulary-diversity":  (0, 0.0, "方向相反"),
+        "structural-patterns":   (0, 0.0, "区分力弱"),
+        "structured-shape":      (0, 0.0, "恒为 0"),
+        "hidden-characters":     (0, 0.0, "恒为 0"),
+        "punctuation-patterns":  (0, 0.0, "恒为 1.0"),
+        "statistical-watermark": (0, 0.0, "方向相反"),
+        "spec-detect":           (0, 0.0, "近乎恒定"),
+        "dna-detect":            (0, 0.0, "恒为 1.0，实现有误"),
+        "chinese-ai":            (0, 0.0, "仅中文文本生效"),
     }
-    total_weight = 0
-    weighted_sum = 0
+
+    # 语言自适应：中文文本下，英文词表类引擎基本失效，必须降权，
+    # 否则它们的噪声会盖过唯一有效的中文引擎。
+    _lang = _detect_language(prose_text)
+    if _lang == "zh":
+        _EN_ONLY = ("linguistic-markers", "formulaic-markers", "formulaic-patterns",
+                    "sentiment-hedging", "transition-density", "starter-patterns",
+                    "self-references", "logical-connectors", "ngram-perplexity",
+                    "pawn-perplexity", "adversarial-perturbation")
+        for _k in _EN_ONLY:
+            if _k in ENGINE_SPEC:
+                _d, _w, _n = ENGINE_SPEC[_k]
+                ENGINE_SPEC[_k] = EngineSpec(_d, round(_w * 0.2, 4), _n + "（对中文无效，降权）")
+        ENGINE_SPEC["chinese-ai"] = EngineSpec(+1, 0.24, "中文 AI 特征")
+        ENGINE_SPEC["zh-char-entropy"] = EngineSpec(+1, 0.20, "中文字符熵（抗改写）")
+
+    adopted = {}       # name -> (score, weight)
+    rejected = {}      # name -> 原因
     for name, score in engine_scores.items():
-        w = weights.get(name, 0.1)
-        weighted_sum += score * w
-        total_weight += w
-    final_score = weighted_sum / total_weight if total_weight > 0 else 0.5
+        spec = ENGINE_SPEC.get(name)
+        if spec is None:
+            rejected[name] = "未注册"
+            continue
+        direction, w, _note = spec
+        if direction == 0 or w <= 0:
+            rejected[name] = "实测无效"
+            continue
+        s = score if direction > 0 else 1.0 - score
+        # 只把"精确 0.5"视为引擎未触发（多数函数在文本不足时 return 0.5）。
+        # 0.0 和 1.0 都是合法信号：很多引擎对极端文本会给出饱和值，
+        # 早期版本把 1.0 也一并降权，导致 AI 检测中最有价值的满分引擎
+        # 反而被压到 0.015，属回归。已被弃用的引擎权重在注册表里就是 0，
+        # 不依赖这条规则兜底。
+        if abs(s - 0.5) < 1e-9:
+            w *= 0.15
+        adopted[name] = (s, w)
+
+    if adopted:
+        # 第一轮加权均值
+        tw = sum(w for _, w in adopted.values())
+        ws = sum(s * w for s, w in adopted.values())
+        mean1 = ws / tw if tw else 0.5
+        # 剔除偏离均值 0.45 以上的引擎后重算
+        filt = {k: v for k, v in adopted.items() if abs(v[0] - mean1) <= 0.45}
+        if not filt:
+            filt = adopted
+        tw = sum(w for _, w in filt.values())
+        ws = sum(s * w for s, w in filt.values())
+        final_score = ws / tw if tw else 0.5
+        # 加权标准差 → 置信度
+        wvar = sum(w * (s - final_score) ** 2 for s, w in filt.values()) / tw if tw else 0
+        wstd = wvar ** 0.5
+        confidence = "high" if wstd < 0.15 else ("medium" if wstd < 0.25 else "low")
+    else:
+        final_score, wstd, confidence = 0.5, 0.0, "low"
+
+    engine_scores = dict(engine_scores)  # 保留全部，供报告展示
 
     # 判定
-    if final_score > 0.6:
+    # 阈值随权重体系重标定：人写文本天然得分偏低，故下界放宽
+    # 阈值在 41 篇真实语料上重标定：
+    #   人类上界 0.385 / AI 下界 0.488，中间留出 mixed 带供人工复核
+    if final_score > 0.58:
         label = "ai"
-    elif final_score < 0.4:
+    elif final_score < 0.33:
         label = "human"
     else:
         label = "mixed"
 
-    # 计算引擎分歧度（标准差）
-    scores_list = list(engine_scores.values())
-    if len(scores_list) > 1:
-        mean_score = sum(scores_list) / len(scores_list)
-        variance = sum((s - mean_score) ** 2 for s in scores_list) / len(scores_list)
-        disagreement = variance ** 0.5
-    else:
-        disagreement = 0.0
+    # 引擎分歧度：沿用加权标准差（仅统计被采纳的引擎）
+    disagreement = wstd
 
     # 高度确信AI的引擎（>0.7）
     confident_engines = [
@@ -2956,15 +3117,39 @@ def run_ai_detection(text: str) -> AIResult:
             })
     flagged_sentences.sort(key=lambda x: x["score"], reverse=True)
 
+    # —— 改写嫌疑：词汇层仍带 AI 特征，但句式/情感层被打散 ——
+    # 这是"AI 生成后人工改写"或改写工具处理后最常见的信号分裂形态。
+    # 单看总分永远判不出来，因为改写本来就压低了绝大多数特征。
+    rewrite_hint = ""
+    _lmk = engine_scores.get("linguistic-markers")
+    _fmp = engine_scores.get("formulaic-patterns")
+    # 该判据基于英文词表（linguistic-markers 对中文恒为 0 或饱和），
+    # 中文文本下会稳定误报，故只在英文语境启用。
+    if (_lang == "en" and _lmk is not None and _lmk > 0.8
+            and _fmp is not None and _fmp < 0.25):
+        rewrite_hint = (
+            f"词汇层仍有 AI 特征（linguistic-markers {_lmk:.0%}），"
+            f"但句式与模板层已被打散（formulaic-patterns {_fmp:.0%}）。"
+            "典型形态为「AI 生成后人工改写」或改写工具处理，"
+            "此类文本的总分通常会被压低，需单独判断。"
+        )
+
     return AIResult(
         ai_probability=round(final_score, 4),
         label=label,
-        method=f"ensemble ({len(engine_scores)} engines, references excluded)",
+        method=f"ensemble v2 ({len(adopted)}/{len(engine_scores)} engines adopted, confidence={confidence}, references excluded)",
         engine_scores=engine_scores,
         flagged_sentences=flagged_sentences[:10],
         engine_disagreement=round(disagreement, 4),
         confident_engines=confident_engines[:5],
         conflicting_engines=conflicting_engines,
+        confidence=confidence,
+        adopted_engines=sorted(
+            [{"name": k, "score": round(v[0], 3), "weight": round(v[1], 3)}
+             for k, v in adopted.items()],
+            key=lambda x: x["weight"] * abs(x["score"] - final_score), reverse=True),
+        rejected_engines=[{"name": k, "reason": v} for k, v in rejected.items()],
+        rewrite_hint=rewrite_hint,
     )
 
 
@@ -3019,33 +3204,61 @@ def _cosine_sim(text1: str, text2: str) -> float:
 # 引用验证（onecite）
 # ============================================================
 
+def _doi_to_bibtex(doi: str) -> str:
+    """用 doi.org 的内容协商取 BibTeX，不依赖任何外部命令。
+
+    原实现只调 onecite CLI。这个命令默认没装，subprocess 抛异常后
+    所有 DOI 都被记成"解析失败"——报告会把有效的 DOI 说成有问题，
+    把"工具没装"伪装成"文献有问题"，属于最坏的一类误报。
+    """
+    import urllib.request
+
+    url = "https://doi.org/" + urllib.parse.quote(doi)
+    req = urllib.request.Request(url, headers={"Accept": "application/x-bibtex"})
+    try:
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            body = resp.read().decode("utf-8", "replace")
+        return body.strip() if "@" in body else ""
+    except Exception:
+        return ""
+
+
 def run_citation_check(text: str) -> CitationResult:
-    """提取引用并调用 onecite 验证"""
-    # 提取 DOI
-    dois = re.findall(r'10\.\d{4,}/[^\s\]>\)]+', text)
-    dois = list(set(dois))  # 去重
+    """提取引用并逐一验证：优先 onecite，缺失时回落到 doi.org 内容协商。"""
+    import shutil
+
+    # 提取 DOI，末尾的标点不算
+    dois = re.findall(r"10\.\d{4,}/[^\s\]\)>,;]+", text)
+    dois = list(dict.fromkeys(dois))  # 去重并保留顺序
 
     if not dois:
         return CitationResult(total_extracted=0, resolved=0)
 
+    has_onecite = shutil.which("onecite") is not None
     resolved = 0
     failed = []
     bibtex_entries = []
 
     for doi in dois[:20]:  # 最多处理 20 条
-        try:
-            result = subprocess.run(
-                ["onecite", "process", doi, "--quiet"],
-                capture_output=True,
-                text=True,
-                timeout=15,
-            )
-            if result.returncode == 0 and result.stdout.strip():
-                resolved += 1
-                bibtex_entries.append(result.stdout.strip())
-            else:
-                failed.append(doi)
-        except Exception:
+        entry = ""
+        if has_onecite:
+            try:
+                result = subprocess.run(
+                    ["onecite", "process", doi, "--quiet"],
+                    capture_output=True,
+                    text=True,
+                    timeout=15,
+                )
+                if result.returncode == 0:
+                    entry = result.stdout.strip()
+            except Exception:
+                entry = ""
+        if not entry:
+            entry = _doi_to_bibtex(doi)
+        if entry:
+            resolved += 1
+            bibtex_entries.append(entry)
+        else:
             failed.append(doi)
 
     return CitationResult(
@@ -3075,8 +3288,9 @@ def run_check(text: str = "", file_path: str = "") -> CheckReport:
     if file_path:
         text = extract_text_from_file(file_path)
 
-    if not text or len(text.strip()) < 50:
-        return CheckReport(text_length=0)
+    ok, reason = validate_text(text)
+    if not ok:
+        return CheckReport(text_length=len((text or "").strip()), note=reason)
 
     # 跑各模块
     ai_result = run_ai_detection(text)
@@ -3094,10 +3308,15 @@ def run_check(text: str = "", file_path: str = "") -> CheckReport:
 # CLI 入口
 if __name__ == "__main__":
     import sys
+    _flags = {a for a in sys.argv[1:] if a.startswith("--")}
+    _args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    sys.argv = [sys.argv[0]] + _args
+
     if len(sys.argv) < 2:
         print("用法:")
-        print("  AI 检测: python aurora_check.py <文件路径>")
-        print("  文档比对: python aurora_check.py compare <当前文档> <参考文档>")
+        print("  AI 检测:   python aurora_check.py <文件路径> [--json] [--no-html]")
+        print("  文档比对:  python aurora_check.py compare <当前文档> <参考文档>")
+        print("  环境变量:  AURORA_VERBOSE=1 显示模型加载细节")
         sys.exit(1)
 
     # 文档比对模式
@@ -3120,10 +3339,14 @@ if __name__ == "__main__":
 
     # 普通 AI 检测模式
     report = run_check(file_path=sys.argv[1])
+    if "--json" in _flags:
+        print(json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
+        sys.exit(0)
     print(report.to_markdown())
 
     # 生成 HTML 报告
-    base_name = os.path.splitext(sys.argv[1])[0]
-    html_path = base_name + "_aurora_report.html"
-    report.to_html(output_path=html_path)
-    print(f"\nHTML 报告已生成: {html_path}")
+    if "--no-html" not in _flags:
+        base_name = os.path.splitext(sys.argv[1])[0]
+        html_path = base_name + "_aurora_report.html"
+        report.to_html(output_path=html_path)
+        print(f"\nHTML 报告已生成: {html_path}")

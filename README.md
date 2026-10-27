@@ -5,7 +5,7 @@
 ![Engines](https://img.shields.io/badge/Engines-31-orange.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
 
-**An open-source AI text detection and plagiarism toolkit integrating 31 detection engines, including a real RoBERTa machine learning classifier, 6 novel innovation engines, zero-shot detection paradigms (PAWN, SpecDetect, DNA-DetectLLM), adversarial robustness, statistical watermark detection, and engine disagreement analysis.**
+**An open-source AI text detection and plagiarism toolkit integrating 31 detection engines (29 run without any model download), including a real RoBERTa machine learning classifier, 6 novel innovation engines, zero-shot detection paradigms (PAWN, SpecDetect, DNA-DetectLLM), adversarial robustness, statistical watermark detection, and engine disagreement analysis.**
 
 ---
 
@@ -17,7 +17,7 @@ Unlike commercial software (such as Turnitin, GPTZero, or Originality.ai), Auror
 
 ### ✨ Key Features
 
-- 🤖 **31 integrated detection engines** - Statistical features + machine learning models + 6 novel innovation engines + zero-shot paradigms
+- 🤖 **31 detection engines**（29 个纯统计引擎离线可用，含 6 个自研引擎） - Statistical features + machine learning models + 6 novel innovation engines + zero-shot paradigms
 - 🧠 **RoBERTa ML classifier** - A real deep learning model, not just simple statistical rules
 - 🆕 **6 novel innovation engines** - Human imperfection detector, emotion curve detector, specific details detector, self-reference detector, logical connectors detector, hidden watermark detector
 - 🔬 **Zero-shot detection paradigms** - PAWN perplexity weighting, SpecDetect signal processing, DNA-DetectLLM repair-based detection
@@ -57,6 +57,54 @@ python aurora_check.py examples/sample_essay.txt
 # HTML report is saved in the same directory
 ```
 
+### 可选：困惑度模型（强烈推荐，中文）
+
+```bash
+python download_model.py     # 约 950MB，从 ModelScope 下载
+```
+
+装好后，检测会多一个「语言模型困惑度」信号——它衡量这段文字对语言模型来说
+有多"顺"。这是所有信号里对改写最鲁棒的一项：改写能改掉用词和句式，
+但改不掉"这个词后面该接什么"的概率分布。
+
+实测（Qwen2.5-0.5B，中文）：
+
+```text
+标准 AI 输出      困惑度  6.3 ~ 13.0
+伪装成人类的 AI            14.4 ~ 59.7
+真实人类                   22.9 ~ 116.5
+```
+
+它只作**单边证据**：困惑度低才构成"像 AI"的证据；困惑度高只能说明
+"不像模型写的"，不能反证是人写的——人写得好一样很顺。所以超过阈值直接不参与。
+
+不装也能用，只是少了这一项。模型约 944MB，不进仓库。
+
+### Web UI
+
+```bash
+pip install -r requirements-web.txt
+python web.py            # → http://127.0.0.1:8000
+```
+
+拖入 `.docx` / `.txt`，或直接粘贴文本。报告包含总分、置信度、逐句风险高亮、
+各信号贡献度。全部在本机运行，文档不出设备。
+
+Docker 一键部署：
+
+```bash
+docker compose up --build
+```
+
+### Benchmark
+
+```bash
+python benchmark.py
+```
+
+在 `examples/benchmark/` 上输出逐样本得分、人写/AI 区间、AUC 与判定准确率。
+文件名前缀即标签（`human_*` / `ai_*` / `paraphrased_*`），加自己的样本即可扩充。
+
 ### Document Comparison (Plagiarism Check)
 
 ```bash
@@ -68,7 +116,7 @@ python aurora_check.py compare document1.txt document2.txt
 
 ## 🧠 Detection Engines Explained
 
-Aurora Check integrates **15 detection engines**, divided into two categories:
+Aurora Check integrates **31 engines** — 29 statistical signals plus an optional ML classifier. Two categories:
 
 ### Category 1: Machine Learning Models (Highest Weight)
 
@@ -181,10 +229,57 @@ weights = {
 | Tier | Representative Software | Features |
 |------|------------------------|----------|
 | **Tier 1** | Turnitin, GPTZero, Originality.ai | Multiple pre-trained models + full-web comparison + commercial support |
-| **Tier 2** | **Aurora Check** | 15-engine ensemble + RoBERTa ML model + local comparison |
+| **Tier 2** | **Aurora Check** | 29-engine ensemble + RoBERTa ML model + local comparison |
 | **Tier 3** | Simple single-engine detectors | Only one or two statistical rules |
 
 ---
+
+## 📊 Measured on this build
+
+### English（`python benchmark.py`，随仓库分发）
+
+```text
+人写区间     0.163 ~ 0.284
+AI 区间      0.456 ~ 0.781
+间隔         +0.172
+AUC          1.000  (n=9，样本量小，仅作回归基线)
+```
+
+### 中文（本地实测，语料因版权不随仓库分发）
+
+采集 24 篇真实中文文章（少数派 / 36氪 / 简书）+ 8 篇生成式模型输出：
+
+```text
+                 均值     区间              检出(≥0.5)
+标准 AI 输出     0.667    0.585 ~ 0.775     8/8
+伪装成人类的 AI  0.611    0.494 ~ 0.672     3/4
+真实人类         0.249    0.129 ~ 0.375     0/24（零误判）
+```
+
+第三组是**对抗测试**：刻意加口语、编具体数字、打乱段落，模仿人类笔法。
+它测出了统计检测器的天花板——只靠表层特征，始终可以被改写绕过。
+
+对抗中唯一稳住的是 `zh-char-entropy`（字符级 3-gram 熵）：
+AI 文本 8.4~8.7 比特，人类 10.5 比特。加几句口语改变不了整篇的用字分布，
+这一项把对抗样本的检出率从 50% 拉到 75%。
+
+中文不是英文引擎的副产品：英文词表（delve / furthermore）对中文恒为 0，
+必须单独建模。当前中文引擎依赖六组信号——模板连接词、公文抽象词、
+口语标记、具体数字、句长变异、引号密度——并会在检测到中文时自动
+把英文词表类引擎降到 20% 权重。
+
+## ⚠️ Known Limitations
+
+Measured on 6 texts of known origin (see `test_regression.py`):
+
+| Issue | Detail |
+|---|---|
+| **Paraphrased AI text is not detected** | Rewriting destroys sentence rhythm, template and emotion signals. Total score drops to the human band. Use the `rewrite_hint` field instead of the score. |
+| **Non-native academic writing skews "human"** | Engines such as `formulaic-markers` use native-English marker lists; ESL writing scores 0 on them. |
+| **Short texts are unreliable** | Below ~200 characters the tool refuses to output a score (`note` field). |
+| **Absolute scores are not probabilities** | Do not read "43%" as "43% chance of AI". Only relative comparison between texts is meaningful. |
+
+Regardless of score, **defer to human judgement** for academic-integrity decisions.
 
 ## 🤝 Contributing
 
@@ -224,6 +319,7 @@ This project reverse-engineered and integrated core algorithms from the followin
 - [lynote-ai/ai-text-detector](https://github.com/lynote-ai/ai-text-detector) - 6-signal detection algorithm
 - [pablocaeg/sloptotal](https://github.com/pablocaeg/sloptotal) - 24-engine ensemble approach
 - [stef41/lmscan](https://github.com/stef41/lmscan) - Local statistical feature detection
+- [DW-Studio/sloplint](https://github.com/DW-Studio/sloplint) - 中文 AI 味特征清单（283 万字对照语料）
 - [Hello-SimpleAI/chatgpt-detector-roberta](https://huggingface.co/Hello-SimpleAI/chatgpt-detector-roberta) - RoBERTa ChatGPT detection model
 - [followsci/bert-ai-text-detector](https://huggingface.co/followsci/bert-ai-text-detector) - BERT academic text detection model
 
