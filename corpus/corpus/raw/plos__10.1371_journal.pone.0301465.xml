@@ -1,0 +1,1488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pone.0301465</article-id>
+<article-id pub-id-type="publisher-id">PONE-D-23-10789</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Employment</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Computer and information sciences</subject><subj-group><subject>Computer networks</subject><subj-group><subject>Internet</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Employment</subject><subj-group><subject>Jobs</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Microeconomics</subject><subj-group><subject>Household economics</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Human capital</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Salaries</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Computer and information sciences</subject><subj-group><subject>Network analysis</subject><subj-group><subject>Social networks</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Sociology</subject><subj-group><subject>Social networks</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Political science</subject><subj-group><subject>Political aspects of health</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Does internet use improve employment?——Empirical evidence from China</article-title>
+<alt-title alt-title-type="running-head">Does internet use improve employment?</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0009-0000-2757-3771</contrib-id>
+<name name-style="western">
+<surname>Zhan</surname>
+<given-names>Yunqiu</given-names>
+</name>
+<role content-type="http://credit.niso.org/contributor-roles/writing-original-draft/">Writing – original draft</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Yang</surname>
+<given-names>Shuwen</given-names>
+</name>
+<role content-type="http://credit.niso.org/contributor-roles/conceptualization/">Conceptualization</role>
+<role content-type="http://credit.niso.org/contributor-roles/methodology/">Methodology</role>
+<role content-type="http://credit.niso.org/contributor-roles/software/">Software</role>
+<role content-type="http://credit.niso.org/contributor-roles/supervision/">Supervision</role>
+<role content-type="http://credit.niso.org/contributor-roles/writing-review-editing/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>School of Marxism, Chengdu Technological University, Chengdu, Sichuan Province, China</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Research Institute of Social Development, Southwestern University of Finance and Economics, Chengdu, Sichuan Province, China</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Dey</surname>
+<given-names>Avanti</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Public Library of Science, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">zyq185075660@163.com</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>16</day>
+<month>4</month>
+<year>2024</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2024</year>
+</pub-date>
+<volume>19</volume>
+<issue>4</issue>
+<elocation-id>e0301465</elocation-id>
+<history>
+<date date-type="received">
+<day>10</day>
+<month>4</month>
+<year>2023</year>
+</date>
+<date date-type="accepted">
+<day>13</day>
+<month>3</month>
+<year>2024</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2024</copyright-year>
+<copyright-holder>Zhan, Yang</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0301465"/>
+<abstract>
+<p>Achieving comprehensive and high-quality employment is essential to achieving new levels of people’s well-being. The advancement of Internet technology not only affect the massiveness of employment, but also the quality of that. On the basis of constructing an employment quality evaluation index system, this article uses CLDS (China Labor-force Dynamics Survey) data to explore the impact of Internet use on the employment quality of workers and its underlying mechanisms. The results reveal that Internet use has a significant positive impact on improving the employment quality of workers. As the quantile of employment quality increases, internet use has a greater impact on workers with a lower employment quality quantile. In addition, the use of Internet has a more significant promoting effect on the employment quality of rural and female workers. From the perspective of mechanism, Internet use can increase workers’ social capital and influence their employment quality through the accumulation of social capital. Based on this, countermeasures and suggestions are put forward from the aspects of increasing investment and construction of Internet infrastructure, further perfecting the reform of household registration system, promoting human capital investment and social capital construction.</p>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100012226</institution-id>
+<institution>Fundamental Research Funds for the Central Universities</institution>
+</institution-wrap>
+</funding-source>
+<award-id>JBK2307095</award-id>
+<principal-award-recipient>
+<name name-style="western">
+<surname>Yang</surname>
+<given-names>Shuwen</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<funding-statement>It is the second author, Shuwen Yang received the funding award, named Fundamental Research Funds for the Central Universities (Award Number: JBK2307095).</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="0"/>
+<table-count count="7"/>
+<page-count count="17"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value><ext-link ext-link-type="uri" xlink:href="https://blog.csdn.net/m0_65191343/article/details/124136072" xlink:type="simple">https://blog.csdn.net/m0_65191343/article/details/124136072</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>1 Introduction</title>
+<p>With the advent of the digital age, the digital technology revolution represented by the Internet is driving the modernisation of traditional modes of production and lifestyles. Compared with traditional communication media, the Internet has network-specific attributes such as inter-temporal capability, as well as strong spillover and externality. The Internet has raised the level of informatisation, driven a new round of global scientific and technological revolution, and had an impact on various socio-economic fields. From the perspective of the employment field, the Internet has created new jobs for workers while promoting industrial restructuring. According to the White Paper on China’s Digital Economy Development and Employment (2021), there were 256 million jobs in China’s digital economy in 2020, up 15 percent year-on-year. "Achieving higher-quality employment" is a strategic choice for China’s current economic development, and the Internet will not only affect the quantity of employment, but also the quality of employment. So, how will Internet technology affect employment quality while also affecting employment quantity? What is the internal mechanism of Internet affecting employment quality? It is of great significance to analyze these questions against the double background of rapid development of digital technology and advocacy of high-quality employment.</p>
+<p>Internet-related studies were quite rich. The existing literature focuses on the following areas: First is the impact of the Internet on household economic well-being. Studies have shown that Internet use can reduce farmers’ costs of accessing information and enable them to make better production decisions, which can help increase farmers’ income and expenditures [<xref ref-type="bibr" rid="pone.0301465.ref001">1</xref>, <xref ref-type="bibr" rid="pone.0301465.ref002">2</xref>], but it may widen the income gap between employers and employees as well [<xref ref-type="bibr" rid="pone.0301465.ref003">3</xref>]. In addition, Internet use can also reduce the incidence of poverty and increase the diversity of consumption of the population [<xref ref-type="bibr" rid="pone.0301465.ref004">4</xref>, <xref ref-type="bibr" rid="pone.0301465.ref005">5</xref>]. Second is the impact of Internet use on agricultural productivity and economic efficiency. Relevant studies have shown that the Internet can increase the rate of agricultural production [<xref ref-type="bibr" rid="pone.0301465.ref006">6</xref>], reduce the inequality of agricultural productivity [<xref ref-type="bibr" rid="pone.0301465.ref007">7</xref>], and increase farm profits [<xref ref-type="bibr" rid="pone.0301465.ref008">8</xref>]. Therefore, the government should improve the construction of rural Internet infrastructure and increase the Internet penetration rate. Third is the impact of Internet use on e-commerce, online banking use and diversity of risky financial assets. In terms of e-commerce, the adoption of e-commerce can significantly increase household incomes [<xref ref-type="bibr" rid="pone.0301465.ref009">9</xref>], while Internet use can help increase the probability of farmers engaging in e-trade [<xref ref-type="bibr" rid="pone.0301465.ref010">10</xref>]. In terms of online banking, scholars suggest that customers’ skills in using the Internet need be improved, and website design should be more visually appealing to increase users’ willingness to use online banking [<xref ref-type="bibr" rid="pone.0301465.ref011">11</xref>–<xref ref-type="bibr" rid="pone.0301465.ref013">13</xref>]. In terms of risky financial diversity, relevant studies have shown that Internet use has an impact on the diversity of risky financial assets, and this impact is more obvious in the female group [<xref ref-type="bibr" rid="pone.0301465.ref014">14</xref>]. Fourth is the impact of Internet use on the sense of happiness and social justice. Internet use is closely related to mental health [<xref ref-type="bibr" rid="pone.0301465.ref015">15</xref>], with one view suggesting that it reduces feelings of loneliness and sadness, thereby increasing subjective well-being [<xref ref-type="bibr" rid="pone.0301465.ref016">16</xref>]. Another viewpoint is that Internet use reduces people’s life satisfaction and happiness [<xref ref-type="bibr" rid="pone.0301465.ref017">17</xref>], as well as the sense of social justice [<xref ref-type="bibr" rid="pone.0301465.ref018">18</xref>].</p>
+<p>It can be seen that a large number of studies have explored the impact of Internet use on various socio-economic aspects, but few studies have focused on the relationship between Internet use and employment quality. Even if a few studies have explored the impact of Internet use on the quality of employment, they have mostly analyzed it from a single dimension and lacked a comprehensive perspective. Combined with existing research, the contributions of this article are: first, while a large number of studies have discussed the impact of Internet use on the economic well-being of rural households, crop productivity, farm economic performance, e-commerce, online banking use, happiness, and social equity, few studies have analyzed the impact of Internet use on the quality of employment. The only studies on the impact of the Internet on employment quality mainly analyze the impact of Internet use a certain dimension of employment quality, lacking a comprehensive perspective. This article adopts the method of factor analysis to measure the index of employment quality and comprehensively analyze the impact of Internet use on employment quality. Second, unlike existing studies that mainly analyze employment quality at the macro level, this article uses micro data to analysize employment quality, which not only includes factors such as social security, salary level, labour contract, working hours, etc. at the macro level, but also pays attention to the subjective evaluation of workers on their jobs, such as job satisfaction and job security, so as to provide a more comprehensive measurement of employment quality. Thirdly, in addition to directly affecting the quality of employment, the use of the Internet also indirectly affects the quality of employment through other intrinsic mechanisms, and this article makes the study more in-depth by analyzing the intrinsic mechanisms of the Internet affecting the quality of employment.</p>
+<p>The remainder of the article is structured as follows: Section 2 combs the relevant literature and puts forward the theoretical hypothesis. Section 3 introduces the data sources, variables and empirical models. Section 4 reports the results of empirical analysis, including baseline regression, quantile regression, heterogeneity analysis, robustness test and internal mechanism analysis. Section 5 is the discussion. Section 6 offers implications, limitations and future recommendations.</p>
+</sec>
+<sec id="sec002">
+<title>2 Literature review and hypothesis</title>
+<sec id="sec003">
+<title>2.1 The impact of the Internet on the quality of employment</title>
+<p>Research on the impact of the Internet on employment has centered on three aspects: the quantity of employment, the structure of employment, and the quality of employment. In terms of the quantity of employment, there is a controversy about whether the Internet has increased or decreased the number of jobs. One viewpoint is that the Internet reduces jobs. According to Marx’s theory of relative surplus population, the organic composition of capital will cause a decrease in the demand for the labor force population, thus creating a relative surplus population. With the development of the Internet, materialized labor will further replace human labor, and there is a certain extrusion effect on jobs [<xref ref-type="bibr" rid="pone.0301465.ref019">19</xref>, <xref ref-type="bibr" rid="pone.0301465.ref020">20</xref>]. Another viewpoint is that the Internet will increase jobs, and the digital platform integrates resources and information from all aspects, which can provide more job opportunities for job seekers. Some scholars have examined the impact of the Internet on local employment rates based on panel data on broadband coverage in West Germany, and the results show that the popularization of the Internet can significantly increase employment rates [<xref ref-type="bibr" rid="pone.0301465.ref021">21</xref>]. Other studies have shown that the resources and information provided by Internet platforms can provide job seekers with more employment opportunities and choices [<xref ref-type="bibr" rid="pone.0301465.ref022">22</xref>]. In terms of employment structure, the development of Internet technology has an important impact on the adjustment of employment structure, and most scholars’ studies show that digital technology will increase the employment of high-skilled and low-skilled workers, but reduce the employment of middle-skilled workers, the employment structure in the Internet era will show the characteristic of "bipolarization" [<xref ref-type="bibr" rid="pone.0301465.ref023">23</xref>].</p>
+<p>Employment quality is a comprehensive concept, which can roudly reflect the working conditions that workers receive when they engage in social work, such as the level of wages and benefits, the length of working hours, whether labour rights and interests are protected, and the subjective satisfaction of workers with the work they do [<xref ref-type="bibr" rid="pone.0301465.ref024">24</xref>–<xref ref-type="bibr" rid="pone.0301465.ref026">26</xref>]. When scholars discuss the impact of Internet use on employment quality, they mostly analyze from a single dimension and lack a comprehensive perspective. (1) In terms of employment opportunities, the Internet can shorten workers’ job search time, reduce the cost of searching for a job, and increase the probability of getting a job [<xref ref-type="bibr" rid="pone.0301465.ref027">27</xref>, <xref ref-type="bibr" rid="pone.0301465.ref028">28</xref>]. (2) In terms of labour skills, the Internet technology has enriched people’s material and cultural life and at the same time promoted the improvement of labour skills [<xref ref-type="bibr" rid="pone.0301465.ref029">29</xref>, <xref ref-type="bibr" rid="pone.0301465.ref030">30</xref>]. (3) In terms of wages, the use of the Internet has a positive effect on raising the wage level of workers, workers who use the Internet can generate a significant wage premium [<xref ref-type="bibr" rid="pone.0301465.ref031">31</xref>]. (4) In terms of work autonomy, workers who work remotely through the Internet can achieve a better work-life balance and increase their work autonomy [<xref ref-type="bibr" rid="pone.0301465.ref032">32</xref>, <xref ref-type="bibr" rid="pone.0301465.ref033">33</xref>]. (5) In terms of working time, the Internet has a double effect on the working time of workers, as it may increase productivity and reduces working time, it can lengthen the actual working time of workers due to the flexibility of office forms as well [<xref ref-type="bibr" rid="pone.0301465.ref034">34</xref>].</p>
+<p>In general, although some studies analyzed the impact of the Internet on employment quality, they analyzed a particular dimension of employment quality or several dimensions separately, lacking a comprehensive perspective and relating mechanisms analysis. This article uses micro data to construct an employment quality index system, analyzing the impact of the Internet on the employment quality composite index and exploring the inner mechanism of the Internet’s impact on employment quality. The main effects of the Internet on employment quality are as follows: The first is the efficiency-enhancing effect. Emerging technologies such as the Internet have brought about new forms of business, which are mainly manifested in the platformisation, flexibilisation and borderlessness of employment. Under the premise that the total amount of work is fixed, workers can improve their work efficiency and reduce their working hours through instant communication and data transmission through the Internet, which improves their job satisfaction. The second is the wage enhancement effect. With the popularity of the Internet, economic development is gradually digitised, and various industries are also continuously extended and expanded due to "Internet+", which has boosted and activated the consumer Internet. Now it is integrating manufacturing and agriculture, promoting the digital transformation of agriculture and industry through the industrial Internet, realising digital agriculture and service-oriented manufacturing, giving rise to new industries and new modes, and creating a large number of new employment modes, thus promoting the continuous optimisation of the employment structure, and providing workers with better career development and salary compensation. The third is the quality enhancement effect. More highly qualified workers are needed in the Internet Age, which places higher demands on workers’ working ability and motivates them to continuously improve their working ability so as to obtain better promotion opportunities. The fourth is the stability enhancement effect. The Internet helps to increase public supervision of enterprises, protect workers’ rights and interests, and improve the security and stability of employ-ment. The fifth is the security-enhancing effect. The Internet can spread legal knowledge and raise workers’ awareness of contracts, as well as protecting workers’ legitimate rights and interests through encouraging enterprises to sign formal employment contracts with workers and taking out social insurance.</p>
+<p>Based on this, Hypothesis I is proposed: Internet use can improve the workers’ quality of employment.</p>
+</sec>
+<sec id="sec004">
+<title>2.2 Internet use, social capital and quality of employment</title>
+<p>The study of social capital theory can be traced back to the early 20th century, when the Hanifan (1916) referred it in The Community Center. In Hanifan’s view, social capital was both a prerequisite for collaboration between members and a resource for strengthening social networks [<xref ref-type="bibr" rid="pone.0301465.ref035">35</xref>]. On this basis, Bourdieu (1991) explained social capital in a more systematic way that social capital enhanced individual interests and was both a collection of potential resources and an institutionalized network of relationships [<xref ref-type="bibr" rid="pone.0301465.ref036">36</xref>]. Lin (2002) argued that social capital was not possessed by individuals and could not be acquired without effort, but needed to be acquired from social networks through practice. Social resources would play a more important role than individual resources at a later stage [<xref ref-type="bibr" rid="pone.0301465.ref037">37</xref>].</p>
+<p>The rapid development of the Internet broadened people’s social networks. Social resources are better integrated with the increading accessibility of information. The Internet provids a platform for people to communicate and share information with each other, which has a positive effect on the level of social capital [<xref ref-type="bibr" rid="pone.0301465.ref038">38</xref>]. The Internet can broaden social networks and has a positive impact on the enhancement of social capital [<xref ref-type="bibr" rid="pone.0301465.ref039">39</xref>]. Social capital is also seen as an individual’s ability to mobilize and absorb resources from a wide network. The richer the resources, the more opportunities they have for quality employment. Thus, social capital can improve the quality of employment for workers [<xref ref-type="bibr" rid="pone.0301465.ref040">40</xref>].</p>
+<p>Based on this, Hypothesis II is proposed: Internet use can directly improve the workers’ quality of employment while indirectly improve the workers’ quality of employment through the accumulation of social capital.</p>
+</sec>
+</sec>
+<sec id="sec005" sec-type="materials|methods">
+<title>3 Methods</title>
+<sec id="sec006">
+<title>3.1 Data source</title>
+<p>This article uses data from the CLDS, a survey planned and implemented by Sun Yat-sen University, with the latest survey conducted in 2018 and data officially released in 2020. The CLDS collects data at three levels: individual labor force, household and village residence, with the working-age population as the main study target, covering internet use and variables related to personal characteristics, Human capital characteristics, occupational characteristics, household characteristics and other variables, in line with the aims and themes of this study. The data covers 497 villages in 29 provinces (municipalities and autonomous regions) in China, making it a large, interdisciplinary, dynamic and regular tracking survey that is highly representative. The employed population aged 18–60 still in the labor market are retained in conjunction with the study objectives, yielding a sample of 3,983 people after dealing with missing values.</p>
+</sec>
+<sec id="sec007">
+<title>3.2 Variables</title>
+<sec id="sec008">
+<title>Internet use</title>
+<p>Current indicators on measuring people’s Internet use behavior mainly include: whether they use the Internet, the time they use the Internet, and the frequency of Internet use. In this article, Internet use is measured by how often workers use the Internet, use respondents’ 4-point scale answers to the questions “Do you surf the Internet?” to measure Chinese workers’ Internet use, with 1 indicating “never use”, 2 indicating “rarely use”, 3 indicating “sometimes use” and 4 indicating “often use”.</p>
+</sec>
+<sec id="sec009">
+<title>Quality of employment</title>
+<p>The measurement of employment quality is relatively complex, including both objective factors such as job income, working hours, social security and labor relations, and subjective factors such as job satisfaction. In this article, we refer to Leschke’s (2014) study and combine the CLDS-related options to construct an employment quality index system 25, using factor analysis to extract eight dimensions of factors (with an explanatory rate of 0.759), calculating the employment quality index and transforming it to obtain an employment quality index variable with values between 0 and 100, as shown in <xref ref-type="table" rid="pone.0301465.t001">Table 1</xref>.</p>
+<table-wrap id="pone.0301465.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0301465.t001</object-id>
+<label>Table 1</label> <caption><title>Employment quality index system.</title></caption>
+<alternatives>
+<graphic id="pone.0301465.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0301465.t001" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="justify">Index name</th>
+<th align="justify">Primary index</th>
+<th align="justify">Secondary index</th>
+<th align="justify">Factor weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="20"><bold>Employment quality index system</bold></td>
+<td align="left" rowspan="6"><bold>Fator1</bold><break/><bold>Social security factor</bold></td>
+<td align="left">Endowment insurance</td>
+<td align="left" rowspan="6">0.266</td>
+</tr>
+<tr>
+<td align="left">Medical insurance</td>
+</tr>
+<tr>
+<td align="left">Employment injury insurance</td>
+</tr>
+<tr>
+<td align="left">Maternity insurance</td>
+</tr>
+<tr>
+<td align="left">Unemployment insurance</td>
+</tr>
+<tr>
+<td align="left">Housing accumulation fund</td>
+</tr>
+<tr>
+<td align="left" rowspan="4"><bold>Fator2</bold><break/><bold>Subjective satisfaction factor</bold></td>
+<td align="left">Satisfaction of the relationship between partners</td>
+<td align="left" rowspan="4">0.207</td>
+</tr>
+<tr>
+<td align="left">Satisfaction with ability display</td>
+</tr>
+<tr>
+<td align="left">Satisfaction of job respect</td>
+</tr>
+<tr>
+<td align="left">Satisfaction with the opportunity to express opinions</td>
+</tr>
+<tr>
+<td align="left" rowspan="3"><bold>Fator3</bold><break/><bold>Work autonomy factor</bold></td>
+<td align="left">Autonomy of task content</td>
+<td align="left" rowspan="3">0.159</td>
+</tr>
+<tr>
+<td align="left">Autonomy of work schedule</td>
+</tr>
+<tr>
+<td align="left">Autonomy of work intensity</td>
+</tr>
+<tr>
+<td align="left" rowspan="2"><bold>Fator4</bold><break/><bold>Work safety factor</bold></td>
+<td align="left">Job safety satisfaction</td>
+<td align="left" rowspan="2">0.103</td>
+</tr>
+<tr>
+<td align="left">Work environment satisfaction</td>
+</tr>
+<tr>
+<td align="left" rowspan="2"><bold>Factor5</bold><break/><bold>Career development factor</bold></td>
+<td align="left">Opportunity for advancement</td>
+<td align="left" rowspan="2">0.073</td>
+</tr>
+<tr>
+<td align="left">Interesting work</td>
+</tr>
+<tr>
+<td align="left"><bold>Fator6</bold><break/><bold>Salary compensation factor</bold></td>
+<td align="left">Work income</td>
+<td align="left">0.066</td>
+</tr>
+<tr>
+<td align="left"><bold>Fator7</bold><break/><bold>Labor time factor</bold></td>
+<td align="left">Working hours</td>
+<td align="left">0.064</td>
+</tr>
+<tr>
+<td align="left"><bold>Fator8</bold><break/><bold>Labor relation factor</bold></td>
+<td align="left">Trade union organization</td>
+<td align="left">0.062</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec010">
+<title>Social capital</title>
+<p>There is no consensus in the academic community on the measurement of social capital. Some studies use trust as a proxy variable for social capital [<xref ref-type="bibr" rid="pone.0301465.ref041">41</xref>], others measure social capital by participation in institutional organizations [<xref ref-type="bibr" rid="pone.0301465.ref042">42</xref>]. According to Granovetter’s (1985) theory of embeddedness, economic decision-making processes need to take place in social interactions and economic behavior is embedded in social networks. Some factors in social networks, such as trust, family and friendships, may lead to altruistic economic behavior [<xref ref-type="bibr" rid="pone.0301465.ref043">43</xref>]. Altruistic behavior refers to acts of helping others to gain benefits at the expense of one’s own interests in times of difficulty or need. In this article, based on Granovetter’s theory of embeddedness, the number of people who can ask for help in times of crisis is used as a proxy variable for the mediating variable of social capital. 1 indicating “the number of people who can ask for help is 0”. 2 indicating “the number of people who can ask for help is 1–5”. 3 indicating “the number of people who can ask for help is 6–10”. 4 indicating “the number of people who can ask for help is more than 10”.</p>
+</sec>
+<sec id="sec011">
+<title>Instrumental variables and control variables</title>
+<p>The instrumental variable is the mean value of the frequency of Internet use in the worker’s community. As personal characteristics, human capital characteristics, occupational characteristics and family factors also affect the quality of employment of individuals, this article also includes age, gender (female = 0, male = 1), household registration (rural = 0, urban = 1), political affiliation (non-party member = 0, party member = 1), health (very unhealthy = 1, relatively unhealthy = 2, average = 3, healthy = 4, very healthy = 5), years of education, vocational certificate (no = 0, yes = 1), Mandarin level, full-time work (no = 0, yes = 1), work in the system (no = 0, yes = 1), size of work unit, family member relationship, and family economic level are used as control variables. The all-sample distribution is shown in <xref ref-type="table" rid="pone.0301465.t002">Table 2</xref>.</p>
+<table-wrap id="pone.0301465.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0301465.t002</object-id>
+<label>Table 2</label> <caption><title>Summary statistics.</title></caption>
+<alternatives>
+<graphic id="pone.0301465.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0301465.t002" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center">Variables</th>
+<th align="center">Meaning and measurement</th>
+<th align="center">Mean</th>
+<th align="center">Min</th>
+<th align="center">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Quality of employment</td>
+<td align="center">Composite index of employment quality (obtained by factor analysis)</td>
+<td align="center">57.31</td>
+<td align="center">0</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">Internet use</td>
+<td align="center">How often workers use the Internet (never = 1, rarely = 2, sometimes = 3, often = 4)</td>
+<td align="center">2.49</td>
+<td align="center">1</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">Social capital</td>
+<td align="center">Number of people to turn to when in trouble (None = 1, 1–5 people = 2, 6–10 people = 3, more than 10 people = 4)</td>
+<td align="center">2.62</td>
+<td align="center">1</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">Personal characteristics:</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="center">Age</td>
+<td align="center">Age of the worker (year)</td>
+<td align="center">38.83</td>
+<td align="center">18</td>
+<td align="center">60</td>
+</tr>
+<tr>
+<td align="center">Gender</td>
+<td align="center">Gender of the worker (female = 0, male = 1)</td>
+<td align="center">0.55</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">Household registration</td>
+<td align="center">Household registration of the worker (rural = 0, urban = 1)</td>
+<td align="center">0.49</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">Political identity</td>
+<td align="center">Political identity of the worker (non-party member = 0, party member = 1)</td>
+<td align="center">0.16</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">Human capital characteristics:</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="center">Health</td>
+<td align="center">Health level of the worker (very unhealthy = 1, relatively unhealthy = 2, average = 3, healthy = 4, very healthy = 5)</td>
+<td align="center">3.93</td>
+<td align="center">1</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">Education</td>
+<td align="center">Education of the worker (year)</td>
+<td align="center">11.51</td>
+<td align="center">0</td>
+<td align="center">22</td>
+</tr>
+<tr>
+<td align="center">Occupational certificate</td>
+<td align="center">Whether the worker has an occupational certificate (no = 0, yes = 1)</td>
+<td align="center">0.29</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">Mandarin level</td>
+<td align="center">Mandarin level of the worker (from 1 to 5, with higher scores representing higher levels of Mandarin)</td>
+<td align="center">4.13</td>
+<td align="center">1</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">Occupational characteristics:</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="center">Full-time work</td>
+<td align="center">Whether the worker works full-time (No = 0, Yes = 1)</td>
+<td align="center">0.92</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">Work in the system</td>
+<td align="center">Whether the worker works in the system (no = 0, yes = 1)</td>
+<td align="center">0.23</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">Size of work unit</td>
+<td align="center">Number of workers in the unit (&lt;50 = 1,50–100 = 2, 200–500 = 3, &gt; 500 = 4)</td>
+<td align="center">2.07</td>
+<td align="center">1</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">Family factors:</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="center">Family member relationship</td>
+<td align="center">Family member relationship of the worker (from 1 to 10, with higher scores representing better family member relationships)</td>
+<td align="center">7.42</td>
+<td align="center">1</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">Family economic level</td>
+<td align="center">Family economic level of the worker (from 1 to 10, with higher scores representing better family economic level)</td>
+<td align="center">6.10</td>
+<td align="center">1</td>
+<td align="center">10</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+</sec>
+<sec id="sec012">
+<title>3.3 Empirical model</title>
+<p>Linear regression is a model used to establish the relationship between a dependent variable and one or more independent variables. Simple linear regression involves one independent variable, while multiple linear regression involves multiple independent variables. This model predicts or explains the value of a dependent variable by considering multiple independent variables. Factors influencing employment quality are diverse, so this article constructs a multiple linear regression model of the impact of Internet use on employment quality, and sets the following regression equation:
+<disp-formula id="pone.0301465.e001">
+<alternatives>
+<graphic id="pone.0301465.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0301465.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1">
+<mml:msub><mml:mrow><mml:mi>E</mml:mi><mml:mi>m</mml:mi><mml:mi>p</mml:mi><mml:mi>l</mml:mi><mml:mi>o</mml:mi><mml:mi>y</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mrow><mml:mi>α</mml:mi></mml:mrow><mml:mrow><mml:mn>0</mml:mn></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>α</mml:mi></mml:mrow><mml:mrow><mml:mn>1</mml:mn></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>I</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mi>e</mml:mi><mml:mi>r</mml:mi><mml:mi>n</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>α</mml:mi></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>X</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>ε</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula></p>
+<p><italic>Employ</italic><sub><italic>i</italic></sub> represents every worker’s employment quality. <italic>Internet</italic><sub><italic>i</italic></sub> stands for Internet usage frequency. <italic>X</italic><sub><italic>i</italic></sub> stands for other control variables, including age, gender, household registration, political affiliation, health, years of education, vocational certificate, Mandarin level, full-time work, work in the system, size of work unit, family member relationship, and family economic level.</p>
+<p>Quantile regression is a regression analysis method used to explore changes in the distribution of the dependent variable under different conditions. Unlike traditional ordinary least squares regression, quantile regression focuses on the conditional distribution of the dependent variable at different quantiles, rather than just the average level of change. In quantile regression, we aim to capture a more comprehensive view of the data features by fitting the conditional distribution at various quantiles. This method is more sensitive to outliers and asymmetry in data distribution. To examine the differential impact of internet usage on the quality of employment across different quantiles, the following regression equation is set:
+<disp-formula id="pone.0301465.e002">
+<alternatives>
+<graphic id="pone.0301465.e002g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0301465.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2">
+<mml:msub><mml:mrow><mml:mi mathvariant="normal">Q</mml:mi></mml:mrow><mml:mrow><mml:mi>θ</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>E</mml:mi><mml:mi>m</mml:mi><mml:mi>p</mml:mi><mml:mi>l</mml:mi><mml:mi>o</mml:mi><mml:mi>y</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mrow><mml:mi mathvariant="normal">Z</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:msup><mml:mrow><mml:mi>φ</mml:mi></mml:mrow><mml:mrow><mml:mi>θ</mml:mi></mml:mrow></mml:msup><mml:msub><mml:mrow><mml:mi mathvariant="normal">Z</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula></p>
+<p>Z<sub><italic>i</italic></sub> in Eq (<xref ref-type="disp-formula" rid="pone.0301465.e002">2</xref>) represents the core explanatory variable mentioned in (1), <inline-formula id="pone.0301465.e003"><alternatives><graphic id="pone.0301465.e003g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0301465.e003" xlink:type="simple"/><mml:math display="inline" id="M3"><mml:msub><mml:mrow><mml:mi mathvariant="normal">Q</mml:mi></mml:mrow><mml:mrow><mml:mi>θ</mml:mi></mml:mrow></mml:msub><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>E</mml:mi><mml:mi>m</mml:mi><mml:mi>p</mml:mi><mml:mi>l</mml:mi><mml:mi>o</mml:mi><mml:mi>y</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mrow><mml:mi mathvariant="normal">Z</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:math></alternatives></inline-formula> represents the conditional quantile of <italic>Employ</italic><sub><italic>i</italic></sub>, θ represents the examined quantile, <italic>φ</italic><sup><italic>θ</italic></sup> is the vector of coefficients corresponding to θ, the estimation method is the minimization of the absolute deviation. The computation method of <italic>φ</italic><sup><italic>θ</italic></sup> in Eq (<xref ref-type="disp-formula" rid="pone.0301465.e002">2</xref>) is shown as in Eq (<xref ref-type="disp-formula" rid="pone.0301465.e004">3</xref>):
+<disp-formula id="pone.0301465.e004">
+<alternatives>
+<graphic id="pone.0301465.e004g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0301465.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4">
+<mml:msup><mml:mrow><mml:mi>φ</mml:mi></mml:mrow><mml:mrow><mml:mi>θ</mml:mi></mml:mrow></mml:msup><mml:mo>=</mml:mo><mml:mi mathvariant="normal">a</mml:mi><mml:mi mathvariant="normal">r</mml:mi><mml:mi mathvariant="normal">g</mml:mi><mml:mi mathvariant="normal">m</mml:mi><mml:mi mathvariant="normal">i</mml:mi><mml:mi mathvariant="normal">n</mml:mi><mml:mo>{</mml:mo><mml:mrow><mml:mrow><mml:msub><mml:mo stretchy="false">∑</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mspace width="0.25em"/><mml:msub><mml:mrow><mml:mi>E</mml:mi><mml:mi>m</mml:mi><mml:mi>p</mml:mi><mml:mi>l</mml:mi><mml:mi>o</mml:mi><mml:mi>y</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>≥</mml:mo><mml:msub><mml:mrow><mml:mi>X</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mi>φ</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:msub><mml:mrow><mml:mi mathvariant="normal">θ</mml:mi><mml:mo>/</mml:mo><mml:mi>S</mml:mi><mml:mi>u</mml:mi><mml:mi>r</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mrow><mml:mi>X</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mi>φ</mml:mi><mml:mo>/</mml:mo><mml:mo>+</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:msub><mml:mo stretchy="false">∑</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mrow><mml:mi>S</mml:mi><mml:mi>u</mml:mi><mml:mi>r</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>&lt;</mml:mo><mml:msub><mml:mrow><mml:mi>X</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mi>φ</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi mathvariant="normal">θ</mml:mi><mml:mo>)</mml:mo><mml:mo>/</mml:mo><mml:mi>S</mml:mi><mml:mi>u</mml:mi><mml:mi>r</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mrow><mml:mi>X</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mi>φ</mml:mi><mml:mo>/</mml:mo></mml:mrow></mml:mrow></mml:mrow><mml:mo>}</mml:mo>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula></p>
+<p>Mediation analysis model is typically utilized to determine whether the impact of an independent variable on a dependent variable is direct or indirectly facilitated through intermediary variables. This analysis aids in obtaining a more comprehensive understanding of the relationships and mechanisms between variables. In examining methods related to testing the mediation mechanism, stepwise regression analysis has been widely employed [<xref ref-type="bibr" rid="pone.0301465.ref044">44</xref>]. Referring to this study, we constructs the following equation based on Eq (<xref ref-type="disp-formula" rid="pone.0301465.e001">1</xref>):
+<disp-formula id="pone.0301465.e005">
+<alternatives>
+<graphic id="pone.0301465.e005g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0301465.e005" xlink:type="simple"/>
+<mml:math display="block" id="M5">
+<mml:msub><mml:mrow><mml:mi>C</mml:mi><mml:mi>a</mml:mi><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mi>l</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mrow><mml:mi mathvariant="normal">β</mml:mi></mml:mrow><mml:mrow><mml:mn>0</mml:mn></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi mathvariant="normal">β</mml:mi></mml:mrow><mml:mrow><mml:mn>1</mml:mn></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>I</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mi>e</mml:mi><mml:mi>r</mml:mi><mml:mi>n</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi mathvariant="normal">β</mml:mi></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>X</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>ε</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula>
+<disp-formula id="pone.0301465.e006">
+<alternatives>
+<graphic id="pone.0301465.e006g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0301465.e006" xlink:type="simple"/>
+<mml:math display="block" id="M6">
+<mml:msub><mml:mrow><mml:mi>E</mml:mi><mml:mi>m</mml:mi><mml:mi>p</mml:mi><mml:mi>l</mml:mi><mml:mi>o</mml:mi><mml:mi>y</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mrow><mml:mi mathvariant="normal">γ</mml:mi></mml:mrow><mml:mrow><mml:mn>0</mml:mn></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi mathvariant="normal">γ</mml:mi></mml:mrow><mml:mrow><mml:mn>1</mml:mn></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>I</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mi>e</mml:mi><mml:mi>r</mml:mi><mml:mi>n</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi mathvariant="normal">γ</mml:mi></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>C</mml:mi><mml:mi>a</mml:mi><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mi>l</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi mathvariant="normal">γ</mml:mi></mml:mrow><mml:mrow><mml:mn>3</mml:mn></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>X</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>ε</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub>
+</mml:math>
+</alternatives>
+<label>(5)</label>
+</disp-formula></p>
+<p>To test the mediating effect of <italic>Capital</italic><sub><italic>i</italic></sub> in <italic>Internet</italic><sub><italic>i</italic></sub> affecting <italic>Employ</italic><sub><italic>i</italic></sub>, first test the coefficient <italic>α</italic><sub>1</sub>, if <italic>α</italic><sub>1</sub> is not significant, stop the mediation test; if <italic>α</italic><sub>1</sub> is significant, test β<sub>1</sub> and γ<sub>2</sub>. If β<sub>1</sub> and γ<sub>2</sub> are significant, then test γ<sub>1</sub>; if γ<sub>1</sub> is significant, part of the intermediary effect is valid, if γ<sub>1</sub> is not significant, it is a complete intermediary effect. If β<sub>1</sub> and γ<sub>2</sub> at least one is not significant, conduct sobel test. If it passes the test, the intermediary effect exists. And vice versa, the intermediary effect does not exist.</p>
+</sec>
+</sec>
+<sec id="sec013">
+<title>4 Empirical results</title>
+<sec id="sec014">
+<title>4.1 Basic analysis</title>
+<p><xref ref-type="table" rid="pone.0301465.t003">Table 3</xref> presents the Baseline results. Model 1 only includes the core explanatory variable Internet use frequency. Model 2-Model 5 adds control variables related to personal characteristics, human capital characteristics, occupational characteristics and family characteristics respectively. With the addition of the control variables, the model’s goodness-of-fit R<sup>2</sup> increases, indicating that the model’s explanatory strength gradually increases and the variables are reasonably selected. From model 5, it can be seen that for every 1 unit increasing in the frequency of Internet use, the quality of employment of workers increases by 0.518. Internet use have a positive effect on the quality of employment of workers, which verifies the Hypothesis I.</p>
+<table-wrap id="pone.0301465.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0301465.t003</object-id>
+<label>Table 3</label> <caption><title>Baseline results.</title></caption>
+<alternatives>
+<graphic id="pone.0301465.t003g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0301465.t003" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="2"/>
+<th align="center">Model 1</th>
+<th align="center">Model 2</th>
+<th align="center">Model 3</th>
+<th align="center">Model 4</th>
+<th align="center">Model 5</th>
+</tr>
+<tr>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Core explanatory variables:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Internet usage frequency</td>
+<td align="center">2.032<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">1.267<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.524<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.585<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.518<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.110)</td>
+<td align="center">(0.122)</td>
+<td align="center">(0.133)</td>
+<td align="center">(0.131)</td>
+<td align="center">(0.131)</td>
+</tr>
+<tr>
+<td align="center">Personal characteristics:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Age</td>
+<td align="center"/>
+<td align="center">0.335<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.359<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.253<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.221<xref ref-type="table-fn" rid="t003fn003">**</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.091)</td>
+<td align="center">(0.089)</td>
+<td align="center">(0.088)</td>
+<td align="center">(0.088)</td>
+</tr>
+<tr>
+<td align="center">Square of age</td>
+<td align="center"/>
+<td align="center">-0.004<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="left">-0.003<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">-0.002<xref ref-type="table-fn" rid="t003fn003">**</xref></td>
+<td align="center">-0.002<xref ref-type="table-fn" rid="t003fn003">**</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.001)</td>
+<td align="left">(0.001)</td>
+<td align="center">(0.001)</td>
+<td align="center">(0.001)</td>
+</tr>
+<tr>
+<td align="center">Male</td>
+<td align="center"/>
+<td align="center">0.494<xref ref-type="table-fn" rid="t003fn004">*</xref></td>
+<td align="center">0.475<xref ref-type="table-fn" rid="t003fn004">*</xref></td>
+<td align="center">0.583<xref ref-type="table-fn" rid="t003fn003">**</xref></td>
+<td align="center">0.531<xref ref-type="table-fn" rid="t003fn004">*</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.282)</td>
+<td align="center">(0.278)</td>
+<td align="center">(0.274)</td>
+<td align="center">(0.274)</td>
+</tr>
+<tr>
+<td align="center">Urban resident registration</td>
+<td align="center"/>
+<td align="center">4.441<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">2.748<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">2.052<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">2.037<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.308)</td>
+<td align="center">(0.335)</td>
+<td align="center">(0.339)</td>
+<td align="center">(0.338)</td>
+</tr>
+<tr>
+<td align="center">Party member</td>
+<td align="center"/>
+<td align="center">2.235<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">1.108<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">1.017<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.851<xref ref-type="table-fn" rid="t003fn003">**</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.376)</td>
+<td align="center">(0.382)</td>
+<td align="center">(0.376)</td>
+<td align="center">(0.377)</td>
+</tr>
+<tr>
+<td align="center">Characteristics of human capital:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Health condition</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center">1.007<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.989<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.909<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.170)</td>
+<td align="center">(0.167)</td>
+<td align="center">(0.168)</td>
+</tr>
+<tr>
+<td align="center">Years of education</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center">0.466<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.398<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.362<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.056)</td>
+<td align="center">(0.055)</td>
+<td align="center">(0.056)</td>
+</tr>
+<tr>
+<td align="center">Professional certificate</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center">1.614<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">1.150<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">1.037<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.316)</td>
+<td align="center">(0.316)</td>
+<td align="center">(0.316)</td>
+</tr>
+<tr>
+<td align="center">Mandarin level</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center">0.799<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.743<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.726<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.170)</td>
+<td align="center">(0.168)</td>
+<td align="center">(0.168)</td>
+</tr>
+<tr>
+<td align="center">Occupational characteristics:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Full-time</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">2.056<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">2.109<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.557)</td>
+<td align="center">(0.555)</td>
+</tr>
+<tr>
+<td align="center">Within the system</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">2.674<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">2.660<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.338)</td>
+<td align="center">(0.337)</td>
+</tr>
+<tr>
+<td align="center">Unit scale</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">0.632<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+<td align="center">0.586<xref ref-type="table-fn" rid="t003fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.107)</td>
+<td align="center">(0.108)</td>
+</tr>
+<tr>
+<td align="center">Family characteristics:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Family member relationship</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">0.191<xref ref-type="table-fn" rid="t003fn003">**</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.094)</td>
+</tr>
+<tr>
+<td align="center">Family economic situation</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">0.219<xref ref-type="table-fn" rid="t003fn003">**</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.096)</td>
+</tr>
+<tr>
+<td align="center">Observations</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t003fn001"><p>Notes: ①Robust standard error in parentheses.</p></fn>
+<fn id="t003fn002"><p>②*** p&lt;0.01</p></fn>
+<fn id="t003fn003"><p>** p&lt;0.05</p></fn>
+<fn id="t003fn004"><p>* p&lt;0.1.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>From the perspective of individual demographic characteristics, the quality of employment shows an inverted U-shaped relationship with age. As age increases, the quality of employment initially rises and then declines. After adding control variables, male employment quality is 0.531 higher than female, indicating the prevalence of gender stratification in the employment sector where females generally occupy a disadvantaged position in the labor market. Urban registered residents’ employment quality surpasses rural residents by 2.037, constrained by the urban-rural dual household registration system, leading to higher employment quality for urban registered residents. Moreover, compared to non-party members, party members exhibit a 0.851 higher employment quality.</p>
+<p>From the perspective of human capital characteristics, full-time employees within state-owned enterprises exhibit higher employment quality. Employment quality also correlates positively with organizational scale, with a 0.586 increase in employment quality for every unit increase in organizational scale. Examining family characteristics, better family relationships and improved family economic status correlate with higher employment quality.</p>
+<p>From the perspective of occupational features, after incorporating all control variables, full-time workers experience a 2.109 increase in employment quality, while those within state-owned enterprises witness a 2.660 increase in employment quality. Employment quality also correlates positively with organizational scale, with a 0.586 increase in employment quality for every unit increase in organizational scale.</p>
+<p>From the perspective of family characteristics, after incorporating all control variables, better family relationships and improved family economic status correlate with higher employment quality.</p>
+</sec>
+<sec id="sec015">
+<title>4.2 Quantile analysis</title>
+<p><xref ref-type="table" rid="pone.0301465.t004">Table 4</xref> presents the quantile regression results from the 10th percentile to the 90th percentile respectively, indicating that Internet use has a significant positive impact on employment quality at all quantiles. But there are certain differences in the variation of coefficient values at different quantiles. Specifically, with the continuous improvement of the quantile of employment quality, the regression coefficient shows a downward trend, from 0.761 at the 10th quantile to 0.595 at the 25th quantile, 0.557 at the 50th quantile, 0.458 at the 75th quantile and 0.379 at the 90th quantile, indicating that Internet use has a greater impact on workers with lower quantile of employment quality. The possible reason for this phenomenon is that the positive effect of Internet use on employment quality has the possibility of diminishing marginal utility. With the improvement of Internet use, Internet has gradually become an vital part of people’s work and life. Compared to workers with higher employment quality, those with lower employment quality have weaker job competitiveness. Accordingly, Internet use will also be more sensitive to the effects of the later ones.</p>
+<table-wrap id="pone.0301465.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0301465.t004</object-id>
+<label>Table 4</label> <caption><title>Quantile regression results.</title></caption>
+<alternatives>
+<graphic id="pone.0301465.t004g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0301465.t004" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="2"/>
+<th align="center">Model 1</th>
+<th align="center">Model 2</th>
+<th align="center">Model 3</th>
+<th align="center">Model 4</th>
+<th align="center">Model 5</th>
+</tr>
+<tr>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Quantile level</td>
+<td align="center">0.1</td>
+<td align="center">0.25</td>
+<td align="center">0.5</td>
+<td align="center">0.75</td>
+<td align="center">0.9</td>
+</tr>
+<tr>
+<td align="center">Core explanatory variables:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Internet usage frequency</td>
+<td align="center">0.761<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.595<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.557<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.458<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.379<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.211)</td>
+<td align="center">(0.195)</td>
+<td align="center">(0.153)</td>
+<td align="center">(0.163)</td>
+<td align="center">(0.221)</td>
+</tr>
+<tr>
+<td align="center">Personal characteristics:</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="center">Age</td>
+<td align="center">0.258<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.232<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.276<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.217<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.257<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.122)</td>
+<td align="center">(0.112)</td>
+<td align="center">(0.103)</td>
+<td align="center">(0.110)</td>
+<td align="center">(0.129)</td>
+</tr>
+<tr>
+<td align="center">Square of age</td>
+<td align="center">-0.003<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">-0.002<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">-0.002<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">-0.002<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">-0.003<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.001)</td>
+<td align="center">(0.001)</td>
+<td align="center">(0.001)</td>
+<td align="center">(0.001)</td>
+<td align="center">(0.001)</td>
+</tr>
+<tr>
+<td align="center">Male</td>
+<td align="center">0.698<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.524<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.526<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.593<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.361</td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.340)</td>
+<td align="center">(0.308)</td>
+<td align="center">(0.290)</td>
+<td align="center">(0.301)</td>
+<td align="center">(0.363)</td>
+</tr>
+<tr>
+<td align="center">Urban resident registration</td>
+<td align="center">1.207<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">1.708<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">2.220<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">3.019<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">3.183<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.543)</td>
+<td align="center">(0.503)</td>
+<td align="center">(0.395)</td>
+<td align="center">(0.421)</td>
+<td align="center">(0.645)</td>
+</tr>
+<tr>
+<td align="center">Party member</td>
+<td align="center">2.280<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.976*<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.863<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.810<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.490</td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.505)</td>
+<td align="center">(0.461)</td>
+<td align="center">(0.340)</td>
+<td align="center">(0.369)</td>
+<td align="center">(0.539)</td>
+</tr>
+<tr>
+<td align="center">Characteristics of human capital:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Health condition</td>
+<td align="center">0.526<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.801<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">1.021<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">1.238<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">1.325<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.270)</td>
+<td align="center">(0.250)</td>
+<td align="center">(0.196)</td>
+<td align="center">(0.209)</td>
+<td align="center">(0.320)</td>
+</tr>
+<tr>
+<td align="center">Years of education</td>
+<td align="center">0.242<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.313<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.367<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.419<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.464<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.090)</td>
+<td align="center">(0.083)</td>
+<td align="center">(0.065)</td>
+<td align="center">(0.069)</td>
+<td align="center">(0.106)</td>
+</tr>
+<tr>
+<td align="center">Professional certificate</td>
+<td align="center">0.929<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">1.113<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">1.398<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.772<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">1.048<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.507)</td>
+<td align="center">(0.470)</td>
+<td align="center">(0.369)</td>
+<td align="center">(0.393)</td>
+<td align="center">(0.603)</td>
+</tr>
+<tr>
+<td align="center">Mandarin level</td>
+<td align="center">0.462<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.720<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.901<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.915<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">1.034<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.269)</td>
+<td align="center">(0.249)</td>
+<td align="center">(0.196)</td>
+<td align="center">(0.208)</td>
+<td align="center">(0.320)</td>
+</tr>
+<tr>
+<td align="center">Occupational characteristics:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Full-time job</td>
+<td align="center">1.990<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">2.285<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">2.310<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">2.681<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">3.203<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.892)</td>
+<td align="center">(0.826)</td>
+<td align="center">(0.648)</td>
+<td align="center">(0.690)</td>
+<td align="center">(1.059)</td>
+</tr>
+<tr>
+<td align="center">Within the system</td>
+<td align="center">3.297<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">3.171<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">2.351<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">2.330<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">2.171<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.541)</td>
+<td align="center">(0.501)</td>
+<td align="center">(0.393)</td>
+<td align="center">(0.419)</td>
+<td align="center">(0.643)</td>
+</tr>
+<tr>
+<td align="center">Unit scale</td>
+<td align="center">0.359<xref ref-type="table-fn" rid="t004fn003">**</xref></td>
+<td align="center">0.450<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.687<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.810<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.827<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.173)</td>
+<td align="center">(0.160)</td>
+<td align="center">(0.125)</td>
+<td align="center">(0.134)</td>
+<td align="center">(0.205)</td>
+</tr>
+<tr>
+<td align="center">Family characteristics:</td>
+<td align="center" colspan="5"/>
+</tr>
+<tr>
+<td align="center">Family member relationship</td>
+<td align="center">0.199<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.187<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.202<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.184<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.227<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.120)</td>
+<td align="center">(0.109)</td>
+<td align="center">(0.101)</td>
+<td align="center">(0.106)</td>
+<td align="center">(0.127)</td>
+</tr>
+<tr>
+<td align="center">Family economic situation</td>
+<td align="center">0.161</td>
+<td align="center">0.197<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.207<xref ref-type="table-fn" rid="t004fn004">*</xref></td>
+<td align="center">0.300<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+<td align="center">0.330<xref ref-type="table-fn" rid="t004fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.123)</td>
+<td align="center">(0.117)</td>
+<td align="center">(0.103)</td>
+<td align="center">(0.109)</td>
+<td align="center">(0.142)</td>
+</tr>
+<tr>
+<td align="center">Observations</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t004fn001"><p>Notes: ①Robust standard error in parentheses.</p></fn>
+<fn id="t004fn002"><p>②*** p&lt;0.01</p></fn>
+<fn id="t004fn003"><p>** p&lt;0.05</p></fn>
+<fn id="t004fn004"><p>* p&lt;0.1.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>In addition, as the quantile point rises, the control variables of registered urban residents, health status, years of education, Mandarin level, full-time employment, unit size and household economic status have an increasing impact on employment quality, suggesting that these factors have a greater impact on those in the high employment quality quantile. In contrast, the impact of male, party membership and institutional employment on employment quality tends to decrease as the number of quantile points increasing.</p>
+</sec>
+<sec id="sec016">
+<title>4.3 Robustness analysis</title>
+<p><xref ref-type="table" rid="pone.0301465.t005">Table 5</xref> presents the robustness test results. Considering the possible endogeneity of the model due to omitted variables and bivariate causality, Model 1 shows the regression results of instrumental variables. The instrumental variable is the mean value of the frequency of Internet use in the worker’s community. The effect of internet use on employment quality is still significantly positive and the coefficient value is increased, indicating that the basic findings of this article still hold true after accounting for endogeneity. The model’s minimum eigenvalue of 339.75 is greater than the critical value, suggesting that there is no weak instrumental variable problem. The p-value in the overidentification test is 0.39, so the the instrumental variable is strictly exogenous, and finally the p-value in the Hausman test is less than 0.05, so the frequency of internet use is considered endogenous.</p>
+<table-wrap id="pone.0301465.t005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0301465.t005</object-id>
+<label>Table 5</label> <caption><title>Robustness analysis results.</title></caption>
+<alternatives>
+<graphic id="pone.0301465.t005g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0301465.t005" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="2"/>
+<th align="center">Model 1</th>
+<th align="center">Model 2</th>
+<th align="center">Model 3</th>
+<th align="center">Model 4</th>
+</tr>
+<tr>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Internet usage frequency</td>
+<td align="center">2.216<xref ref-type="table-fn" rid="t005fn002">***</xref></td>
+<td align="center"/>
+<td align="center">2.832<xref ref-type="table-fn" rid="t005fn002">***</xref></td>
+<td align="center">2.234<xref ref-type="table-fn" rid="t005fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.477)</td>
+<td align="center"/>
+<td align="center">(0.726)</td>
+<td align="center">(0.487)</td>
+</tr>
+<tr>
+<td align="center">Whether use the Internet</td>
+<td align="center"/>
+<td align="center">1.970<xref ref-type="table-fn" rid="t005fn003">**</xref></td>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.955)</td>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="center">Control variables</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+</tr>
+<tr>
+<td align="center">Observations</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+<td align="center">3,585</td>
+<td align="center">3,706</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t005fn001"><p>Notes: ① Robust standard error in parentheses.</p></fn>
+<fn id="t005fn002"><p>② *** p&lt;0.01</p></fn>
+<fn id="t005fn003"><p>** p&lt;0.05</p></fn>
+<fn id="t005fn004"><p>* p&lt;0.1.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>Model 2 replaces the core explanatory variable with whether or not use the Internet, with those who never use the Internet recorded as 0, who use the Internet recorded as 1. Since the legal retirement age in China is male workers for 60-year-old, female worker for 50-year-old and 55-year-old for female cadres. Some of the preceding samples are outside the legal working age range, which may cause bias in the estimation results, so the sample of employed persons is re-estimated by retaining them according to the legal retirement age. Model 3 shows that the promotional role of Internet use to employment quality remains significant after changing the age range of employed persons. Finally, considering that distrust of the interviewers may affect the authenticity and accuracy of the questionnaire, the sample with low trust in the interviewers is removed and the sample with high trust is retained for re-estimation. Model 4 shows that the promotional role of Internet use to employment quality remains significant after retaining only those respondents with high trust in the interviewer. The results from Model 1-Model 4 show that the findings of this article are robust.</p>
+</sec>
+<sec id="sec017">
+<title>4.4 Heterogeneity analysis</title>
+<p><xref ref-type="table" rid="pone.0301465.t006">Table 6</xref> presents the results of the heterogeneity analysis. In terms of urban-rural heterogeneity, social stratification theory emphasises the division of social groups into different classes with a higher or lower order according to certain criteria, of which urban-rural differences are an important manifestation of social stratification. The urban-rural dichotomy has long existed in China, and on the basis of the urban-rural stratification, the household registration system has a benefit distribution function to the population registration and management function, the urban population occupies a certain advantage in the employment field. The comparison between Model 1 and Model 2 shows that internet use has a positive effect on the quality of employment for both rural and urban workers, but the effect on the quality of employment for urban workers is more pronounced. It can be seen that for every 1 unit increase in the frequency of Internet use, the employment quality of the rural workers increase by 3.108, the urban workers increase by 1.314. This indicates that there are urban-rural differences in the employment quality effect of Internet use.</p>
+<table-wrap id="pone.0301465.t006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0301465.t006</object-id>
+<label>Table 6</label> <caption><title>The heterogeneity analysis results.</title></caption>
+<alternatives>
+<graphic id="pone.0301465.t006g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0301465.t006" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="2"/>
+<th align="center">Model 1</th>
+<th align="center">Model 2</th>
+<th align="center">Model 3</th>
+<th align="center">Model 4</th>
+</tr>
+<tr>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+<th align="center">Quality of employment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"/>
+<td align="center">Rural sample</td>
+<td align="center">Urban sample</td>
+<td align="center">Male sample</td>
+<td align="center">Female sample</td>
+</tr>
+<tr>
+<td align="center">Internet usage frequency</td>
+<td align="center">3.108<xref ref-type="table-fn" rid="t006fn003">**</xref></td>
+<td align="center">1.314<xref ref-type="table-fn" rid="t006fn003">**</xref></td>
+<td align="center">1.329<xref ref-type="table-fn" rid="t006fn003">**</xref></td>
+<td align="center">3.771<xref ref-type="table-fn" rid="t006fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.598)</td>
+<td align="center">(0.620)</td>
+<td align="center">(0.544)</td>
+<td align="center">(0.933)</td>
+</tr>
+<tr>
+<td align="center">Control variables</td>
+<td align="left">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+</tr>
+<tr>
+<td align="center">Observations</td>
+<td align="left">2,009</td>
+<td align="center">1,974</td>
+<td align="center">2,205</td>
+<td align="center">1,778</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t006fn001"><p>Notes: ① Robust standard error in parentheses.</p></fn>
+<fn id="t006fn002"><p>② *** p&lt;0.01</p></fn>
+<fn id="t006fn003"><p>** p&lt;0.05</p></fn>
+<fn id="t006fn004"><p>* p&lt;0.1.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>In terms of gender heterogeneity, gender stratification theory distinguishes men and women into groups with gender hierarchies. The existence of gender stratification makes men and women differ in the field of employment. Therefore the effect of Internet use on the quality of employment for men and women is different. The comparison between Model 3 and Model 4 shows that for every 1 unit of increase in Internet useage frequency, the quality of employment increases by 1.329 and 3.771 for men and women respectively. Internet usage by women at work improves their quality of employment more significantly. A possible explanation for this is that women need to own more internet skills when seeking employment for a higher quality job-seeking, which reaffirms the gender inequality in the labor market.</p>
+</sec>
+<sec id="sec018">
+<title>4.5 Mechanism analysis</title>
+<p><xref ref-type="table" rid="pone.0301465.t007">Table 7</xref> presents an analysis of the mediating mechanisms by which Internet use affects the quality of employment. Model 1 shows that Internet use has a significant positive effect on workers’ employment quality. Model 2 shows that the coefficient of the effect of Internet use on workers’ social capital is 0.224. Model 3 adds both internet use and social capital to the equation for regression and the results show that the coefficient of the effect of social capital on employment quality is 0.045, indicating that social capital improves the quality of employment of workers [<xref ref-type="bibr" rid="pone.0301465.ref045">45</xref>]. The promotional role of internet use on employment quality remains significant after the inclusion of the social capital variable. Thus, social capital plays a partially mediating role in the process of internet use affecting the quality of employment of workers. This confirms the Hypothesis II that internet use not only directly improving the quality of employment for workers, but also indirectly improving the quality of employment for workers through the accumulation of social capital.</p>
+<table-wrap id="pone.0301465.t007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0301465.t007</object-id>
+<label>Table 7</label> <caption><title>Mediating effect analysis results.</title></caption>
+<alternatives>
+<graphic id="pone.0301465.t007g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0301465.t007" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center"/>
+<th align="center">Model 1 Quality of employment</th>
+<th align="center">Model 2 Social Capital</th>
+<th align="center">Model 3 Quality of employment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Internet usage frequency</td>
+<td align="center">2.216<xref ref-type="table-fn" rid="t007fn002">***</xref></td>
+<td align="center">0.224<xref ref-type="table-fn" rid="t007fn003">**</xref></td>
+<td align="center">2.207<xref ref-type="table-fn" rid="t007fn002">***</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center">(0.477)</td>
+<td align="center">(0.102)</td>
+<td align="center">(0.478)</td>
+</tr>
+<tr>
+<td align="center">Social Capita</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center">0.045<xref ref-type="table-fn" rid="t007fn003">**</xref></td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center">(0.021)</td>
+</tr>
+<tr>
+<td align="center">Control variables</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+</tr>
+<tr>
+<td align="center">Observations</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+<td align="center">3,983</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t007fn001"><p>Notes: ① Robust standard error in parentheses.</p></fn>
+<fn id="t007fn002"><p>② *** p&lt;0.01</p></fn>
+<fn id="t007fn003"><p>** p&lt;0.05</p></fn>
+<fn id="t007fn004"><p>* p&lt;0.1</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+</sec>
+<sec id="sec019" sec-type="conclusions">
+<title>5 Discussion</title>
+<p>Based on CLDS data, this article uses factor analysis to construct a system of employment quality indicators, discuss the impact of internet use on workers’ employment quality, and then compare the urban-rural and gender heterogeneity of this impact. Finally analyzes the underlying mechanisms of internet use on employment quality.</p>
+<p>First, the measurement of employment quality is relatively complex and is mainly reflected by a combination of social security, subjective satisfaction, job autonomy, job security, career development, salary and compensation, labor hours, and labor relations [<xref ref-type="bibr" rid="pone.0301465.ref024">24</xref>–<xref ref-type="bibr" rid="pone.0301465.ref026">26</xref>]. Most existing studies analyzed the impact of Internet use on employment quality by analyzing one dimension of employment quality, or by analyzing several dimensions separately [<xref ref-type="bibr" rid="pone.0301465.ref031">31</xref>–<xref ref-type="bibr" rid="pone.0301465.ref033">33</xref>], lacking a comprehensive perspective. In this article, we construct a comprehensive index of employment quality and analyze the impact of Internet use on the employment quality index. The results show that Internet use has a significant positive impact on the employment quality of workers.</p>
+<p>Internet use is essentially a technological advancement. In terms of the practice of social development, although technological progress may bring about structural unemployment and the widening of the digital divide, technology is intrinsically consistent with the improvement of employment quality, and this intrinsic consistency is mainly reflected in the fact that technological progress itself may have a positive impact on the improvement of employment quality [<xref ref-type="bibr" rid="pone.0301465.ref028">28</xref>]. Furthermore, on the one hand, information technology such as the Internet can build a new employment ecology, mainly in the form of platform, flexibility and borderless employment, which can improve subjective job satisfaction, job autonomy, job security, more flexible labor time and relatively moderate labor relations. On the other hand, the Internet can optimize and upgrade the employment structure. With the popularity of the Internet, economic development has gradually become digitalized, and various industries have been extended by the "Internet+", which has enhanced the activation of the consumer Internet. The Internet is now integrating manufacturing and agriculture, promoting the digital transformation of agriculture and industry through the Internet, realizing digital agriculture and service-oriented manufacturing, giving rise to new industries and new models, creating a large number of new employment methods, thus promoting the continuous optimization of the employment structure, providing workers with better career development and salary compensation. This is conducive to promoting high-quality employment for workers, ultimately achieving free and comprehensive human development.</p>
+<p>Second, besides the core explanatory variable internet usage, the quality of workers’ employment is influenced by various other factors. As for individual demographic characteristics, employment quality and age exhibit an inverted U-shaped relationship. As age increases, the quality of employment initially rises and then declines. Male, urban-dwelling, and those affiliated with the Communist Party tend to have higher employment quality, indicating the prevalence of gender, urban-rural, and political affiliation stratification in the employment sector. As for human capital characteristics, individuals with good health, proficiency in Mandarin, and possessing professional certificates tend to have higher employment quality, signifying that investments in human capital can enhance employment quality. As for organizational features, full-time, within-state-owned enterprises, and larger-scale employment settings tend to yield higher employment quality. As for family characteristics, better family relationships and improved family economic status correlate with higher employment quality. It shows that the influencing factors on employment quality are multidimensional. Apart from the core explanatory variable of internet usage in this article, a comprehensive analysis from an all-round perspective is also needed to consider other influencing factors.</p>
+<p>Third, previous studies paid less attention to the heterogeneity across workers when analyzing the impact of Internet use on employment quality [<xref ref-type="bibr" rid="pone.0301465.ref020">20</xref>, <xref ref-type="bibr" rid="pone.0301465.ref027">27</xref>]. This article pays attention to this heterogeneity and finds that the regression coefficient tends to decrease as the employment quality quantile continues to increase. Internet use has a greater impact on workers in the lower employment quality quantile, indicating that there is diminishing marginal utility in the positive effect of Internet use on employment quality. Compared to workers with higher employment quality, those with low employment quality are less competitive for jobs, and the effects of Internet use on this group will be more sensitive. The effect of Internet use on workers’ employment quality is heterogeneous, with stronger effects on rural workers and female workers. This result suggests that urban-rural inequality and gender inequality do exist in the Chinese labor market, and that the root of inequality is still in the system [<xref ref-type="bibr" rid="pone.0301465.ref041">41</xref>].</p>
+<p>Finally, few studies have analyzed the internal mechanisms by which Internet use affects the impact of employment quality [<xref ref-type="bibr" rid="pone.0301465.ref031">31</xref>]. By analyzing the indirect role of social capital in the process of the Internet’s impact on employment quality, this article aims to make the research more in-depth. Social capital is both a prerequisite for mutual collaboration among members and a resource that drives the strengthening of social networks, an institutionalised network of relationships [<xref ref-type="bibr" rid="pone.0301465.ref036">36</xref>]. Social capital is not possessed by individuals and cannot be acquired without effort, but needs to be acquired from social networks through practice, and social resources play a more important role than individual resources in the later stages [<xref ref-type="bibr" rid="pone.0301465.ref037">37</xref>]. The use of the Internet has a positive effect on the level of individual social capital, and with the increased accessibility of information, social resources are better integrated. The Internet provides a platform for people to communicate and share information with each other, broadening social networks and contributing to the accumulation of social capital [<xref ref-type="bibr" rid="pone.0301465.ref039">39</xref>]. In addition, some studies have analyzed the positive impact of social capital on employment quality, viewing social capital as an individual’s ability to mobilise and draw resources from a wide range of networks, with more resources meaning more opportunities for high-quality employment, and thus social capital can improve the quality of employment for workers [<xref ref-type="bibr" rid="pone.0301465.ref040">40</xref>]. However, related studies have neglected the indirect role of social capital in the impact of Internet use on employment quality. The results of this article show that social capital is an intrinsic mechanism through which Internet use affects the quality of employment, and that while Internet use directly improves the quality of employment of workers, it also indirectly improves the quality of employment of workers through the accumulation of social capital (<xref ref-type="supplementary-material" rid="pone.0301465.s001">S1 Appendix</xref>).</p>
+</sec>
+<sec id="sec020">
+<title>6 Implications, limitations and future recommendations</title>
+<sec id="sec021">
+<title>6.1 Implications</title>
+<p>The policy implications of this article are: First, Internet use is conducive to the improvement of the quality of employment for workers, especially those with low quality levels of employment. The current level of Internet infrastructure and Internet penetration in China needs to be further improved, the government should increase investment in Internet infrastructure to ensure a comprehensive and effective supply of information networks.</p>
+<p>Second, the existence of the household registration system and gender discrimination are at the root of the differences in the impact of Internet use on the quality of employment of workers, efforts should be made to promote information technology in rural areas and to address the imbalance between urban and rural Internet development. Meanwhile, a unified and open labor market should be established to eliminate gender differences in employment.</p>
+<p>Third, the accumulation of human capital helps to improve the quality of employment. The strategy of strengthening the country through science and education should be further promoted, and professional skills training should be strengthened while education is emphasized. Along with the improvement of workers’ own education level, they can better adapt to the needs of the digital economy, use the Internet to find employment opportunities that better match their own characteristics and meet the demand for fuller and higher quality employment.</p>
+<p>Fourth, social capital is an intrinsic mechanism through which the use of the Internet affects the quality of employment. Online platforms should be actively nurtured to create conditions that broaden the channels through which people can accumulate social capital. The supervision of online platforms should be stepped up to stop the spread of false and fraudulent information, more safe, efficient and high-quality employment information sharing platforms should be cultivated and built.</p>
+</sec>
+<sec id="sec022">
+<title>6.2 Limitations and future recommendations</title>
+<p>The limitations of this article are: First, as some of the key variable indicators in the CLDS vary in each period of data and there are differences in the statistical calibre, this article uses cross-sectional data in analyzing the impact of internet use on employment quality, which lacks sufficient time series. This also results in the relative lack of innovativeness in the model of this article. Second, in this article, employment quality is measured more comprehensively based on a number of dimensions such as social security, subjective satisfaction, job security, job autonomy, career development, salary, working hours, and labor relations, but a unified measure of employment quality has not yet been formed in the academic community, a more comprehensive and authoritative indicator system needs to rely on more data to be achieved. The above limitations are also directions that will continue to be explored in the future.</p>
+</sec>
+</sec>
+<sec id="sec023" sec-type="supplementary-material">
+<title>Supporting information</title>
+<supplementary-material id="pone.0301465.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pone.0301465.s001" xlink:type="simple">
+<label>S1 Appendix</label>
+<caption>
+<title/>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ref-list>
+<title>References</title>
+<ref id="pone.0301465.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name>, <name name-style="western"><surname>Nie</surname> <given-names>P.</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>P.</given-names></name>, &amp; <name name-style="western"><surname>Renwick</surname> <given-names>A.</given-names></name> (<year>2020</year>). <article-title>Impact of internet use on economic well-being of rural households: evidence from china</article-title>. <source><italic>Review of Development Economics</italic></source>, <volume>24</volume>(<issue>2</issue>), <fpage>503</fpage>–<lpage>523</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name>, &amp; <name name-style="western"><surname>Wang</surname> <given-names>X.</given-names></name> (<year>2020</year>). <article-title>Internet use, sustainable agricultural practices and rural incomes: evidence from China.</article-title> <source><italic>Australian Journal of Agricultural and Resource E</italic></source><italic>conomics</italic>, <volume>64</volume>(<issue>4</issue>), <fpage>1087</fpage>–<lpage>1112</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname> <given-names>X.</given-names></name> (<year>2023</year>). <article-title>Internet usage and the income gap between self‐employed individuals and employees</article-title>: <source>Evidence from China. <italic>Review of Development Economics</italic></source>, <volume>27</volume>(<issue>3</issue>), <fpage>1509</fpage>–<lpage>1536</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mora-Rivera</surname> <given-names>J.</given-names></name>, &amp; <name name-style="western"><surname>García-Mora</surname> <given-names>F.</given-names></name> (<year>2021</year>). <article-title>Internet access and poverty reduction: Evidence from rural and urban Mexico</article-title>. <source><italic>Telecommunications Policy</italic></source>, <volume>45</volume>(<issue>2</issue>), <fpage>102076</fpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vatsa</surname> <given-names>P.</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>J.</given-names></name>, <name name-style="western"><surname>Luu</surname> <given-names>PQ</given-names></name>, &amp; <name name-style="western"><surname>Botero‐R</surname> <given-names>JC</given-names></name> (<year>2023</year>). <article-title>Internet use and consumption diversity: Evidence from rural China</article-title>. <source><italic>Review of Development Economics</italic></source>, <volume>27</volume> (<issue>3</issue>), <fpage>1287</fpage>–<lpage>1308</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zheng</surname> <given-names>H.</given-names></name>, <name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>F.</given-names></name>, &amp; <name name-style="western"><surname>Li</surname> <given-names>G.</given-names></name> (<year>2021</year>). <article-title>Does internet use improve technical efficiency of banana production in China? Evidence from a selectivity-corrected analysis</article-title>. <source><italic>Food Policy</italic></source>, <volume>102</volume>, <fpage>102044</fpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nguyen</surname> <given-names>T. T.</given-names></name>, <name name-style="western"><surname>Nguyen</surname> <given-names>T. T.</given-names></name>, &amp; <name name-style="western"><surname>Grote</surname> <given-names>U.</given-names></name> (<year>2023</year>). <article-title>Internet use and agricultural productivity in rural Vietnam</article-title>. <source><italic>Review of Development Economics</italic></source>, <volume>27</volume> (<issue>3</issue>), <fpage>1309</fpage>–<lpage>1326</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zheng</surname> <given-names>H.</given-names></name>, &amp; <name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name> (<year>2023</year>). <article-title>Economic benefits of internet use for smallholder wheat farmers</article-title>. <source><italic>Applied Economics</italic></source>, <fpage>1</fpage>–<lpage>16</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname> <given-names>X.</given-names></name>, <name name-style="western"><surname>Guo</surname> <given-names>H.</given-names></name>, <name name-style="western"><surname>Jin</surname> <given-names>S.</given-names></name>, <name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name>, &amp; <name name-style="western"><surname>Zeng</surname> <given-names>Y.</given-names></name> (<year>2021</year>). <article-title>Do farmers gain internet dividends from E-commerce adoption? Evidence from China</article-title>. <source><italic>Food Policy</italic></source>, <volume>101</volume>, <fpage>102024</fpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>X.</given-names></name>, &amp; <name name-style="western"><surname>Liu</surname> <given-names>M.</given-names></name> (<year>2020</year>). <article-title>What drives farmers’willingness to adopt e‐commerce in rural China?</article-title> <source>The role of Internet use. <italic>Agribusiness</italic></source>, <volume>36</volume>(<issue>1</issue>), <fpage>159</fpage>–<lpage>163</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Arshian</surname> <given-names>S.</given-names></name>, &amp; <name name-style="western"><surname>Ali</surname> <given-names>R. S.</given-names></name> (<year>2017</year>). <article-title>The influence of hedonic motivation, self-efficacy, trust and habit on adoption of internet banking: a case of developing country</article-title>. <source><italic>International Journal of Electronic Customer Relationship Management</italic></source>, <volume>11</volume>(<issue>1</issue>), <fpage>1</fpage>–<lpage>22</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Raza</surname> <given-names>S.A.</given-names></name>, <name name-style="western"><surname>Umer</surname> <given-names>A.</given-names></name>, <name name-style="western"><surname>Qureshi</surname> <given-names>M. A.</given-names></name>, &amp; <name name-style="western"><surname>Dahri</surname> <given-names>A. S.</given-names></name> (<year>2020</year>). <article-title>Internet banking service quality, e-customer satisfaction and loyalty: the modified e-SERVQUAL model</article-title>. <source><italic>The TQM Journal</italic></source>, <volume>32</volume>(<issue>6</issue>), <fpage>1443</fpage>–<lpage>1466</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Raza</surname> <given-names>S. A.</given-names></name>, <name name-style="western"><surname>Jawaid</surname> <given-names>S. T.</given-names></name>, &amp; <name name-style="western"><surname>Hassan</surname> <given-names>A.</given-names></name> (<year>2015</year>). <article-title>Internet banking and customer satisfaction in Pakistan.</article-title> <source><italic>Qualitative Research in Financial Markets</italic></source>, <volume>7</volume>(<issue>1</issue>), <fpage>24</fpage>–<lpage>36</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhou</surname> <given-names>X.</given-names></name>, <name name-style="western"><surname>Vatsa</surname> <given-names>P.</given-names></name>, &amp; <name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name> (<year>2023</year>). <article-title>Impact of internet use on value and diversity of risky financial asset portfolios</article-title>. <source><italic>The Quarterly Review of Economics and Finance</italic></source>, <volume>89</volume>, <fpage>188</fpage>–<lpage>193</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dutta</surname> <given-names>O.</given-names></name>, &amp; <name name-style="western"><surname>Chye</surname> <given-names>S. Y. L.</given-names></name> (<year>2017</year>). <article-title>Internet use and psychological wellbeing: A study of international students in Singapore.</article-title> <source><italic>Journal of International Students</italic></source>, <volume>7</volume>(<issue>3</issue>), <fpage>825</fpage>–<lpage>840</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zheng</surname> <given-names>H.</given-names></name>, <name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>J.</given-names></name>, &amp; <name name-style="western"><surname>Botero</surname> <given-names>J.</given-names></name> (<year>2023</year>). <article-title>Relationship between internet use and negative affect</article-title>. <source><italic>Applied Research in Quality of Life</italic></source>, <fpage>1</fpage>–<lpage>21</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1007/s11482-023-10158-z" xlink:type="simple">10.1007/s11482-023-10158-z</ext-link></comment> <object-id pub-id-type="pmid">37359227</object-id></mixed-citation></ref>
+<ref id="pone.0301465.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>J.</given-names></name>, <name name-style="western"><surname>Cheng</surname> <given-names>M.</given-names></name>, &amp; <name name-style="western"><surname>Yu</surname> <given-names>N.</given-names></name> (<year>2020</year>). <article-title>Internet use and lower life satisfaction: The mediating effect of environmental quality perception</article-title>. <source><italic>Ecological Economics</italic></source>, <volume>176</volume>, <fpage>106725</fpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhu</surname> <given-names>Z.</given-names></name>, <name name-style="western"><surname>Ma</surname> <given-names>W.</given-names></name>, <name name-style="western"><surname>Sousa-Poza</surname> <given-names>A.</given-names></name>, &amp; <name name-style="western"><surname>Leng</surname> <given-names>C.</given-names></name> (<year>2020</year>). <article-title>The effect of internet usage on perceptions of social fairness: evidence from rural china</article-title>. <source><italic>China Economic Review</italic></source>, <volume>62</volume>(<issue>8</issue>), <fpage>101508</fpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jung</surname> <given-names>S.</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>J. D.</given-names></name>, <name name-style="western"><surname>Hwang</surname> <given-names>W. S.</given-names></name>, &amp; <name name-style="western"><surname>Yeo</surname> <given-names>Y.</given-names></name> (<year>2017</year>). <article-title>Growth versus equity: A CGE analysis for effects of factor-biased technical progress on economic growth and employment</article-title>. <source><italic>Economic Modelling</italic></source>, <volume>60</volume>, <fpage>424</fpage>–<lpage>438</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname> <given-names>B.</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>T.</given-names></name>, <name name-style="western"><surname>Guo</surname> <given-names>L.</given-names></name>, &amp; <name name-style="western"><surname>Xie</surname> <given-names>Z.</given-names></name> (<year>2020</year>). <article-title>The disembedded digital economy: Social protection for new economy employment in China.</article-title> <source><italic>Social Policy &amp; Administration</italic></source>, <volume>54</volume>(<issue>7</issue>), <fpage>1246</fpage>–<lpage>1260</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fabritz</surname> <given-names>N.</given-names></name> (<year>2013</year>). <article-title>The Impact of Broadband on Economic Activity in Rural Areas: Evidence from German Municipalities.</article-title> <source><italic>Ifo Working Paper</italic></source>, <volume>2013</volume>(<issue>2</issue>):<fpage>453</fpage>–<lpage>468</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vivarelli</surname> <given-names>M.</given-names></name> (<year>2014</year>). <article-title>Innovation, employment and skills in advanced and developing countries: A survey of economic literature</article-title>. <source><italic>Journal of Economic Issues</italic></source>, <volume>48</volume>(<issue>1</issue>), <fpage>123</fpage>–<lpage>154</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dauth</surname> <given-names>W.</given-names></name>, <name name-style="western"><surname>Findeisen</surname> <given-names>S.</given-names></name>, <name name-style="western"><surname>Suedekum</surname> <given-names>J.</given-names></name>, &amp; <name name-style="western"><surname>Woessner</surname> <given-names>N.</given-names></name> (<year>2018</year>). <article-title>Adjusting to robots: worker-level evidence. Opportunity and inclusive growth institute, Federal Reserve Bank of Minneapolis.</article-title> <source>Institute Working Paper</source> <volume>13</volume></mixed-citation></ref>
+<ref id="pone.0301465.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Green</surname> <given-names>F.</given-names></name>, <name name-style="western"><surname>Mostafa</surname> <given-names>T.</given-names></name>, <name name-style="western"><surname>Parent-Thirion</surname> <given-names>A.</given-names></name>, <name name-style="western"><surname>Vermeylen</surname> <given-names>G.</given-names></name>, <name name-style="western"><surname>Van Houten</surname> <given-names>G.</given-names></name>, <name name-style="western"><surname>Biletta</surname> <given-names>I.</given-names></name>, <etal>et al</etal>. (<year>2013</year>). <article-title>Is job quality becoming more unequal?.</article-title> <source><italic>ILR Review</italic></source>, <volume>66</volume>(<issue>4</issue>), <fpage>753</fpage>–<lpage>784</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Leschke</surname> <given-names>J.</given-names></name>, &amp; <name name-style="western"><surname>Watt</surname> <given-names>A.</given-names></name> (<year>2014</year>). <article-title>Challenges in constructing a multi-dimensional European job quality index</article-title>. <source>Social indicators research</source>, <volume>118</volume>, <fpage>1</fpage>–<lpage>31</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Muñoz</surname> <given-names>R.</given-names></name>, <name name-style="western"><surname>Fernández-Macías</surname> <given-names>E.</given-names></name>, <name name-style="western"><surname>Esteve</surname> <given-names>F.</given-names></name>, &amp; <name name-style="western"><surname>Antón</surname> <given-names>J. I.</given-names></name> (<year>2011</year>). <article-title>E pluribus unum? A critical survey of job quality indicators</article-title>. <source><italic>Socio-Economic Review</italic></source>, <volume>9</volume>(<issue>3</issue>), <fpage>447</fpage>–<lpage>475</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Beard</surname> <given-names>T. R.</given-names></name>, <name name-style="western"><surname>Ford</surname> <given-names>G. S.</given-names></name>, <name name-style="western"><surname>Saba</surname> <given-names>R. P.</given-names></name>, &amp; <name name-style="western"><surname>Seals</surname> <given-names>R. A.</given-names></name> (<year>2012</year>). <article-title>Internet use and job search</article-title>. <source><italic>Telecommunications Policy</italic></source>, <volume>36</volume>(<issue>4</issue>), <fpage>260</fpage>–<lpage>273</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dettling</surname> <given-names>L. J.</given-names></name> (<year>2017</year>). <article-title>Broadband in the labor market: The impact of residential high-speed internet on married women’s labor force participation</article-title>. <source><italic>Ilr Review</italic></source>, <volume>70</volume>(<issue>2</issue>), <fpage>451</fpage>–<lpage>482</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brynjolfsson</surname> <given-names>E.</given-names></name>, &amp; <name name-style="western"><surname>McAfee</surname> <given-names>A.</given-names></name> (<year>2014</year>). <article-title>The second machine age: Work, progress, and prosperity in a time of brilliant technologies.</article-title> <source>WW Norton &amp; Company</source>.</mixed-citation></ref>
+<ref id="pone.0301465.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>X.</given-names></name>, <name name-style="western"><surname>Sun</surname> <given-names>X.</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>H.</given-names></name>, &amp; <name name-style="western"><surname>Xue</surname> <given-names>C.</given-names></name> (<year>2022</year>). <article-title>Digital economy development and urban green innovation CA-pability: Based on panel data of 274 prefecture-level cities in China.</article-title> <source><italic>Sustainability</italic></source>, <volume>14</volume>(<issue>5</issue>), <fpage>2921</fpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Forman</surname> <given-names>C.</given-names></name>, <name name-style="western"><surname>Goldfarb</surname> <given-names>A.</given-names></name>, &amp; <name name-style="western"><surname>Greenstein</surname> <given-names>S.</given-names></name> (<year>2012</year>). <article-title>The Internet and local wages: A puzzle</article-title>. <source><italic>American Economic Review</italic></source>, <volume>102</volume>(<issue>1</issue>), <fpage>556</fpage>–<lpage>575</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bloom</surname> <given-names>N.</given-names></name>, <name name-style="western"><surname>Liang</surname> <given-names>J.</given-names></name>, <name name-style="western"><surname>Roberts</surname> <given-names>J.</given-names></name>, &amp; <name name-style="western"><surname>Ying</surname> <given-names>Z. J.</given-names></name> (<year>2015</year>). <article-title>Does working from home work? Evidence from a Chinese experiment</article-title>. <source><italic>The Quarterly journal of economics</italic></source>, <volume>130</volume>(<issue>1</issue>), <fpage>165</fpage>–<lpage>218</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Castellacci</surname> <given-names>F.</given-names></name>, &amp; <name name-style="western"><surname>Viñas-Bardolet</surname> <given-names>C.</given-names></name> (<year>2019</year>). <article-title>Internet use and job satisfaction</article-title>. <source><italic>Computers in Human Behavior</italic></source>, <volume>90</volume>, <fpage>141</fpage>–<lpage>152</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rubery</surname> <given-names>J.</given-names></name>, &amp; <name name-style="western"><surname>Grimshaw</surname> <given-names>D.</given-names></name> (<year>2001</year>). <article-title>ICTs and employment: The problem of job quality</article-title>. <source><italic>Int’l Lab</italic>. <italic>Rev</italic>.</source>, <volume>140</volume>, <fpage>165</fpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hanifan</surname> <given-names>L. J.</given-names></name> (<year>1916</year>). <article-title>The rural school community center</article-title>. <source><italic>The Annals of the American Academy of Political and Social Science</italic></source>, <volume>67</volume>(<issue>1</issue>), <fpage>130</fpage>–<lpage>138</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bourdieu</surname> <given-names>P.</given-names></name> (<year>1991</year>). <article-title>Sport and social class.</article-title> <source><italic>Rethinking popular culture</italic>: <italic>Contemporary perspectives in cultural studies</italic>,</source> <fpage>357</fpage>–<lpage>373</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref037"><label>37</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Lin</surname> <given-names>N.</given-names></name> (<year>2002</year>). <source>Social capital: A theory of social structure and action</source> (Vol. <volume>19</volume>). <publisher-name>Cambridge university press</publisher-name>.</mixed-citation></ref>
+<ref id="pone.0301465.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bauernschuster</surname> <given-names>S.</given-names></name>, <name name-style="western"><surname>Falck</surname> <given-names>O.</given-names></name>, &amp; <name name-style="western"><surname>Woessmann</surname> <given-names>L.</given-names></name> (<year>2014</year>). <article-title>Surfing alone? The Internet and social capital: Evidence from an unforeseeable technological mistake</article-title>. <source><italic>Journal of Public Economics</italic></source>, <volume>117</volume>, <fpage>73</fpage>–<lpage>89</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hooghe</surname> <given-names>M.</given-names></name>, &amp; <name name-style="western"><surname>Oser</surname> <given-names>J.</given-names></name> (<year>2015</year>). <article-title>Internet, television and social capital: the effect of ‘screen time’on social capital.</article-title> <source>Information, <italic>Communication &amp; Society</italic></source>, <volume>18</volume>(<issue>10</issue>), <fpage>1175</fpage>–<lpage>1199</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brown</surname> <given-names>S.</given-names></name>, &amp; <name name-style="western"><surname>Taylor</surname> <given-names>K.</given-names></name> (<year>2010</year>). <article-title>Social interaction and stock market participation: Evidence from British panel data</article-title>. <source>Working Paper</source>.</mixed-citation></ref>
+<ref id="pone.0301465.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pan</surname> <given-names>H.</given-names></name>, &amp; <name name-style="western"><surname>Wu</surname> <given-names>J.</given-names></name> (<year>2020</year>). <article-title>Cognitive social capital and self-rated health: Different outcomes across elderly Chinese groups in rural areas</article-title>. <source><italic>International Social Work</italic></source>, <volume>63</volume>(<issue>1</issue>), <fpage>87</fpage>–<lpage>99</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yusuf</surname> <given-names>S. A.</given-names></name> (<year>2008</year>). <article-title>Social capital and household welfare in Kwara State</article-title>, <source>Nigeria. <italic>Journal of Human Ecology</italic></source>, <volume>23</volume>(<issue>3</issue>), <fpage>219</fpage>–<lpage>229</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Granovetter</surname> <given-names>M.</given-names></name> (<year>1985</year>). <article-title>Economic action and social structure: The problem of embeddedness</article-title>. <source><italic>American journal of sociology</italic></source>, <volume>91</volume>(<issue>3</issue>), <fpage>481</fpage>–<lpage>510</lpage>.</mixed-citation></ref>
+<ref id="pone.0301465.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Baron</surname> <given-names>R. M.</given-names></name>, &amp; <name name-style="western"><surname>Kenny</surname> <given-names>D. A.</given-names></name> (<year>1986</year>). <article-title>The moderator–mediator variable distinction in social psychological research: Conceptual, strategic, and statistical considerations</article-title>. <source><italic>Journal of personality and social psychology</italic></source>, <volume>51</volume>(<issue>6</issue>), <fpage>1173</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1037//0022-3514.51.6.1173" xlink:type="simple">10.1037//0022-3514.51.6.1173</ext-link></comment> <object-id pub-id-type="pmid">3806354</object-id></mixed-citation></ref>
+<ref id="pone.0301465.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zenou</surname> <given-names>Y.</given-names></name> (<year>2015</year>). <article-title>A dynamic model of weak and strong ties in the labor market</article-title>. <source>Journal of Labor Economics</source>, <volume>33</volume>(<issue>4</issue>), <fpage>891</fpage>–<lpage>932</lpage>.</mixed-citation></ref>
+</ref-list>
+</back>
+</article>

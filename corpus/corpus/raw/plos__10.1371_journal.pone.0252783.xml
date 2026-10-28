@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pone.0252783</article-id>
+<article-id pub-id-type="publisher-id">PONE-D-20-33919</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Microbiology</subject><subj-group><subject>Medical microbiology</subject><subj-group><subject>Microbial pathogens</subject><subj-group><subject>Viral pathogens</subject><subj-group><subject>Immunodeficiency viruses</subject><subj-group><subject>HIV</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Pathology and laboratory medicine</subject><subj-group><subject>Pathogens</subject><subj-group><subject>Microbial pathogens</subject><subj-group><subject>Viral pathogens</subject><subj-group><subject>Immunodeficiency viruses</subject><subj-group><subject>HIV</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Organisms</subject><subj-group><subject>Viruses</subject><subj-group><subject>Viral pathogens</subject><subj-group><subject>Immunodeficiency viruses</subject><subj-group><subject>HIV</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Organisms</subject><subj-group><subject>Viruses</subject><subj-group><subject>Immunodeficiency viruses</subject><subj-group><subject>HIV</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Organisms</subject><subj-group><subject>Viruses</subject><subj-group><subject>RNA viruses</subject><subj-group><subject>Retroviruses</subject><subj-group><subject>Lentivirus</subject><subj-group><subject>HIV</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Microbiology</subject><subj-group><subject>Medical microbiology</subject><subj-group><subject>Microbial pathogens</subject><subj-group><subject>Viral pathogens</subject><subj-group><subject>Retroviruses</subject><subj-group><subject>Lentivirus</subject><subj-group><subject>HIV</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Pathology and laboratory medicine</subject><subj-group><subject>Pathogens</subject><subj-group><subject>Microbial pathogens</subject><subj-group><subject>Viral pathogens</subject><subj-group><subject>Retroviruses</subject><subj-group><subject>Lentivirus</subject><subj-group><subject>HIV</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Organisms</subject><subj-group><subject>Viruses</subject><subj-group><subject>Viral pathogens</subject><subj-group><subject>Retroviruses</subject><subj-group><subject>Lentivirus</subject><subj-group><subject>HIV</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Employment</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Mental health and psychiatry</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Epidemiology</subject><subj-group><subject>Medical risk factors</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Earth sciences</subject><subj-group><subject>Geography</subject><subj-group><subject>Human geography</subject><subj-group><subject>Housing</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Human geography</subject><subj-group><subject>Housing</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Health care</subject><subj-group><subject>Socioeconomic aspects of health</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Public and occupational health</subject><subj-group><subject>Socioeconomic aspects of health</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Public and occupational health</subject><subj-group><subject>Behavioral and social aspects of health</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Health care</subject><subj-group><subject>Quality of life</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Associations of internalized and anticipated HIV stigma with returning to work for persons living with HIV</article-title>
+<alt-title alt-title-type="running-head">Stigma and employment</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0000-0002-8536-0085</contrib-id>
+<name name-style="western">
+<surname>Lightner</surname>
+<given-names>Joseph S.</given-names>
+</name>
+<role content-type="https://casrai.org/credit/">Conceptualization</role>
+<role content-type="https://casrai.org/credit/">Data curation</role>
+<role content-type="https://casrai.org/credit/">Formal analysis</role>
+<role content-type="https://casrai.org/credit/">Investigation</role>
+<role content-type="https://casrai.org/credit/">Methodology</role>
+<role content-type="https://casrai.org/credit/">Software</role>
+<role content-type="https://casrai.org/credit/">Supervision</role>
+<role content-type="https://casrai.org/credit/">Validation</role>
+<role content-type="https://casrai.org/credit/">Visualization</role>
+<role content-type="https://casrai.org/credit/">Writing – original draft</role>
+<role content-type="https://casrai.org/credit/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0000-0001-8770-5764</contrib-id>
+<name name-style="western">
+<surname>Rajabiun</surname>
+<given-names>Serena</given-names>
+</name>
+<role content-type="https://casrai.org/credit/">Conceptualization</role>
+<role content-type="https://casrai.org/credit/">Data curation</role>
+<role content-type="https://casrai.org/credit/">Formal analysis</role>
+<role content-type="https://casrai.org/credit/">Funding acquisition</role>
+<role content-type="https://casrai.org/credit/">Investigation</role>
+<role content-type="https://casrai.org/credit/">Methodology</role>
+<role content-type="https://casrai.org/credit/">Project administration</role>
+<role content-type="https://casrai.org/credit/">Resources</role>
+<role content-type="https://casrai.org/credit/">Software</role>
+<role content-type="https://casrai.org/credit/">Supervision</role>
+<role content-type="https://casrai.org/credit/">Validation</role>
+<role content-type="https://casrai.org/credit/">Visualization</role>
+<role content-type="https://casrai.org/credit/">Writing – original draft</role>
+<role content-type="https://casrai.org/credit/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Cabral</surname>
+<given-names>Howard J.</given-names>
+</name>
+<role content-type="https://casrai.org/credit/">Conceptualization</role>
+<role content-type="https://casrai.org/credit/">Formal analysis</role>
+<role content-type="https://casrai.org/credit/">Investigation</role>
+<role content-type="https://casrai.org/credit/">Methodology</role>
+<role content-type="https://casrai.org/credit/">Supervision</role>
+<role content-type="https://casrai.org/credit/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Flaherty</surname>
+<given-names>Jessica</given-names>
+</name>
+<role content-type="https://casrai.org/credit/">Project administration</role>
+<role content-type="https://casrai.org/credit/">Supervision</role>
+<role content-type="https://casrai.org/credit/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff005"><sup>5</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Shank</surname>
+<given-names>Jamie</given-names>
+</name>
+<role content-type="https://casrai.org/credit/">Conceptualization</role>
+<role content-type="https://casrai.org/credit/">Data curation</role>
+<role content-type="https://casrai.org/credit/">Funding acquisition</role>
+<role content-type="https://casrai.org/credit/">Methodology</role>
+<role content-type="https://casrai.org/credit/">Project administration</role>
+<role content-type="https://casrai.org/credit/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Brooks</surname>
+<given-names>Ronald</given-names>
+</name>
+<role content-type="https://casrai.org/credit/">Conceptualization</role>
+<role content-type="https://casrai.org/credit/">Methodology</role>
+<role content-type="https://casrai.org/credit/">Supervision</role>
+<role content-type="https://casrai.org/credit/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff006"><sup>6</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>School of Nursing and Health Studies, University of Missouri-Kansas City, Kansas City, Missouri, United States of America</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>HIV Services, Kansas City Health Department, Kansas City, Missouri, United States of America</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>Department of Public Health, Zuckerberg College of Health Sciences, University of Massachusetts, Lowell, Massachusetts, United States of America</addr-line></aff>
+<aff id="aff004"><label>4</label> <addr-line>Department of Biostatistics, School of Public Health, Boston University, Boston, Massachusetts, United States of America</addr-line></aff>
+<aff id="aff005"><label>5</label> <addr-line>School of Social Work, Boston University, Boston, Massachusetts, United States of America</addr-line></aff>
+<aff id="aff006"><label>6</label> <addr-line>Center for HIV Identification, Prevention and Treatment Services, University of California Los Angeles, Los Angeles, California, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Daftary</surname>
+<given-names>Amrita</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>York University, CANADA</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have no competing interests to declare. During the data collection of this study, Joseph Lightner was a paid consultant for the Kansas City Health Department. During the preparation of this manuscript, Joseph Lightner was not paid. This does not alter our adherence to PLOS ONE policies on sharing data and material.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">Lightnerj@umkc.edu</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>4</day>
+<month>6</month>
+<year>2021</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2021</year>
+</pub-date>
+<volume>16</volume>
+<issue>6</issue>
+<elocation-id>e0252783</elocation-id>
+<history>
+<date date-type="received">
+<day>28</day>
+<month>10</month>
+<year>2020</year>
+</date>
+<date date-type="accepted">
+<day>23</day>
+<month>5</month>
+<year>2021</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2021</copyright-year>
+<copyright-holder>Lightner et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0252783"/>
+<abstract>
+<sec id="sec001">
+<title>Introduction</title>
+<p>Employment is particularly beneficial for persons living with HIV (PLWH). However, PLWH experiencing internalized stigma or anticipating that they may experience stigma may be less likely to seek employment due to additional barriers associated with HIV. The purpose of this study was to understand the associations between internalized and anticipated stigma and employment barriers for PLWH.</p>
+</sec>
+<sec id="sec002">
+<title>Methods</title>
+<p>Participants (N = 712) from 12 sites across the United States were recruited and interviewed about barriers to employment, HIV stigma, and several other factors related to health. A series of unadjusted and adjusted linear regression models were conducted using cross-sectional data.</p>
+</sec>
+<sec id="sec003">
+<title>Results</title>
+<p>Adjusted models suggest that greater anticipated stigma was related to increased employment barriers (β = 0.12, p = 0.04). Mental and physical health functioning also positively predicted employment barriers (β = -0.18, p &lt;0.001; β = -0.40, p &lt;0.001, respectively).</p>
+</sec>
+<sec id="sec004">
+<title>Discussion</title>
+<p>Employment among PLWH has beneficial impacts on HIV-related health outcomes. This study suggests that anticipated stigma may limit and individual’s willingness to seek out employment, or may cause them to leave employment. Internalized stigma may not play as large of a role in employment as anticipated stigma for PLWH. HIV-related stigma reduction interventions focused on community-level and employers are essential to improve employment opportunities for PLWH.</p>
+</sec>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/100000102</institution-id>
+<institution>Health Resources and Services Administration</institution>
+</institution-wrap>
+</funding-source>
+<award-id>H89HA00028</award-id>
+</award-group>
+<award-group id="award002">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/100000102</institution-id>
+<institution>Health Resources and Services Administration</institution>
+</institution-wrap>
+</funding-source>
+<award-id>U90HA31449</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0000-0001-8770-5764</contrib-id>
+<name name-style="western">
+<surname>Rajabiun</surname>
+<given-names>Serena</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<funding-statement>This project was supported by the Health Resources and Services Administration (HRSA) of the U.S. Department of Health and Human Services (HHS) under grant numbers H89HA00028 and U90HA31449, Special Projects of National Significance (SPNS) Initiative, Improving Health Outcomes through the Coordination of Supportive Employment &amp; Housing Services, awarded to the City of Kansas City, MO and Boston University, respectively. No percentage of this project was financed with non-governmental sources. This information or content and conclusions are those of the authors and should not be construed as the official position or policy of, nor should any endorsements be inferred by HRSA, HHS or the U.S. Government.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="0"/>
+<table-count count="2"/>
+<page-count count="10"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its <xref ref-type="sec" rid="sec012">Supporting Information</xref> files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec005" sec-type="intro">
+<title>Introduction</title>
+<p>About 1.2 million individuals are living with HIV in the United States [<xref ref-type="bibr" rid="pone.0252783.ref001">1</xref>]. Of those, 45–65% are unemployed and 10–20% are homeless [<xref ref-type="bibr" rid="pone.0252783.ref002">2</xref>]. In 2011, among persons living with HIV (PLWH), the majority were living at or below the federal poverty level, leaving this disadvantaged group with limited resources [<xref ref-type="bibr" rid="pone.0252783.ref003">3</xref>]. Employment opportunities for PLWH may help to address issues of poverty, homelessness, and limited resources in this population.</p>
+<p>Due to effective medical treatments, PLWH are expected to live 43.1 years longer than individuals living with HIV just 20 years ago [<xref ref-type="bibr" rid="pone.0252783.ref004">4</xref>]. This increased life expectancy provides PLWH with an opportunity to retain or gain employment to live a life similar to those not infected with HIV and to help sustain normal activities.</p>
+<p>Employment has been shown to be a major social determinant of health, particularly important for the financial and mental well-being of PLWH [<xref ref-type="bibr" rid="pone.0252783.ref005">5</xref>]. Results of a previous study suggest that those who are unemployed experience poorer psychological health in comparison to those working [<xref ref-type="bibr" rid="pone.0252783.ref006">6</xref>]. Loss of income associated with unemployment can negatively influence a person’s access to health care [<xref ref-type="bibr" rid="pone.0252783.ref007">7</xref>]. Unemployment has been linked to mental health disorders such as depression and suicidal ideation [<xref ref-type="bibr" rid="pone.0252783.ref008">8</xref>]. PLWH are no exception. In fact, greater quality of life has been associated with paid employment and having a higher level of income among PLWH [<xref ref-type="bibr" rid="pone.0252783.ref009">9</xref>]. Employment among PLWH may prevent disease progression by increasing one’s sense of belonging, access to health care, and medication adherence. Interventions to increase employment and income are needed for PLWH [<xref ref-type="bibr" rid="pone.0252783.ref010">10</xref>].</p>
+<p>Research findings suggest that stigma and discrimination are significant barriers to employment for PLWH [<xref ref-type="bibr" rid="pone.0252783.ref011">11</xref>]. While 74% of unemployed PLWH were thinking of returning to work, 66% fear workplace discrimination as a potential barrier [<xref ref-type="bibr" rid="pone.0252783.ref012">12</xref>]. Stigma is particularly damaging to persons living with HIV (PLWH). PLWH who experience internalized, anticipated, and enacted stigma are more reticent to enter the workforce [<xref ref-type="bibr" rid="pone.0252783.ref013">13</xref>]. Among employers, previous research findings have associated fear of contagion and HIV-related stigma as factors in decisions to hire PLWH [<xref ref-type="bibr" rid="pone.0252783.ref011">11</xref>].</p>
+<p>HIV stigma are negative attitudes, judgements, and discriminatory behaviors directed towards those at risk for or living with HIV [<xref ref-type="bibr" rid="pone.0252783.ref014">14</xref>]. Internalized HIV stigma is a negative self-perception of self-image due to HIV and has been be linked to poor physical, mental and cognitive health, and poor antiretroviral adherence [<xref ref-type="bibr" rid="pone.0252783.ref015">15</xref>]. The perception of HIV stigma within a community, such as an unfamiliar work environment, can deter PLWH from entering the workforce. An ecological momentary assessment study of HIV-positive gay and bisexual men revealed a positive correlation between experiences of internalized HIV stigma and negative affective experiences, such as depression, fatigue, anger, and emotion dysregulation [<xref ref-type="bibr" rid="pone.0252783.ref011">11</xref>]. Anticipated stigma are expectations of future repercussions from others due to HIV status including friends, family, and neighbors in the community. Anticipated stigma predicts healthcare behaviors and interpersonal outcomes [<xref ref-type="bibr" rid="pone.0252783.ref015">15</xref>].</p>
+<p>A gap in the literatures exists for an individual’s perception of HIV stigma and employment barriers especially in populations that experience housing instability. The purpose of this study is to understand the associations among internalized and anticipated HIV stigma and employment barriers. We hypothesize that, consistent with existing literature, higher rates of stigma will be associated with more employment barriers.</p>
+</sec>
+<sec id="sec006" sec-type="materials|methods">
+<title>Materials and methods</title>
+<p>The Heath Resources and Services Administration, HIV/AIDS Bureau, Special Projects of National Significance Initiative “Improving HIV Health Outcomes through the Coordination of Supportive Employment and Housing Services” funded 12 sites to deliver interventions focused on connecting PLWH to employment opportunities. All sites were located in urban areas with interventions based at outpatient HIV clinics or hospitals (4), city or county health departments (4) or AIDS Service Organizations (4). Common elements of the interventions included: i. employing navigators as part of the care team to support participants with obtaining necessary housing, employment and other social services, and ii. system level coordination with formal meetings between housing, employment and medical providers to share and exchange information and supported referrals [<xref ref-type="bibr" rid="pone.0252783.ref016">16</xref>].</p>
+<p>Eligibility criteria included: 1) PLWH who is 18 years or older, 2) being homeless, unstably housed, imminent risk of losing housing or fleeing domestic violence, and 3) un- or under employed. Under employed was defined as not having enough paid work or not doing work that makes full use of their skills and abilities to meet their essential needs. In addition, participants had to have at least one of the following HIV health outcomes: 1) newly diagnosed with HIV in the past 12 months, 2) had been previously out of care for at least six months, or not virally suppressed at the time of enrollment. Participants were identified from clinic records and databases for out of care and virally suppressed candidates, from referrals from case managers and other internal team members and external partners.</p>
+<sec id="sec007">
+<title>Data collection</title>
+<p>Data collection was from May 2018-June 2019 with participants consenting to the study and completing a baseline interview administered by trained staff prior to being enrolled in the intervention. All data collection was conducted via in-person interviews by trained staff. Participants received a $25 gift card for interview completion and then were referred to intervention staff or introduced through a warm hand off to participate in the intervention. Study staff also gathered medical chart data to assess baseline viral load and last HIV primary medical visit for non-newly diagnosed clients. All client data were gathered using Research Electronic Data Capture (RED Cap, Version 8.6.4 Vanderbilt, Nashville, TN), a data management software program [<xref ref-type="bibr" rid="pone.0252783.ref017">17</xref>].</p>
+</sec>
+<sec id="sec008">
+<title>Measures</title>
+<p>Our main outcome was employment barriers gathered from a 13-item scale on perceived barriers to returning to work for people with HIV [<xref ref-type="bibr" rid="pone.0252783.ref012">12</xref>]. Barriers included fear of HIV discrimination and disclosure; inability to perform job duties due to poor health, lacking skills, or added stress; losing government benefits and/or health insurance; inability to get health insurance from their employer, and other aspects of employment. For each item, participants were asked yes/no if the item is a barrier to returning to work. The items were then summed and scored 0–13 with 0 being no barriers to high level of barriers.</p>
+<p>Our independent variables were anticipated and internalized HIV stigma using a 15-item scale adapted from previously validated scales [<xref ref-type="bibr" rid="pone.0252783.ref013">13</xref>]. Internalized stigma was measured with six items, anticipated stigma included nine items all measured on a 5-point Likert scale with higher scores indicated greater stigma.</p>
+<p>Additional covariates include socio-demographics, age, race/ethnicity, educational status, income, and sexual orientation. Current housing status was measured as literally homeless, unstably housed or imminent risk of losing housing. Current employment status was measured as working full/part time, underemployed, or unemployed. Unmet needs for 12 basic needs were collected that included food, clothing, housing, transportation and other needs. Social support was measured using five items on a 5-point Likert scale with higher scores indicating a greater need for social support in the past four weeks [<xref ref-type="bibr" rid="pone.0252783.ref018">18</xref>]. Food security for the past 6 months was measured with a 6-item scale with higher scores indicating higher food insecurity risk [<xref ref-type="bibr" rid="pone.0252783.ref019">19</xref>]. Addiction severity was measured using the World Health Organization’s ASSIST tool to assess lifetime substance use including tobacco, alcohol, and elicit substances [<xref ref-type="bibr" rid="pone.0252783.ref020">20</xref>]. For each substance used in an individual’s lifetime, additional information for the past 3 months is collected and an overall summary score is computed with a higher score indicating greater addiction severity [<xref ref-type="bibr" rid="pone.0252783.ref020">20</xref>]. Depression risk for the past week was measured using a 10-item short form on a 4-point Likert scale with higher scores above 10 indicating moderate to high risk for depression [<xref ref-type="bibr" rid="pone.0252783.ref021">21</xref>]. HIV medication adherence was measured by asking individual to rate their ability to take all HIV medications as prescribed in the last month on a scale from excellent to very poor. Other social and health risk factors included: mental health treatment and substance use treatment for the past 3 months; financial assistance, job training, legal and interpretation services in the last 6 months; lifetime history of incarceration; lifetime exposure to trauma [<xref ref-type="bibr" rid="pone.0252783.ref022">22</xref>]; current health insurance status (yes/no); and physical and mental health-related quality of life in the past 4 weeks [<xref ref-type="bibr" rid="pone.0252783.ref023">23</xref>]. All validated tools were used based on their recommended time frame. Viral load was collected from medical records in the past 6 months. Viral suppression was defined as having a HIV viral load less than 200 copies/ml.</p>
+</sec>
+<sec id="sec009">
+<title>Data analysis</title>
+<p>Of the 1083 individuals who participated in this study, 712 were seeking employment and asked about their perceptions of barriers to employment. Therefore, we only included participants who have data on employment barriers for this analysis. We conducted an inter-item reliability analysis on the 13-item barrier scale to ensure appropriate reliability. The hypothesis of this study was tested using two linear regression models. An unadjusted model was conducted with anticipated and internalized stigma as independent variables and employment barriers as the dependent variable. An adjusted model included site, employment status, participant age, household income, identified gender, sexual orientation, race, education, HIV medication adherence, viral suppression, years living with HIV, social support, unmet need, addiction severity, depression, incarceration, trauma, physical heath functioning, and mental health functioning as covariates. All scales were validated for the population ensuring the robustness of this study. Missing data were removed from analysis. All analyses were performed in SPSS, version 25 [<xref ref-type="bibr" rid="pone.0252783.ref024">24</xref>].</p>
+<p>The study was approved by the Institutional Review Boards (IRB) at the University of Missouri-Kansas City (protocol: 2006108) and Boston University Charles River Campus (protocol: 4798E), as well as the 11 other participating sites (AIDS Foundation, Chicago; Avenue 360, Houston; Bexar Co Hospital System, San Antonio; City of Pasadena, California; City of Paterson, New Jersey; Family Health Centers, San Diego; Fenway Health, Boston; Gay Men’s Health Crisis, New York; Positive Impact Health Center, Atlanta; PRC, San Francisco; and Yale University, New Haven). Written documentation of consent was obtained by 11 sites. One site was granted a waiver of documentation of consent as the research was determined to be minimal risk.</p>
+</sec>
+</sec>
+<sec id="sec010" sec-type="results">
+<title>Results</title>
+<p><xref ref-type="table" rid="pone.0252783.t001">Table 1</xref> includes descriptive statistics, demographic characteristics, and other study variables. The sample of participants were, on average, 38.9 years old (SD 11.3 years) with annual household income of $7,806 (SD $11,856). The majority of the sample identified as male (79.0%), lesbian, gay, or homosexual (50.2%), and reported being racial or ethnic minorities (88.8%). Nearly half (48.8%) reported their highest level of education as high school or less.</p>
+<table-wrap id="pone.0252783.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0252783.t001</object-id>
+<label>Table 1</label> <caption><title>Demographic and other study variables (N = 712).</title></caption>
+<alternatives>
+<graphic id="pone.0252783.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0252783.t001" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">Variable</th>
+<th align="left"/>
+<th align="left">Mean or N</th>
+<th align="left">SD or %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Age (years)</td>
+<td align="left"/>
+<td align="left">38.9</td>
+<td align="left">11.4</td>
+</tr>
+<tr>
+<td align="left">Annual Household Income (USD)</td>
+<td align="left"/>
+<td align="left">7805.8</td>
+<td align="left">11856.4</td>
+</tr>
+<tr>
+<td align="left">Gender</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Male</td>
+<td align="left">562</td>
+<td align="left">79.0%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Female</td>
+<td align="left">114</td>
+<td align="left">16.1%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Transgender or Other</td>
+<td align="left">35</td>
+<td align="left">4.9%</td>
+</tr>
+<tr>
+<td align="left">Sexual Orientation</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Heterosexual or Straight</td>
+<td align="left">238</td>
+<td align="left">33.6%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Lesbian, Gay, or Homosexual</td>
+<td align="left">356</td>
+<td align="left">50.2%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Bisexual</td>
+<td align="left">87</td>
+<td align="left">12.3%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Other</td>
+<td align="left">28</td>
+<td align="left">3.9%</td>
+</tr>
+<tr>
+<td align="left">Race</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">African American/Black</td>
+<td align="left">307</td>
+<td align="left">43.4%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Hispanic</td>
+<td align="left">237</td>
+<td align="left">33.7%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">White</td>
+<td align="left">80</td>
+<td align="left">11.4%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Other</td>
+<td align="left">83</td>
+<td align="left">11.7%</td>
+</tr>
+<tr>
+<td align="left">Education</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Less than high school</td>
+<td align="left">138</td>
+<td align="left">19.4%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">High school</td>
+<td align="left">209</td>
+<td align="left">29.4%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Some college/2-year degree/technical school</td>
+<td align="left">282</td>
+<td align="left">39.7%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">4-year degree or beyond</td>
+<td align="left">82</td>
+<td align="left">11.5%</td>
+</tr>
+<tr>
+<td align="left">Employment Status</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Currently employed</td>
+<td align="left">0</td>
+<td align="left">0.0%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Underemployed</td>
+<td align="left">141</td>
+<td align="left">19.8%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Unemployed</td>
+<td align="left">570</td>
+<td align="left">80.1%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Not currently seeking employment</td>
+<td align="left">1</td>
+<td align="left">0.1%</td>
+</tr>
+<tr>
+<td align="left">Housing Status</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Literally homeless</td>
+<td align="left">296</td>
+<td align="left">41.7%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Imminent risk of losing housing</td>
+<td align="left">78</td>
+<td align="left">11.0%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Unstably housed/at risk of losing housing</td>
+<td align="left">319</td>
+<td align="left">44.9%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Stably housed</td>
+<td align="left">17</td>
+<td align="left">2.4%</td>
+</tr>
+<tr>
+<td align="left">Viral Suppression<xref ref-type="table-fn" rid="t001fn001">*</xref></td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Yes</td>
+<td align="left">219</td>
+<td align="left">67.4%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">No</td>
+<td align="left">106</td>
+<td align="left">32.6%</td>
+</tr>
+<tr>
+<td align="left">Years Living with HIV</td>
+<td align="left"/>
+<td align="left">9.4</td>
+<td align="left">8.3</td>
+</tr>
+<tr>
+<td align="left">Health Insurance</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Yes</td>
+<td align="left">481</td>
+<td align="left">69.6%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">No</td>
+<td align="left">210</td>
+<td align="left">30.4%</td>
+</tr>
+<tr>
+<td align="left">Social Support</td>
+<td align="left"/>
+<td align="left">11.6</td>
+<td align="left">5.2</td>
+</tr>
+<tr>
+<td align="left">Unmet Needs</td>
+<td align="left"/>
+<td align="left">3.8</td>
+<td align="left">2.2</td>
+</tr>
+<tr>
+<td align="left">Addiction Severity Score</td>
+<td align="left"/>
+<td align="left">38.5</td>
+<td align="left">31.9</td>
+</tr>
+<tr>
+<td align="left">Depression Score</td>
+<td align="left"/>
+<td align="left">4.1</td>
+<td align="left">2.3</td>
+</tr>
+<tr>
+<td align="left">Incarceration history</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Yes</td>
+<td align="left">212</td>
+<td align="left">29.9%</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">No</td>
+<td align="left">497</td>
+<td align="left">70.1%</td>
+</tr>
+<tr>
+<td align="left">Total Trauma Score</td>
+<td align="left"/>
+<td align="left">4.1</td>
+<td align="left">2.3</td>
+</tr>
+<tr>
+<td align="left">Physical Health Functioning</td>
+<td align="left"/>
+<td align="left">44.3</td>
+<td align="left">12.5</td>
+</tr>
+<tr>
+<td align="left">Mental Health Functioning</td>
+<td align="left"/>
+<td align="left">35.3</td>
+<td align="left">6.9</td>
+</tr>
+<tr>
+<td align="left">HIV Stigma (scale 1low-5high)</td>
+<td align="left"/>
+<td align="left"/>
+<td align="left"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Anticipated</td>
+<td align="left">2.3</td>
+<td align="left">0.9</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Internalized</td>
+<td align="left">2.5</td>
+<td align="left">1.1</td>
+</tr>
+<tr>
+<td align="left">Employment Barriers (summed scale 0–13)</td>
+<td align="left"/>
+<td align="left">5.3</td>
+<td align="left">3.1</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001"><p>*54.4% of viral suppression data are missing.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>A majority of participants reported being unemployed (80.1%) or underemployed (19.8%) and literally homeless (41.7%) or unstably housed/at risk of losing housing (44.9%). The average reported scores of anticipated and internalized HIV stigma were 2.3 (SD 0.90) and 2.5 (SD 1.1), respectively. Most participants were virally suppressed (67.4%) and had health insurance (69.6%). Roughly, one-third of the sample reported being incarcerated at some point in their lives. Participants reported an average of 3.8 (SD 2.2) unmet needs out of a possible 13. Additionally, participants reported 5.3 (SD 3.1) barriers to employment out of a possible 13. Inter-item reliability for the 13-item barriers to employment scale showed appropriate reliability (alpha = 0.75) [<xref ref-type="bibr" rid="pone.0252783.ref025">25</xref>]. All other average values of covariates are presented in <xref ref-type="table" rid="pone.0252783.t001">Table 1</xref>.</p>
+<p>Results from the regression analyzes are presented in <xref ref-type="table" rid="pone.0252783.t002">Table 2</xref>. First, we estimated and tested the unadjusted associations between anticipated and internalized stigma and employment barriers in Model 1. Anticipated stigma (β = 0.19, <italic>p</italic> = 0.001) and internalized stigma (β = 0.17, <italic>p</italic> = 0.002) were positively associated to employment barriers.</p>
+<table-wrap id="pone.0252783.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0252783.t002</object-id>
+<label>Table 2</label> <caption><title>Relationship between stigma and employment barriers.</title></caption>
+<alternatives>
+<graphic id="pone.0252783.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0252783.t002" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<tbody>
+<tr>
+<td align="left" colspan="6"><bold>Model 1. Unadjusted Associations between Stigma and Employment Barriers</bold></td>
+</tr>
+<tr>
+<td align="left"><bold>Parameter</bold></td>
+<td align="center"><bold>β</bold></td>
+<td align="center"><bold>t</bold></td>
+<td align="center"><bold><italic>p</italic></bold></td>
+<td align="left" colspan="2"><bold>95% Confidence Interval</bold></td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"><bold>Lower Bound</bold></td>
+<td align="center"><bold>Upper Bound</bold></td>
+</tr>
+<tr>
+<td align="left">Anticipated Stigma</td>
+<td align="center">0.19</td>
+<td align="center">3.26</td>
+<td align="center">0.001</td>
+<td align="center">0.25</td>
+<td align="center">1.02</td>
+</tr>
+<tr>
+<td align="left">Internalized Stigma</td>
+<td align="center">0.17</td>
+<td align="center">3.07</td>
+<td align="center">0.002</td>
+<td align="center">0.17</td>
+<td align="center">0.79</td>
+</tr>
+<tr>
+<td align="left" colspan="6"><bold>Model 2. Adjusted Associations between Stigma and Employment Barriers</bold></td>
+</tr>
+<tr>
+<td align="left">Anticipated Stigma</td>
+<td align="center">0.12</td>
+<td align="center">2.07</td>
+<td align="center">0.04</td>
+<td align="center">0.02</td>
+<td align="center">0.78</td>
+</tr>
+<tr>
+<td align="left">Internalized Stigma</td>
+<td align="center">0.07</td>
+<td align="center">1.15</td>
+<td align="center">0.25</td>
+<td align="center">-0.13</td>
+<td align="center">0.50</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t002fn001"><p>Note: N = 712; Model 1 R<sup>2</sup> = .08, df = 2; Model 2 R<sup>2</sup> = .20, df = 23</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>Second, we estimated and tested the associations between anticipated and internalized stigma and employment barriers while adjusting for covariates. The results are presented in Model 2. After adjusting for covariates, anticipated stigma was significantly and positively associated with employment barriers (β = 0.12, <italic>p</italic> = 0.04). After adjusting for covariates, internalized stigma was not related to employment barriers (β = 0.07, <italic>p</italic> = 0.25). Physical health functioning and mental health functioning also significantly predicted employment barriers (β = -0.40, <italic>p</italic> &lt;0.001; β = -0.18, p &lt;0.001, respectively) with higher physical and mental health functioning being associated with fewer employment barriers.</p>
+<p>Model 1 and Model 2 significantly accounted for 8% and 20% of the total variation in employment barriers, respectively.</p>
+</sec>
+<sec id="sec011" sec-type="conclusions">
+<title>Discussion</title>
+<p>In the present study, we analyzed the associations between HIV-related stigma and employment barriers among PLWH. Anticipated stigma was related to employment barriers, such that higher levels of anticipated stigma were related to more barriers to employment adjusting for socio demographic and other risk factors. The study findings are consistent with existing literature [<xref ref-type="bibr" rid="pone.0252783.ref013">13</xref>]. The perception of being stigmatized because of HIV status can potentially deter PLWH from seeking or maintaining employment. This is significant as employment is associated with improved quality of life, less depression, and increased HIV medication adherence [<xref ref-type="bibr" rid="pone.0252783.ref013">13</xref>].</p>
+<p>To our knowledge this is the first study that highlights the relationship of anticipated stigma and employment among people living with HIV. Previous studies have documented an association between internalized and anticipated stigma on adherence to HIV care visits and medications and physical health and well-being [<xref ref-type="bibr" rid="pone.0252783.ref026">26</xref>–<xref ref-type="bibr" rid="pone.0252783.ref028">28</xref>]. A recent review highlighted the role of employment as a social determinant affecting movement along the HIV care continuum for people living with HIV [<xref ref-type="bibr" rid="pone.0252783.ref029">29</xref>]. Our study suggests that for people living with HIV especially those from lower income racial ethnic minority communities, addressing the underlying consequences of stigma are essential to support not only physical and mental health but also economic well-being. Future studies are warranted to explore the mechanisms between stigma, employment and HIV health outcomes.</p>
+<p>Previous studies suggest that there is strong evidence employment is therapeutic and combats negative feelings associated with unemployment [<xref ref-type="bibr" rid="pone.0252783.ref030">30</xref>]. Throughout the life span, employment among PLWH has been shown to be associated with better disease-specific health factors and higher neurocognitive functioning [<xref ref-type="bibr" rid="pone.0252783.ref031">31</xref>–<xref ref-type="bibr" rid="pone.0252783.ref033">33</xref>]. Since employment may be beneficial for improvement of quality of life and well-being, elimination of HIV stigma and employment barriers among PLWH is essential. Future research is needed to understand the complex nature of employment and health for PLWH to determine potential spuriousness of age, health status, and other factors.</p>
+<p>Currently, health disparities are universally recognized, with increased rates of mortality and disease burden disproportionately falling upon racial/ethnic minorities and the poor [<xref ref-type="bibr" rid="pone.0252783.ref033">33</xref>]. Among these vulnerable individuals are PLWH and those at risk for contracting HIV. HIV infection is most prevalent among persons with limited resources and does not have the same impact among those within the higher income level [<xref ref-type="bibr" rid="pone.0252783.ref030">30</xref>]. Our sample of PLWH are from racial/ethnic minority communities experiencing unstable housing and are in need of employment. Stigma and specifically anticipated stigma not only affects access and use of health care but limits employment opportunities.</p>
+<p>There are many strengths to this study. First, we recruited a large, national sample of PLWH who were experiencing housing instability, low-income, and unemployment or under-employment. Our findings may be generalized to other low-income, unemployed PLWH in the United States experiencing housing instability.</p>
+<p>However, limitations of this study include the self-report nature of barriers to employment and perceptions of stigma. This study is cross-sectional and, as such, we cannot determine causation. A significant portion of viral suppression data are missing due to the cross-sectional nature of this study. We did not impute any missing data in this analysis. The majority of the participants in this study are men, and thus the results may not be representative of women living with HIV and barriers to employment. Additionally, the results may not represent other higher income, higher education populations with access to resources.</p>
+<p>Further research should attempt to understand the causal relationship between HIV stigma and barriers to employment. Additionally, an intersectional investigation of multiple form of stigma that PLWH experience is warranted. Developing interventions aimed at reducing anticipated HIV stigma may provide opportunities and stability in employment and improved quality of life. We also suggest exploring employer perceptions of stigma, as well as openness and support for employees living with HIV. Perhaps, by focusing on both community-level and employer interventions, practitioners may reduce the severity and impact of anticipated stigma on employment.</p>
+</sec>
+<sec id="sec012" sec-type="supplementary-material">
+<title>Supporting information</title>
+<supplementary-material id="pone.0252783.s001" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.pone.0252783.s001" xlink:type="simple">
+<label>S1 Data</label>
+<caption>
+<title>Data release.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pone.0252783.s002" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pone.0252783.s002" xlink:type="simple">
+<label>S1 Table</label>
+<caption>
+<title>Supplemental table.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We would like to thank Mary Jo Hoyt, Travis Barnhart, Debbie Adams, Frank Thompson, Divya Jain, Denise Dean, and all funded sites for their participation in this project.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0252783.ref001"><label>1</label><mixed-citation publication-type="other" xlink:type="simple">Centers for Disease Control and Prevention. Behavioral and Clinical Characteristics of Persons with Diagnosed HIV Infection–Medical Monitoring Project. HIV Surveillance Special Report 25. 2020. Available from: <ext-link ext-link-type="uri" xlink:href="https://www.cdc.gov/hiv/pdf/library/reports/surveillance/cdc-hiv-surveillance-special-report-number-25.pdf" xlink:type="simple">https://www.cdc.gov/hiv/pdf/library/reports/surveillance/cdc-hiv-surveillance-special-report-number-25.pdf</ext-link></mixed-citation></ref>
+<ref id="pone.0252783.ref002"><label>2</label><mixed-citation publication-type="other" xlink:type="simple">Denning P. &amp; DiNenno, E. Communities in Crisis: is there a generalized HIV epidemic in impoverished urban areas of the United States? 2019. Available from: <ext-link ext-link-type="uri" xlink:href="https://www.cdc.gov/hiv/group/poverty.html" xlink:type="simple">https://www.cdc.gov/hiv/group/poverty.html</ext-link></mixed-citation></ref>
+<ref id="pone.0252783.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><collab>Centers for Disease Control and Prevention</collab>. <article-title>Characteristics associated with HIV Infection among heterosexuals in urban areas with high AIDS prevalence—24 cities, United States, 2006–2007</article-title>. <source>Morbidity and Mortality Weekly Report</source>. <year>2011</year>;<volume>60</volume>, <fpage>1045</fpage>–<lpage>1049</lpage>. <object-id pub-id-type="pmid">21832975</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gueler</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Moser</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Calmy</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Günthard</surname> <given-names>HF</given-names></name>, <name name-style="western"><surname>Bernasconi</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Furrer</surname> <given-names>H</given-names></name>, <etal>et al</etal>. <article-title>Life expectancy in HIV-positive persons in Switzerland: matched comparison with general population</article-title>. <source>AIDS</source>. <year>2017</year>;<volume>31</volume>(<issue>3</issue>), <fpage>427</fpage>–<lpage>436</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1097/QAD.0000000000001335" xlink:type="simple">10.1097/QAD.0000000000001335</ext-link></comment> <object-id pub-id-type="pmid">27831953</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maulsby</surname> <given-names>CH</given-names></name>, <name name-style="western"><surname>Ratnayake</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hesson</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Mugavero</surname> <given-names>MJ</given-names></name>, &amp; <name name-style="western"><surname>Latkin</surname> <given-names>CA</given-names></name>. <article-title>A Scoping Review of Employment and HIV</article-title>. <source>AIDS and Behavior</source>. <volume>2020</volume>: <volume>24</volume>, <fpage>2942</fpage>–<lpage>2955</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1007/s10461-020-02845-x" xlink:type="simple">10.1007/s10461-020-02845-x</ext-link></comment> <object-id pub-id-type="pmid">32246357</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Coduti</surname> <given-names>WA</given-names></name>, <name name-style="western"><surname>Eissenstat</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Conyers</surname> <given-names>LM</given-names></name>. <article-title>Linking hope factors, barriers to employment and health outcomes for individuals living with Human Immunodeficiency Virus (HIV).</article-title> <source>Work</source>. <year>2018</year>;<volume>61</volume>, <fpage>225</fpage>–<lpage>236</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.3233/WOR-182794" xlink:type="simple">10.3233/WOR-182794</ext-link></comment> <object-id pub-id-type="pmid">30373973</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lazar</surname> <given-names>M</given-names></name> &amp; <name name-style="western"><surname>Davenport</surname> <given-names>L</given-names></name>. <article-title>Barriers to Health Care Access for Low Income Families: A Review of Literature</article-title>. <source>Journal of Community Health Nursing</source>. <year>2018</year>; <volume>35</volume>(<issue>1</issue>): <fpage>28</fpage>–<lpage>37</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1080/07370016.2018.1404832" xlink:type="simple">10.1080/07370016.2018.1404832</ext-link></comment> <object-id pub-id-type="pmid">29323941</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dabaghzadeh</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Jabbari</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Khalili</surname> <given-names>H</given-names></name>, &amp; <name name-style="western"><surname>Abbasian</surname> <given-names>L</given-names></name>. <article-title>Associated factors of suicidal thoughts in HIV-positive individuals</article-title>. <source>Iranian Journal of Psychiatry</source>. <year>2015</year>;<volume>10</volume>(<issue>3</issue>), <fpage>185</fpage>. <object-id pub-id-type="pmid">26877752</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rodger</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Brecker</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Bhagani</surname> <given-names>S</given-names></name>, <etal>et al</etal>. <article-title>Attitudes and barriers to employment in HIV-positive patients</article-title>. <source>Occupational Medicine</source>. <year>2010</year>;<volume>60</volume>(<issue>6</issue>), <fpage>423</fpage>–<lpage>429</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/occmed/kqq077" xlink:type="simple">10.1093/occmed/kqq077</ext-link></comment> <object-id pub-id-type="pmid">20584766</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref010"><label>10</label><mixed-citation publication-type="other" xlink:type="simple">U.S. Department of Health and Human Services. HIV National Strategic Plan for the United States: A Roadmap to End the Epidemic 2021–2025. 2020. Available from: <ext-link ext-link-type="uri" xlink:href="https://hivgov-prod-v3.s3.amazonaws.com/s3fs-public/HIV-National-Strategic-Plan-2021-2025.pdf" xlink:type="simple">https://hivgov-prod-v3.s3.amazonaws.com/s3fs-public/HIV-National-Strategic-Plan-2021-2025.pdf</ext-link></mixed-citation></ref>
+<ref id="pone.0252783.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Canada</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Shi</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Corrigan</surname> <given-names>P</given-names></name>. <article-title>HIV-related stigma acting as predictors of unemployment of people living with HIV/AIDS</article-title>. <source>AIDS Care</source>. <year>2012</year>;<volume>24</volume>(<issue>1</issue>), <fpage>129</fpage>–<lpage>135</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1080/09540121.2011.596512" xlink:type="simple">10.1080/09540121.2011.596512</ext-link></comment> <object-id pub-id-type="pmid">21777074</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brooks</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Martin</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Ortiz</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Veniegas</surname> <given-names>RC</given-names></name>. <article-title>Perceived barriers to employment among persons living with HIV/AIDS</article-title>. <source>AIDS Care</source>. <year>2004</year>;<volume>16</volume>(<issue>6</issue>), <fpage>756</fpage>–<lpage>766</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1080/09540120412331269594" xlink:type="simple">10.1080/09540120412331269594</ext-link></comment> <object-id pub-id-type="pmid">15370063</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Earnshaw</surname> <given-names>VA</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>LR</given-names></name>, <name name-style="western"><surname>Chaudoir</surname> <given-names>SR</given-names></name>, <name name-style="western"><surname>Amico</surname> <given-names>KR</given-names></name>, &amp; <name name-style="western"><surname>Copenhaver</surname> <given-names>MM</given-names></name>. <article-title>HIV stigma mechanisms and well-being among PLWH: a test of the HIV stigma framework</article-title>. <source>AIDS and Behavior</source>. <year>2013</year>;<volume>17</volume>(<issue>5</issue>), <fpage>1785</fpage>–<lpage>1795</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1007/s10461-013-0437-9" xlink:type="simple">10.1007/s10461-013-0437-9</ext-link></comment> <object-id pub-id-type="pmid">23456594</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kučukalić</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kučukalić</surname> <given-names>A</given-names></name>. <article-title>Stigma and Suicide</article-title>. <source>Psychiatr Danub</source>. <year>2017</year>;<volume>29</volume>(<issue>Suppl 5</issue>), <fpage>895</fpage>–<lpage>899</lpage>. <object-id pub-id-type="pmid">29283986</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Turan</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Budhwani</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Fazeli</surname> <given-names>PL</given-names></name>, <etal>et al</etal>. <article-title>How Does Stigma Affect People Living with HIV? The Mediating Roles of Internalized and Anticipated HIV Stigma in the Effects of Perceived Community Stigma on Health and Psychosocial Outcomes</article-title>. <source>AIDS Behav</source>. <year>2017</year>;<volume>21</volume>(<issue>1</issue>), <fpage>283</fpage>–<lpage>291</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1007/s10461-016-1451-5" xlink:type="simple">10.1007/s10461-016-1451-5</ext-link></comment> <object-id pub-id-type="pmid">27272742</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref016"><label>16</label><mixed-citation publication-type="other" xlink:type="simple">HIV/AIDS Bureau. Improving HIV health outcomes through the coordination of supportive employment and housing services. Resources and Services Administration. 2017. Available from: <ext-link ext-link-type="uri" xlink:href="https://www.hrsa.gov/grants/find-funding/hrsa-17-113" xlink:type="simple">https://www.hrsa.gov/grants/find-funding/hrsa-17-113</ext-link></mixed-citation></ref>
+<ref id="pone.0252783.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Harris</surname> <given-names>PA</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Minor</surname> <given-names>BL</given-names></name>, <name name-style="western"><surname>Elliott</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Fernandez</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>O’Neal</surname> <given-names>L</given-names></name>, <etal>et al</etal>. <article-title>The REDCap consortium: Building an international community of software partners</article-title>, <source>J Biomed Inform</source>. <year>2019</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.jbi.2019.103208" xlink:type="simple">10.1016/j.jbi.2019.103208</ext-link></comment> <object-id pub-id-type="pmid">31078660</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref018"><label>18</label><mixed-citation publication-type="other" xlink:type="simple">National Institute for Drug Abuse: Data Harmonization. Seek, Test, Treat and Retain for Vulnerable Populations: Data Harmonization Measure Social Support subscale, <ext-link ext-link-type="uri" xlink:href="http://www.drugabuse.gov/sites/default/files/sttrfiles/AccesstoCareVP.pdf.Accessed" xlink:type="simple">http://www.drugabuse.gov/sites/default/files/sttrfiles/AccesstoCareVP.pdf.Accessed</ext-link> October 1, 2017.</mixed-citation></ref>
+<ref id="pone.0252783.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Blumberg</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Bialostosky</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Hamilton</surname> <given-names>WL</given-names></name>, <name name-style="western"><surname>Briefel</surname> <given-names>RR</given-names></name>. <article-title>The effectiveness of a short form of the Household Food Security Scale</article-title>. <source>American journal of public health</source>. <year>1999</year> <month>Aug</month>;<volume>89</volume>(<issue>8</issue>):<fpage>1231</fpage>–<lpage>4</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.2105/ajph.89.8.1231" xlink:type="simple">10.2105/ajph.89.8.1231</ext-link></comment> <object-id pub-id-type="pmid">10432912</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><collab>World Health Organization</collab>, <article-title>Alcohol, Smoking and Substance Use Involvement Screening Test (ASSIST World Health Organization. The Alcohol, Smoking and Substance Involvement Screening Test (ASSIST): development, reliability and feasibility</article-title>. <source>Addiction</source>. <year>2002</year>;<volume>97</volume>(<issue>9</issue>): <fpage>1183</fpage>–<lpage>1194</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1046/j.1360-0443.2002.00185.x" xlink:type="simple">10.1046/j.1360-0443.2002.00185.x</ext-link></comment> <object-id pub-id-type="pmid">12199834</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><collab>Center for Epidemiologic Studies</collab> <article-title>Depression Scale (CES-D 10) Radloff LS. The CESD Scale: a self-report depression scale for research in the general population</article-title>. <source>Applied Psychological Measurement</source>. <year>1977</year>;<volume>1</volume>:<fpage>385</fpage>–<lpage>401</lpage>.</mixed-citation></ref>
+<ref id="pone.0252783.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schnur Schnurr</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Vielhauer</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Weathers</surname> <given-names>F</given-names></name>, &amp; <name name-style="western"><surname>Findler</surname> <given-names>M</given-names></name>. <article-title>The Brief Trauma Questionnaire (BTQ) 1999</article-title>. Available from <ext-link ext-link-type="uri" xlink:href="http://www.ptsd.va.gov" xlink:type="simple">http://www.ptsd.va.gov</ext-link></mixed-citation></ref>
+<ref id="pone.0252783.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kazis</surname> <given-names>LE</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>DR</given-names></name>, <name name-style="western"><surname>Skinner</surname> <given-names>KM</given-names></name>, <etal>et al</etal>. <article-title>Applications of methodologies of the Veterans Health Study in the VA healthcare system: Conclusions and summary</article-title>. <source>The Journal of Ambulatory Care Management</source>. <year>2006</year>;<volume>29</volume>, <fpage>182</fpage>–<lpage>188</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1097/00004479-200604000-00011" xlink:type="simple">10.1097/00004479-200604000-00011</ext-link></comment> <object-id pub-id-type="pmid">16552327</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref024"><label>24</label><mixed-citation publication-type="other" xlink:type="simple">SPSS Statistics for Windows, version 25. 2017. Armonk, NY: IBM SPSS Corp.</mixed-citation></ref>
+<ref id="pone.0252783.ref025"><label>25</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Nunnally</surname> <given-names>JC</given-names></name>. <source>Psychometric theory, 2nd edition</source>. <year>1978</year>. <publisher-loc>McGraw-Hill, New York, NY</publisher-loc>.</mixed-citation></ref>
+<ref id="pone.0252783.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Turan</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Budhwani</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Fazeli</surname> <given-names>PL</given-names></name>, <name name-style="western"><surname>Browning</surname> <given-names>WR</given-names></name>, <name name-style="western"><surname>Raper</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Mugavero</surname> <given-names>MJ</given-names></name>, <etal>et al</etal>. <article-title>How does stigma affect people living with HIV? The mediating roles of internalized and anticipated HIV stigma in the effects of perceived community stigma on health and psychosocial outcomes</article-title>. <source>AIDS and Behavior</source>. <year>2017</year>;<volume>21</volume>(<issue>1</issue>):<fpage>283</fpage>–<lpage>91</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1007/s10461-016-1451-5" xlink:type="simple">10.1007/s10461-016-1451-5</ext-link></comment> <object-id pub-id-type="pmid">27272742</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sweeney</surname> <given-names>SM</given-names></name>, &amp; <name name-style="western"><surname>Vanable</surname> <given-names>PA</given-names></name>. <article-title>The association of HIV-related stigma to HIV medication adherence: a systematic review and synthesis of the literature</article-title>. <source>AIDS and Behavior</source>. <year>2016</year>;<volume>20</volume>(<issue>1</issue>), <fpage>29</fpage>–<lpage>50</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1007/s10461-015-1164-1" xlink:type="simple">10.1007/s10461-015-1164-1</ext-link></comment> <object-id pub-id-type="pmid">26303196</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rice</surname> <given-names>WS</given-names></name>, <name name-style="western"><surname>Burnham</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Mugavero</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Raper</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Atkins</surname> <given-names>GC</given-names></name>, &amp; <name name-style="western"><surname>Turan</surname> <given-names>B</given-names></name>. <article-title>Association between internalized HIV-related stigma and HIV care visit adherence</article-title>. <source>Journal of acquired immune deficiency syndromes</source>. <year>2017</year>;<volume>76</volume>(<issue>5</issue>):<fpage>482</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1097/QAI.0000000000001543" xlink:type="simple">10.1097/QAI.0000000000001543</ext-link></comment> <object-id pub-id-type="pmid">28885270</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maulsby</surname> <given-names>CH</given-names></name>, <name name-style="western"><surname>Ratnayake</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hesson</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Mugavero</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Latkin</surname> <given-names>CA</given-names></name>. <article-title>A Scoping Review of Employment and HIV</article-title>. <source>AIDS and behavior</source>. 2020; <volume>24</volume>(<issue>10</issue>): <fpage>2942</fpage>–<lpage>2955</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1007/s10461-020-02845-x" xlink:type="simple">10.1007/s10461-020-02845-x</ext-link></comment> <object-id pub-id-type="pmid">32246357</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref030"><label>30</label><mixed-citation publication-type="other" xlink:type="simple">Waddell G, &amp; Burton AK. Is work good for your health and well-being?. The Stationery Office. 2006.</mixed-citation></ref>
+<ref id="pone.0252783.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Blalock</surname> <given-names>AC</given-names></name>, <name name-style="western"><surname>Mcdaniel</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Farber</surname> <given-names>EW</given-names></name>. <article-title>Effect of employment on quality of life and psychological functioning in patients with HIV/AIDS</article-title>. <source>Psychosomatics</source>. <year>2002</year>; (<issue>43</issue>)<volume>5</volume>, <fpage>400</fpage>–<lpage>404</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1176/appi.psy.43.5.400" xlink:type="simple">10.1176/appi.psy.43.5.400</ext-link></comment> <object-id pub-id-type="pmid">12297609</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Heaton</surname> <given-names>RK</given-names></name>, <name name-style="western"><surname>Marcotte</surname> <given-names>TD</given-names></name>, <name name-style="western"><surname>Rivera-Mindt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Sadek</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Moore</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Bentley</surname> <given-names>H</given-names></name>, <etal>et al</etal>. <article-title>The impact of HIV-associated neuropsychological impairment on everyday functioning</article-title>. <source>Journal of the International Neuropsychological Society</source>. <year>2004</year>; <volume>10</volume>, <fpage>317</fpage>–<lpage>331</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1017/S1355617704102130" xlink:type="simple">10.1017/S1355617704102130</ext-link></comment> <object-id pub-id-type="pmid">15147590</object-id></mixed-citation></ref>
+<ref id="pone.0252783.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pellowski</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Kalichman</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Matthews</surname> <given-names>KA</given-names></name>, &amp; <name name-style="western"><surname>Adler</surname> <given-names>N</given-names></name>. <article-title>A pandemic of the poor: Social disadvantage and the US HIV epidemic</article-title>. <source>American Psychologist</source>. <year>2013</year>;<volume>68</volume>(<issue>4</issue>), <fpage>197</fpage>.</mixed-citation></ref>
+</ref-list>
+</back>
+</article>

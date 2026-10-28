@@ -1,0 +1,1228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLOS Glob Public Health</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosgph</journal-id>
+<journal-title-group>
+<journal-title>PLOS Global Public Health</journal-title>
+</journal-title-group>
+<issn pub-type="epub">2767-3375</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pgph.0002634</article-id>
+<article-id pub-id-type="publisher-id">PGPH-D-23-00532</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Employment</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Mental health and psychiatry</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Labor markets</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Employment</subject><subj-group><subject>Jobs</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Pharmaceutics</subject><subj-group><subject>Drug therapy</subject><subj-group><subject>Drug administration</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>People and places</subject><subj-group><subject>Population groupings</subject><subj-group><subject>Age groups</subject><subj-group><subject>Children</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>People and places</subject><subj-group><subject>Population groupings</subject><subj-group><subject>Families</subject><subj-group><subject>Children</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Physiology</subject><subj-group><subject>Physiological parameters</subject><subj-group><subject>Body weight</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Medicine and health sciences</subject><subj-group><subject>Health care</subject><subj-group><subject>Health statistics</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Involuntary temporary work and mental health medications: A longitudinal study in Denmark</article-title>
+<alt-title alt-title-type="running-head">Involuntary temporary work and mental health in Denmark</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0000-0003-0497-3312</contrib-id>
+<name name-style="western">
+<surname>Albæk</surname>
+<given-names>Karsten</given-names>
+</name>
+<role content-type="http://credit.niso.org/contributor-roles/conceptualization/">Conceptualization</role>
+<role content-type="http://credit.niso.org/contributor-roles/data-curation/">Data curation</role>
+<role content-type="http://credit.niso.org/contributor-roles/formal-analysis/">Formal analysis</role>
+<role content-type="http://credit.niso.org/contributor-roles/funding-acquisition/">Funding acquisition</role>
+<role content-type="http://credit.niso.org/contributor-roles/investigation/">Investigation</role>
+<role content-type="http://credit.niso.org/contributor-roles/methodology/">Methodology</role>
+<role content-type="http://credit.niso.org/contributor-roles/project-administration/">Project administration</role>
+<role content-type="http://credit.niso.org/contributor-roles/resources/">Resources</role>
+<role content-type="http://credit.niso.org/contributor-roles/software/">Software</role>
+<xref ref-type="corresp" rid="cor001">*</xref>
+<xref ref-type="aff" rid="aff001"/>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Andrade</surname>
+<given-names>Stefan Bastholm</given-names>
+</name>
+<role content-type="http://credit.niso.org/contributor-roles/conceptualization/">Conceptualization</role>
+<role content-type="http://credit.niso.org/contributor-roles/data-curation/">Data curation</role>
+<role content-type="http://credit.niso.org/contributor-roles/formal-analysis/">Formal analysis</role>
+<role content-type="http://credit.niso.org/contributor-roles/funding-acquisition/">Funding acquisition</role>
+<role content-type="http://credit.niso.org/contributor-roles/investigation/">Investigation</role>
+<role content-type="http://credit.niso.org/contributor-roles/methodology/">Methodology</role>
+<role content-type="http://credit.niso.org/contributor-roles/project-administration/">Project administration</role>
+<role content-type="http://credit.niso.org/contributor-roles/resources/">Resources</role>
+<role content-type="http://credit.niso.org/contributor-roles/software/">Software</role>
+<xref ref-type="corresp" rid="cor001">*</xref>
+<xref ref-type="aff" rid="aff001"/>
+</contrib>
+</contrib-group>
+<aff id="aff001"><addr-line>VIVE–The Danish Center for Social Science Research, Copenhagen K., Denmark</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>De Moortel</surname>
+<given-names>Deborah</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Vrije Universiteit Brussel, BELGIUM</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">kal@vive.dk</email> (KA); <email xlink:type="simple">sba@vive.dk</email> (SBA)</corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>30</day>
+<month>11</month>
+<year>2023</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2023</year>
+</pub-date>
+<volume>3</volume>
+<issue>11</issue>
+<elocation-id>e0002634</elocation-id>
+<history>
+<date date-type="received">
+<day>28</day>
+<month>3</month>
+<year>2023</year>
+</date>
+<date date-type="accepted">
+<day>23</day>
+<month>10</month>
+<year>2023</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2023</copyright-year>
+<copyright-holder>Albæk, Andrade</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pgph.0002634"/>
+<abstract>
+<p>Since the 1970s, most western countries have experienced an increase in jobs characterized by temporary employment working arrangements. Research links temporary employment to negative health outcomes. Yet, no study has analysed the effects on the mental health of workers in involuntary temporary employment. This study analyses the consequences of involuntary temporary employment for mental health. We distinguish between different lengths of exposure to involuntary temporary employment and assess the effects separately for women and men. We use a cohort design that combines data from the Danish version of the longitudinal European Labour Force Survey with administrative data about use of prescription drugs for anxiety and stress. Using a fixed effects approach, we identify the effects of involuntary full-time temporary employment on mental health over time. To further investigate causal effects, we also compare the outcomes of workers in involuntary full-time temporary employment with a control group that consists of workers who become employed in involuntarily full-time temporary job at a later point of time. For women in involuntary full-time temporary employment (for six quarters or more) the results show a deterioration in mental health as indicated by a 12.8 percentage point increase in drug use. Involuntary full-time temporary employment for one quarter results in a decrease in drug use by 1.1 percentage points, but no lasting effects. For men, we find no mental health consequences of involuntary full-time temporary employment. We conclude that involuntary full-time temporary employment for six quarters or more is likely to be harmful for women’s mental health, while shorter periods of involuntary full-time temporary employment may have a minor positive impact. The implications suggest that it is advisable for labour market policy to make it easy for those in involuntary temporary employment to find permanent jobs, and that policy makers should consider adverse mental health problems when addressing policies affecting the prevalence of temporary employment.</p>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100005404</institution-id>
+<institution>Arbejdstilsynet</institution>
+</institution-wrap>
+</funding-source>
+<award-id>15-2019-09</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0000-0003-0497-3312</contrib-id>
+<name name-style="western">
+<surname>Albæk</surname>
+<given-names>Karsten</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<funding-statement>This work was supported by the Danish Working Environment Research Fund (grant no. 15-2019-09 to KA and SBA). The funder had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="2"/>
+<table-count count="3"/>
+<page-count count="17"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>Due to restrictions related to Danish law and protecting citizen privacy, the combined set of data as used in this study can only be made available through a trusted third party, Statistics Denmark. University-based Danish scientific organizations can be authorized to work with data within Statistics Denmark and such organization can provide access to individual scientists inside and outside of Denmark. Requests for data may be sent to Statistics Denmark or the Danish Data Protection Agency. The LFS data are open access and permission to use these data may be granted by Eurostat. The procedure and conditions for approval is described here: <ext-link ext-link-type="uri" xlink:href="https://ec.europa.eu/eurostat/documents/203647/771732/How_to_apply_for_microdata_access.pdf" xlink:type="simple">https://ec.europa.eu/eurostat/documents/203647/771732/How_to_apply_for_microdata_access.pdf</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Compared to workers in permanent employment, workers in temporary employment tend to have lower and more unstable incomes [<xref ref-type="bibr" rid="pgph.0002634.ref001">1</xref>]. In addition to the economic distress, research links temporary employment to poor working environments, lack of training, bleak labour market prospects, and poor health [<xref ref-type="bibr" rid="pgph.0002634.ref002">2</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref003">3</xref>]. A particular concern is whether job insecurity associated with this type of employment may also lead to psychological distress [<xref ref-type="bibr" rid="pgph.0002634.ref004">4</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref005">5</xref>]. Drawing on cross-sectional data, studies show that, on average, workers in temporary employment have poorer mental health than workers in permanent employment [<xref ref-type="bibr" rid="pgph.0002634.ref006">6</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref007">7</xref>].</p>
+<p>However, the relationship between temporary employment and mental health may be bidirectional: While temporary employment can lead to mental health problems, workers with mental health problems might be more likely to enter temporary employment. To address the issue of whether temporary employment causes poor mental health, recent studies draw on longitudinal data. The findings of these studies are inconclusive. Two studies using Australian longitudinal data find no connection between temporary employment and mental health [<xref ref-type="bibr" rid="pgph.0002634.ref008">8</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref009">9</xref>], and one study using UK data finds that temporary work arrangements have no long-lasting detrimental health consequences [<xref ref-type="bibr" rid="pgph.0002634.ref010">10</xref>]. For Italy, a study finds that temporary employment has adverse consequences for mental health [<xref ref-type="bibr" rid="pgph.0002634.ref011">11</xref>], and the same is the case for a study on the US [<xref ref-type="bibr" rid="pgph.0002634.ref012">12</xref>].</p>
+<p>In this study, we make four contributions to the literature on temporary employment and mental health. First, our study is the first to conduct analyses of the consequences of <italic>involuntary</italic> temporary employment (ITE) on mental health. We use data from the Danish version of the longitudinal European Labour Force Survey (LFS), which we merge with administrative data on drugs prescribed for anxiety and stress. We focus on those survey respondents who answered that they have employment contract of limited duration because they could not find a permanent job, i.e., the involuntary temporary employees. Second, our study is the first to examine the extent to which the length of exposure to temporary employment plays a role for mental health. Third, we report gender specific results, which are rarely found in the literature on temporary employment and health [<xref ref-type="bibr" rid="pgph.0002634.ref013">13</xref>]. Fourth, we draw on recent innovations in causal inferences to estimate the causal effect of temporary employment on mental health problems [<xref ref-type="bibr" rid="pgph.0002634.ref014">14</xref>–<xref ref-type="bibr" rid="pgph.0002634.ref016">16</xref>].</p>
+</sec>
+<sec id="sec002" sec-type="intro">
+<title>Background</title>
+<sec id="sec003">
+<title>Temporary employment in a Scandinavian context</title>
+<p>Since the 1970s, western countries have experienced an increase in jobs with “non-standard”, “atypical”, “precarious” or “flexible” working arrangements [<xref ref-type="bibr" rid="pgph.0002634.ref017">17</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref018">18</xref>]. For example, data for the European countries show that while 8 pct. of the labour force was in temporary employment in 1983, the share of workers had risen by 75 pct. to 14 pct. of total European employment in 2017 [<xref ref-type="bibr" rid="pgph.0002634.ref017">17</xref>]. Research explains the rise in non-standard working arrangements with references to globalization, a decrease in the role of labour unions, technological changes, “fissuring” of traditional workplaces as work processes are outsourced, and labour market reforms involving changes in employment protection [<xref ref-type="bibr" rid="pgph.0002634.ref001">1</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref019">19</xref>–<xref ref-type="bibr" rid="pgph.0002634.ref021">21</xref>].</p>
+<p>Studies suggest that the distressing effects of temporary work might vary across welfare states [<xref ref-type="bibr" rid="pgph.0002634.ref003">3</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref022">22</xref>]. For example, there is some evidence that Scandinavian-type welfare systems provide protection against adverse effects of flexible employment relationships [<xref ref-type="bibr" rid="pgph.0002634.ref023">23</xref>]. Compared to other western labour markets, the Danish labour market is characterized by substantial <italic>flexibility</italic>, with high levels of job and worker flows that are comparable to the U.S. level [<xref ref-type="bibr" rid="pgph.0002634.ref024">24</xref>]. This labour market arrangement implies that displaced workers find new jobs with comparative ease [<xref ref-type="bibr" rid="pgph.0002634.ref025">25</xref>]. Furthermore, <italic>security</italic> in Denmark is high because the social democratic welfare state keeps income maintenance comparatively high [<xref ref-type="bibr" rid="pgph.0002634.ref026">26</xref>]. This combination concept, <italic>flexicurity</italic>, has played a large role in the development of European policies [<xref ref-type="bibr" rid="pgph.0002634.ref027">27</xref>] and in the academic debate about precarious work [<xref ref-type="bibr" rid="pgph.0002634.ref028">28</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref029">29</xref>].</p>
+</sec>
+<sec id="sec004">
+<title>Literature on temporary employment and mental health</title>
+<p>The relationship between temporary jobs and health is bidirectional: temporary employment might lead to health problems but workers with health problems might be more likely to enter temporary employment. A substantial share of the early contributions to the literature assess the health of temporary workers relative to workers with permanent contracts using cross-sectional data. A recent review lists 39 cross-section studies and three longitudinal studies on the association between fixed-term employment and mental health ([<xref ref-type="bibr" rid="pgph.0002634.ref006">6</xref>] see also [<xref ref-type="bibr" rid="pgph.0002634.ref007">7</xref>]). In the following, we review recent contributions on the relationship between temporary employment and health, where the health status of workers is followed over time.</p>
+<p>Bardasi and Francesconi [<xref ref-type="bibr" rid="pgph.0002634.ref010">10</xref>] apply ten waves of the British Household Panel Survey (BHPS) to study the relationship between different types of employment contracts and mental health. The descriptive statistics show no statistically significant differences in mental health between workers on temporary and permanent contracts for women and men. When applying fixed effects estimation, the authors find that temporary work arrangements did not have long-lasting detrimental health effects on either female or male workers. However, as the authors note, they cannot distinguish between involuntary and voluntary temporary employment and they state that health effects may even be positive in the latter case.</p>
+<p>Quesnel-Vallée et al. [<xref ref-type="bibr" rid="pgph.0002634.ref012">12</xref>] analyse the effect of temporary work using answers from six biannual versions of the US National Longitudinal Survey of Youth 1979. They compare the outcome for workers in temporary employment with a control group constructed by propensity score matching. The authors find a substantial and significant increase in the severity of depression symptoms associated with exposure to temporary work at any point in time in the two preceding years.</p>
+<p>Dawson et al. [<xref ref-type="bibr" rid="pgph.0002634.ref030">30</xref>] use 18 waves of the annual British Household Panel Survey (BHPS) to analyse the extent to which workers who enter temporary employment differ from other groups with respect to health, where mental health is assessed by answers to questions about psychological distress, psychological anxiety and life dissatisfaction. The authors find that permanent contract employees who transit into temporary employment have lower levels of mental health relative to individuals who never transition into temporary employment.</p>
+<p>Pirani and Salvini [<xref ref-type="bibr" rid="pgph.0002634.ref031">31</xref>] use four years of the Italian version of the European Union Statistics on Income and Living Conditions survey. Their outcome variable is answers to the question “How is your health in general?” The respondents are considered to have health problems if the answers are fair, poor or very poor. In addition to regressions on the survey data, the authors apply inverse probability weights calculated from propensity score matching to adjust for the probability of entering temporary employment. The authors find that temporary employment does not entail significant adverse consequences for men, but is strongly harmful for Italian women. Temporary employment becomes particularly negative for health when it is prolonged over time, while a temporary contract followed by a permanent one within “a reasonable lapse of time”, e.g, one year, has no negative consequences for the worker’s health.</p>
+<p>Moscone et al. [<xref ref-type="bibr" rid="pgph.0002634.ref011">11</xref>] use information on workforce contract type for five years of administrative data for the Lombardy region of Italy. Information on mental health stems from administrative registers on prescription drugs, and the authors construct a variable that takes the value one if a person received at least one medical prescription for two or more consecutive quarters (i.e., 6 months). The empirical model includes lagged health status and control functions, where firm level variables for contract type are included as instruments. The authors find that being in a state of temporary employment tends to increase the likehood of developing mental health problems; moving from a permanent to a temporary contract tends to deteriorate mental health, while a shift from a temporary to a permanent contract improves mental health status.</p>
+<p>Bender and Theodossiou [<xref ref-type="bibr" rid="pgph.0002634.ref032">32</xref>] apply 17 waves of the BHPS, where the employed respondents are categorized as having either permanent or flexible employment contracts. The outcome variables are subjective evaluations of whether health was excellent or good, and answers to questions about specific health problems, such as anxiety, depression, heart or blood pressure problems, stomach or digestion problems. In the analysis, the authors only include those individuals who state that they are in good health and in permanent employment in the initial period. They use hazard regressions, including a frailty distribution, to take account of unobserved heterogeneity and conclude that individuals with long spells of “atypical” employment have higher levels of stress.</p>
+<p>In summary, the reviewed studies performed using longitudinal data yield the impression that workers on temporary contracts experienced health problems before they were in temporary employment. However, some studies also presented evidence that temporary employment worsens health problems, at least for longer periods of temporary employment. The single study with separate analyses for women and men finds adverse consequences for women but not for men.</p>
+</sec>
+</sec>
+<sec id="sec005" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec006">
+<title>Data</title>
+<p>The data come from the European Union Labour Force Survey (LFS), which is a quarterly comparative panel survey that interviews a sample of people in the European countries about their labour market participation. The respondents are interviewed up to four times. The second interview takes place one quarter after the first survey, while the third and fourth interviews take place after a two-quarter pause. In our analysis, we use interview rounds collected between 2006 and 2018 and limit our sample to respondents between ages 20 and 64.</p>
+<p><xref ref-type="fig" rid="pgph.0002634.g001">Fig 1</xref> illustrates the data collection in LFS for the first quarter of 2006 to the last quarter of 2008. The first group, labelled group A, is interviewed in the first and the second quarter of 2006. After a break during the third and fourth quarter of 2006, the group is interviewed again in the first and the second quarter of 2007.</p>
+<fig id="pgph.0002634.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pgph.0002634.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Illustration of the data collection process for the Labour Force Survey for eight rounds of interviews between 2006 and 2008, where grey boxes indicate that the respondent group is invited for an interview.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.g001" xlink:type="simple"/>
+</fig>
+<p>Group B starts the first interview in the second quarter of 2006 and is interviewed for the last time in the third quarter of 2007. The LFS continues to add new respondents in each new quarter, not only for the groups C to H that are included in <xref ref-type="fig" rid="pgph.0002634.g001">Fig 1</xref> but up to 2018, which is the last year of our data.</p>
+<p>In our main analysis, we include all respondents who have answered at least once that they are in ITE. If a respondent states they are in ITE in the first quarter of the LFS, we do not have information about their previous labour market status. We complement the main analysis with an analysis of how the consequences of ITE might differ depending on the worker’s previous labour market status. This complementary analysis demands that a labour market state is observed before the first quarter in which respondent answers that she is in ITE. As a result, the complementary analysis only includes respondents who have participated a maximum of three times in the LFS.</p>
+</sec>
+<sec id="sec007">
+<title>Involuntary temporary employment</title>
+<p>Since 2006, participants in the LFS have been asked whether they are employed on a temporary contract and, if so, the reason for their temporary employment. The participants with temporary employment can state one of the following four reasons: they could not find a permanent job, they did not want a permanent job, they have a training contract, or they have a contract for a probationary period. Our treatment group consists of full-time employees who answered that they were on a temporary contract because they could not find a permanent job. We refer to this group as “involuntary temporary workers”. In addition, we construct a comparison group consisting of all other respondents who stated that they were employed full-time on a permanent contract. We label this group the “permanent contract workers.” In our analyses, we include variables that measure different lengths of ITE varying from one to six quarters of employment.</p>
+<p>We confine the analysis to workers in full-time involuntary temporary employment only. Our reason for not including part-time temporary workers is that full-time workers might exhibit higher levels of organizational commitment and job satisfaction compared to part-time employees. As a result, mental health consequences of temporary employment might also differ for full-time and part-time workers. Inclusion of part-time workers in the analysis would thus make our results a mixture between the responses of the two groups of workers.</p>
+</sec>
+<sec id="sec008">
+<title>Medication for certain mental health problems</title>
+<p>We supplemented the LFS with detailed administrative data on the respondents’ health status from the Prescription Drug Database that covers all prescribed drugs purchased by Danish residents. The database contains a detailed classification of medicine according to the Anatomical Therapeutic Chemical (ATC) system. We construct a binary indicator for mental health that measures whether the respondent has been prescribed one or more drugs for mental health problems during a quarter. We follow the mental health of the participants for eight quarters before the first survey and eight quarters after the last survey. We use the same two groups of drugs as indicators for mental health as in Rocco et al. [<xref ref-type="bibr" rid="pgph.0002634.ref033">33</xref>]: anti-hypertensive drugs and psychotropic drugs. Anti-hypertensive drugs include ATC-codes C02, C03, C07, C08, and C09, while the psychotropic drugs include ATC-codes N05 and N06. While a number of studies have used medication as a measure of mental health problems, we are aware that many people with similar health problems (for various reasons) do not use medication. Our analyses should, therefore, be seen as relatively conservative estimates, as the number of people with mental health problems due to ITE may be significantly higher.</p>
+</sec>
+<sec id="sec009">
+<title>Control variables</title>
+<p>Inspired by previous research [<xref ref-type="bibr" rid="pgph.0002634.ref029">29</xref>], our regression models include control variables for the workers’ education, occupation and income. We draw on the International Standard Classification of Education to classify the workers’ education into three categories: “high” (university or college), “middle” (vocational or high school), and “low” (below high school). The occupational categories are white-collar workers (main categories 0–4 in the International Standard Classification of Occupations, ISCO), and blue-collar workers (main ISCO categories 5–9). Information about income comes from tax registers. From these registers, we apply a variable measuring the annual total income that includes earnings and capital income. We also include demographic household variables about family composition (i.e., marital status, an indicator for children below age 6 living in the household, and an indicator for children below age 18 living in the household).</p>
+</sec>
+<sec id="sec010">
+<title>Ethics statement</title>
+<p>The participants in the LFS provide consent to the administrators of the survey. The LFS data was merged with administrative data at Statistics Denmark. Researchers at approved research institutions have access to these data for research purposes under confidentiality rules.</p>
+</sec>
+<sec id="sec011">
+<title>Methodology and empirical strategy</title>
+<p>We use variants of regression analysis to determine the effect of the treatment variable (ITE) on our outcome variable (medication for certain mental health problems). The association between treatment and outcome is measured by coefficients on indicator variables taking the value one if the respondent is in temporary employment in a quarter, and zero otherwise. We code different lengths such that there is one indicator for being in involuntary temporary employment for one quarter and other indicators for being in temporary employment for two, four, five and six quarters (the pause in collecting the survey implies that spells of three quarters of temporary employment are not observed in the data). In addition, we apply indicator variables before and after treatment to assess pre- and post-treatment levels of mental health.</p>
+<p>We estimate three types of models. First, we compare the outcome of the treatment group with the comparison group of other full-time employees using a linear regression model (OLS). Second, we use the treatment group to estimate regression models containing separate intercepts for each participant, i.e., fixed effects. Fixed effects models exclude effects of time-invariant factors that might influence the workers’ mental health. We therefore only include time varying explanatory variables in these models. Third, we apply “difference-in-difference matching” [<xref ref-type="bibr" rid="pgph.0002634.ref016">16</xref>] by forming a control group that consists of workers who enter temporary employment in a later quarter [<xref ref-type="bibr" rid="pgph.0002634.ref014">14</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref015">15</xref>]. This procedure has the potential to alleviate the impact of unobserved differences between workers on the outcome variable.</p>
+<p>We use sample weights for calculating all the statistics that are reported in the paper. The sample weights of the LFS take both stratification and attrition into account. For each respondent, we apply the average of the sample weights in the surveys. We handle missing values as follows: Respondents without educational information are omitted from the analyses, corresponding to 2.3 pct. of the observations; we assign workers zero children if there is no information about children in the data; workers without marriage information are treated as singles; six workers without occupational information are categorized as blue-collar workers on the basis of their educational information.</p>
+<p>While our main focus is on involuntary full-time temporary employment, we also include workers with part-time employment in the subsection of the analysis entitled “Involuntary temporary employment and previous labour force states”. In this part of the analysis, we assess the role of previous labour market states before the worker enters involuntary full-time temporary employment, which might include part-time employment.</p>
+</sec>
+</sec>
+<sec id="sec012" sec-type="results">
+<title>Results</title>
+<sec id="sec013">
+<title>Descriptive statistics</title>
+<p><xref ref-type="table" rid="pgph.0002634.t001">Table 1</xref> presents summary statistics (mean and standard deviation) for the variables in the analysis, separately for women and men. The treatment groups of workers in full-time temporary employment consist of 5,365 women and 3,827 men. Among the group of women, 14 pct. received a prescription for mental health drugs in contrast to 17 pct. of the women in the comparison group with permanent full-time employment. For men, the corresponding figures are lower at 12 pct. and 13 pct. For both women and men, the average age of temporary workers is lower than workers in the comparison group (37–38 years compared to 42 years). The lower age of temporary workers is reflected in a lower marriage rate and lower shares of workers with children. The magnitude of the standard deviation of age shows that temporary employment is prevalent among different age groups of the workforce (and not confined to, e.g., younger age groups). Older full-time workers are more frequent users of prescription drugs than younger ones: The share of women using prescription drugs increases from 6 pct. among workers aged 20–24 to 38 pct. among those aged 60–64, while the corresponding shares for men are 3 pct. and 36 pct.</p>
+<table-wrap id="pgph.0002634.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pgph.0002634.t001</object-id>
+<label>Table 1</label> <caption><title>Mean and standard deviation of variables, full-time workers of age 20–64 in involuntary full-time temporary employment (treatment group) and permanent full-time employment (comparison group).</title></caption>
+<alternatives>
+<graphic id="pgph.0002634.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.t001" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="2"/>
+<th align="center" colspan="4">Women</th>
+<th align="center" colspan="4">Men</th>
+</tr>
+<tr>
+<th align="center" colspan="2">Involuntary temporary employment</th>
+<th align="center" colspan="2">Permanent employment</th>
+<th align="center" colspan="2">Involuntary temporary employment</th>
+<th align="center" colspan="2">Permanent employment</th>
+</tr>
+<tr>
+<th align="left"/>
+<th align="center">Mean</th>
+<th align="center">Std.dev</th>
+<th align="center">Mean</th>
+<th align="center">Std.dev</th>
+<th align="center">Mean</th>
+<th align="center">Std.dev</th>
+<th align="center">Mean</th>
+<th align="center">Std.dev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Prescription drugs for mental health problems</td>
+<td align="center">0.142</td>
+<td align="center">0.355</td>
+<td align="center">0.165</td>
+<td align="center">0.371</td>
+<td align="center">0.118</td>
+<td align="center">0.333</td>
+<td align="center">0.128</td>
+<td align="center">0.333</td>
+</tr>
+<tr>
+<td align="left">Education level</td>
+<td align="left"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="left">        Low</td>
+<td align="center">0.146</td>
+<td align="center">0.359</td>
+<td align="center">0.152</td>
+<td align="center">0.358</td>
+<td align="center">0.214</td>
+<td align="center">0.423</td>
+<td align="center">0.198</td>
+<td align="center">0.398</td>
+</tr>
+<tr>
+<td align="left">        Middle</td>
+<td align="center">0.391</td>
+<td align="center">0.495</td>
+<td align="center">0.471</td>
+<td align="center">0.499</td>
+<td align="center">0.464</td>
+<td align="center">0.516</td>
+<td align="center">0.552</td>
+<td align="center">0.497</td>
+</tr>
+<tr>
+<td align="left">        High</td>
+<td align="center">0.464</td>
+<td align="center">0.506</td>
+<td align="center">0.377</td>
+<td align="center">0.484</td>
+<td align="center">0.323</td>
+<td align="center">0.484</td>
+<td align="center">0.251</td>
+<td align="center">0.433</td>
+</tr>
+<tr>
+<td align="left">White collar</td>
+<td align="center">0.526</td>
+<td align="center">0.507</td>
+<td align="center">0.540</td>
+<td align="center">0.498</td>
+<td align="center">0.440</td>
+<td align="center">0.512</td>
+<td align="center">0.475</td>
+<td align="center">0.499</td>
+</tr>
+<tr>
+<td align="left">Married</td>
+<td align="center">0.387</td>
+<td align="center">0.494</td>
+<td align="center">0.549</td>
+<td align="center">0.497</td>
+<td align="center">0.327</td>
+<td align="center">0.484</td>
+<td align="center">0.531</td>
+<td align="center">0.498</td>
+</tr>
+<tr>
+<td align="left">Children up to 6 years old</td>
+<td align="center">0.018</td>
+<td align="center">0.134</td>
+<td align="center">0.020</td>
+<td align="center">0.140</td>
+<td align="center">0.006</td>
+<td align="center">0.080</td>
+<td align="center">0.020</td>
+<td align="center">0.140</td>
+</tr>
+<tr>
+<td align="left">Children up to 18 years old</td>
+<td align="center">0.216</td>
+<td align="center">0.418</td>
+<td align="center">0.290</td>
+<td align="center">0.453</td>
+<td align="center">0.144</td>
+<td align="center">0.362</td>
+<td align="center">0.250</td>
+<td align="center">0.432</td>
+</tr>
+<tr>
+<td align="left">Income, in 1000s DKK, 2018 level</td>
+<td align="center">317</td>
+<td align="center">138</td>
+<td align="center">387</td>
+<td align="center">159</td>
+<td align="center">333</td>
+<td align="center">242</td>
+<td align="center">460</td>
+<td align="center">373</td>
+</tr>
+<tr>
+<td align="left">Age</td>
+<td align="center">36.8</td>
+<td align="center">11.4</td>
+<td align="center">42.1</td>
+<td align="center">11.0</td>
+<td align="center">37.9</td>
+<td align="center">12.5</td>
+<td align="center">41.9</td>
+<td align="center">11.4</td>
+</tr>
+<tr>
+<td align="left">Year</td>
+<td align="center">2012.0</td>
+<td align="center">3.7</td>
+<td align="center">2011.8</td>
+<td align="center">3.9</td>
+<td align="center">2012.1</td>
+<td align="center">3.6</td>
+<td align="center">2011.7</td>
+<td align="center">3.9</td>
+</tr>
+<tr>
+<td align="left">No. of persons</td>
+<td align="center" colspan="2">5,365 </td>
+<td align="center" colspan="2">67,142 </td>
+<td align="center" colspan="2">3,827 </td>
+<td align="center" colspan="2">80,216 </td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001"><p><bold><italic>Notes</italic></bold>: Based on persons who had full time employment in at least one of the LFS surveys, 2006–2018. The treatment group, "Temporary", had temporary employment in at least one of the surveys. The comparison group, "Permanent," had a permanent contract in at least one of the surveys (and no temporary employment in the others). Levels of variables are assessed at the quarter of the first observation of temporary employment and the quarter of the first observation of a permanent contract, except health for the treatment group, which is assessed two quarters before the first observation of temporary employment. Rows 2 to 8 display statistics for indicator variables that take the value one if the respondent belongs to the stated group and zero otherwise. The income variable is the yearly personal income deflated to 2018 Danish kroners (one Euro is about 7.4 Danish kroners). Sample weights are used.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+<sec id="sec014">
+<title>Mental health before, during, and after involuntary temporary employment</title>
+<p><xref ref-type="fig" rid="pgph.0002634.g002">Fig 2</xref> illustrates the pattern of drug use for mental health problems before, during, and after ITE separately for women (Panel A) and men (Panel B). For women, drug use during the first four quarters of temporary employment (Graph A2) tends to be lower than drug use in most of the period before entering temporary employment (Graph A1), while workers on spells of five and six quarters of temporary employment use more drugs than before entering temporary employment. After temporary employment (Graph A3), drug use returns to the pre-treatment level. For men on temporary employment (Graph B2), drug use during most of the quarters appears to be higher than before entering temporary employment (Graph B1).</p>
+<fig id="pgph.0002634.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pgph.0002634.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Quarterly use of prescription drugs before, during, and after involuntarily temporary employment relative to permanent employment for women and men, age adjusted.</title>
+<p>Quarters are presented with negative values before involuntary temporary employment to signify the time leading up to the event of employment.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.g002" xlink:type="simple"/>
+</fig>
+<p>While all workers with ITE are included in the coefficient on the first treatment indicator (one quarter), only workers with six quarters of ITE enter the calculation of the last treatment indicator. As a result, the confidence intervals in <xref ref-type="fig" rid="pgph.0002634.g002">Fig 2</xref>, Graphs A2 and B2 increase as temporary employment periods become longer. The height of the dots in the diagrams indicates the level of mental health in the treatment group relative to the comparison group, taking age differences into account. The levels in <xref ref-type="fig" rid="pgph.0002634.g002">Fig 2</xref>, Graphs A1 and B1 show that before entering temporary employment workers, on average, used more drugs on average than workers with permanent employment.</p>
+</sec>
+<sec id="sec015">
+<title>Regression results</title>
+<p><xref ref-type="table" rid="pgph.0002634.t002">Table 2</xref> shows the results of regression models for women (columns 1 and 2) and men (columns 3 and 4). The model in the column 1 is based on an OLS estimation on data for women from both the treatment group and the comparison group of permanent contract workers. The coefficient on the indicator for belonging to the treatment group is positive and significantly different from zero at the 1 pct. level, which means that women in ITE use prescription drugs more frequently than those with permanent employment.</p>
+<table-wrap id="pgph.0002634.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pgph.0002634.t002</object-id>
+<label>Table 2</label> <caption><title>Involuntary temporary full-time employment and mental health, quarterly observations, 2006–2018.</title> <p>Dependent variable indicator for drug prescription for mental health problems.</p></caption>
+<alternatives>
+<graphic id="pgph.0002634.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.t002" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="2"/>
+<th align="center" colspan="2"><sc>Women</sc></th>
+<th align="center" colspan="2"><sc>Men</sc></th>
+</tr>
+<tr>
+<th align="center">(1)</th>
+<th align="center">(2)</th>
+<th align="center">(3)</th>
+<th align="center">(4)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Involuntary temporary employment</td>
+<td align="center">0.0219***<break/>(0.0052)</td>
+<td align="center">-</td>
+<td align="center">0.0108**<break/>(0.0052)</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">1 quarter before involuntary temporary employment</td>
+<td align="center">-0.0075***<break/>(0.0033)</td>
+<td align="center">-0.0083**<break/>(0.0039)</td>
+<td align="center">-0.0005<break/>(0.0035)</td>
+<td align="center">0.0018<break/>(0.0038)</td>
+</tr>
+<tr>
+<td align="left">Length of involuntary temporary employment</td>
+<td align="left"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="left">        Quarter 1</td>
+<td align="center">-0.0053**<break/>(0.0044)</td>
+<td align="center">-0.0109**<break/>(0.0052)</td>
+<td align="center">-0.0011<break/>(0.0045)</td>
+<td align="center">0.0006<break/>(0.0048)</td>
+</tr>
+<tr>
+<td align="left">        Quarter 1–2</td>
+<td align="center">-0.0019<break/>(0.0127)</td>
+<td align="center">-0.0041<break/>(0.0075)</td>
+<td align="center">-0.0125<break/>(0.0147)</td>
+<td align="center">-0.0119*<break/>(0.0072)</td>
+</tr>
+<tr>
+<td align="left">        Quarter 1–4</td>
+<td align="center">-0.0617***<break/>(0.0244)</td>
+<td align="center">-0.0319*<break/>(0.0168)</td>
+<td align="center">0.0166<break/>(0.0374)</td>
+<td align="center">0.0006<break/>(0.0197)</td>
+</tr>
+<tr>
+<td align="left">        Quarter 1–3</td>
+<td align="center">-0.0038<break/>(0.0281)</td>
+<td align="center">0.0140<break/>(0.0195)</td>
+<td align="center">0.0197<break/>(0.0378)</td>
+<td align="center">0.0188<break/>(0.0138)</td>
+</tr>
+<tr>
+<td align="left">        Quarter 1–6</td>
+<td align="center">0.0632<break/>(0.0708)</td>
+<td align="center">0.1244**<break/>(0.0553)</td>
+<td align="center">0.0337<break/>(0.0727)</td>
+<td align="center">-0.0033<break/>(0.0093)</td>
+</tr>
+<tr>
+<td align="left">After involuntary temporary employment</td>
+<td align="center">0.0032<break/>(0.0039)</td>
+<td align="center">-0.0009<break/>(0.0059)</td>
+<td align="center">-0.0021<break/>(0.0038)</td>
+<td align="center">0.0047<break/>(0.0053)</td>
+</tr>
+<tr>
+<td align="left">After involuntary temporary employment, 1–6 quarters</td>
+<td align="center">0.0460<break/>(0.0824)</td>
+<td align="center">0.1314**<break/>(0.0624)</td>
+<td align="center">-0.0238<break/>(0.0585)</td>
+<td align="center">-0.0359<break/>(0.0955)</td>
+</tr>
+<tr>
+<td align="left">Education level</td>
+<td align="left"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="left">        Low</td>
+<td align="center">0.0225***<break/>(0.0042)</td>
+<td align="center">-0.0153<break/>(0.0218)</td>
+<td align="center">0.0193***<break/>(0.0028)</td>
+<td align="center">0.0160<break/>(0.0212)</td>
+</tr>
+<tr>
+<td align="left">        High</td>
+<td align="center">-0.0198***<break/>(0.0029)</td>
+<td align="center">-0.0278<break/>(0.0119)</td>
+<td align="center">-0.0161***<break/>(0.0024)</td>
+<td align="center">0.0120<break/>(0.0197)</td>
+</tr>
+<tr>
+<td align="left">White collar</td>
+<td align="center">-0.0218***<break/>(0.0028)</td>
+<td align="center">-0.0016<break/>(0.0071)</td>
+<td align="center">-0.0090***<break/>(0.0022)</td>
+<td align="center">-0.0005<break/>(0.0075)</td>
+</tr>
+<tr>
+<td align="left">Married</td>
+<td align="center">-0.0133***<break/>(0.0025)</td>
+<td align="center">-0.0103<break/>(0.0099)</td>
+<td align="center">-0.0039**<break/>(0.0022)</td>
+<td align="center">0.0003<break/>(0.0121)</td>
+</tr>
+<tr>
+<td align="left">Children, up to 6 years old</td>
+<td align="center">-0.0111***<break/>(0.0053)</td>
+<td align="center">-0.0107<break/>(0.0179)</td>
+<td align="center">0.0127***<break/>(0.0047)</td>
+<td align="center">0.0225**<break/>(0.0145)</td>
+</tr>
+<tr>
+<td align="left">Children, up to 18 years old</td>
+<td align="center">-0.0184***<break/>(0.0029)</td>
+<td align="center">0.0066<break/>(0.0143)</td>
+<td align="center">-0.0137***<break/>(0.0024)</td>
+<td align="center">-0.0298**<break/>(0.0142)</td>
+</tr>
+<tr>
+<td align="left">Income, normalized</td>
+<td align="center">-0.0286***<break/>(0.0031)</td>
+<td align="center">0.0029<break/>(0.0093)</td>
+<td align="center">-0.0074***<break/>(0.0014)</td>
+<td align="center">-0.0075*<break/>(0.0041)</td>
+</tr>
+<tr>
+<td align="left">Estimation method</td>
+<td align="center">OLS</td>
+<td align="center">FE</td>
+<td align="center">OLS</td>
+<td align="center">FE</td>
+</tr>
+<tr>
+<td align="left">Sample</td>
+<td align="center">Whole</td>
+<td align="center">Treatment</td>
+<td align="center">Whole</td>
+<td align="center">Treatment</td>
+</tr>
+<tr>
+<td align="left">Constant</td>
+<td align="center">0.1312***<break/>(0.0058)</td>
+<td align="center">0.1860***<break/>(0.0166)</td>
+<td align="center">0.0817***<break/>(0.0050)</td>
+<td align="center">0.0973***<break/>(0.0169)</td>
+</tr>
+<tr>
+<td align="left">No. of workers</td>
+<td align="center">75,507</td>
+<td align="center">5,365</td>
+<td align="center">84,043</td>
+<td align="center">3,827</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t002fn001"><p><bold><italic>Notes</italic></bold></p></fn>
+<fn id="t002fn002"><p>Significance levels: * 10%, ** 5%, *** 1%. Standard errors in parentheses are clustered at the person level and calculated using sample weights. Columns (1) and (3) contain Ordinary Least Squares (OLS) estimates on the sample of workers in involuntary full-time temporary employment (treatment group) and workers in full-time permanent employment (comparison group). Columns (2) and (4) contain Fixed Effects (FE) estimates of workers in involuntary full-time temporary employment (treatment group), where the medication level of the workers is compared with their level before they entered involuntary temporary employment. The indicator for temporary employment for, e.g., “Quarter 1–6” takes the value 1 for each of the 6 quarters of temporary employment and 0 otherwise. The income variable is standardized to have mean zero and standard deviation one. The reference person is an unmarried blue-collar worker without children with middle-level education and average income of age 35–39 in the first month of 2012. The data encompasses persons who had full-time employment in at least one of the LFS surveys in 2006–2018 and include mental health indicators of the participants eight quarters before the first survey and eight quarters after the last survey.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>Furthermore, the model in column 1 shows that the first quarter of ITE for women is associated with a decline in drug use and the same is the case for the last quarter before entering temporary employment. ITE of four quarters of temporary employment also appears to be associated with improved mental health for women. Furthermore, ITE does not appear to have lasting effects on prescription drug use for mental health (the coefficient on the indicator of post-treatment drug use is close to zero and not significantly differently from zero).</p>
+<p>Model 2 in column 2 only includes women with ITE and uses fixed effects estimation on longitudinal data. In contrast to Model 1 in column 1, we no longer compare the effects with workers in permanent employment, rather, we compare them before and after they enter ITE. Note that the fixed effect coefficients solely reflect changes over time in mental health within the observations for each worker. Compared to the use of prescription drugs for mental health before female workers enter ITE, the model shows an improvement in mental health during the first quarter of temporary employment and for the first quarter before ITE. The decrease in drug use among women with one quarter of ITE is a moderate 1.1 percentage points according to the estimate of -0.011 in column 2 (<italic>p</italic> = 0.036, 95% confidence interval: -0.021 to -0.001). Model 2 in column 2 also shows moderate evidence of a decrease in drug use for women experiencing ITE for four quarters. However, longer periods of ITE appear to be detrimental to mental health as women with six quarters of ITE have significantly higher drug use.</p>
+<p>After ITE, the level of drug use returns to the previous level the worker had two to eight quarters before they are observed entering ITE. The exception is women with six quarters of ITE for which a separate indicator provides evidence of increased use of drugs. Women with six observed quarters of ITE appear to experience decreased mental health both during and after ITE. As the effects for women are similar in size during and after six quarters of ITE, we estimate a model that assess the overall magnitude by entering a common indicator for both treatment and post-treatment. The common indicator yields a coefficient of 0.128 (<italic>p</italic> = 0.025, 95% confidence interval: 0.016 to 0.240), which implies an increase of drug use during and after six quarters of ITE by a substantial 12.8 percentage points. As shown in <xref ref-type="table" rid="pgph.0002634.t001">Table 1</xref>, the average drug use among woman temporary workers two quarters before entering ITE is 14.2 pct. Thus an increase of 12.8 percentage points nearly doubles this share, while a decrease of 1.1 percentage point (for only one quarter of temporary employment) amounts to less than a ten percent reduction in the share.</p>
+<p>The OLS estimates in Model 1 for women (column 1) and men (column 3) do not take unobserved differences between workers into account. For example, workers who enter involuntary full-time temporary employment may have certain personality traits that interact with the both the outcome variable (mental health prescription drugs) and the treatment variable (ITE). By applying fixed effects estimation, Model 2 for women (column 2) and men (column 4) enable us to take time-invariant unobserved differences between workers (such as personality traits) into account. The estimates in Model 1 of the effect of ITE on mental health will thus be downward biased if workers inclined to use prescription drugs tend to avoid entering ITE. Such a bias might be the reason why the coefficients on ITE in Model 2, column 2 are larger than the ones in Mode1, column 1 for lengths of duration beyond 3 months.</p>
+<p>For men, we find no statistical significant effects of involuntary temporary employment on prescription drug use for mental health problems. As shown in the results presented in <xref ref-type="table" rid="pgph.0002634.t002">Table 2</xref> for columns 3 and 4, most of the coefficients on the treatment indicators are much smaller than those for women. Like women, men with ITE use more prescription drugs than men with permanent contracts.</p>
+</sec>
+<sec id="sec016">
+<title>Age differences</title>
+<p>Our models for specific age groups reveal that the association between temporary employment and medication for mental health varies across age. As shown in <xref ref-type="table" rid="pgph.0002634.t003">Table 3</xref>, for women below age 30 we find no evidence that longer durations of temporary employment have adverse mental health consequences. In contrast, adverse effects of longer periods of temporary employment on prescription drug use for mental health problems appear to be especially pronounced for women aged 30–39 years.</p>
+<table-wrap id="pgph.0002634.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pgph.0002634.t003</object-id>
+<label>Table 3</label> <caption><title>Involuntary temporary full-time employment and mental health for women in different age classes, fixed effects estimation, quarterly observations, 2006–2018.</title> <p>Dependent variable indicator for drug prescription for mental health problems.</p></caption>
+<alternatives>
+<graphic id="pgph.0002634.t003g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.t003" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="3"/>
+<th align="center" colspan="4"><sc>Age group</sc></th>
+</tr>
+<tr>
+<th align="center">(1)</th>
+<th align="center">(2)</th>
+<th align="center">(3)</th>
+<th align="center">(4)</th>
+</tr>
+<tr>
+<th align="center">20-29</th>
+<th align="center">30-39</th>
+<th align="center">40-49</th>
+<th align="center">50-64</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1 quarter before involuntary temporary employment</td>
+<td align="center">-0.0128**<break/>(0.0057)</td>
+<td align="center">-0.0123<break/>(0.0076)</td>
+<td align="center">-0.0019<break/>(0.0098)</td>
+<td align="center">-0.0027<break/>(0.0100)</td>
+</tr>
+<tr>
+<td align="left">Length of involuntary temporary employment</td>
+<td align="left"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="left">        Quarter 1</td>
+<td align="center">-0.0112<break/>(0.0072)</td>
+<td align="center">-0.0253**<break/>(0.0105)</td>
+<td align="center">-0.0015<break/>(0.0132)</td>
+<td align="center">0.0034<break/>(0.0125)</td>
+</tr>
+<tr>
+<td align="left">        Quarter 1–2</td>
+<td align="center">0.0044<break/>(0.0124)</td>
+<td align="center">-0.0158<break/>(0.0143)</td>
+<td align="center">0.0244<break/>(0.0171)</td>
+<td align="center">-0.0389**<break/>(0.0166)</td>
+</tr>
+<tr>
+<td align="left">        Quarter 1–4</td>
+<td align="center">-0.0042<break/>(0.0071)</td>
+<td align="center">-0.0610*<break/>(0.0354)</td>
+<td align="center">-0.0410<break/>(0.0410)</td>
+<td align="center">-0.0130<break/>(0.0245)</td>
+</tr>
+<tr>
+<td align="left">        Quarter 1–5</td>
+<td align="center">0.0243<break/>(0.0322)</td>
+<td align="center">0.0237<break/>(0.0359)</td>
+<td align="center">-0.0071<break/>(0.0438)</td>
+<td align="center">-0.0198<break/>(0.0453)</td>
+</tr>
+<tr>
+<td align="left">        Quarter 1–6</td>
+<td align="center">-0.0033<break/>(0.0113)</td>
+<td align="center">0.2369**<break/>(0.1159)</td>
+<td align="center">0.0455<break/>(0.0650)</td>
+<td align="center">0.0569<break/>(0.0718)</td>
+</tr>
+<tr>
+<td align="left">After involuntary temporary employment</td>
+<td align="center">0.0047<break/>(0.0090)</td>
+<td align="center">-0.0128<break/>(0.0118)</td>
+<td align="center">0.0111<break/>(0.0150)</td>
+<td align="center">-0.0030<break/>(0.0134)</td>
+</tr>
+<tr>
+<td align="left">After involuntary temporary employment, quarter 1–6</td>
+<td align="center">0.0985<break/>(0.0791)</td>
+<td align="center">0.2015<break/>(0.1201)</td>
+<td align="center">0.0891<break/>(0.1319)</td>
+<td align="center">0.0567<break/>(0.0919)</td>
+</tr>
+<tr>
+<td align="left">Education level</td>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="left">        Low</td>
+<td align="center">-0.0193<break/>(0.0187)</td>
+<td align="center">-0.0095<break/>(0.0944)</td>
+<td align="center">-0.0682<break/>(0.0612)</td>
+<td align="center">-0.0545*<break/>(0.0311)</td>
+</tr>
+<tr>
+<td align="left">        High</td>
+<td align="center">-0.0186<break/>(0.0137)</td>
+<td align="center">-0.0433<break/>(0.0295)</td>
+<td align="center">-0.0541<break/>(0.0407)</td>
+<td align="center">-0.0408<break/>(0.0585)</td>
+</tr>
+<tr>
+<td align="left">White collar</td>
+<td align="center">-0.0058<break/>(0.0082)</td>
+<td align="center">0.0011<break/>(0.0182)</td>
+<td align="center">0.0047<break/>(0.0157)</td>
+<td align="center">-0.0020<break/>(0.0198)</td>
+</tr>
+<tr>
+<td align="left">Married</td>
+<td align="center">-0.0117<break/>(0.0146)</td>
+<td align="center">-0.0053<break/>(0.0186)</td>
+<td align="center">-0.0072<break/>(0.0266)</td>
+<td align="center">-0.0170<break/>(0.0268)</td>
+</tr>
+<tr>
+<td align="left">Children up to 6 years old</td>
+<td align="center">-0.0926*<break/>(0.0471)</td>
+<td align="center">0.0223<break/>(0.0174)</td>
+<td align="center">0.0170<break/>(0.0543)</td>
+<td align="center">0.0000<break/>(.)</td>
+</tr>
+<tr>
+<td align="left">Children up to 18 years old</td>
+<td align="center">0.0417***<break/>(0.0161)</td>
+<td align="center">-0.0330<break/>(0.0384)</td>
+<td align="center">-0.0081<break/>(0.0248)</td>
+<td align="center">0.0002<break/>(0.0340)</td>
+</tr>
+<tr>
+<td align="left">Income, normalized</td>
+<td align="center">0.0079<break/>(0.0154)</td>
+<td align="center">0.0201<break/>(0.0164)</td>
+<td align="center">0.0167<break/>(0.0201)</td>
+<td align="center">-0.0358<break/>(0.0241)</td>
+</tr>
+<tr>
+<td align="left">Constant</td>
+<td align="center">0.1139***<break/>(0.0162)</td>
+<td align="center">0.1587***<break/>(0.0351)</td>
+<td align="center">0.2702***<break/>(0.0362)</td>
+<td align="center">0.3803***<break/>(0.0332)</td>
+</tr>
+<tr>
+<td align="left">No. of workers</td>
+<td align="center">1,635</td>
+<td align="center">1,462</td>
+<td align="center">1,077</td>
+<td align="center">1,191</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t003fn001"><p><bold><italic>Notes</italic></bold>: Significance levels: * 10%, ** 5%, *** 1%. Standard errors in parentheses are clustered at the person level and calculated using sample weights. The indicators for involuntary temporary employment for, e.g., “Quarter 1–6” take the value 1 for each of the 6 quarters of temporary employment and 0 otherwise. The income variable is standardized to have mean zero and standard deviation one. The reference person is an unmarried blue-collar worker without children with middle-level education, average income, and aged 35–39 in the first month of 2012. The data encompasses persons who had full-time employment in at least one of the LFS surveys in 2006–2018 and include mental health indicators of the participants eight quarters before the first survey and eight quarters after the last survey.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>As shown in <xref ref-type="table" rid="pgph.0002634.t002">Table 2</xref>, we find no statistical significant associations between ITE and mental health for men. However, according to <xref ref-type="supplementary-material" rid="pgph.0002634.s001">S1 Table</xref> in the Supporting Information, this average result conceals that for the group of men with six quarters of ITE, drug use diminishes after leaving ITE for those over 40, which is not the case for men under 40.</p>
+</sec>
+<sec id="sec017">
+<title>Involuntary temporary employment and previous labour force states</title>
+<p>Workers might follow different mental health paths depending on the type of the previous labour force state. We therefore confine the analysis to those workers where labour market status is observed before they enter ITE. In practice, this means that for these sensitivity analyses we can at most observe respondents over three survey rounds, as one round indicates their employment before they entered ITE. We distinguish between workers entering involuntary full-time temporary employment from being either (1) full-time employed on a permanent contract, (2) part-time employed on a permanent contract, (3) in part-time temporary employment, or (4) unemployed.</p>
+<p>For women entering involuntary full-time temporary employment from part-time temporary employment, our OLS regression indicates significant improvements in mental health during full-time ITE. However, our longitudinal fixed effect regression models yield no significant results for transitions from full-time permanent employment, permanent part-time employment, temporary part-time employment and unemployment (for estimates see <xref ref-type="supplementary-material" rid="pgph.0002634.s002">S2 Table</xref> in the Supporting Information). For men, both our OLS and fixed effects models show indications of improvements in mental health for those entering ITE from part-time permanent employment and unemployment (see <xref ref-type="supplementary-material" rid="pgph.0002634.s003">S3 Table</xref> in the Supporting Information). We also find indications of a deterioration in mental health for those entering ITE from full-time permanent contracts (columns 1 and 5).</p>
+</sec>
+<sec id="sec018">
+<title>Analyses with control groups</title>
+<p>The main results in the study stem from fixed effects longitudinal models that assess the use of prescription drugs for mental health during and after ITE relative to workers’ health before entering ITE. In these analyses, we do not distinguish whether the workers were unemployed or came from other types of employment before entering involuntary full-time temporary employment. However, mental health workers in ITE might have changed during the estimation period due to observed or unobserved characteristics of workers even if they had not entered temporary employment.</p>
+<p>As a supplement to the fixed effects models, we therefore assess the development of the mental health of temporary workers relative to a control group by applying “difference-in-difference matching” [<xref ref-type="bibr" rid="pgph.0002634.ref016">16</xref>]. This procedure has the potential to adjust for the bias in the fixed effects estimates that arises if the use of prescription drugs among temporary workers changes over time for other (unobserved) reasons than changes in type of employment contract. We use workers who enter ITE at a later point in time as control groups (see [<xref ref-type="bibr" rid="pgph.0002634.ref014">14</xref>, <xref ref-type="bibr" rid="pgph.0002634.ref015">15</xref>] for more technical details of this procedure). The results from matching models that include control groups are shown in <xref ref-type="supplementary-material" rid="pgph.0002634.s004">S4 Table</xref> in the Supporting Information. Results from these matching models deviate only marginally from the results of the regression models without control groups presented in <xref ref-type="table" rid="pgph.0002634.t002">Table 2</xref>.</p>
+</sec>
+</sec>
+<sec id="sec019" sec-type="conclusions">
+<title>Discussion</title>
+<p>In this study, we show that ITE of longer duration (at least six quarters) has adverse mental health consequences for women, but not for men. Shorter periods of ITE appear to have minor positive mental health consequences for women, but not for men. We obtain these results by analysing survey data from the European Union LFS (2006–2018), supplemented by high-quality administrative data on use of prescriptions of drugs to alleviate mental health problems provided by Statistics Denmark. Three characteristics of our study makes it different from all or most previous studies in the field: (1) The analysis is confined to workers who are involuntarily employed on a temporary contract, (2) the analysis traces the consequences of different spell lengths of temporary employment, and (3) women and men are analysed separately.</p>
+<p>First, to the best of our knowledge, our study is the first to analyse mental health consequences for involuntary temporary workers, that is, temporary contract workers who could not find a permanent contract job. However, we are not the first to emphasize the importance of separate analyses of involuntary temporary employment. For example, Bardasi and Francesconi [<xref ref-type="bibr" rid="pgph.0002634.ref010">10</xref>] use survey data to find that workers with seasonal or causal work, or work done under contract for a fixed period of time in the UK did not have long-lasting detrimental mental health effects for either female or male workers. They note that due to data limitations they cannot distinguish between involuntary and voluntary temporary employment and that health effects may even be positive. Drawing on the combination of survey data and Danish administrative registers, our study documents that short-term ITE can in fact have positive health effects for the workers’ mental health but that long-term temporary employment can have negative consequence for female workers.</p>
+<p>Second, our study is–to our knowledge–also the first to analyse mental health consequences of different periods of ITE. Using the method of inverse-probability-of-treatment weights, Pirani and Salvini [<xref ref-type="bibr" rid="pgph.0002634.ref031">31</xref>] find that longer periods of temporary employment in Italy have negative consequences for the “general health” of women, but not for men. Our study adds to this line of research by showing that long-term effects also apply for ITE and mental health.</p>
+<p>Third, we report gender specific results, which is not common in the literature. In a survey of atypical employment (including temporary employment) and health (including mental health), Gray et al. [<xref ref-type="bibr" rid="pgph.0002634.ref013">13</xref>] found only 12 studies published since 2009 that reported gender specific results.</p>
+<p>Among the limitations of the study is that employment status is self-reported and not observed outside the survey quarters (information on involuntary employment is, however, difficult to obtain without asking workers). This design has at least two implications for the interpretation of our results. First, we show that women with six quarters of involuntary temporary employment experience adverse mental health. This finding is based on survey data containing two quarters of temporary employment, then two quarters without survey data, and then two quarters of temporary employment. As workers might have been in non-temporary employment in the six months without surveys, the treatment indicator may contain measurement errors that attenuate the coefficients of the treatment in the regressions. Therefore, we view our measures of the adverse mental health consequence of longer periods of temporary employment as conservative estimates.</p>
+<p>Second, our data do not contain information about employment before the first survey and it is therefore likely that some workers have been in temporary employment before the first observed quarter. If short-term ITE improves mental health for some workers (as our study shows), this improvement may take place before the first observation of ITE. If so, the coefficient on the indicator for the period before the first observation of temporary employment tends to be negative, which is indeed the case (<xref ref-type="table" rid="pgph.0002634.t002">Table 2</xref>, Models 1–2). Another potential reason for this negative coefficient is self-selection, which is the case when some women (due to different life circumstances, such as the rules for receiving welfare benefits) enter ITE when they experience improved mental health.</p>
+</sec>
+<sec id="sec020" sec-type="conclusions">
+<title>Conclusion</title>
+<p>Our analysis contains five main results. First, compared to workers on permanent employment contracts, workers on temporary contracts had worse mental health before entering ITE. This result holds true for both women and men. Second, entering temporary contracts did not appear to have adverse effects on mental health in the short run. On the contrary, for women we found a minor improvement in mental health at the beginning of this type of employment contract. Third, for women we found substantial adverse effects of ITE on mental health for temporary contracts for six quarters. Fourth, after leaving ITE, we found no permanent effects of shorter spells of temporary employment on use of prescription drugs for mental health problems. Women with longer periods of temporary employment experienced worse mental health after the termination of ITE. Fifth, for women we found evidence that the improvement in mental health during involuntary temporary full-time work stems from women coming from other types of atypical employment.</p>
+<p>However, more studies are needed to draw definitive conclusions about whether the adverse effects are smaller in the Scandinavian countries compared to other countries. In addition, as we find different patterns for men compared to women with regard to sign and magnitude of the effects, future research should investigate gender differences in the effects of involuntary temporary employment.</p>
+</sec>
+<sec id="sec021" sec-type="supplementary-material">
+<title>Supporting information</title>
+<supplementary-material id="pgph.0002634.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.s001" xlink:type="simple">
+<label>S1 Table</label>
+<caption>
+<title>Involuntary temporary full-time employment and mental health for men in different age classes, fixed effects estimation, quarterly observations, 2006–2018.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pgph.0002634.s002" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.s002" xlink:type="simple">
+<label>S2 Table</label>
+<caption>
+<title>Women in involuntary temporary full-time employment and mental health according to labour market state before temporary employment, quarterly observations, 2006–2018.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pgph.0002634.s003" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.s003" xlink:type="simple">
+<label>S3 Table</label>
+<caption>
+<title>Men in involuntary temporary full-time employment and mental health according to labour market state before temporary employment, quarterly observations, 2006–2018.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pgph.0002634.s004" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.s004" xlink:type="simple">
+<label>S4 Table</label>
+<caption>
+<title>Involuntary temporary full-time employment and mental health compared to control group, quarterly observations, 2006–2018.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ref-list>
+<title>References</title>
+<ref id="pgph.0002634.ref001"><label>1</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Kalleberg</surname> <given-names>AL</given-names></name>. <source>Good jobs, bad jobs: The rise of polarized and precarious employment systems in the United States, 1970s-2000s.</source> <publisher-loc>New York</publisher-loc>: <publisher-name>Russell Sage Foundation, American Sociological Rose Series in Sociology</publisher-name>; <year>2011</year>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Howell</surname> <given-names>DR</given-names></name>, <name name-style="western"><surname>Kalleberg</surname> <given-names>AL</given-names></name>. <article-title><italic>Declining job quality in the United States</italic>: <italic>explanations and evidence</italic>.</article-title> <source>RSF: Russell Sage Found J Soc Sci.</source> <year>2019</year>;<volume>5</volume>(<issue>4</issue>):<fpage>1</fpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Voßemer</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Gebel</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Täht</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Unt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Högberg</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Strandh</surname> <given-names>M</given-names></name>. <article-title>The effects of unemployment and insecure jobs on well-Being and health: the moderating role of labor market policies</article-title>. <source><italic>Soc Indic Res</italic></source>. <year>2018</year>;<volume>138</volume>(<issue>3</issue>):<fpage>1229</fpage>–<lpage>57</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ferrie</surname> <given-names>JE</given-names></name>. <article-title>Is job insecurity harmful to health?</article-title> <source><italic>J R Soc Med</italic></source>. <year>2001</year>;<volume>94</volume>(<issue>2</issue>):<fpage>71</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1177/014107680109400206" xlink:type="simple">10.1177/014107680109400206</ext-link></comment> <object-id pub-id-type="pmid">11234203</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sverke</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hellgren</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Näswall</surname> <given-names>K</given-names></name>. <article-title>No security: a meta-analysis and review of job insecurity and its consequences.</article-title> <source><italic>J Occup Health Psychol</italic></source>. <year>2002</year>;<volume>7</volume>(<issue>3</issue>):<fpage>242</fpage>–<lpage>64</lpage>. <object-id pub-id-type="pmid">12148956</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Virtanen</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kivimäki</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Joensuu</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Virtanen</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Elovainio</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Vahtera</surname> <given-names>J</given-names></name>. <article-title>Temporary employment and health: a review.</article-title> <source><italic>Int J Epidemiol</italic>.</source> <year>2005</year>;(<month>February</month>):<fpage>610</fpage>–<lpage>22</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/ije/dyi024" xlink:type="simple">10.1093/ije/dyi024</ext-link></comment> <object-id pub-id-type="pmid">15737968</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huenefeld</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Koeper</surname> <given-names>B</given-names></name>. <article-title>Fixed-term employment and job insecurity (JI) as risk factors for mental mealth. A Review of International Study Results.</article-title> <source><italic>E-Journal Int Comp Labour Stud</italic>.</source> <year>2016</year>;<volume>5</volume>(<issue>3</issue>):<fpage>94</fpage>–<lpage>113</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hahn</surname> <given-names>MH</given-names></name>, <name name-style="western"><surname>McVicar</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Wooden</surname> <given-names>M</given-names></name>. <article-title>Is casual employment in Australia bad for workers’ health?</article-title> <source><italic>Occup Environ Med</italic>.</source> <year>2021</year>;<volume>78</volume>(<issue>1</issue>):<fpage>15</fpage>–<lpage>21</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1136/oemed-2020-106568" xlink:type="simple">10.1136/oemed-2020-106568</ext-link></comment> <object-id pub-id-type="pmid">33033106</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lamontagne</surname> <given-names>AD</given-names></name>, <name name-style="western"><surname>Milner</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Krnjacki</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Kavanagh</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Blakely</surname> <given-names>TA</given-names></name>, <name name-style="western"><surname>Bentley</surname> <given-names>R</given-names></name>. <article-title>Employment arrangements and mental health in a cohort of working Australians: are transitions from permanent to temporary employment associated with changes in mental health?</article-title> <source><italic>Am J Epidemiol</italic></source>. <year>2014</year>;<volume>179</volume>(<issue>12</issue>):<fpage>1467</fpage>–<lpage>76</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/aje/kwu093" xlink:type="simple">10.1093/aje/kwu093</ext-link></comment> <object-id pub-id-type="pmid">24872351</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bardasi</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Francesconi</surname> <given-names>M</given-names></name>. <article-title>The impact of atypical employment on individual wellbeing: evidence from a panel of British workers</article-title>. <source><italic>Soc Sci Med</italic></source>. <year>2004</year>;<volume>58</volume>(<issue>9</issue>):<fpage>1671</fpage>–<lpage>88</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/S0277-9536%2803%2900400-3" xlink:type="simple">10.1016/S0277-9536(03)00400-3</ext-link></comment> <object-id pub-id-type="pmid">14990369</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moscone</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Tosetti</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Vittadini</surname> <given-names>G</given-names></name>. <article-title>The impact of precarious employment on mental health: the case of Italy</article-title>. <source><italic>Soc Sci Med</italic> [Internet].</source> <year>2016</year>;<volume>158</volume>:<fpage>86</fpage>–<lpage>95</lpage>. Available from: <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.socscimed.2016.03.008" xlink:type="simple">10.1016/j.socscimed.2016.03.008</ext-link></comment> <object-id pub-id-type="pmid">27115334</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Quesnel-Vallée</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>DeHaney</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Ciampi</surname> <given-names>A</given-names></name>. <article-title>Temporary work and depressive symptoms: a propensity score analysis.</article-title> <source><italic>Soc Sci Med</italic>.</source> <year>2010</year>;<volume>70</volume>(<issue>12</issue>):<fpage>1982</fpage>–<lpage>7</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.socscimed.2010.02.008" xlink:type="simple">10.1016/j.socscimed.2010.02.008</ext-link></comment> <object-id pub-id-type="pmid">20371142</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gray</surname> <given-names>BJ</given-names></name>, <name name-style="western"><surname>Grey</surname> <given-names>CNB</given-names></name>, <name name-style="western"><surname>Hookway</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Homolova</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Davies</surname> <given-names>AR</given-names></name>. <article-title>Differences in the impact of precarious employment on health across population subgroups: a scoping review.</article-title> <source><italic>Perspect Public Health</italic>.</source> <year>2021</year>;<volume>141</volume>(<issue>1</issue>):<fpage>37</fpage>–<lpage>49</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1177/1757913920971333" xlink:type="simple">10.1177/1757913920971333</ext-link></comment> <object-id pub-id-type="pmid">33269663</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fadlon</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Nielsen</surname> <given-names>TH</given-names></name>. <article-title>Family labor supply responses to severe health shocks: evidence from Danish administrative records</article-title>. <source><italic>Am Econ J Appl Econ</italic></source>. <year>2021</year>;<volume>13</volume>(<issue>3</issue>):<fpage>1</fpage>–<lpage>30</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Deshpande</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>Y</given-names></name>. <article-title>Who is screened out? Application costs and the targeting of disability programs</article-title>. <source><italic>SSRN Electron J</italic></source>. <year>2019</year>;<volume>11</volume>(<issue>4</issue>):<fpage>213</fpage>–<lpage>48</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Heckman</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Ichimura</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Todd</surname> <given-names>PE</given-names></name>. <article-title>Matching as an econometric evaluation estimator: evidence from evaluating a job training programme</article-title>. <source><italic>Rev Econ Stud</italic>.</source> <year>1997</year>;<volume>64</volume>(<issue>4</issue>):<fpage>605</fpage>–<lpage>54</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref017"><label>17</label><mixed-citation publication-type="book" xlink:type="simple"><collab>OECD</collab>. <source><italic>The emergence of new forms of work and their implications for labour relations</italic>.</source> <publisher-name>1st Meeting of the G20 Employment Working Group.</publisher-name> <year>2018</year>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Katz</surname> <given-names>LF</given-names></name>, <name name-style="western"><surname>Krueger</surname> <given-names>AB</given-names></name>. <article-title>The role of unemployment in the rise in alternative work arrangements.</article-title> <source><italic>Am Econ Rev</italic>.</source> <year>2017</year>;<volume>107</volume>(<issue>5</issue>):<fpage>388</fpage>–<lpage>92</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref019"><label>19</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Weil</surname> <given-names>D.</given-names></name> <chapter-title><italic>The Fissured Workplace</italic>: <italic>Why Work Became So Bad for So Many and What Can Be Done to Improve It</italic></chapter-title>. <publisher-loc>Cambridge, MA</publisher-loc>: <source>Harvard University Press</source>; <year>2014</year>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barbieri</surname> <given-names>P.</given-names></name> <article-title>Flexible employment and inequality in Europe</article-title>. <source><italic>Eur Sociol Rev</italic></source>. <year>2009</year>;<volume>25</volume>(<issue>6</issue>):<fpage>621</fpage>–<lpage>8</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kalleberg</surname> <given-names>AL</given-names></name>. <article-title>Nonstandard employment relations: Part-time, temporary and contract work.</article-title> <source><italic>Annu Rev Sociol</italic></source>. <year>2000</year>;<volume>26</volume>:<fpage>341</fpage>–<lpage>65</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref022"><label>22</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Andrade</surname> <given-names>SB</given-names></name>. <chapter-title>Precarity and public risk management: trends in Denmark across four decades.</chapter-title> In: <name name-style="western"><surname>Larsen</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>Bengtsson</surname> <given-names>TT</given-names></name>, editors. <source><italic>The Danish Welfare State A Sociological Investigation</italic>.</source> <publisher-name>Palgrave Macmillan</publisher-name>; <year>2015</year>. p. <fpage>73</fpage>–<lpage>87</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname> <given-names>IH</given-names></name>, <name name-style="western"><surname>Muntaner</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Vahid Shahidi</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Vives</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Vanroelen</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Benach</surname> <given-names>J</given-names></name>. <article-title>Welfare states, flexible employment, and health: A critical review.</article-title> <source>Health Policy (New York) [Internet].</source> <year>2012</year>;<volume>104</volume>(<issue>2</issue>):<fpage>99</fpage>–<lpage>127</lpage>. Available from: <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.healthpol.2011.11.002" xlink:type="simple">10.1016/j.healthpol.2011.11.002</ext-link></comment> <object-id pub-id-type="pmid">22137444</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Albæk</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Sorensen</surname> <given-names>BE</given-names></name>. <article-title>Worker Flows and Job Flows in Danish Manufacturing, 1980–91</article-title>. <source><italic>Econ J</italic></source>. <year>1998</year>;<fpage>1750</fpage>–<lpage>71</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref025"><label>25</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Albæk</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Audenrode</surname> <given-names>M Van</given-names></name>, <name name-style="western"><surname>Browning</surname> <given-names>M</given-names></name>. <chapter-title>Employment Protection and the Consequences for Displaced Workers: a Comparison of Belgium and Denmark.</chapter-title> In: <name name-style="western"><surname>Kuhn</surname> <given-names>P</given-names></name>, editor. <source><italic>Losing Work</italic>, <italic>Moving On International Perspectives on Worker Displacement</italic>.</source> <publisher-loc>Kalamazoo</publisher-loc>: <publisher-name>W.E.Upjohn Institute</publisher-name>; <year>2002</year>. p. <fpage>471</fpage>–<lpage>511</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref026"><label>26</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Esping-Andersen</surname> <given-names>G.</given-names></name> <source><italic>The Three Worlds of Welfare Capitalism</italic></source>. <publisher-loc>Princeton, NJ</publisher-loc>: <publisher-name>Princeton University Press</publisher-name>; <year>1990</year>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><collab>European Commission.</collab> <article-title><italic>Towards Common Principles of Flexicurity</italic>.</article-title> <source>Commission of the Europan Communities, Brussels.</source> <year>2007</year>. <fpage>2005</fpage>–<lpage>2007</lpage> p.</mixed-citation></ref>
+<ref id="pgph.0002634.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kalleberg</surname> <given-names>AL</given-names></name>. <article-title>Precarious work, insecure workers: employment relations in transition. Presidential Address to the American Sociological Association.</article-title> <source><italic>Am Sociol Rev</italic>.</source> <year>2009</year>;<volume>74</volume>:<fpage>1</fpage>–<lpage>22</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Benach</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Vives</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Amable</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Vanroelen</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Tarafa</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Muntaner</surname> <given-names>C</given-names></name>. <article-title>Precarious employment: Understanding an emerging social determinant of health.</article-title> <source><italic>Annu Rev Public Health</italic></source>. <year>2014</year>;<volume>35</volume>:<fpage>229</fpage>–<lpage>53</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1146/annurev-publhealth-032013-182500" xlink:type="simple">10.1146/annurev-publhealth-032013-182500</ext-link></comment> <object-id pub-id-type="pmid">24641559</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dawson</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Veliziotis</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Pacheco</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Webber</surname> <given-names>DJ</given-names></name>. <article-title>Is temporary employment a cause or consequence of poor mental health? A panel data analysis.</article-title> <source><italic>Soc Sci Med</italic> [Internet].</source> <year>2015</year>;<volume>134</volume>:<fpage>50</fpage>–<lpage>8</lpage>. Available from: <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.socscimed.2015.04.001" xlink:type="simple">10.1016/j.socscimed.2015.04.001</ext-link></comment> <object-id pub-id-type="pmid">25884416</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pirani</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Salvini</surname> <given-names>S</given-names></name>. <article-title>Is temporary employment damaging to health? A longitudinal study on Italian workers.</article-title> <source><italic>Soc Sci Med</italic> [Internet].</source> <year>2015</year>;<volume>124</volume>:<fpage>121</fpage>–<lpage>31</lpage>. Available from: <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.socscimed.2014.11.033" xlink:type="simple">10.1016/j.socscimed.2014.11.033</ext-link></comment> <object-id pub-id-type="pmid">25461869</object-id></mixed-citation></ref>
+<ref id="pgph.0002634.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bender</surname> <given-names>KA</given-names></name>, <name name-style="western"><surname>Theodossiou</surname> <given-names>I</given-names></name>. <article-title>The unintended consequences of flexicurity: the health consequences of flexible employment.</article-title> <source><italic>Rev Income Wealth</italic></source>. <year>2018</year>;<volume>64</volume>(<issue>4</issue>):<fpage>777</fpage>–<lpage>99</lpage>.</mixed-citation></ref>
+<ref id="pgph.0002634.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rocco</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Crema</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Simonato</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Cestari</surname> <given-names>L</given-names></name>. <article-title>The effect of job loss on pharmaceutical prescriptions.</article-title> <source><italic>Soc Sci Med</italic> [Internet].</source> <year>2018</year>;<volume>217</volume>(<issue>September</issue>):<fpage>73</fpage>–<lpage>83</lpage>. Available from: <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.socscimed.2018.09.059" xlink:type="simple">10.1016/j.socscimed.2018.09.059</ext-link></comment> <object-id pub-id-type="pmid">30296693</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+<sub-article article-type="aggregated-review-documents" id="pgph.0002634.r001" specific-use="decision-letter">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pgph.0002634.r001</article-id>
+<title-group>
+<article-title>Decision Letter 0</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author">
+<name name-style="western">
+<surname>Landenmark</surname>
+<given-names>Hanna</given-names>
+</name>
+<role>Staff Editor</role>
+</contrib>
+</contrib-group>
+<permissions>
+<copyright-year>2023</copyright-year>
+<copyright-holder>Hanna Landenmark</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<related-object document-id="10.1371/journal.pgph.0002634" document-id-type="doi" document-type="article" id="rel-obj001" link-type="peer-reviewed-article"/>
+<custom-meta-group>
+<custom-meta>
+<meta-name>Submission Version</meta-name>
+<meta-value>0</meta-value>
+</custom-meta>
+</custom-meta-group>
+</front-stub>
+<body>
+<p>
+<named-content content-type="letter-date">18 Jun 2023</named-content>
+</p>
+<p>PGPH-D-23-00532</p>
+<p>Involuntary temporary work and mental health in Denmark</p>
+<p>PLOS Global Public Health</p>
+<p>Dear Dr. albæk,</p>
+<p>Thank you for submitting your manuscript to PLOS Global Public Health. After careful consideration, we feel that it has merit but does not fully meet PLOS Global Public Health’s publication criteria as it currently stands. Therefore, we invite you to submit a revised version of the manuscript that addresses the points raised during the review process.</p>
+<p>Please see the comments from two reviewers below and in the attachment. Both reviewers find the study and its contribution interesting, but have provided a number of comments to help strengthen and clarify the message. Reviewer 1's comments about consistent and clear definitions throughout are particularly pertinent, and will aid readers in understanding how the findings can be used.</p>
+<p>Please submit your revised manuscript by Jul 31 2023 11:59PM. If you will need more time than this to complete your revisions, please reply to this message or contact the journal office at <email xlink:type="simple">globalpubhealth@plos.org</email>. When you're ready to submit your revision, log on to <ext-link ext-link-type="uri" xlink:href="https://www.editorialmanager.com/pgph/" xlink:type="simple">https://www.editorialmanager.com/pgph/</ext-link> and select the 'Submissions Needing Revision' folder to locate your manuscript file.</p>
+<p>Please include the following items when submitting your revised manuscript:</p>
+<p><list list-type="bullet"><list-item><p>A rebuttal letter that responds to each point raised by the editor and reviewer(s). You should upload this letter as a separate file labeled 'Response to Reviewers'.</p></list-item><list-item><p>A marked-up copy of your manuscript that highlights changes made to the original version. You should upload this as a separate file labeled 'Revised Manuscript with Track Changes'.</p></list-item><list-item><p>An unmarked version of your revised paper without tracked changes. You should upload this as a separate file labeled 'Manuscript'.</p></list-item></list></p>
+<p>Guidelines for resubmitting your figure files are available below the reviewer comments at the end of this letter.</p>
+<p>We look forward to receiving your revised manuscript.</p>
+<p>Kind regards,</p>
+<p>Hanna Landenmark</p>
+<p>Staff Editor</p>
+<p>PLOS Global Public Health</p>
+<p>Journal Requirements:</p>
+<p>1. Our staff editors have determined that your manuscript is likely within the scope of our Global Mental Health: challenges, opportunities, and the future of the field. This editorial initiative is headed by a team of Guest Editors for PLOS GPH: Rochelle Burgess (University College of London) and Dixon Chibanda (University of Zimbabwe and London School of Tropical Medicine and Hygiene). The Collection invites researchers to submit original research which engages with, or disrupts, the urgent needs across the global mental health landscape. We especially encourage submissions of studies that critically interrogate the status quo of the field and that involve inter-/trans-disciplinary approaches and those which share perspectives from underrepresented global regions and communities.</p>
+<p> Additional information can be found on our announcement page: <ext-link ext-link-type="uri" xlink:href="https://collections.plos.org/call-for-papers/global-mental-health-opportunities-challenges/ " xlink:type="simple">https://collections.plos.org/call-for-papers/global-mental-health-opportunities-challenges/ </ext-link></p>
+<p>If you would like your manuscript to be considered for this collection, please let us know in your cover letter and we will ensure that your paper is treated as if you were responding to this call.  Please note that being considered for the Collection does not require additional peer review beyond the journal’s standard process and will not delay the publication of your manuscript if it is accepted by PLOS GPH. If you would prefer to remove your manuscript from collection consideration, please specify this in the cover letter.</p>
+<p>Additional Editor Comments (if provided):</p>
+<p>[Note: HTML markup is below. Please do not edit.]</p>
+<p>Reviewers' comments:</p>
+<p>Reviewer's Responses to Questions</p>
+<p><!-- <font color="black"> --><bold>Comments to the Author</bold></p>
+<p>1. Does this manuscript meet PLOS Global Public Health’s <ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/globalpublichealth/s/criteria-for-publication" xlink:type="simple">publication criteria</ext-link>? Is the manuscript technically sound, and do the data support the conclusions? The manuscript must describe methodologically and ethically rigorous research with conclusions that are appropriately drawn based on the data presented.<!-- </font> --></p>
+<p>Reviewer #1: Partly</p>
+<p>Reviewer #2: Yes</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->2. Has the statistical analysis been performed appropriately and rigorously?<!-- </font> --></p>
+<p>Reviewer #1: Yes</p>
+<p>Reviewer #2: Yes</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->3. Have the authors made all data underlying the findings in their manuscript fully available (please refer to the Data Availability Statement at the start of the manuscript PDF file)?</p>
+<p>The <ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/globalpublichealth/s/data-availability" xlink:type="simple">PLOS Data policy</ext-link> requires authors to make all data underlying the findings described in their manuscript fully available without restriction, with rare exception. The data should be provided as part of the manuscript or its supporting information, or deposited to a public repository. For example, in addition to summary statistics, the data points behind means, medians and variance measures should be available. If there are restrictions on publicly sharing data—e.g. participant privacy or use of data from a third party—those must be specified.<!-- </font> --></p>
+<p>Reviewer #1: No</p>
+<p>Reviewer #2: No</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->4. Is the manuscript presented in an intelligible fashion and written in standard English?</p>
+<p>PLOS Global Public Health does not copyedit accepted manuscripts, so the language in submitted articles must be clear, correct, and unambiguous. Any typographical or grammatical errors should be corrected at revision, so please note any specific errors here.<!-- </font> --></p>
+<p>Reviewer #1: Yes</p>
+<p>Reviewer #2: Yes</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->5. Review Comments to the Author</p>
+<p>Please use the space provided to explain your answers to the questions above. You may also include additional comments for the author, including concerns about dual publication, research ethics, or publication ethics. (Please upload your review as an attachment if it exceeds 20,000 characters)<!-- </font> --></p>
+<p>Reviewer #1: Review: PGPH-D-23-00532</p>
+<p>Very interesting and innovative research topic.</p>
+<p>Some points need to be tackled to improve the manuscript:</p>
+<p>Title:</p>
+<p>Adjust the title to make it more specific about your research topic and the research methods.</p>
+<p>My suggestion:</p>
+<p>Involuntary temporary work and mental health medications: a longitudinal study in Denmark</p>
+<p>Abstract;</p>
+<p>Make somewhere already clear that you only selected full-time workers.</p>
+<p>Throughout manuscript (and abstract):</p>
+<p>Pay attention to your wording; this is an article about “Involuntary” full-time temporary employment, yet throughout the description of your results and in the discussion, the word “involuntary” is often omitted making the manuscript confusing and hard to follow (as the reader is believed to think that the results are about temporary employment (independent of being involuntary). Add the word “involuntary” to the text where necessary.</p>
+<p>The authors highlight too much that their study is on mental health. Their study is only on the use of medication for certain mental health problem. Many people who have (common) mental health problems do not use medication. The authors should be more transparent about how specific their study is and use the wording “the use of medication for mental health problems” instead of mental health as much as possible.</p>
+<p>Introduction:</p>
+<p>P 2: 3 paragraph: “this is the first study to do a separate analysis” – what do you mean by “separate analysis”. Lots of studies are done about the health effects of temporary employment.</p>
+<p>More information (e.g. previous research) should also be given about what is already know about medication for mental health problems and temporary employment.</p>
+<p>Methodology</p>
+<p>Add more information about the data, what are the years that these data were gathered?</p>
+<p>More information is also needed about who is selected into the group that are analyzed: there age-range.</p>
+<p>A visualization of the data and used gathered would be a useful tool to understand the data better. The authors report on a “pause” in the collecting of the survey. This will also become more clear how this affected the data and results, with a visualization.</p>
+<p>Be more specific about what a quarter means (is this 3 month?) – could also be helpful in the tables.</p>
+<p>Can you control your results for income and family composition, as these are an important confounder between employment and mental health. The authors should think about more variable which could be added as controls.</p>
+<p>Describe also what methodology is used for the descriptive tables.</p>
+<p>Describe whether you used weights, how you handled missing data, whether some variables had high missing data.</p>
+<p>In the end you do an analysis with part-time employed; this should already be explained in the methodology.</p>
+<p>Results</p>
+<p>This will be an article which will be interesting to many occupational sociologists. The use of the medical words “Treatment group” and “pre-treatment”, “post treatment”, etc. is difficult to follow when not being from a medical background. These words should be replaced by the “labels” which they stand for “such as, permanent, and involuntary temporary employment. This will make the interpretation of the results, tables and figure much more clarity.</p>
+<p>Tables</p>
+<p>Avoid to use of the words “quarter” it is very difficult to understand.</p>
+<p>Figure &amp; Tables:</p>
+<p>What is pre-treatment? Unemployed?</p>
+<p>Post-treatment? Not being involuntary temporary employed anymore?</p>
+<p>Discussion</p>
+<p>Be specific when you mention “shorter periods” – how many months are that?</p>
+<p>P 13, first sentence above: is that compared to fulltime permanent workers? Please be specific.</p>
+<p>The authors mention that “since the mid-1990 “non-standard” jobs increased. However, within the occupational sociology, scholars usually mention the 1970’s as the start of more flexible contracts.</p>
+<p>See Benach et al 2014 Precarious Employment: Understanding an Emerging Social Determinant of Health. Annual Review of Public Health</p>
+<p>P14 Last sentence of the discussion: “When some women choose to enter temporary employment” is this really an issue in your study when you only selected “involuntary” temporary workers?</p>
+<p>Conclusion:</p>
+<p>Second sentence: “workers on temporary contract has worse mental health before entering “temporary employment ….</p>
+<p>This sentence is confussing - what do you mean? What was there status then before they entered temporary employment? Unemployed?</p>
+<p>Reviewer #2: The main aim of the paper is to bridge the gap in the literature with regard to the relationship between involuntary temporary employment and mental health. The authors estimate gendered effects using various estimation measures and assess the medium-term effect of being in involuntary employment. In general, the paper is well-written and conveys its main messages clearly. In the attached document, I have added my detailed comments and suggestions.</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->6. PLOS authors have the option to publish the peer review history of their article (<ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/globalpublichealth/s/editorial-and-peer-review-process#loc-peer-review-history" xlink:type="simple">what does this mean?</ext-link>). If published, this will include your full peer review and any attached files.</p>
+<p><bold>Do you want your identity to be public for this peer review?</bold> If you choose “no”, your identity will remain anonymous but your review may still be made public.</p>
+<p>For information about this choice, including consent withdrawal, please see our <ext-link ext-link-type="uri" xlink:href="https://www.plos.org/privacy-policy" xlink:type="simple">Privacy Policy</ext-link>.<!-- </font> --></p>
+<p>Reviewer #1: No</p>
+<p>Reviewer #2: No</p>
+<p>**********</p>
+<p>[NOTE: If reviewer comments were submitted as an attachment file, they will be attached to this email and accessible via the submission site. Please log into your account, locate the manuscript record, and check for the action link "View Attachments". If this link does not appear, there are no attachment files.]</p>
+<p>While revising your submission, please upload your figure files to the Preflight Analysis and Conversion Engine (PACE) digital diagnostic tool, <ext-link ext-link-type="uri" xlink:href="https://pacev2.apexcovantage.com/" xlink:type="simple">https://pacev2.apexcovantage.com/</ext-link>. PACE helps ensure that figures meet PLOS requirements. To use PACE, you must first register as a user. Registration is free. Then, login and navigate to the UPLOAD tab, where you will find detailed instructions on how to use the tool. If you encounter any issues or have any questions when using PACE, please email PLOS at <email xlink:type="simple">figures@plos.org</email>. Please note that Supporting Information files do not need this step.</p>
+<supplementary-material id="pgph.0002634.s005" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.s005" xlink:type="simple">
+<label>Attachment</label>
+<caption>
+<p>Submitted filename: <named-content content-type="submitted-filename">Review_PLos Global Health.docx</named-content></p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pgph.0002634.s006" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.s006" xlink:type="simple">
+<label>Attachment</label>
+<caption>
+<p>Submitted filename: <named-content content-type="submitted-filename">PGPH-D-23-00532_review.docx</named-content></p>
+</caption>
+</supplementary-material>
+</body>
+</sub-article>
+<sub-article article-type="author-comment" id="pgph.0002634.r002">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pgph.0002634.r002</article-id>
+<title-group>
+<article-title>Author response to Decision Letter 0</article-title>
+</title-group>
+<related-object document-id="10.1371/journal.pgph.0002634" document-id-type="doi" document-type="peer-reviewed-article" id="rel-obj002" link-type="rebutted-decision-letter" object-id="10.1371/journal.pgph.0002634.r001" object-id-type="doi" object-type="decision-letter"/>
+<custom-meta-group>
+<custom-meta>
+<meta-name>Submission Version</meta-name>
+<meta-value>1</meta-value>
+</custom-meta>
+</custom-meta-group>
+</front-stub>
+<body>
+<p>
+<named-content content-type="author-response-date">14 Aug 2023</named-content>
+</p>
+<supplementary-material id="pgph.0002634.s007" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.s007" xlink:type="simple">
+<label>Attachment</label>
+<caption>
+<p>Submitted filename: <named-content content-type="submitted-filename">Resonse_referees (v6).docx</named-content></p>
+</caption>
+</supplementary-material>
+</body>
+</sub-article>
+<sub-article article-type="editor-report" id="pgph.0002634.r003" specific-use="decision-letter">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pgph.0002634.r003</article-id>
+<title-group>
+<article-title>Decision Letter 1</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author">
+<name name-style="western">
+<surname>De Moortel</surname>
+<given-names>Deborah</given-names>
+</name>
+<role>Guest Editor</role>
+</contrib>
+</contrib-group>
+<permissions>
+<copyright-year>2023</copyright-year>
+<copyright-holder>Deborah De Moortel</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<related-object document-id="10.1371/journal.pgph.0002634" document-id-type="doi" document-type="article" id="rel-obj003" link-type="peer-reviewed-article"/>
+<custom-meta-group>
+<custom-meta>
+<meta-name>Submission Version</meta-name>
+<meta-value>1</meta-value>
+</custom-meta>
+</custom-meta-group>
+</front-stub>
+<body>
+<p>
+<named-content content-type="letter-date">6 Sep 2023</named-content>
+</p>
+<p>PGPH-D-23-00532R1</p>
+<p>Involuntary temporary work and mental health medications: A longitudinal study in Denmark</p>
+<p>PLOS Global Public Health</p>
+<p>Dear Dr. albæk,</p>
+<p>Thank you for submitting your manuscript to PLOS Global Public Health. After careful consideration, we feel that it has merit but does not fully meet PLOS Global Public Health’s publication criteria as it currently stands. Therefore, we invite you to submit a revised version of the manuscript that addresses the points raised during the review process.</p>
+<p>==============================</p>
+<p>Dear authors,</p>
+<p>First of all, I was reviewer 1 of the previous version of your article and PLOS Global Public Health now asked me to be the guest editor for your manuscript.</p>
+<p>I carefully read your revised manuscript and the letters to the reviewers and believe your article has improved a lot. From the beginning I believed this is a very interesting and well-performed researchpaper for occupational researchers.</p>
+<p>Yet, I still see some points which need clarification and mentioning in the discussion. My comments are also based on the comments of Reviewer 2.</p>
+<p>Before, accepting your manuscript to PLOS Global Public Health, I would like you to address the following:</p>
+<p>1) Reviewer's 2 comment number 13 (Only in the discussion that we read about the fact that the temporary employed could have started before the first quarter, when the individual is first captured in the data. In light of this the authors should be careful with the use of the terms short and long-term results of temporary employment and entering temporary employment. This issues deserves thorough discussion in the methods section).</p>
+<p>I'm not satisfied with the adjustments made by the authors (only using months to describe the duration).</p>
+<p>I would like to see, just like Reviewer 2, a discussion about this issues in the methods section already and how this would affect your results.</p>
+<p>Moreover, in the sensitivity analysis The authors mention, we confine the analysis to those workers where the labour market status is observed before entering "involuntary temporary employment" (ITE). Why is it possible that the authors can observe the labour market status before entering ITE, and at the same time the temporary employed could have started before the first quarter? Can you not also exclude those who started ITE before the first quarter then?</p>
+<p>2) Reviewer's 3 comment number 3 (The authors excluded part-time employees and only included in their sample full-time employees. A reasoning is needed for excluding this category especially since women usually represent a large percentage of part-time workers).</p>
+<p>I believe the authors are not answering reviewer's 2 comment correctly. Reviewer 2 is talking about part-time work and the authors are answering about temporary or short-term employment, this is not the same. Could you please mention in the methods section already what the reasoning was to exclude part-time workers and how this would affect your results (since women usually are part-time workers).</p>
+<p>3) Figure 1 needs some more work. It is still very difficult to understand the way the data is gathered. In the manuscript it is talked about 4 waves and in the figure I see 6 rounds? Could you also add the years (2006, 2018, etc...) to your figure, name your x and y-axis, as a reader I want to be able to understand the "months" which the article mentions so much.</p>
+<p>4) Sensitivity analyses (Involuntary temporary employment and previous labour force status). Please do not call part-time employment or voluntary temporary employment "precarious employment". This is not at all in line with consensus about precarious employment. Part-time employment can be "protected" employment because of good employment conditions, the same holds for temporary employment. Precarious employment can be considered a multidimensional construct and only measuring it with 1 is not the best way to do it. Group 2 talking part-time workers and voluntary temporary workers together is not the best idea? split them up?</p>
+<p>5) Please read your article carefully for typo's.</p>
+<p>6) Table 2, Model 2 and 4, for the sake of clarity please write in the notes the comparison group of these models.</p>
+<p>Best regards,</p>
+<p>Deborah De Moortel</p>
+<p>==============================</p>
+<p>Please submit your revised manuscript by Oct 06 2023 11:59PM. If you will need more time than this to complete your revisions, please reply to this message or contact the journal office at <email xlink:type="simple">globalpubhealth@plos.org</email>. When you're ready to submit your revision, log on to <ext-link ext-link-type="uri" xlink:href="https://www.editorialmanager.com/pgph/" xlink:type="simple">https://www.editorialmanager.com/pgph/</ext-link> and select the 'Submissions Needing Revision' folder to locate your manuscript file.</p>
+<p>Please include the following items when submitting your revised manuscript:</p>
+<p><list list-type="bullet"><list-item><p>A rebuttal letter that responds to each point raised by the editor and reviewer(s). You should upload this letter as a separate file labeled 'Response to Reviewers'.</p></list-item><list-item><p>A marked-up copy of your manuscript that highlights changes made to the original version. You should upload this as a separate file labeled 'Revised Manuscript with Track Changes'.</p></list-item><list-item><p>An unmarked version of your revised paper without tracked changes. You should upload this as a separate file labeled 'Manuscript'.</p></list-item></list></p>
+<p>Guidelines for resubmitting your figure files are available below the reviewer comments at the end of this letter.</p>
+<p>We look forward to receiving your revised manuscript.</p>
+<p>Kind regards,</p>
+<p>Deborah De Moortel</p>
+<p>Guest Editor</p>
+<p>PLOS Global Public Health</p>
+<p>Journal Requirements:</p>
+<p>1. Please review your reference list to ensure that it is complete and correct. If you have cited papers that have been retracted, please include the rationale for doing so in the manuscript text, or remove these references and replace them with relevant current references. Any changes to the reference list should be mentioned in the rebuttal letter that accompanies your revised manuscript. If you need to cite a retracted article, indicate the article’s retracted status in the References list and also include a citation and full reference for the retraction notice.</p>
+<p>Additional Editor Comments (if provided):</p>
+<p>[Note: HTML markup is below. Please do not edit.]</p>
+<p>Reviewers' comments:</p>
+<p>[NOTE: If reviewer comments were submitted as an attachment file, they will be attached to this email and accessible via the submission site. Please log into your account, locate the manuscript record, and check for the action link "View Attachments". If this link does not appear, there are no attachment files.]</p>
+<p>While revising your submission, please upload your figure files to the Preflight Analysis and Conversion Engine (PACE) digital diagnostic tool, <ext-link ext-link-type="uri" xlink:href="https://pacev2.apexcovantage.com/" xlink:type="simple">https://pacev2.apexcovantage.com/</ext-link>. PACE helps ensure that figures meet PLOS requirements. To use PACE, you must first register as a user. Registration is free. Then, login and navigate to the UPLOAD tab, where you will find detailed instructions on how to use the tool. If you encounter any issues or have any questions when using PACE, please email PLOS at <email xlink:type="simple">figures@plos.org</email>. Please note that Supporting Information files do not need this step.</p>
+</body>
+</sub-article>
+<sub-article article-type="author-comment" id="pgph.0002634.r004">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pgph.0002634.r004</article-id>
+<title-group>
+<article-title>Author response to Decision Letter 1</article-title>
+</title-group>
+<related-object document-id="10.1371/journal.pgph.0002634" document-id-type="doi" document-type="peer-reviewed-article" id="rel-obj004" link-type="rebutted-decision-letter" object-id="10.1371/journal.pgph.0002634.r003" object-id-type="doi" object-type="decision-letter"/>
+<custom-meta-group>
+<custom-meta>
+<meta-name>Submission Version</meta-name>
+<meta-value>2</meta-value>
+</custom-meta>
+</custom-meta-group>
+</front-stub>
+<body>
+<p>
+<named-content content-type="author-response-date">12 Oct 2023</named-content>
+</p>
+<supplementary-material id="pgph.0002634.s008" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pgph.0002634.s008" xlink:type="simple">
+<label>Attachment</label>
+<caption>
+<p>Submitted filename: <named-content content-type="submitted-filename">Response to reviewers.docx</named-content></p>
+</caption>
+</supplementary-material>
+</body>
+</sub-article>
+<sub-article article-type="editor-report" id="pgph.0002634.r005" specific-use="decision-letter">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pgph.0002634.r005</article-id>
+<title-group>
+<article-title>Decision Letter 2</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author">
+<name name-style="western">
+<surname>De Moortel</surname>
+<given-names>Deborah</given-names>
+</name>
+<role>Guest Editor</role>
+</contrib>
+</contrib-group>
+<permissions>
+<copyright-year>2023</copyright-year>
+<copyright-holder>Deborah De Moortel</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<related-object document-id="10.1371/journal.pgph.0002634" document-id-type="doi" document-type="article" id="rel-obj005" link-type="peer-reviewed-article"/>
+<custom-meta-group>
+<custom-meta>
+<meta-name>Submission Version</meta-name>
+<meta-value>2</meta-value>
+</custom-meta>
+</custom-meta-group>
+</front-stub>
+<body>
+<p>
+<named-content content-type="letter-date">27 Oct 2023</named-content>
+</p>
+<p>Involuntary temporary work and mental health medications: A longitudinal study in Denmark</p>
+<p>PGPH-D-23-00532R2</p>
+<p>Dear Senior researcher albæk,</p>
+<p>We are pleased to inform you that your manuscript 'Involuntary temporary work and mental health medications: A longitudinal study in Denmark' has been provisionally accepted for publication in PLOS Global Public Health.</p>
+<p>Before your manuscript can be formally accepted you will need to complete some formatting changes, which you will receive in a follow up email. A member of our team will be in touch with a set of requests.</p>
+<p>Please note that your manuscript will not be scheduled for publication until you have made the required changes, so a swift response is appreciated.</p>
+<p>IMPORTANT: The editorial review process is now complete. PLOS will only permit corrections to spelling, formatting or significant scientific errors from this point onwards. Requests for major changes, or any which affect the scientific understanding of your work, will cause delays to the publication date of your manuscript.</p>
+<p>If your institution or institutions have a press office, please notify them about your upcoming paper to help maximize its impact. If they'll be preparing press materials, please inform our press team as soon as possible -- no later than 48 hours after receiving the formal acceptance. Your manuscript will remain under strict press embargo until 2 pm Eastern Time on the date of publication. For more information, please contact <email xlink:type="simple">globalpubhealth@plos.org</email>.</p>
+<p>Thank you again for supporting Open Access publishing; we are looking forward to publishing your work in PLOS Global Public Health.</p>
+<p>Best regards,</p>
+<p>Deborah De Moortel</p>
+<p>Guest Editor</p>
+<p>PLOS Global Public Health</p>
+<p>***********************************************************</p>
+<p>Thank you for this well-done revision! This paper is very interesting and statistical analyses are well done and well explained!</p>
+<p>Reviewer Comments (if any, and for reference):</p>
+</body>
+</sub-article>
+</article>

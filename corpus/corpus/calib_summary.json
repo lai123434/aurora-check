@@ -1,0 +1,128 @@
+{
+  "n": 52,
+  "pp_raw": {
+    "mean": 23062.47,
+    "median": 11660.75,
+    "min": 492.94,
+    "max": 212836.39,
+    "p10": 1295.27,
+    "p25": 3888.26,
+    "p50": 11660.75,
+    "p75": 29671.65,
+    "p90": 55379.98
+  },
+  "engines": {
+    "transition-density": {
+      "mean": 0.2715,
+      "median": 0.2591,
+      "p75": 0.3369,
+      "p90": 0.3583,
+      "max": 0.5092
+    },
+    "linguistic-markers": {
+      "mean": 0.4598,
+      "median": 0.4345,
+      "p75": 0.6445,
+      "p90": 0.7632,
+      "max": 1.0
+    },
+    "formulaic-patterns": {
+      "mean": 0.0616,
+      "median": 0.051,
+      "p75": 0.0932,
+      "p90": 0.121,
+      "max": 0.243
+    },
+    "formulaic-markers": {
+      "mean": 0.2865,
+      "median": 0.3,
+      "p75": 0.4,
+      "p90": 0.4,
+      "max": 0.7
+    },
+    "sentiment-hedging": {
+      "mean": 0.1855,
+      "median": 0.1595,
+      "p75": 0.2682,
+      "p90": 0.3315,
+      "max": 0.448
+    },
+    "sentence-length": {
+      "mean": 0.0413,
+      "median": 0.0045,
+      "p75": 0.0745,
+      "p90": 0.1268,
+      "max": 0.205
+    },
+    "burstiness-stat": {
+      "mean": 0.35,
+      "median": 0.35,
+      "p75": 0.35,
+      "p90": 0.55,
+      "max": 0.55
+    },
+    "vocabulary-richness": {
+      "mean": 0.4973,
+      "median": 0.4965,
+      "p75": 0.5268,
+      "p90": 0.5497,
+      "max": 0.624
+    },
+    "starter-patterns": {
+      "mean": 0.2055,
+      "median": 0.2,
+      "p75": 0.2,
+      "p90": 0.2,
+      "max": 0.337
+    },
+    "specific-details": {
+      "mean": 0.0,
+      "median": 0.0,
+      "p75": 0.0,
+      "p90": 0.0,
+      "max": 0.0
+    },
+    "compressibility": {
+      "mean": 0.7401,
+      "median": 0.7572,
+      "p75": 0.8118,
+      "p90": 0.8407,
+      "max": 0.9192
+    },
+    "human-imperfection": {
+      "mean": 0.3964,
+      "median": 0.397,
+      "p75": 0.4455,
+      "p90": 0.4717,
+      "max": 0.532
+    },
+    "paragraph-rhythm": {
+      "mean": 0.184,
+      "median": 0.1765,
+      "p75": 0.298,
+      "p90": 0.4439,
+      "max": 0.552
+    },
+    "emotion-curve": {
+      "mean": 0.3061,
+      "median": 0.2875,
+      "p75": 0.4317,
+      "p90": 0.5085,
+      "max": 1.0
+    },
+    "ngram-perplexity": {
+      "mean": 0.1,
+      "median": 0.1,
+      "p75": 0.1,
+      "p90": 0.1,
+      "max": 0.1
+    },
+    "statistical-baseline": {
+      "mean": 0.4869,
+      "median": 0.47,
+      "p75": 0.47,
+      "p90": 0.67,
+      "max": 0.67
+    }
+  }
+}

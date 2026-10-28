@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-Aurora Check API 服务（v3）
+Aurora Check API service (v3).
 
-把纯本地脚本 aurora_check.py 封装成 Web API，别人传一段文本即可拿回 JSON 报告，
-也能被微信小程序 / 网页后端 / 其他 AI 通过 MCP 直接调用。
+Wraps the purely local ``aurora_check.py`` script as a Web API: hand it a piece
+of text and get a JSON report back. It can also be called directly by WeChat mini
+programs, web backends, or other AI agents via MCP.
 
-启动：
-    python server.py                  # 默认 http://127.0.0.1:8000
+Start:
+    python server.py                  # default http://127.0.0.1:8000
     python server.py --port 8080
-    uvicorn server:app --reload       # 开发模式（热重载）
+    uvicorn server:app --reload       # dev mode (hot reload)
 
-接口：
-    GET  /               可视化首页（网页输入框粘贴文字即可测）
-    POST /api/check      提交文本 JSON: {"text": "...", "mode": "strict"}
-    POST /api/check-file 上传文件（.txt/.md/.docx），mode 走 query 参数
-    POST /api/rewrite       按需 AI 降维改写 JSON: {"sentence": "..."}
-    POST /api/rewrite-batch 一键批量改写（最多 3 句）JSON: {"sentences": [...]}
-    GET  /api/health        健康检查
+Endpoints:
+    GET  /                   Visual home page (paste text into the box)
+    POST /api/check          Submit text JSON: {"text": "...", "mode": "strict"}
+    POST /api/check-file     Upload a file (.txt/.md/.docx); mode as a query param
+    POST /api/rewrite        On-demand AI humanizing rewrite: {"sentence": "..."}
+    POST /api/rewrite-batch  Batch rewrite (max 3 sentences): {"sentences": [...]}
+    GET  /api/history        Recent check records (for the de-AI curve)
+    GET  /api/health         Health check
 """
 from __future__ import annotations
 
@@ -45,14 +47,16 @@ app = FastAPI(
 
 _VALID_MODES = ("normal", "strict")
 
-# —— LLM 改写并发控制 ——
-# 本地 Qwen2.5-0.5b 在 CPU 上会占满多核，若同时来 3 个改写请求，3 句都拖到 40 秒+
-# 互相拖慢、前端 30 秒超时变 504。这里用全局信号量(1) 强制「一次只跑一句」，
-# 后来的请求排队等待，最多等 60 秒，超时返回 429 提示稍后再试。
+# —— LLM rewrite concurrency control ——
+# The local Qwen2.5-0.5b saturates multiple cores on CPU: three simultaneous
+# rewrite requests would drag each other past 40 s and trip the front-end's
+# 30 s timeout into a 504. A global Semaphore(1) enforces "one sentence at a
+# time"; later requests queue for at most 60 s, then get a 429 asking to retry.
 _REWRITE_SEMAPHORE = asyncio.Semaphore(1)
 
-# —— SQLite 持久化：记录每次查重结果，前端画「降重曲线」——
-# 建在源码同目录，进程退出也不丢；存库失败绝不阻塞主检测流程。
+# —— SQLite persistence: record every check for the front-end "de-AI curve" ——
+# The DB lives next to the source, so it survives process exits; storage failures
+# never block the main detection flow.
 DB_PATH = os.path.join(BASE, "aurora_records.db")
 
 
@@ -80,7 +84,7 @@ _init_db()
 
 def _save_record(filename: str, ai_probability: float, label: str,
                  mode: str, raw_text: str) -> None:
-    """把一次查重结果写入 SQLite（失败静默，不影响主流程）。"""
+    """Persist one check result to SQLite (fails silently, never blocks detection)."""
     try:
         con = sqlite3.connect(DB_PATH)
         con.execute(
@@ -112,10 +116,18 @@ class RewriteBatchPayload(BaseModel):
 
 
 def _run_check_blocking(text: str, mode: str) -> dict:
-    """同步跑完整检测流程，返回可直接 JSON 序列化的 dict。
+    """Run the full detection pipeline synchronously, returning a JSON-ready dict.
 
-    单独拆出来是为了方便丢进 asyncio.to_thread 的线程池：
-    大模型推理跑在 CPU 上要十几秒，绝不能占用事件循环。
+    Split out as a standalone function so it can be handed to
+    ``asyncio.to_thread``'s thread pool: model inference takes over ten seconds
+    on CPU and must never occupy the event loop.
+
+    Args:
+        text: The text to analyse.
+        mode: ``"normal"`` or ``"strict"``.
+
+    Returns:
+        dict: A JSON-serializable report produced by ``CheckReport.to_dict()``.
     """
     report = core.run_check(text=text, mode=mode)
     return report.to_dict()
@@ -132,10 +144,10 @@ async def index():
 
 @app.post("/api/check")
 async def check(payload: CheckPayload):
-    """核心接口：提交一段文本，返回完整 JSON 报告。
+    """Core endpoint: submit a piece of text, get the full JSON report back.
 
-    请求体示例：
-        {"text": "文章内容...", "mode": "strict"}
+    Request body example:
+        {"text": "Article content...", "mode": "strict"}
     """
     if not payload.text.strip():
         raise HTTPException(400, "文本为空")
@@ -163,7 +175,7 @@ async def check(payload: CheckPayload):
 
 @app.post("/api/check-file")
 async def check_file(file: UploadFile = File(...), mode: str = "normal"):
-    """上传文件检测（.txt / .md / .docx）。mode 走 query 参数：?mode=strict"""
+    """Detect an uploaded file (.txt / .md / .docx). mode comes from the query string: ?mode=strict"""
     if mode not in _VALID_MODES:
         raise HTTPException(400, f"mode 必须是 {' / '.join(_VALID_MODES)}")
 
@@ -206,14 +218,19 @@ async def check_file(file: UploadFile = File(...), mode: str = "normal"):
 
 @app.post("/api/rewrite")
 async def rewrite(payload: RewritePayload):
-    """按需触发 AI 降维改写（独立接口，与查重解耦）。
+    """On-demand AI humanizing rewrite (standalone endpoint, decoupled from checks).
 
-    查重阶段只用 Mock 规则版改写建议（瞬时），真正需要「更自然」的 AI 改写时，
-    前端每条高危句旁的「帮我改写」按钮才会调这里。本地 Qwen2.5-0.5b 在 CPU 上
-    每句约 5~15 秒，所以丢线程池异步跑，不阻塞事件循环；无模型/异常自动回退 Mock。
+    Detection itself only attaches instant rule-based rewrite suggestions. This
+    endpoint is hit only when the user clicks the "Rewrite this sentence" button
+    beside a flagged sentence and wants a more natural, LLM-generated version.
+    The local Qwen2.5-0.5b takes ~5-15 s per sentence on CPU, so the call is
+    dispatched into a thread pool to keep the event loop free; if the model is
+    unavailable or raises, it falls back to the rule-based rewriter.
 
-    并发控制：全局信号量(1) 保证同一时刻只有一个改写请求在跑，后来的排队等，
-    最多等 60 秒；拿不到就返回 429，避免并发把 CPU 打满、互相拖慢成 504。
+    Concurrency: a global Semaphore(1) guarantees only one rewrite runs at a
+    time. Later requests queue for at most 60 s; a request that cannot acquire
+    the semaphore gets a 429, which prevents concurrent work from saturating the
+    CPU and slowing each other into 504s.
     """
     sentence = payload.sentence.strip()
     if not sentence:
@@ -235,11 +252,13 @@ async def rewrite(payload: RewritePayload):
 
 @app.post("/api/rewrite-batch")
 async def rewrite_batch(payload: RewriteBatchPayload):
-    """一键批量改写（前端「一键改写前 3 句」按钮调用）。
+    """Batch rewrite (backed by the front-end "Rewrite top 3" button).
 
-    内部串行处理最多 3 句，整体受同一把信号量保护——既保证 batch 内部不并发，
-    也保证 batch 与单句 /api/rewrite 请求互斥，CPU 上永远只有一个改写任务在跑。
-    前端对 batch 的心理预期是「等约 40 秒」，一次拿到 3 条，比点 3 次体验好。
+    Processes at most 3 sentences serially, guarded by the same semaphore: this
+    keeps requests inside one batch from running concurrently and also makes the
+    batch mutually exclusive with single /api/rewrite calls, so only one rewrite
+    task is ever on the CPU. The front-end treats a batch as "wait ~60 s" and gets
+    three results at once, which feels better than clicking three times.
     """
     sentences = [s.strip() for s in payload.sentences
                  if s and len(s.strip().split()) >= 3]
@@ -264,7 +283,7 @@ async def rewrite_batch(payload: RewriteBatchPayload):
 
 @app.get("/api/history")
 async def history():
-    """返回最近 10 条查重记录（前端画「降重曲线」）。"""
+    """Return the 10 most recent check records (powers the front-end de-AI curve)."""
     try:
         con = sqlite3.connect(DB_PATH)
         rows = con.execute(

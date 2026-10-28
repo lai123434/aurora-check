@@ -1,0 +1,85 @@
+# Aurora Check v3.16.0 — 全量回归测试报告
+
+- 生成时间：2026-10-28 21:07:18 +0800
+- 执行命令：python3 -m pytest tests/ -v --runslow
+- 环境：Python 3.11.1 / pytest 9.0.2 / CPU
+
+## 汇总
+
+ 47 passed, 2 warnings in 60.68s (0:01:00) 
+
+- fast 测试：34 项（默认执行）
+- slow 测试：13 项（依赖深度学习模型，需 --runslow，本次全部执行）
+- skip：0（slow 全部真跑，未以 skip 蒙混）
+
+## 用例明细（47 项全通过）
+
+  test_external_similarity_none_when_network_disabled  test_contracts.py
+  test_self_overlap_is_measured                        test_contracts.py
+  test_mlm_perplexity_returns_tuple_or_none            test_contracts.py
+  test_compute_engine_scores_returns_four_tuple        test_contracts.py
+  test_registry_has_no_bare_tuples                     test_contracts.py
+  test_validate_rejects_trash[]                        test_contracts.py
+  test_validate_rejects_trash[ab]                      test_contracts.py
+  test_validate_rejects_trash[aaa]                     test_contracts.py
+  test_validate_rejects_trash[!!!]                     test_contracts.py
+  test_validate_rejects_trash[12345]                   test_contracts.py
+  test_validate_accepts_real_prose                     test_contracts.py
+  test_missing_engines_reported_when_ml_unavailable    test_contracts.py
+  test_student_verdict_thresholds                      test_contracts.py
+  test_high_pressure_warning_threshold                 test_contracts.py
+  test_strict_sentence_strategy_detects_advanced_word  test_contracts.py
+  test_strict_sentence_strategy_detects_template_starter test_contracts.py
+  test_strict_mode_returns_mode_field                  test_contracts.py
+  test_ai_never_confidently_human[AI:S1_obvious_ai]    test_detection_regression.py
+  test_ai_scores_match_baseline[AI:S1_obvious_ai]      test_detection_regression.py
+  test_ai_never_confidently_human[AI:S2_casual_ai]     test_detection_regression.py
+  test_ai_scores_match_baseline[AI:S2_casual_ai]       test_detection_regression.py
+  test_ai_never_confidently_human[AI:S3_student_ai]    test_detection_regression.py
+  test_ai_scores_match_baseline[AI:S3_student_ai]      test_detection_regression.py
+  test_ai_never_confidently_human[AI:S4_imperfect_ai]  test_detection_regression.py
+  test_ai_scores_match_baseline[AI:S4_imperfect_ai]    test_detection_regression.py
+  test_ai_never_confidently_human[AI:S5_natural_essay] test_detection_regression.py
+  test_ai_scores_match_baseline[AI:S5_natural_essay]   test_detection_regression.py
+  test_human_not_flagged_as_ai                         test_detection_regression.py
+  test_human_score_matches_baseline                    test_detection_regression.py
+  test_score_is_explainable                            test_detection_regression.py
+  test_rewrite_delve_into                              test_rewrite.py
+  test_rewrite_utilize                                 test_rewrite.py
+  test_rewrite_in_my_opinion                           test_rewrite.py
+  test_rewrite_long_sentence_splits                    test_rewrite.py
+  test_rewrite_verb_agreement                          test_rewrite.py
+  test_rewrite_no_change_returns_empty                 test_rewrite.py
+  test_rewrite_empty_input                             test_rewrite.py
+  test_to_html_renders_rewrite_suggestion              test_rewrite.py
+  test_to_markdown_renders_rewrite_suggestion          test_rewrite.py
+  test_to_html_contains_echarts_and_visual_anchors     test_web_api.py
+  test_to_html_radar_top5_and_truncates_long_name      test_web_api.py
+  test_to_html_invalid_input_returns_warning_page      test_web_api.py
+  test_to_html_human_label_renders_student_friendly    test_web_api.py
+  test_health_endpoint                                 test_web_api.py
+  test_index_serves_visual_page                        test_web_api.py
+  test_check_rejects_invalid_mode                      test_web_api.py
+  test_check_rejects_blank_text                        test_web_api.py
+
+## 本次修复
+
+1. 新增 pytest.ini，注册 slow marker（消除 5 条 PytestUnknownMarkWarning）。
+2. 重建分数基线 tests/baseline_scores.json（3.4.0 → 3.16.0）。
+
+## 基线重录记录（3.13 语料校准后）
+
+| 样本 | 旧(3.4.0) | 新(3.16.0) | 真实标签 |
+|---|---|---|---|
+| S1_obvious_ai         | 0.847 | 0.887 | AI    |
+| S2_casual_ai          | 0.485 | 0.524 | AI    |
+| S3_student_ai         | 0.489 | 0.557 | AI    |
+| S4_imperfect_ai       | 0.399 | 0.415 | AI    |
+| S5_natural_essay      | 0.442 | 0.467 | AI    |
+| H1_real_student_final | 0.376 | 0.373 | human |
+
+结论：AI 样本分数整体上移、真人稿几乎不变（0.376→0.373），AI/真人区分度扩大。
+这是 3.13 真实文献语料校准（伪困惑度 PIVOT 1650→700 / SCALE 1950→450，
+失效引擎权重归零）带来的预期提升，非回归。
+
+residual：2 条 warnings 均来自第三方 C 扩展（swig DeprecationWarning），与本项目无关。

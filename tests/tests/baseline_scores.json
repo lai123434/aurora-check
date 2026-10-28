@@ -1,54 +1,54 @@
 {
   "S1_obvious_ai": {
-    "score": 0.847,
+    "score": 0.887,
     "label": "ai",
     "primary": 0.99,
-    "stat_mean": 0.703,
+    "stat_mean": 0.783,
     "truth": "AI"
   },
   "S2_casual_ai": {
-    "score": 0.485,
+    "score": 0.524,
     "label": "mixed",
     "primary": 0.718,
-    "stat_mean": 0.252,
+    "stat_mean": 0.266,
     "truth": "AI"
   },
   "S3_student_ai": {
-    "score": 0.489,
+    "score": 0.557,
     "label": "mixed",
     "primary": 0.581,
-    "stat_mean": 0.302,
+    "stat_mean": 0.366,
     "truth": "AI"
   },
   "S4_imperfect_ai": {
-    "score": 0.399,
+    "score": 0.415,
     "label": "mixed",
     "primary": 0.027,
-    "stat_mean": 0.13,
+    "stat_mean": 0.121,
     "truth": "AI",
     "comment": "两个分类器都被骗，靠困惑度反向锚定救回 mixed"
   },
   "S5_natural_essay": {
-    "score": 0.442,
+    "score": 0.467,
     "label": "mixed",
     "primary": 0.366,
-    "stat_mean": 0.226,
+    "stat_mean": 0.259,
     "truth": "AI"
   },
   "H1_real_student_final": {
-    "score": 0.376,
+    "score": 0.373,
     "label": "mixed",
     "primary": 0.47,
-    "stat_mean": 0.283,
+    "stat_mean": 0.277,
     "truth": "human",
     "source": "BUS100_A1_Annotated_Bibliography_Final.docx",
     "comment": "真人稿落在 mixed 是召回优先策略的已知代价，不是 bug"
   },
   "_meta": {
     "recorded_at": "2026-10-28",
-    "engine_version": "3.4.0",
-    "models": "ModernBERT-RAID/MAGE + RoBERTa-openai + ModernBERT-base(ppl)",
+    "engine_version": "3.16.0",
+    "models": "ModernBERT-RAID/MAGE + ModernBERT-base(ppl)",
     "tol": 0.06,
-    "note": "3.4.0 断句修复(缩写保护)后重录：真人稿分数由 0.468 修正为更准确的较低值，AI/真人区分度提升"
+    "note": "3.13 真实文献语料校准后重录：伪困惑度敏感区 PIVOT 1650→700、SCALE 1950→450，compressibility/linguistic-markers 等失效引擎权重归零。副作用是困惑度反向锚定对 AI 样本更强（S3 0.489→0.557），召回提升，属有意调参。"
   }
 }

@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pone.0299726</article-id>
+<article-id pub-id-type="publisher-id">PONE-D-23-02612</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Employment</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Earth sciences</subject><subj-group><subject>Geography</subject><subj-group><subject>Human geography</subject><subj-group><subject>Human mobility</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Human geography</subject><subj-group><subject>Human mobility</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Earth sciences</subject><subj-group><subject>Geography</subject><subj-group><subject>Human geography</subject><subj-group><subject>Urban geography</subject><subj-group><subject>Urban areas</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Human geography</subject><subj-group><subject>Urban geography</subject><subj-group><subject>Urban areas</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Earth sciences</subject><subj-group><subject>Geography</subject><subj-group><subject>Geographic areas</subject><subj-group><subject>Urban areas</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Engineering and technology</subject><subj-group><subject>Equipment</subject><subj-group><subject>Communication equipment</subject><subj-group><subject>Cell phones</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Ecology</subject><subj-group><subject>Ecological metrics</subject><subj-group><subject>Species diversity</subject><subj-group><subject>Shannon index</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Ecology and environmental sciences</subject><subj-group><subject>Ecology</subject><subj-group><subject>Ecological metrics</subject><subj-group><subject>Species diversity</subject><subj-group><subject>Shannon index</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Biology and life sciences</subject><subj-group><subject>Population biology</subject><subj-group><subject>Population metrics</subject><subj-group><subject>Population density</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Applied mathematics</subject><subj-group><subject>Algorithms</subject><subj-group><subject>Machine learning algorithms</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Research and analysis methods</subject><subj-group><subject>Simulation and modeling</subject><subj-group><subject>Algorithms</subject><subj-group><subject>Machine learning algorithms</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Computer and information sciences</subject><subj-group><subject>Artificial intelligence</subject><subj-group><subject>Machine learning</subject><subj-group><subject>Machine learning algorithms</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3">
+<subject>Social sciences</subject><subj-group><subject>Economics</subject><subj-group><subject>Labor economics</subject><subj-group><subject>Employment</subject><subj-group><subject>Jobs</subject></subj-group></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Identification and classification of urban employment centers based on big data: A case study of Beijing</article-title>
+<alt-title alt-title-type="running-head">Identification and classification of urban employment centers based on big data</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0000-0003-3987-6678</contrib-id>
+<name name-style="western">
+<surname>Wang</surname>
+<given-names>Liang</given-names>
+</name>
+<role content-type="http://credit.niso.org/contributor-roles/conceptualization/">Conceptualization</role>
+<role content-type="http://credit.niso.org/contributor-roles/data-curation/">Data curation</role>
+<role content-type="http://credit.niso.org/contributor-roles/formal-analysis/">Formal analysis</role>
+<role content-type="http://credit.niso.org/contributor-roles/writing-original-draft/">Writing – original draft</role>
+<role content-type="http://credit.niso.org/contributor-roles/writing-review-editing/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Cui</surname>
+<given-names>He</given-names>
+</name>
+<role content-type="http://credit.niso.org/contributor-roles/software/">Software</role>
+<role content-type="http://credit.niso.org/contributor-roles/visualization/">Visualization</role>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>School of Economics and Management, Beijing Jiaotong University, Beijing, China</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Beijing Municipal Institute of City Planning &amp; Design, Beijing, China</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Latif</surname>
+<given-names>Zahid</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Beijing University of Posts and Telecommunications, CHINA</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">wljean@126.com</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>24</day>
+<month>5</month>
+<year>2024</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2024</year>
+</pub-date>
+<volume>19</volume>
+<issue>5</issue>
+<elocation-id>e0299726</elocation-id>
+<history>
+<date date-type="received">
+<day>9</day>
+<month>2</month>
+<year>2023</year>
+</date>
+<date date-type="accepted">
+<day>15</day>
+<month>2</month>
+<year>2024</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2024</copyright-year>
+<copyright-holder>Wang, Cui</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0299726"/>
+<abstract>
+<p>The layout, scale and spatial form of urban employment centers are important guidelines for the rational layout of public service facilities such as urban transportation, medical care, and education. In this paper, we use Internet cell phone positioning data to identify the workplace and residence of users in the Beijing city area and obtain commuting data of the employed to measure the employment center system in Beijing. Firstly, the employment density distribution is generated using the data of the working places of the employed persons, and the employment centers are identified based on the employment density of Beijing. Then, we use the business registration data of employment centers to measure the industrial diversity within the employment centers by using the ecological Shannon Wiener Diversity Index, and combine the commuting links between employment centers and places of residence to measure the energy level of each employment center, analyze the hinterland and sphere of influence of each center, and finally using the industrial diversity index of employment centers and the average commuting time of employed persons, combined with the K-Means clustering algorithm, to classify the employment centers in Beijing. The employment center identification and classification method based on big data constructed in this study can help solve the limitations of the previous employment center system research in terms of center identification and commuting linkage measurement due to large spatial units and lack of commuting data to a certain extent. The study can provide reference for the regular understanding and technical analysis of employment centers and provide help for the employment multi-center system in Beijing in terms of quantifying the employment spatial structure, guiding the construction of multi-center system, and adjusting the land use rules.</p>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution>National Key R&amp;D Program of China</institution>
+</funding-source>
+<award-id>2021YFA1000300</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0000-0003-3987-6678</contrib-id>
+<name name-style="western">
+<surname>Wang</surname>
+<given-names>Liang</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award002">
+<funding-source>
+<institution>National Key R&amp;D Program of China</institution>
+</funding-source>
+<award-id>2021YFA1000304</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">https://orcid.org/0000-0003-3987-6678</contrib-id>
+<name name-style="western">
+<surname>Wang</surname>
+<given-names>Liang</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<funding-statement>This research is supported by the National Key R&amp;D Program of China (Nos. 2021YFA1000300 and 2021YFA1000304). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="8"/>
+<table-count count="4"/>
+<page-count count="21"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>The use of the dataset was done in compliance to the BaiduHUIYAN and State Administration of Market Supervision and Administration(SAMSA) Privacy Policy (<ext-link ext-link-type="uri" xlink:href="https://map.baidu.com/zt/client/privacy/index.html" xlink:type="simple">https://map.baidu.com/zt/client/privacy/index.html</ext-link>, <ext-link ext-link-type="uri" xlink:href="https://bj.gsxt.gov.cn/affiche-query-info-help-110000.html" xlink:type="simple">https://bj.gsxt.gov.cn/affiche-query-info-help-110000.html</ext-link>), which stated that the anonymized and aggregated data could be used for other services. This study was carried out with the support of BaiduHUIYAN and SAMSA, and the use of anonymized and aggregated data is authorized by BaiduHUIYAN and SAMSA and its Terms and Conditions. However, some restrictions will apply when accessing the original data, and the data request should be addressed to BaiduHUIYAN (<ext-link ext-link-type="uri" xlink:href="https://huiyan.baidu.com/products/platform" xlink:type="simple">https://huiyan.baidu.com/products/platform</ext-link>, E-mail: <email xlink:type="simple">huiyan@baidu.com</email>) and State Administration of Market Supervision and Administration (<ext-link ext-link-type="uri" xlink:href="https://bj.gsxt.gov.cn/index.html" xlink:type="simple">https://bj.gsxt.gov.cn/index.html</ext-link>, Tel: 86-010-82691819).</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>1. Introduction</title>
+<p>The layout, scale and spatial morphology of employment centers in cities have important guiding significance for the rational layout of public service facilities such as urban transportation, medical care and education [<xref ref-type="bibr" rid="pone.0299726.ref001">1</xref>, <xref ref-type="bibr" rid="pone.0299726.ref002">2</xref>]. In recent years, with the increasing scarcity of land resources, the optimization of urban space and the improvement of urban functions have become particularly important in the era of stock planning. The location, scale and functional classification of employment centers have naturally become the focus of attention of relevant managers and researchers [<xref ref-type="bibr" rid="pone.0299726.ref003">3</xref>–<xref ref-type="bibr" rid="pone.0299726.ref006">6</xref>]. The uneven distribution of urban public service facilities, traffic congestion caused by the separation of jobs and housing, and other big city problems have also prompted city managers and policy makers to reconsider the urban pattern [<xref ref-type="bibr" rid="pone.0299726.ref007">7</xref>], and the identification of employment center boundaries has gradually become the focus of scholars [<xref ref-type="bibr" rid="pone.0299726.ref008">8</xref>], and its location, scale and functional classification have naturally become the focus of relevant managers and researchers.</p>
+<p>At present, many scholars have carried out related research work, generally using the population density index of employment centers to determine the absolute and relative criteria, the traditional employment center boundary determination mainly relies on the combination of field research and city-related economic statistics analysis method [<xref ref-type="bibr" rid="pone.0299726.ref007">7</xref>]; the fitting models of employment density are non-parametric models [<xref ref-type="bibr" rid="pone.0299726.ref002">2</xref>, <xref ref-type="bibr" rid="pone.0299726.ref007">7</xref>] and parametric models [<xref ref-type="bibr" rid="pone.0299726.ref009">9</xref>], and the Clark model is found to be more effective in fitting the change of population density in the pattern of urban centers. while the Smeed model is superior in fitting the citywide geographic distribution of population including the suburbs [<xref ref-type="bibr" rid="pone.0299726.ref010">10</xref>]; while the non-parametric models can achieve better results in fitting the change in employment population density in the polycentric city structure [<xref ref-type="bibr" rid="pone.0299726.ref009">9</xref>]. Currently, urban employment centers are developing in the direction of polycentricity, systematization and networking, etc., limited by the fact that the spatial units of data mainly used in current studies may be too large (e.g., the smallest unit of data such as the economic census is the street) and cannot be subdivided within the larger spatial units, resulting in the identified employment center boundaries only overlapping with one or several spatial units, which may have large deviations from the actual boundaries [<xref ref-type="bibr" rid="pone.0299726.ref003">3</xref>, <xref ref-type="bibr" rid="pone.0299726.ref011">11</xref>, <xref ref-type="bibr" rid="pone.0299726.ref012">12</xref>], and the lack of research on measures such as the commuting direction and range of employed persons in employment centers and the types of employment centers, limited by survey means and the lack of basic information are the main reasons for the above limitations. With the popularity of mobile communication in recent years, the spatio-temporal trajectories of mobile users can be recorded by base stations, which greatly improves the spatial accuracy of the data. For example, the spatial accuracy of cell phone positioning data obtained by Internet companies can reach 100-meter grid (1 hectare), which is much smaller than the average area streets in Beijing of 4841 hectares.</p>
+<p>In this paper, we use cell phone positioning data and enterprise business registration data in Beijing to identify the spatial location, scale, and functional classification of employment centers in Beijing based on the distribution of individual employed people’s workplaces and the commuting links between workplaces and residences to provide basic information for urban research, planning preparation and urban management. This paper attempts to focus on the following four aspects on a smaller spatial unit: (i) employment center identification: how jobs are distributed and which areas are most densely employed as a way to identify employment centers; (ii) employment center industrial diversity analysis: using the Shannon-Wiener diversity index, combined with data on business registration of enterprises in employment centers, to calculate the industrial diversity of employment centers; (iii) employment center attraction and radiation range: analyze the radiation range of employment centers by using the commuting links of the employed in the employment centers; (iv) classification of employment centers: Industrial diversity index of employment centers and average commuting time of employed persons, combined with K-Means clustering algorithm, for classification of employment centers in Beijing.</p>
+</sec>
+<sec id="sec002">
+<title>2. Literature review</title>
+<sec id="sec003">
+<title>2.1 A review of employment center system measurement methods</title>
+<p>The development of modern urban spatial structure theory can be traced back to the 1960s, when three urban economists, Alonso, Muth, and Mills [<xref ref-type="bibr" rid="pone.0299726.ref013">13</xref>–<xref ref-type="bibr" rid="pone.0299726.ref015">15</xref>] proposed the monocentric city model. In the following four decades, this abstract theoretical model has been used and can provide a reasonable explanation of urban. Due to the combined effect of urbanization rate, building height, building density and housing consumption, the urban population in monocentric cities shows a regular spatial distribution—the population density decreases with increasing distance from the city’s business center (CBD). In the monocentric city model, employment is highly concentrated, so the population density and its rate of change (i.e., gradient) can more adequately reflect the spatial structure characteristics of the city, which makes urban population density the most concerned variable when studying urban spatial structure. Since the study of the Clark model was proposed in 1951 [<xref ref-type="bibr" rid="pone.0299726.ref016">16</xref>], many scholars have worked on models that estimate different urban population density functions and their variation patterns with space [<xref ref-type="bibr" rid="pone.0299726.ref017">17</xref>]. The monocentric city model explains the location and travel behavior of city residents given the exogenous location of firms and the resulting characteristics of the urban spatial structure. Enterprises in actual cities choose their locations considering urban land cost, production cost, labor availability and market proximity. Along with the rapid development of cities, the congestion effect of urban centers gradually emerges and the production cost of enterprises gradually increases, which also motivates enterprises to gradually look for space at the periphery of cities, which in turn leads to the splitting of employment centers and the formation of polycentric urban forms, and more and more sub-centers appear within cities, so that the spatial distribution of land (housing) prices, population, and employment in cities will change [<xref ref-type="bibr" rid="pone.0299726.ref003">3</xref>, <xref ref-type="bibr" rid="pone.0299726.ref018">18</xref>], but the urban The dominant role of the main center is still stronger, forming a primary and secondary polycentric pattern [<xref ref-type="bibr" rid="pone.0299726.ref019">19</xref>].</p>
+<p>In terms of employment center identification, some international scholars have given a general employment center identification method, which generally subdivides cities into multiple regions and selects employment centers by analyzing the changes in the number of jobs in adjacent regions [<xref ref-type="bibr" rid="pone.0299726.ref018">18</xref>, <xref ref-type="bibr" rid="pone.0299726.ref020">20</xref>, <xref ref-type="bibr" rid="pone.0299726.ref021">21</xref>]. Giuliano and Small et al [<xref ref-type="bibr" rid="pone.0299726.ref021">21</xref>] proposed that employment centers are defined as areas with employment densities greater than 2,500 persons per square kilometer and employment numbers greater than 10,000 persons, and identified 32 employment centers in Los Angeles based on the Los Angeles transportation survey data among 1146 transportation subdivisions (average area of each transportation subdivision is about 800 ha). The 32 employment centers in Los Angeles were identified, but due to the large area of the traffic cells used, employment centers with smaller areas or less density could not be accurately identified, and the boundaries of the identified employment centers were usually only the boundaries of the traffic cells [<xref ref-type="bibr" rid="pone.0299726.ref019">19</xref>]. McMillen and Daniel [<xref ref-type="bibr" rid="pone.0299726.ref007">7</xref>] used traffic survey data from cities such as Chicago, and proposed local weighted regression based on the assumption of monocentric spatial structure and semi-parametric regression method, which solved the problem of identifying lower density employment centers, but still could not identify employment centers with smaller area due to the limitation of statistical cell area (about 1000 ha). Vasanen [<xref ref-type="bibr" rid="pone.0299726.ref022">22</xref>] used 250m * 250m raster commuting data to identify employment centers in three Finnish cities with simpler employment density local spatial autocorrelation (Local Moran’s I), avoiding the effect of statistical cell size and identified the cluster with the largest area as the main center and the remaining clusters as secondary centers. However, its required data accuracy is high and it is difficult to obtain. In summary, urban center identification and circle delineation scholars identify urban centers mainly based on employment density or population density data, using employment or population density peak, threshold method, parametric method and semi-parametric method to identify urban centers, in the research method generally use data distribution characteristics to outline the hot spot areas of the research object, including urban employment and residential hot spots, urban crime hot spots, tourism hot spots, etc [<xref ref-type="bibr" rid="pone.0299726.ref008">8</xref>, <xref ref-type="bibr" rid="pone.0299726.ref023">23</xref>]. In this paper Employment center identification mainly combines the methods proposed by Giuliano or Mcmillen [<xref ref-type="bibr" rid="pone.0299726.ref012">12</xref>, <xref ref-type="bibr" rid="pone.0299726.ref024">24</xref>].</p>
+<p>In terms of employment center classification, employment centers, as the locations where commercial activities are concentrated in cities, are responsible for residents’ business and leisure functions, and are the core area of urban economic and social activities. The American scholar Proudfoot [<xref ref-type="bibr" rid="pone.0299726.ref025">25</xref>] classified American urban employment centers into five types according to the spatial location and characteristics of business activities: central employment centers, peripheral employment centers, major employment centers, neighboring employment centers, and clusters of isolated business sites. Davies et al. [<xref ref-type="bibr" rid="pone.0299726.ref026">26</xref>] conducted an empirical study of British towns and cities and found that the specialized business territories in Britain were not as obvious as in the United States. Lamb [<xref ref-type="bibr" rid="pone.0299726.ref027">27</xref>] studied the shape and dynamics of business districts in 40 small towns in upstate New York. In China, research on the types and spatial structure of business territories has been gradually carried out since the 1990s [<xref ref-type="bibr" rid="pone.0299726.ref028">28</xref>]. Chen et al. [<xref ref-type="bibr" rid="pone.0299726.ref029">29</xref>] used to classify the locational types and service levels of retail business services in the downtown area of Kunming, and Wu et al. [<xref ref-type="bibr" rid="pone.0299726.ref030">30</xref>] used GIS spatial analysis to delineate the hierarchy of business centers in Beijing by constructing an index system. Zhang et al. [<xref ref-type="bibr" rid="pone.0299726.ref031">31</xref>] used GIS point pattern analysis to compare and study the distribution and spatial clustering characteristics of business districts in Beijing in 2004 and 2008. From the above analysis, the previous studies on the geographical structure of urban business started earlier and a series of research results were formed. However, in general, due to the data, the spatial scale of previous studies on the spatial scope definition and classification of intra-city business districts is too large or differs greatly from the actual situation. In recent years, some scholars have obtained basic data through a large amount of research in order to study the business district, which is a large amount of work to obtain data and leads to a large research cost [<xref ref-type="bibr" rid="pone.0299726.ref032">32</xref>], while the quantitative identification as well as classification of urban business districts is of great value to the study of urban business development and the study of urban planning and construction.</p>
+</sec>
+<sec id="sec004">
+<title>2.2 Employment center research exploration with big data</title>
+<p>Currently, the main studies on employment center identification and classification require data on employment jobs, enterprise data, and commuting. At present, although the economic census in China can obtain the employment job data of each enterprise, the smallest spatial unit of publicly available data is the street, which may be too large relative to the employment center or not coincide with the actual employment center boundary [<xref ref-type="bibr" rid="pone.0299726.ref024">24</xref>], which may reduce the actual population density of the employment center, resulting in the identification results not matching the actual. Although the Beijing traffic survey data can simultaneously obtain commuting data of employment centers, the sampling rate of the traffic survey is low and the spatial unit precision of the aggregated public data is like that of the economic census, which cannot substantially help the study. Big data (such as cell phone positioning data, cell phone call data, cab GPS data, bus IC smart card data, etc.) that have emerged in recent years record a large number of users’ spatio-temporal trajectories, from which data analysis can be used to obtain data such as human flow density or commuting connections, and scholars have used these data to conduct urban spatial studies [<xref ref-type="bibr" rid="pone.0299726.ref033">33</xref>–<xref ref-type="bibr" rid="pone.0299726.ref035">35</xref>], and the spatial unit can generally be controlled at about 100 ha, and the statistical The number of users is often above the million level, which to a certain extent helps to address the impact caused by past data deficiencies.</p>
+<p>The cell phone location data utilized in this paper records in real time the GPS location of cell phone users’ cell phone connection when they use Internet location services, from which the information of users’ occupational and residence, commuting, etc. can be obtained by analyzing the spatio-temporal trajectories of cell phone users as the basic data for employment center identification research, and the business registration information of enterprises in employment centers is used to analyze the diversity of enterprises in employment centers with the help of Shannon-Wiener diversity index, combined with commuting data of employed persons in employment centers to classify employment centers. Currently, scholars have used cell phone data to study issues related to employment commuting through workplace and residence identification, for example, Ahas et al. [<xref ref-type="bibr" rid="pone.0299726.ref036">36</xref>] used cell phone call data for 12 consecutive months to identify about 45% of users’ workplace and residence; Becker et al. used cell phone call data recorded at 35 base stations within 13 square kilometers in Morristown, New Jersey, over two months to identify users’ workplace and residence, and used the identification data to analyze where employed people live in Morristown to obtain the commuting range of the city. Using cell phone location data, Kan et al. [<xref ref-type="bibr" rid="pone.0299726.ref037">37</xref>] identified the workplace and residence of employed people in the city and analyzed their commuting characteristics, and verified the reliability of the data. The above-mentioned residential population distribution identified by cell phone data can reflect a more realistic population distribution, but existing studies have not explored the identification and classification of employment centers using big data.</p>
+</sec>
+</sec>
+<sec id="sec005" sec-type="materials|methods">
+<title>3. Materials and methodology</title>
+<sec id="sec006">
+<title>3.1 Study area</title>
+<p>In this study, Beijing is selected as a case study. There are 16 districts in Beijing, with a total area of 16,400 square kilometers. Among them, Dongcheng and Xicheng are the Core District; the central core district and six districts, namely Chaoyang, Haidian, Fengtai and Shijingshan, are collectively referred to as the Central District; Tongzhou, Changping, Shunyi, Daxing, Mentougou and Fangshan become the Suburban District; and four districts, namely Huairou, Pinggu, Miyun and Yanqing are four suburban areas, as shown in <xref ref-type="fig" rid="pone.0299726.g001">Fig 1</xref>. We chose this city for several reasons. First, as the capital of China, it has been a model for Chinese cities in terms of land and development market development, urban planning and policy making. As such, Beijing is well established as a field of study for the economic, social, and spatial transformation of Chinese cities. Second, Beijing is growing rapidly, and given this high rate of development, it is important to study short-term changes in Beijing. At the same time, short-term changes can be used to assist in long-term evolutionary studies. Again, with the rapid expansion of Beijing, several urban employment centers have emerged in the city, and the number, size, attractiveness, and evolution of these employment sub-centers merit further study. Finally, in order to alleviate urban problems, the Beijing government has implemented a series of programs and policies to promote decentralized development and attempt to form employment sub-centers in the peripheral areas of Beijing. The construction of the subway is an important means of implementing these policies, and the effectiveness of this approach needs to be tested.</p>
+<fig id="pone.0299726.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Research area of the study.</title>
+<p>Reprinted from [<ext-link ext-link-type="uri" xlink:href="https://www.resdc.cn/" xlink:type="simple">https://www.resdc.cn/</ext-link>, accessed on 10 May 2021], original copyright 2021.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.g001" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec007">
+<title>3.2 Data</title>
+<p>In this paper, we use basic spatio-temporal big data such as Internet location services data (also known as cell phone positioning data), business enterprise registration data, etc. Each type of data is anonymized in all aspects of processing, and no individual privacy is involved in all aspects and outputs.</p>
+<sec id="sec008">
+<title>3.2.1 Internet location service data</title>
+<p>The Internet location service data (also known as cell phone location data) used in this paper is obtained based on Baidu Map location service requests, and the source of the data is mainly from Baidu Map users agreeing to the corresponding terms and conditions of service of the Internet service provider through an app such as Baidu Map. The user data collected without personal information using the connection between the communication base station network and the user’s mobile device, which mainly includes both temporal and spatial dimensions, is used to provide services such as navigation for the user’s movement within the city. At present, the average daily location service requests of Baidu Maps exceed 120 billion, and the number of active smart devices exceeds 1.2 billion per month, covering all levels of administrative divisions in China. Location service data is the basis of urban occupancy, commuting and other features mining, mainly used for occupancy space analysis, commuting OD and commuting time analysis. Location data assists in extracting samples on the one hand, including the extraction of resident points (residence, employment, etc.), and the extraction of samples of commuting modes such as cars, railways, and buses; on the other hand, it is used to construct feature data, including the construction of features such as the number of locations in resident points and the distribution of location time [<xref ref-type="bibr" rid="pone.0299726.ref038">38</xref>].</p>
+</sec>
+<sec id="sec009">
+<title>3.2.2 Enterprise business registration data</title>
+<p>The enterprise data used in this paper is from the business registration data of the industry and commerce department, which contains the information of all enterprises in Beijing from October 1949 to May 2021, including the unique identification number, company name, industry code, address, industry, registered capital and registration status (surviving, cancelled and revoked, etc.), with a total data volume of 4.21 million. The fields used in the study are listed in <xref ref-type="table" rid="pone.0299726.t001">Table 1</xref>. The industry code field is used to determine the industry category of the enterprise; the address and region fields are used to determine the spatial location of the enterprise, and the longitude and latitude coordinates of the enterprise are obtained by inverse address resolution using Baidu Map API; the registered capital field is used to determine the scale of the enterprise; and the enterprise registration status is used to determine the status of the enterprise. Due to the limitation of space, the technical details of data pre-processing will not be discussed in this paper [<xref ref-type="bibr" rid="pone.0299726.ref039">39</xref>].</p>
+<table-wrap id="pone.0299726.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.t001</object-id>
+<label>Table 1</label> <caption><title>Business registration data fields used and their purpose.</title></caption>
+<alternatives>
+<graphic id="pone.0299726.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.t001" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center">Field Name</th>
+<th align="center">Example</th>
+<th align="center">Applications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Industry Code</td>
+<td align="center">IRS</td>
+<td align="center">Extract the enterprise industry</td>
+</tr>
+<tr>
+<td align="center">Address, area</td>
+<td align="center">No. 10, Shangdi 10th Street, Haidian District, Beijing</td>
+<td align="center">Extract the workspace location</td>
+</tr>
+<tr>
+<td align="center">Industry</td>
+<td align="center">Internet and related services</td>
+<td align="center">Determine the type of business</td>
+</tr>
+<tr>
+<td align="center">Registered Capital</td>
+<td align="center">45.2 million USD</td>
+<td align="center">Extract the size of the enterprise</td>
+</tr>
+<tr>
+<td align="center">Registration Status</td>
+<td align="center">Survival</td>
+<td align="center">Extract enterprise status</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+</sec>
+<sec id="sec010" sec-type="materials|methods">
+<title>3.3 Methodology</title>
+<sec id="sec011">
+<title>3.3.1 Ethics statement</title>
+<p>This research was granted ethical approval from the Ethics Committee at Beijing Municipal Institute of City Planning and Design, China. The consent was not needed for this study because the data used in the study was anonymized by baidu before being transferred to the authors, in such a way that no connection could be made with any individual. The mobile phone users agreed to the terms and conditions for using the services with the internet service provider that their communications may be recorded and analyzed for improving services.</p>
+</sec>
+<sec id="sec012">
+<title>3.3.2 Employment center identification method</title>
+<p>In this paper, based on the cell phone location data in Beijing in May 2021, we use the spatial clustering DBSCAN (Density-Based Spatial Clustering of Applications with Noise) algorithm to cluster the location points and obtain multiple independent clusters; and extract location, land use attributes, user portraits, etc. from the clusters over 60 features, classify the user clusters using machine learning algorithms such as XGBoost (eXtreme Gradient Boosting), get the residence, employment, and recreation places of users [<xref ref-type="bibr" rid="pone.0299726.ref037">37</xref>], and finally identify the residence and employment places of the employed population in Beijing in May 2021, gather the employed population spatially on a 100 m * 100 m raster grid, and use kriging spatial interpolation, generating equipotential surfaces, and combining with local empirical knowledge, the employment center is defined as an area enclosed by equipotential surfaces, whose area is not less than 1 km2 and not more than 10 km2, and whose population density is greater than 10,000 people/km2, and the number of employed people in the area is not less than 20,000, so as to identify the employment center of Beijing, a mega metropolitan area.</p>
+<p>DBSCAN is a density-based clustering algorithm, in which the number of objects (points or other spatial objects) contained in a certain region of the clustering space is not less than a given threshold, and the algorithm can discover arbitrarily shaped clusters from a noisy data set, so that regions with sufficient density are divided into the same cluster to achieve the purpose of clustering. The significant advantage of DBSCAN is that it can effectively eliminate noisy data and discover arbitrarily shaped spatial clusters efficiently and quickly. In this study, we mainly cluster the valid data on all users and obtain the arithmetic mean of coordinate points in the largest clusters so that each user can get at least two valid clustering points [<xref ref-type="bibr" rid="pone.0299726.ref040">40</xref>]. xGBoost is an integrated learning algorithm that constructs a strong classifier by training multiple weak classifiers for supervised learning classification of users’ residence and place of employment, etc. By constructing a commuting mode mining classification model based on machine learning algorithms such as Bayesian, SVM, decision tree, random forest, GBDT and XGBoost, Kan et al. [<xref ref-type="bibr" rid="pone.0299726.ref037">37</xref>] trained the model using a sample set and 71 features, and compared, tested and evaluated different machine learning algorithms and found that the XGBoost algorithm had the best accuracy and recall rate of over 87% overall.</p>
+</sec>
+<sec id="sec013">
+<title>3.3.3 Employment center industry diversity analysis</title>
+<p>The number, scale, type, and spatial distribution of industrial and commercial registration of enterprises in cities can reflect the concentration degree and difference of various industries in space. It is of positive significance to analyze the number, scale, and type of industrial and commercial registration of enterprises in various employment centers and analyze the advantageous areas of their distribution for the recognition of urban employment centers. This research innovates the use of the Shannon Wiener Diversity Index, which describes biological diversity, to analyze the industrial diversity of employment centers. The Shannon Wiener Diversity Index was proposed by Claude Elwood Shannon, the founder of information theory, in 1948. It is widely used in mathematics, communications, ecology and other disciplines, mainly to measure the species richness within the system and the uniformity of individual distribution in various categories, It can also be applied in the field of economics to measure the industrial diversity of a job center, where industrial diversity is an important advantage because it provides a wider range of employment opportunities and mitigates the risk of a particular industry being hit during a recession. In the calculation process, the data are categorized by industry type, the percentage of each industry in total employment is calculated, and the Shannon Wiener Diversity Index formula to calculate the industrial diversity index of that job center, according to the index can assess the strengths and weaknesses of the industrial diversity of the job center, as well as the comparison with other job centers, and formulate policies accordingly. This research uses the enterprise information registered in the employment center (business registration data) to calculate the industrial diversity of the employment center. The calculation formula is as follows:
+<disp-formula id="pone.0299726.e001">
+<alternatives>
+<graphic id="pone.0299726.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0299726.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1">
+<mml:mi>H</mml:mi><mml:mo>′</mml:mo><mml:mo>=</mml:mo><mml:mo>−</mml:mo><mml:mrow><mml:munderover><mml:mo stretchy="true">∑</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:mi>S</mml:mi></mml:mrow></mml:munderover><mml:mrow><mml:msub><mml:mrow><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>*</mml:mo><mml:mrow><mml:mrow><mml:msub><mml:mrow><mml:mi mathvariant="normal">log</mml:mi></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mrow><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula>
+Where, <italic>H</italic>′ indicates the information diversity of the research object, and in this paper, it represents the industrial diversity index of the employment center, <italic>S</italic> indicates the number of enterprise types, and <italic>P</italic><sub><italic>i</italic></sub> represents the proportion of registered capital of enterprises in category <italic>i</italic>, and from the above expression, we can see that <italic>H</italic>′ obtains a great value when <italic>P</italic><sub><italic>i</italic></sub> = 1/<italic>S</italic>. The industrial diversity index <italic>H</italic>′ reflects the diversity and uniformity of each enterprise type in the employment center. Under the condition that the number of industrial types is approximately the same, the more uniform the development of industrial types, the larger the value of its diversity index; on the contrary, the more prominent the dominant industry and the more aggregated the industrial types, the smaller the value of its diversity index <italic>H</italic>′.</p>
+</sec>
+<sec id="sec014">
+<title>3.3.4 Employment center classification method</title>
+<p>In this study, we use cell phone location data to analyze the residence of employed people in each employment center and use their average commuting time as the attraction and radiation range of each employment center, and use both this and the industrial diversity index of the employment center as the classification condition to classify the identified Beijing employment centers using K-Means clustering algorithm, K-means is a common clustering algorithm that divides data points into K different clusters, each of which has similar characteristics and has significant differences between data points in different clusters. Since K-means is an unsupervised learning algorithm that does not require a priori knowledge, it can automatically classify employment centers based on their industrial diversity and the average commuting time of employed people, the method has the following advantages such as high scalability, robustness and interpretability of results. The technical route of employment center identification and classification in this paper is shown in <xref ref-type="fig" rid="pone.0299726.g002">Fig 2</xref>.</p>
+<fig id="pone.0299726.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Technology roadmap.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.g002" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+</sec>
+<sec id="sec015" sec-type="results">
+<title>4. Results</title>
+<p>In this paper, we use the Baidu cell phone location data in May 2021, including the encrypted unique user identification number, the time when the location occurred, the GPS location of the phone when the location occurred and other information, and use machine learning algorithms such as XGBoost to identify 27.87 million people living in Beijing and 13.62 million people employed, and extract the commuting OD based on the place of residence and employment to get the data on the place of work and employment and commuting time of the employed population, whose user commuting data are shown in <xref ref-type="table" rid="pone.0299726.t002">Table 2</xref>.</p>
+<table-wrap id="pone.0299726.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.t002</object-id>
+<label>Table 2</label> <caption><title>The attributes of residential employment and commuting data of mobile users.</title></caption>
+<alternatives>
+<graphic id="pone.0299726.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.t002" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center">User ID</th>
+<th align="center">Grid ID of workplace</th>
+<th align="center">Location of workplace</th>
+<th align="center">Grid ID of residence</th>
+<th align="center">Location of residence</th>
+<th align="center">Commuting time (hours)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">X1</td>
+<td align="center">712XXXXX</td>
+<td align="center">116.21XX,39.23XX</td>
+<td align="center">722XXXXX</td>
+<td align="center">116.26XX,39.29XX</td>
+<td align="center">0.5XX</td>
+</tr>
+<tr>
+<td align="center">X2</td>
+<td align="center">713XXXXX</td>
+<td align="center">116.28XX,39.92XX</td>
+<td align="center">713XXXXX</td>
+<td align="center">116.51XX,39.33XX</td>
+<td align="center">0.8XX</td>
+</tr>
+<tr>
+<td align="center">X3</td>
+<td align="center">722XXXXX</td>
+<td align="center">116.25XX,39.25XX</td>
+<td align="center">735XXXXX</td>
+<td align="center">116.71XX,39.56XX</td>
+<td align="center">1.2XX</td>
+</tr>
+<tr>
+<td align="center">X4</td>
+<td align="center">732XXXXX</td>
+<td align="center">116.81XX,39.53XX</td>
+<td align="center">715XXXXX</td>
+<td align="center">116.91XX,39.41XX</td>
+<td align="center">0.9XX</td>
+</tr>
+<tr>
+<td align="center">X5</td>
+<td align="center">714XXXXX</td>
+<td align="center">116.31XX,39.13XX</td>
+<td align="center">729XXXXX</td>
+<td align="center">116.92XX,39.83XX</td>
+<td align="center">0.2XX</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>The commuting data of the employed persons obtained from the cell phone location data are aggregated by the grid representing the workplace to obtain the number of employed persons in each grid, since in the reality employed persons are not exactly located at the location of the grid center point, but at a location within the grid coverage. To simulate the real density distribution of the employed persons, the kernel density (Kernel Density) analysis is done in QGis with 800m as the search radius, and the number of employed persons connected to each base station is apportioned into a 100m×100m grid, and the attribute value of each grid represents the employment density of that grid, and its employment density distribution is shown in <xref ref-type="fig" rid="pone.0299726.g003">Fig 3</xref>.</p>
+<fig id="pone.0299726.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Heat map of employment distribution in Beijing.</title>
+<p>Reprinted from [<ext-link ext-link-type="uri" xlink:href="https://www.resdc.cn/" xlink:type="simple">https://www.resdc.cn/</ext-link>, accessed on 10 May 2021], original copyright 2021.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.g003" xlink:type="simple"/>
+</fig>
+<sec id="sec016">
+<title>4.1 Employment results and verification</title>
+<p>To test the accuracy of the above identification methods, this paper uses the linear correlation between the resident population data from the 7th census of China in 2020 and the entire residential population identified with cell phone location data, this paper uses the linear correlation between the resident population in 339 streets in Beijing from the 7th census of China in 2020 and the entire residential population identified with cell phone location data, the 7th census data is China’s seventh national census, conducted at 00:00 on November 1, 2020, mainly includes data on the number, structure, and distribution of China’s population, and its spatial minimum scale is streets (or townships). The two were calculated to be positively correlated and passed a 99% confidence interval test, as shown in <xref ref-type="fig" rid="pone.0299726.g004">Fig 4</xref>, with a correlation coefficient of 0.853, which is a very strong correlation. Comparing with similar studies [<xref ref-type="bibr" rid="pone.0299726.ref041">41</xref>, <xref ref-type="bibr" rid="pone.0299726.ref042">42</xref>], this identification accuracy is acceptable considering errors such as the number of mobile subscribers and the inconsistency in the percentage of employed people who fit the employment pattern of this paper across streets. The places of residence identified by this method can basically reflect the real spatial distribution of residence. The test on the accuracy rate of workplace identification is not possible at this stage because the original data of the economic census is not publicly available. Considering that this paper only studies employed people who stay in fixed workplaces for a certain period using the DBSCAN algorithm, and their spatio-temporal trajectory characteristics in workplaces are more like those in residence, the workplaces identified by the residence identification method should also basically reflect the real spatial distribution of workplaces of employed people.</p>
+<fig id="pone.0299726.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Check with the resident population data of the seventh population census.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.g004" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec017">
+<title>4.2 Employment center identification</title>
+<p>This research uses the above identified data on the workplace and place of employment and commuting time of the employed population in Beijing in May 2021 to generate an employment density contour distribution map using data aggregated to a 100 m * 100 m raster grid, combined with kriging spatial interpolation, as shown in <xref ref-type="fig" rid="pone.0299726.g005">Fig 5</xref>.</p>
+<fig id="pone.0299726.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Contour lines of employment place.</title>
+<p>Reprinted from [<ext-link ext-link-type="uri" xlink:href="https://www.resdc.cn/" xlink:type="simple">https://www.resdc.cn/</ext-link>, accessed on 10 May 2021], original copyright 2021.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.g005" xlink:type="simple"/>
+</fig>
+<p>In this paper, using cell phone location, path planning, user portrait and behavior data in Beijing in May 2021, we use the spatial clustering DBSCAN algorithm to cluster the location points and get multiple independent user clusters, extract features such as location, land use attributes and user portrait from the user clusters, classify the user clusters using machine learning algorithms such as XGBoost, identify the employed population in Beijing in May 2021 of residence and employment, and spatially cluster the employed population on a 100 m * 100 m raster grid, and use kriging spatial interpolation to generate equipotential surfaces, as shown in <xref ref-type="fig" rid="pone.0299726.g003">Fig 3</xref>, and combine local empirical knowledge to define the employment center as an equipotential surface enclosed area with an area of 1 to 10 square kilometers, a population density greater than 10,000 persons per square kilometer, and a number of people in the area of no less than 20,000. This is used to identify the employment centers in the mega-metropolitan area of Beijing.</p>
+<p>Based on local empirical knowledge, employment centers are defined as areas enclosed by equipotential surfaces, and employment centers in the mega-metropolitan area of Beijing are identified by selecting an area of 1 to 10 square kilometers, a population density greater than 10,000 people per square kilometer, and no less than 20,000 people employed in the area, as shown in <xref ref-type="fig" rid="pone.0299726.g006">Fig 6</xref>.</p>
+<fig id="pone.0299726.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Employment center.</title>
+<p>Reprinted from [<ext-link ext-link-type="uri" xlink:href="https://www.resdc.cn/" xlink:type="simple">https://www.resdc.cn/</ext-link>, accessed on 10 May 2021], original copyright 2021.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.g006" xlink:type="simple"/>
+</fig>
+<p>Using the above methods, a total of 11 Beijing employment centers were identified, including Shangdi(SD), Wangjing(WJ), Zhongguancun(ZGC), Jinrongjie(JRJ), CBD, Yizhuang Economic Development Zone(YZ), Changping Chengbei(CPCB), Haidian Shanhou(HDSH), Tongzhou Beiyuan(TZBY), Fengtai Technology Park(FTTP) and Majuqiao(MJQ). From the perspective of spatial distribution, the employment centers show a significant multi-center distribution, among which, in the functional core areas of the capital (the eastern and western cities), the financial street shows a high concentration of employment; In the four districts of the central city (Chaoyang, Haidian, Fengtai and Shijingshan), the CBD and Zhongguancun in the middle of the city show a high concentration of employment. The Fengtai Technology Park in the southwest, Wangjing in the northeast, Shangdi in the northwest, and Haidian Shanhou in the rear of the region play a sustained impact, and the driving role in the surrounding areas is highlighted to form the employment center; The employment centers identified in the suburbs mainly include Tongzhou Beiyuan, Changping Chengbei, and the development of Yizhuang Economic Development Zone and Majuqiao. In the suburbs, the employment centers are not identified because of the unclear employment gathering situation.</p>
+<p>The area of 11 employment centers in Beijing is 43.21 square kilometers, of which 1.02 million people are employed, accounting for 7.5% of the total employment of the city. There are 7 employment centers located in the central city, accounting for 79.7% of the total employment centers, while the number of jobs accounts for nearly 79.8% of the main employment centers, which is equivalent to the proportion of the area, indicating that the overall employment density of the employment centers in the central city is not significantly higher than that of the suburban employment centers. From the perspective of the employment density of a single employment center, the employment density of CBD, Financial Street, Zhongguancun and Fengtai Science and Technology Park is relatively high. The number of jobs per unit area from the employment-intensive area is more than 30,000, while the employment density of Yizhuang Economic Development Zone and Changping Chengbei is relatively low. From the perspective of total employment, the employment scale of CBD is considerable, accounting for 21.6% of the employment scale of the whole employment center; The employment of Shangdi and Zhongguancun is characterized by high density and large area. Not only is the employment density high, but also the total employment is relatively large (<xref ref-type="table" rid="pone.0299726.t003">Table 3</xref>).</p>
+<table-wrap id="pone.0299726.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.t003</object-id>
+<label>Table 3</label> <caption><title>Spatial characteristics of employment centers in Beijing.</title></caption>
+<alternatives>
+<graphic id="pone.0299726.t003g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.t003" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center">Employment Center</th>
+<th align="center">Area (square kilometer)</th>
+<th align="center">Employment</th>
+<th align="center">Employment Density</th>
+<th align="center">Jobs as a proportion of total employment centers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">JRJ</td>
+<td align="center">2.596375736</td>
+<td align="center">99971</td>
+<td align="center">38504.05726</td>
+<td align="center">9.8%</td>
+</tr>
+<tr>
+<td align="center">FTTP</td>
+<td align="center">1.783135859</td>
+<td align="center">58196</td>
+<td align="center">32636.88502</td>
+<td align="center">5.7%</td>
+</tr>
+<tr>
+<td align="center">TZBY</td>
+<td align="center">1.49002125</td>
+<td align="center">22444</td>
+<td align="center">15062.87243</td>
+<td align="center">2.2%</td>
+</tr>
+<tr>
+<td align="center">HDSH</td>
+<td align="center">1.162817846</td>
+<td align="center">22810</td>
+<td align="center">19616.14201</td>
+<td align="center">2.2%</td>
+</tr>
+<tr>
+<td align="center">SD</td>
+<td align="center">5.845251743</td>
+<td align="center">166952</td>
+<td align="center">28561.98627</td>
+<td align="center">16.4%</td>
+</tr>
+<tr>
+<td align="center">ZGC</td>
+<td align="center">4.762491911</td>
+<td align="center">155965</td>
+<td align="center">32748.61205</td>
+<td align="center">15.3%</td>
+</tr>
+<tr>
+<td align="center">YZ</td>
+<td align="center">9.304873251</td>
+<td align="center">100579</td>
+<td align="center">10809.28211</td>
+<td align="center">9.9%</td>
+</tr>
+<tr>
+<td align="center">CPCB</td>
+<td align="center">4.227182517</td>
+<td align="center">47318</td>
+<td align="center">11193.74425</td>
+<td align="center">4.6%</td>
+</tr>
+<tr>
+<td align="center">WJ</td>
+<td align="center">3.545414893</td>
+<td align="center">90224</td>
+<td align="center">25448.07948</td>
+<td align="center">8.8%</td>
+</tr>
+<tr>
+<td align="center">MJQ</td>
+<td align="center">2.526010648</td>
+<td align="center">36346</td>
+<td align="center">14388.69627</td>
+<td align="center">3.6%</td>
+</tr>
+<tr>
+<td align="center">CBD</td>
+<td align="center">5.964712664</td>
+<td align="center">220084</td>
+<td align="center">36897.67008</td>
+<td align="center">21.6%</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Analyze the causes of the spatial distribution of these high-density employment centers, the path dependence of early urban planning, the recent industrial promotion and evolution, and land transfer policies may be important factors affecting the spatial distribution of high-density employment centers in the main urban area. As early as the early days of the founding of the People’s Republic of China, in the first draft of Beijing’s urban planning, the Jianguomen-Dawanglu area in Chaoyang District was divided into industrial construction land and became one of the areas with highly concentrated employment. After experiencing the turmoil of the Cultural Revolution and the recovery growth period at the beginning of the reform and opening up, Beijing first proposed the idea of building an urban CBD in 1993, and a large number of foreign-related office buildings and hotels rose here. The Jianguomen and Dawanglu areas have not only become the earliest opening windows of Beijing, but also become one of the most popular and headquarters economy gathering areas. With the establishment of the "Beijing New Technology Industrial Development Pilot Zone" in 1988, the first national high-tech industrial development zone was established here and became increasingly prosperous. With the strong scientific and technological support of famous universities and research institutions at home and abroad, it has become the most densely populated area of high-intelligence talents in Beijing. In addition, the financial street in the Guang’anmen area of Fuwai, the transportation hub employment area near Taipingqiao, and Jiuxianqiao Electronic Industrial Park all have the role of the government in guiding the planning and construction.</p>
+</sec>
+<sec id="sec018">
+<title>4.3 Industrial diversity and classification of employment centers</title>
+<p>Through analyzing the data of 4.21 million industrial and commercial enterprises in Beijing, it is found that scientific research and technical services are widely distributed in Chaoyang, Haidian and Fengtai in the overall distribution of Beijing enterprises; Chaoyang, Xicheng and Haidian have obvious advantages in the financial industry; The mining industry is only distributed in Fangshan and Shunyi; The manufacturing industry is relatively concentrated in Daxing, Tongzhou, Shunyi, Changping and other regions; The production and supply of electric water are mainly concentrated in Changping, Fangshan, Tongzhou and other regions; The distribution of construction industry is relatively balanced, but the proportion of Chaoyang and Fengtai is large; Wholesale and retail businesses are widely distributed in all regions, but Fengtai, Chaoyang and Haidian have comparative advantages; There are a large number of transportation and warehousing units in Chaoyang, Daxing, Fengtai and other places; Chaoyang and Haidian have obvious advantages in accommodation and catering industry; Haidian’s information technology industry has absolute advantages, and Chaoyang and Changping also have certain distribution; Chaoyang and Haidian have a high share of the real estate industry; Leasing and business service industry, water conservancy environment and public facilities management industry, residential service industry, education industry, health industry, culture, sports and entertainment industry are similar in distribution, Chaoyang and Haidian are more distributed, followed by Dongcheng and Xicheng; Public management and social security organizations are equally distributed in Xicheng, Dongcheng, Chaoyang, Haidian and other areas, and also in Fangshan and Daxing.</p>
+<p>This paper uses the Shannon Wiener Diversity Index to calculate the industrial diversity of 11 employment centers based on the industrial and commercial registration data of enterprises. The study found that the top three types of enterprises with registered capital in the 11 employment centers are commercial services, monetary financial services, science and technology promotion and application services. The most registered enterprises in the 11 employment centers are Zhongguancun, 30772, and the least registered enterprises are Wangjing, There are only 1261 registered enterprises. On the whole, the types of registered enterprises are mainly business services, monetary and financial services, science and technology promotion and application services. Select the top 10 enterprises with the largest registered capital to make radar charts, as shown in <xref ref-type="fig" rid="pone.0299726.g007">Fig 7</xref>.</p>
+<fig id="pone.0299726.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Radar map of total registered capital of different industry types(TOP10) in the employment centers.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.g007" xlink:type="simple"/>
+</fig>
+<p>The number of registered enterprises, the total amount of registered capital and the spatial distribution of the employment centers can reflect the degree of concentration and difference of each industry in space. By observing the number of enterprises and the scale of registered capital in each industry of each employment center, and analyzing the advantages of their distribution, it is found that the total registered capital of enterprises in the business service and currency financial service industries in CBD is the highest, while the financial street and Yizhuang Economic Development Zone are mainly in the business service industry, Zhongguancun The type of enterprises with the highest total registered capital in Wangjing and Shangdi is the technology promotion and application service industry, while the total registered capital advantage of other employment centers is not obvious.</p>
+<p>This paper uses the Shannon Wiener Diversity Index, which describes biodiversity, to analyze the industrial diversity of the employment center. It mainly uses the types of enterprises in the employment center and the registered capital to calculate the industrial diversity of the employment center. It is mainly used to measure the species richness within the system and the distribution uniformity of individual enterprises in various categories, The average commuting time of employees in 11 employment centers in Beijing is calculated using mobile phone positioning data, and the industrial diversity and average commuting time of 11 employment centers in Beijing are finally obtained as shown in <xref ref-type="table" rid="pone.0299726.t004">Table 4</xref>.</p>
+<table-wrap id="pone.0299726.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.t004</object-id>
+<label>Table 4</label> <caption><title>The attributes of residential employment and commuting time.</title></caption>
+<alternatives>
+<graphic id="pone.0299726.t004g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.t004" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center">Type/EmployeeCenter</th>
+<th align="center">CPCB</th>
+<th align="center">HDSH</th>
+<th align="center">SD</th>
+<th align="center">WJ</th>
+<th align="center">ZGC</th>
+<th align="center">JRJ</th>
+<th align="center">CBD</th>
+<th align="center">TZBY</th>
+<th align="center">FTTP</th>
+<th align="center">MJQ</th>
+<th align="center">YZ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Industry Diversity</td>
+<td align="center">0.416</td>
+<td align="center">0.594</td>
+<td align="center">0.498</td>
+<td align="center">0.380</td>
+<td align="center">0.383</td>
+<td align="center">0.430</td>
+<td align="center">0.395</td>
+<td align="center">0.434</td>
+<td align="center">0.320</td>
+<td align="center">0.560</td>
+<td align="center">0.307</td>
+</tr>
+<tr>
+<td align="center">Commuting time (hours)</td>
+<td align="center">0.586</td>
+<td align="center">0.796</td>
+<td align="center">0.776</td>
+<td align="center">0.893</td>
+<td align="center">0.866</td>
+<td align="center">0.727</td>
+<td align="center">0.846</td>
+<td align="center">0.619</td>
+<td align="center">0.848</td>
+<td align="center">0.747</td>
+<td align="center">0.750</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>This paper uses the industrial diversity index of the employment center and the average commuting time of the employees as the basis for the classification of the employment centers, combines the characteristics of the employment centers, uses the K-Means classification algorithm and selects the classification number K = 3 according to experience to classify the identified Beijing employment centers, and the classification results are shown in <xref ref-type="fig" rid="pone.0299726.g008">Fig 8</xref>.</p>
+<fig id="pone.0299726.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0299726.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Employment center categories.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.g008" xlink:type="simple"/>
+</fig>
+<p>According to the analysis of <xref ref-type="table" rid="pone.0299726.t004">Table 4</xref> and <xref ref-type="fig" rid="pone.0299726.g008">Fig 8</xref>, 11 employment centers in Beijing are divided into the following three categories: (1) CBD, Zhongguancun, Wangjing and Fengtai Science and Technology Park; (2) Financial Street, Shangdi, Yizhuang Economic Development Zone, Majuqiao and Haidian Shanhou; (3) Changping Chengbei and Tongzhou Beiyuan. It can be seen from the classification results that the first type of employment centers CBD, Zhongguancun, Wangjing and Fengtai Science and Technology Park have become important employment centers in Beijing. Their overall advantage industries are prominent. Because they are relatively close to the city center, and the number of employees is large, their employees need to come to work from a farther region, resulting in a longer average commuting time of the employees. Among the second type of employment centers, Financial Street is relatively reasonable in terms of the size of the employment center and the industrial diversity index. Analyzing the space of its employees, it is found that its unique transportation accessibility and the relatively high income of the financial industry enable the employees to afford the relatively high housing costs in the city center, while Shangdi, Majuqiao and Haidian Shanhou are relatively large in terms of the industrial diversity index, mainly because they are relatively far from the city center in space, It needs a relatively complete industrial layout to be self-sufficient. In Yizhuang Economic Development Zone, the smallest industrial diversity index also reflects its focus on advantageous industries and drive the development of employment centers. The third type of employment centers, Changping Chengbei and Tongzhou Beiyuan, are located in the suburbs relatively far from the city center, and have corresponding residential space around them, which makes the average commuting time of their employees shorter.</p>
+<p>Here we try to analyze the driving force of the emergence of multi-center in Beijing. On the surface, the government’s planning and policy guidance have played a great role. CBD, Financial Street, Zhongguancun, Shangdi and so on are the key development areas determined by the relevant planning. Under the conditions of regional economy, the location choice of enterprises is completely based on their own interests, and the most important is the pursuit of agglomeration benefits. The reason why these regions have grown into employment centers may be that the relatively relaxed control of land use nature and development intensity in the planning has given opportunities and space for agglomeration economic growth. Of course, this judgment still needs to be demonstrated with more planning data in the future.</p>
+</sec>
+</sec>
+<sec id="sec019" sec-type="conclusions">
+<title>5. Discussion</title>
+<p>Based on the above research results, the employment population in Beijing has obvious agglomeration characteristics in the central urban area. This paper identifies 11 employment centers in Beijing, and CBD is still the largest employment center. Zhongguancun and Shangdi are close to the employment density and scale of CBD. Although both are located in the central urban area, they are still a certain distance from the city center. For many years, Beijing has tried to reduce the pressure on the central city by restricting the scale of the central city, developing rail transit, and improving infrastructure and other measures to guide the city to develop into a multi-center pattern, and has achieved initial results. Zhongguancun has rapidly developed into one of the major scientific and technological employment centers with the same scale as CBD.</p>
+<p>Compared with previous studies, the use of mobile phone location data and micro-enterprise data in this paper makes the spatial expression of employment density more continuous, and the identification of employment center boundaries clearer. With regard to the measurement method of employment center system, mobile phone signaling data is used, and the space unit identified by the employment center breaks away from the restriction of the established space unit (generally street), and is Under the 100 m × 100 m grid, it can basically be identified according to the actual scope of the employment center, which is helpful to identify the actual employment centers that are difficult to identify according to the average employment density of the space unit due to the large size of the space unit they belong to, and also help to identify the employment centers that are difficult to delimit the real boundary due to crossing the space unit. At the same time, compared with the permanent population, the employed population is a more dynamic factor. Due to the differences in the factors affecting the employment location and residence location, the separation of employment and residence of the employed population is the main reason for the formation of urban commuting pressure. This paper clearly identifies the boundaries of the hot areas where the employed population congregate and the number and space of the employed population, as well as the public transportation arrangement Public service arrangements such as public security and emergency response have important reference significance.</p>
+<p>Although there may be errors of tens of meters in mobile positioning, the spatial resolution of mobile positioning data is still acceptable when measuring employment centers in Beijing. The economic census has the real employment data of the employed, and the population census has the real residence data of the employed, which is more accurate than the employment and residence data identified by mobile phone signaling data. However, there is no link between the place of employment in the economic census and the place of residence in the population census. Compared with traditional data, mobile positioning data is characterized by the ability to obtain the employment and residence of the employees at the same time, and establish the spatial connection between the two and the time required for commuting. However, according to the current identification method, it is impossible to identify the work place and residence place without fixed work place (such as taxi driver) at the same time. How to improve the recognition rate of these users needs further research. In addition, the mobile phone location data does not involve social and economic attributes, and can only be used for descriptive analysis of the employment center system, which can not accurately analyze the impact of factors such as the occupation, income, consumption and family of the employees on the employment center system. In addition, due to the inconsistency between the actual office and registration place, the registered enterprises of the enterprises in the employment center are inaccurate, but their proportion is relatively small, The impact on relatively large employment centers can be ignored.</p>
+</sec>
+<sec id="sec020" sec-type="conclusions">
+<title>6. Conclusions</title>
+<p>To some extent, this research can help solve the limitations of previous research on the employment center system due to large spatial units and lack of commuting data in terms of center identification and commuting connection measurement, and hopes to provide help for the construction of Beijing’s employment multi-center system. Based on the research on the identification and classification of job centers, we believe that the government should pay attention to the construction of job centers and formulate corresponding policies. The policies should include measures such as providing financial support and tax incentives to attract more companies to set up offices in employment centers. It also encourages high-tech enterprises to set up R&amp;D centers and production bases in the employment centers. This will help enhance Beijing’s technological innovation capability and promote industrial upgrading and transformation. In terms of transportation construction between the employment centers and the surrounding areas to improve the convenience of transportation for the employed, the infrastructure construction of the employment centers should promote the improvement of enterprise services and provide relevant consulting, training and technical support services for the employment centers to improve the innovation ability and competitiveness of the enterprises. In the new era, Beijing needs to further study the space optimization strategy and planning management policy to promote the coordinated development of employment space in order to achieve the goals and tasks of "scientifically allocate resource elements, coordinate the relationship between employment and housing, promote the balanced development of employment and housing, effectively control the ’big city disease’, and build a world-class harmonious and livable city" proposed in the new version of the Beijing Urban Master Plan (2016–2035), The research can provide a reference for understanding the laws and technical analysis of employment centers, quantify the spatial structure of employment, guide the construction of a multi-center system, and adjust land use rules.</p>
+</sec>
+</body>
+<back>
+<ref-list>
+<title>References</title>
+<ref id="pone.0299726.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Redfearn</surname> <given-names>CL</given-names></name>. <article-title>Persistence in urban form: The long-run durability of employment centers in metropolitan areas</article-title>. <source>Regional Science and Urban Economics</source>. <year>2009</year>;<volume>39</volume>(<issue>2</issue>):<fpage>224</fpage>–<lpage>32</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.regsciurbeco.2008.09.002" xlink:type="simple">10.1016/j.regsciurbeco.2008.09.002</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Redfearn</surname> <given-names>CL</given-names></name>. <article-title>The topography of metropolitan employment: Identifying centers of employment in a polycentric urban area</article-title>. <source>Journal of Urban Economics</source>. <year>2007</year>;<volume>61</volume>(<issue>3</issue>):<fpage>519</fpage>–<lpage>41</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.jue.2006.08.009" xlink:type="simple">10.1016/j.jue.2006.08.009</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Zheng</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Cao</surname> <given-names>Y</given-names></name>. <article-title>The Identification of Employment Centers in Beijing.</article-title> <source>Urban Studies.</source> <year>2009</year>;<volume>16</volume>(<issue>09</issue>):<fpage>118</fpage>–<lpage>24</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Logan</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Pal</surname> <given-names>A</given-names></name>. <article-title>Emerging socio-spatial pattern of Chinese cities: The case of Beijing in 2006.</article-title> <source>Habitat International.</source> <year>2015</year>;<volume>47</volume>:<fpage>103</fpage>–<lpage>12</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.habitatint.2015.01.011" xlink:type="simple">10.1016/j.habitatint.2015.01.011</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fan</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Allen</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Sun</surname> <given-names>T</given-names></name>. <article-title>Spatial mismatch in Beijing, China: Implications of job accessibility for Chinese low-wage workers.</article-title> <source>Habitat International.</source> <year>2014</year>;<volume>44</volume>:<fpage>202</fpage>–<lpage>10</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.habitatint.2014.06.002" xlink:type="simple">10.1016/j.habitatint.2014.06.002</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Mitchell</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Heppenstall</surname> <given-names>A</given-names></name>. <article-title>Daily travel behaviour in Beijing, China: An analysis of workers’ trip chains, and the role of socio-demographics and urban form.</article-title> <source>Habitat International.</source> <year>2014</year>;<volume>43</volume>:<fpage>263</fpage>–<lpage>73</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.habitatint.2014.04.008" xlink:type="simple">10.1016/j.habitatint.2014.04.008</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McMillen</surname> <given-names>DP</given-names></name>. <article-title>Nonparametric Employment Subcenter Identification.</article-title> <source>Journal of Urban Economics</source>. <year>2001</year>;<volume>50</volume>(<issue>3</issue>):<fpage>448</fpage>–<lpage>73</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1006/juec.2001.2228" xlink:type="simple">10.1006/juec.2001.2228</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yu</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Ai</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Shao</surname> <given-names>S</given-names></name>. <article-title>The analysis and delimitation of Central Business District using network kernel density estimation</article-title>. <source>Journal of Transport Geography</source>. <year>2015</year>;<volume>45</volume>:<fpage>32</fpage>–<lpage>47</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.jtrangeo.2015.04.008" xlink:type="simple">10.1016/j.jtrangeo.2015.04.008</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Feng</surname> <given-names>J.</given-names></name> <article-title>Modeling the spatial distribution of urban population density and its evolution in Hangzhou</article-title>. <source>Geographical Research</source>. <year>2002</year>;(05):<fpage>635</fpage>–<lpage>46</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Ma</surname> <given-names>X</given-names></name>. <article-title>Modelling the Population Density Functions of Shanghai in 1990s.</article-title> <source>Market and Demographic Analysis</source>. <year>2007</year>;<volume>13</volume>(<issue>2</issue>):<fpage>40</fpage>–<lpage>7</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tieshan</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Lanlan</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Guoping</surname> <given-names>L</given-names></name>. <article-title>Distributions of Population and Employment and Evolution of Spatial Structures in the Beijing Metropolitan Area.</article-title> <source>Acta Geographica Sinica</source>. <year>2012</year>;<volume>67</volume>(<issue>06</issue>):<fpage>829</fpage>–<lpage>40</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sun</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Tu</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Shi</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Guo</surname> <given-names>Y</given-names></name>. <article-title>Test on the Performance of Polycentric Spatial Structure as a Measure of Congestion Reduction in Megacities: The Case Study of Shanghai.</article-title> <source>Urban Planning Forum</source>. <year>2013</year>;(<issue>02</issue>):<fpage>63</fpage>–<lpage>9</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Muth</surname> <given-names>RF</given-names></name>, editor <article-title>Cities and housing: the spatial pattern of urban residential land use1969.</article-title></mixed-citation></ref>
+<ref id="pone.0299726.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mills</surname> <given-names>E.</given-names></name> <article-title>Studies in the Structure of the Urban Economy.</article-title> <source>The Economic Journal.</source> <year>1972</year>;<volume>6</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.2307/2231142" xlink:type="simple">10.2307/2231142</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref015"><label>15</label><mixed-citation publication-type="other" xlink:type="simple">Alonso W. Cambridge, MA and London, England: Harvard University Press; 1964.</mixed-citation></ref>
+<ref id="pone.0299726.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clark</surname> <given-names>C.</given-names></name> <article-title>Urban population densities</article-title>. <source>Journal of the Royal Statistical Society. Series A (General)</source>. <year>1951</year>;<volume>114</volume>:<fpage>490</fpage>–<lpage>6</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huang</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Zhao</surname> <given-names>X</given-names></name>. <article-title>Monocentric or Polycentric?</article-title> <source>The Urban Spatial Structure of Employment in Beijing. Sustainability</source>. <year>2015</year>;<volume>7</volume>(<issue>9</issue>):<fpage>11632</fpage>–<lpage>56</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.3390/su70911632" xlink:type="simple">10.3390/su70911632</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Small</surname> <given-names>KA</given-names></name>, <name name-style="western"><surname>Song</surname> <given-names>S</given-names></name>. <article-title>Population and Employment Densities</article-title>: <source>Structure and Change. Journal of Urban Economics</source>. <year>1994</year>;<volume>36</volume>(<issue>3</issue>):<fpage>292</fpage>–<lpage>313</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1006/juec.1994.1037" xlink:type="simple">10.1006/juec.1994.1037</ext-link></comment> <object-id pub-id-type="pmid">12290251</object-id></mixed-citation></ref>
+<ref id="pone.0299726.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McMillen</surname> <given-names>DP</given-names></name>. <article-title>One Hundred Fifty Years of Land Values in Chicago</article-title>: <source>A Nonparametric Approach. Journal of Urban Economics</source>. <year>1996</year>;<volume>40</volume>(<issue>1</issue>):<fpage>100</fpage>–<lpage>24</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1006/juec.1996.0025" xlink:type="simple">10.1006/juec.1996.0025</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bogart</surname> <given-names>WT</given-names></name>, <name name-style="western"><surname>Ferry</surname> <given-names>WC</given-names></name>. <article-title>Employment Centres in Greater Cleveland: Evidence of Evolution in a Formerly Monocentric City.</article-title> <source>Urban Studies</source>. <year>1999</year>;<volume>36</volume>(<issue>12</issue>):<fpage>2099</fpage>–<lpage>110</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Giuliano</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Small</surname> <given-names>KA</given-names></name>. <article-title>Subcenters in the Los Angeles region</article-title>. <source>Regional Science and Urban Economics</source>. <year>1991</year>;<volume>21</volume>(<issue>2</issue>):<fpage>163</fpage>–<lpage>82</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/0166-0462%2891%2990032-I" xlink:type="simple">10.1016/0166-0462(91)90032-I</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vasanen</surname> <given-names>A.</given-names></name> <article-title>Functional Polycentricity: Examining Metropolitan Spatial Structure through the Connectivity of Urban Sub-centres</article-title>. <source>Urban Studies</source>. <year>2012</year>;<volume>49</volume>(<issue>16</issue>):<fpage>3627</fpage>–<lpage>44</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1177/0042098012447000" xlink:type="simple">10.1177/0042098012447000</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0299726.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chainey</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Reid</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Stuart</surname> <given-names>N</given-names></name>, editors. <article-title>When is a hotspot a hotspot?</article-title> <source>A procedure for creating statistically robust hotspot maps of crime2002</source>.</mixed-citation></ref>
+<ref id="pone.0299726.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ding</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Niu</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Song</surname> <given-names>X</given-names></name>. Measuring the employment center system in Shanghai central city: A study using mobile phone signaling data. <source>Acta Geographica Sinica</source>. <year>2016</year>;<volume>71</volume>(<issue>3</issue>):<fpage>484</fpage>–<lpage>99</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Proudfoot</surname> <given-names>MJ</given-names></name>. <article-title>Intra-city business census statistics for Philadelphia, Pennsylvania.</article-title> <year>1937</year>.</mixed-citation></ref>
+<ref id="pone.0299726.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Epstein</surname> <given-names>BJ</given-names></name>, <name name-style="western"><surname>Davies</surname> <given-names>RL</given-names></name>. <article-title>Marketing Geography: With Special Reference to Retailing.</article-title> <source>Economic Geography.</source> <year>1977</year>;<volume>53</volume>(<issue>3</issue>):<fpage>306</fpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>LR</surname> <given-names>F.</given-names></name> <article-title>The morphology and vitality of business districts in upstate New York Villages.</article-title> <source>Professional Geographer</source>. <year>1985</year>;<volume>37</volume>(<issue>2</issue>):<fpage>162</fpage>–<lpage>72</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhu</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>D</given-names></name>. <article-title>A Review on the Models in Research of Consumer Behavior in Commercial Space</article-title>. <source>Progress in Geography</source>. <year>2010</year>;<fpage>29</fpage>(12).</mixed-citation></ref>
+<ref id="pone.0299726.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Cheng</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Yi</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>He</surname> <given-names>J</given-names></name>. <article-title>Explore the Location Types of Urban Commerce Trades.</article-title> <source>Economic Geography.</source> <year>2001</year>.</mixed-citation></ref>
+<ref id="pone.0299726.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Dai</surname> <given-names>X</given-names></name>. <article-title>The Study On The Spatial Structure Of Beijing Commercial Centers.</article-title> <source>City Planning Rrview</source>. <year>2001</year>;(<issue>10</issue>):<fpage>5</fpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Zhong</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>S</given-names></name>. <article-title>Spatial distribution and clustering of commercial network in Beijing during 2004–2008.</article-title> <source>Progress in Geography</source>. <year>2013</year>;<volume>32</volume>(<issue>8</issue>):<fpage>1207</fpage>–<lpage>15</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xiao</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Shen</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Ge</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ryutaro</surname></name>. <article-title>Evaluating urban expansion and land use change in Shijiazhuang, China, by using GIS and remote sensing.</article-title> <source>Landscape &amp; Urban Planning</source>. <year>2006</year>.</mixed-citation></ref>
+<ref id="pone.0299726.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Long</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Cui</surname> <given-names>C</given-names></name>. <article-title>Identifying Commuting Pattern of Beijing Using Bus Smart Card Data.</article-title> <source>ACTA Geographica Sinica.</source> <year>2012</year>;<volume>67</volume>(<issue>10</issue>):<fpage>14</fpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Manfredini</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Pucci</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Tagliolato</surname> <given-names>P</given-names></name>. <article-title>Toward a Systemic Use of Manifold Cell Phone Network Data for Urban Analysis and Planning.</article-title> <source>Journal of Urban Technology</source>. <year>2014</year>;<volume>21</volume>:<fpage>39</fpage>–<lpage>59</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ratti</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Frenchman</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Pulselli</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Williams</surname> <given-names>S</given-names></name>. <article-title>Mobile Landscapes: Using Location Data from Cell Phones for Urban Analysis. Environment and Planning B</article-title>: <source>Planning and Design</source>. <year>2006</year>;<volume>33</volume>:<fpage>727</fpage>–<lpage>48</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ahas</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Silm</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Jrv</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Saluveer</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Tiru</surname> <given-names>M</given-names></name>. <article-title>Using Mobile Positioning Data to Model Locations Meaningful to Users of Mobile Phones</article-title>. <source>Journal of Urban Technology</source>. <year>2010</year>;<volume>17</volume>(<issue>1</issue>):<fpage>3</fpage>–<lpage>27</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kan</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Yan</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Xiang</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Wan</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Fu</surname> <given-names>L</given-names></name>. <article-title>Commuting Travel Characteristics Based on Location Data.</article-title> <source>Urban Transport of China.</source> <year>2020</year>;<volume>18</volume>(<issue>5</issue>):<fpage>7</fpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref038"><label>38</label><mixed-citation publication-type="other" xlink:type="simple">Baidu. Baidu Huiyan Product Introduction [Cited 20 May 2022]. Available from: <ext-link ext-link-type="uri" xlink:href="https://huiyan.baidu.com/products/platform" xlink:type="simple">https://huiyan.baidu.com/products/platform</ext-link>.</mixed-citation></ref>
+<ref id="pone.0299726.ref039"><label>39</label><mixed-citation publication-type="other" xlink:type="simple">Beijing. Beijing Enterprise Credit Information Publicity System [Cited 1 May 2021]. Available from: <ext-link ext-link-type="uri" xlink:href="https://bj.gsxt.gov.cn/index.html" xlink:type="simple">https://bj.gsxt.gov.cn/index.html</ext-link>.</mixed-citation></ref>
+<ref id="pone.0299726.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Huang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>M</given-names></name>. <article-title>Characteristics of jobs-housing spatial distribution in Beijing based on mobile phone signaling data</article-title>. <source>PROGRESS IN GEOGRAPHY</source>. <year>2020</year>;<volume>39</volume>(<issue>12</issue>):<fpage>2028</fpage>–<lpage>42</lpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Yin</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Hu</surname> <given-names>J</given-names></name>. <article-title>Identifying home-work locations from short-term, large-scale, and regularly sampled mobile phone tracking data</article-title>. <source>Geomatics and Information Science of Wuhan University</source>. <year>2014</year>;<volume>39</volume>(<issue>6</issue>):<fpage>7</fpage>.</mixed-citation></ref>
+<ref id="pone.0299726.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Becker</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Caceres</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Hanson</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Loh</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Urbanek</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Varshavsky</surname> <given-names>A</given-names></name>, <etal>et al</etal>. <article-title>A Tale of One City: Using Cellular Network Data for Urban Planning</article-title>. <source>IEEE Pervasive Computing</source>. <year>2011</year>;<volume>10</volume>(<issue>4</issue>):<fpage>18</fpage>–<lpage>26</lpage>.</mixed-citation></ref>
+</ref-list>
+</back>
+<sub-article article-type="aggregated-review-documents" id="pone.0299726.r001" specific-use="decision-letter">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pone.0299726.r001</article-id>
+<title-group>
+<article-title>Decision Letter 0</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author">
+<name name-style="western">
+<surname>Yu</surname>
+<given-names>Wenhao</given-names>
+</name>
+<role>Academic Editor</role>
+</contrib>
+</contrib-group>
+<permissions>
+<copyright-year>2024</copyright-year>
+<copyright-holder>Wenhao Yu</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<related-object document-id="10.1371/journal.pone.0299726" document-id-type="doi" document-type="article" id="rel-obj001" link-type="peer-reviewed-article"/>
+<custom-meta-group>
+<custom-meta>
+<meta-name>Submission Version</meta-name>
+<meta-value>0</meta-value>
+</custom-meta>
+</custom-meta-group>
+</front-stub>
+<body>
+<p>
+<named-content content-type="letter-date">14 Mar 2023</named-content>
+</p>
+<p><!-- <div> -->PONE-D-23-02612<!-- </div> --><!-- <div> -->Identification and Classification of Urban Employment Centers Based on Big Data: A Case Study of Beijing<!-- </div> --><!-- <div> -->PLOS ONE</p>
+<p>Dear Dr. wang,</p>
+<p>Thank you for submitting your manuscript to PLOS ONE. After careful consideration, we feel that it has merit but does not fully meet PLOS ONE’s publication criteria as it currently stands. Therefore, we invite you to submit a revised version of the manuscript that addresses the points raised during the review process.</p>
+<p>==============================</p>
+<p>The reviewers have recommended some revisions to your manuscript.  Therefore, I invite you to respond to the reviewers' comments and revise your manuscript. I also agree that the authors need to add more discussions about the implications of this research on local planning. Besides, some relevant references are missing in this manuscript, such as Yu et al., Journal of Transport Geography (2015) which proposed a CBD delimitation method. It could be better to provide a wide review of the literature. </p>
+<p>==============================</p>
+<p>Please submit your revised manuscript by Apr 28 2023 11:59PM. If you will need more time than this to complete your revisions, please reply to this message or contact the journal office at <email xlink:type="simple">plosone@plos.org</email>. When you're ready to submit your revision, log on to <ext-link ext-link-type="uri" xlink:href="https://www.editorialmanager.com/pone/" xlink:type="simple">https://www.editorialmanager.com/pone/</ext-link> and select the 'Submissions Needing Revision' folder to locate your manuscript file.</p>
+<p>Please include the following items when submitting your revised manuscript:<!-- </div> --><list list-type="bullet"> <list-item><p>A rebuttal letter that responds to each point raised by the academic editor and reviewer(s). You should upload this letter as a separate file labeled 'Response to Reviewers'.</p></list-item> <list-item><p>A marked-up copy of your manuscript that highlights changes made to the original version. You should upload this as a separate file labeled 'Revised Manuscript with Track Changes'.</p></list-item> <list-item><p>An unmarked version of your revised paper without tracked changes. You should upload this as a separate file labeled 'Manuscript'.</p></list-item></list></p>
+<p>If you would like to make changes to your financial disclosure, please include your updated statement in your cover letter. Guidelines for resubmitting your figure files are available below the reviewer comments at the end of this letter.</p>
+<p>If applicable, we recommend that you deposit your laboratory protocols in protocols.io to enhance the reproducibility of your results. Protocols.io assigns your protocol its own identifier (DOI) so that it can be cited independently in the future. For instructions see: <ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/plosone/s/submission-guidelines#loc-laboratory-protocols" xlink:type="simple">https://journals.plos.org/plosone/s/submission-guidelines#loc-laboratory-protocols</ext-link>. Additionally, PLOS ONE offers an option for publishing peer-reviewed Lab Protocol articles, which describe protocols hosted on protocols.io. Read more information on sharing protocols at <ext-link ext-link-type="uri" xlink:href="https://plos.org/protocols?utm_medium=editorial-email&amp;utm_source=authorletters&amp;utm_campaign=protocols" xlink:type="simple">https://plos.org/protocols?utm_medium=editorial-email&amp;utm_source=authorletters&amp;utm_campaign=protocols</ext-link>.</p>
+<p>We look forward to receiving your revised manuscript.</p>
+<p>Kind regards,</p>
+<p>Wenhao Yu, Ph.D.</p>
+<p>Academic Editor</p>
+<p>PLOS ONE</p>
+<p>Journal Requirements:</p>
+<p>When submitting your revision, we need you to address these additional requirements.</p>
+<p>1. Please ensure that your manuscript meets PLOS ONE's style requirements, including those for file naming. The PLOS ONE style templates can be found at </p>
+<p><ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/plosone/s/file?id=wjVg/PLOSOne_formatting_sample_main_body.pdf" xlink:type="simple">https://journals.plos.org/plosone/s/file?id=wjVg/PLOSOne_formatting_sample_main_body.pdf</ext-link> and </p>
+<p><ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/plosone/s/file?id=ba62/PLOSOne_formatting_sample_title_authors_affiliations.pdf" xlink:type="simple">https://journals.plos.org/plosone/s/file?id=ba62/PLOSOne_formatting_sample_title_authors_affiliations.pdf</ext-link></p>
+<p>2. Please note that PLOS ONE has specific guidelines on code sharing for submissions in which author-generated code underpins the findings in the manuscript. In these cases, all author-generated code must be made available without restrictions upon publication of the work. Please review our guidelines at <ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/plosone/s/materials-and-software-sharing#loc-sharing-code" xlink:type="simple">https://journals.plos.org/plosone/s/materials-and-software-sharing#loc-sharing-code</ext-link> and ensure that your code is shared in a way that follows best practice and facilitates reproducibility and reuse.</p>
+<p>3. We note that you have stated that you will provide repository information for your data at acceptance. Should your manuscript be accepted for publication, we will hold it until you provide the relevant accession numbers or DOIs necessary to access your data. If you wish to make changes to your Data Availability statement, please describe these changes in your cover letter and we will update your Data Availability statement to reflect the information you provide.</p>
+<p>4. We note that Figures 1,2,4 and 5 in your submission contain [map/satellite] images which may be copyrighted. All PLOS content is published under the Creative Commons Attribution License (CC BY 4.0), which means that the manuscript, images, and Supporting Information files will be freely available online, and any third party is permitted to access, download, copy, distribute, and use these materials in any way, even commercially, with proper attribution. For these reasons, we cannot publish previously copyrighted maps or satellite images created using proprietary data, such as Google software (Google Maps, Street View, and Earth). For more information, see our copyright guidelines: <ext-link ext-link-type="uri" xlink:href="http://journals.plos.org/plosone/s/licenses-and-copyright" xlink:type="simple">http://journals.plos.org/plosone/s/licenses-and-copyright</ext-link>.</p>
+<p>We require you to either (1) present written permission from the copyright holder to publish these figures specifically under the CC BY 4.0 license, or (2) remove the figures from your submission:</p>
+<p>a. You may seek permission from the original copyright holder of Figures 1,2,4 and 5 to publish the content specifically under the CC BY 4.0 license.  </p>
+<p>We recommend that you contact the original copyright holder with the Content Permission Form (<ext-link ext-link-type="uri" xlink:href="http://journals.plos.org/plosone/s/file?id=7c09/content-permission-form.pdf" xlink:type="simple">http://journals.plos.org/plosone/s/file?id=7c09/content-permission-form.pdf</ext-link>) and the following text:</p>
+<p>“I request permission for the open-access journal PLOS ONE to publish XXX under the Creative Commons Attribution License (CCAL) CC BY 4.0 (<ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">http://creativecommons.org/licenses/by/4.0/</ext-link>). Please be aware that this license allows unrestricted use and distribution, even commercially, by third parties. Please reply and provide explicit written permission to publish XXX under a CC BY license and complete the attached form.”</p>
+<p>Please upload the completed Content Permission Form or other proof of granted permissions as an "Other" file with your submission.</p>
+<p>In the figure caption of the copyrighted figure, please include the following text: “Reprinted from [ref] under a CC BY license, with permission from [name of publisher], original copyright [original copyright year].”</p>
+<p>b. If you are unable to obtain permission from the original copyright holder to publish these figures under the CC BY 4.0 license or if the copyright holder’s requirements are incompatible with the CC BY 4.0 license, please either i) remove the figure or ii) supply a replacement figure that complies with the CC BY 4.0 license. Please check copyright information on all replacement figures and update the figure caption with source information. If applicable, please specify in the figure caption text when a figure is similar but not identical to the original image and is therefore for illustrative purposes only.</p>
+<p>The following resources for replacing copyrighted map figures may be helpful:</p>
+<p>USGS National Map Viewer (public domain): <ext-link ext-link-type="uri" xlink:href="http://viewer.nationalmap.gov/viewer/" xlink:type="simple">http://viewer.nationalmap.gov/viewer/</ext-link></p>
+<p>The Gateway to Astronaut Photography of Earth (public domain): <ext-link ext-link-type="uri" xlink:href="http://eol.jsc.nasa.gov/sseop/clickmap/" xlink:type="simple">http://eol.jsc.nasa.gov/sseop/clickmap/</ext-link></p>
+<p>Maps at the CIA (public domain): <ext-link ext-link-type="uri" xlink:href="https://www.cia.gov/library/publications/the-world-factbook/index.html" xlink:type="simple">https://www.cia.gov/library/publications/the-world-factbook/index.html</ext-link> and <ext-link ext-link-type="uri" xlink:href="https://www.cia.gov/library/publications/cia-maps-publications/index.html" xlink:type="simple">https://www.cia.gov/library/publications/cia-maps-publications/index.html</ext-link></p>
+<p>NASA Earth Observatory (public domain): <ext-link ext-link-type="uri" xlink:href="http://earthobservatory.nasa.gov/" xlink:type="simple">http://earthobservatory.nasa.gov/</ext-link></p>
+<p>Landsat: <ext-link ext-link-type="uri" xlink:href="http://landsat.visibleearth.nasa.gov/" xlink:type="simple">http://landsat.visibleearth.nasa.gov/</ext-link></p>
+<p>USGS EROS (Earth Resources Observatory and Science (EROS) Center) (public domain): <ext-link ext-link-type="uri" xlink:href="http://eros.usgs.gov/#" xlink:type="simple">http://eros.usgs.gov/#</ext-link></p>
+<p>Natural Earth (public domain): <ext-link ext-link-type="uri" xlink:href="http://www.naturalearthdata.com/" xlink:type="simple">http://www.naturalearthdata.com/</ext-link></p>
+<p>Additional Editor Comments:</p>
+<p>The reviewers have recommended some revisions to your manuscript. Therefore, I invite you to respond to the reviewers' comments and revise your manuscript. I also agree that the authors need to add more discussions about the implications of this research on local planning. Besides, some relevant references are missing in this manuscript, such as Yu et al., Journal of Transport Geography (2015) which proposed a CBD delimitation method. It could be better to provide a wide review of the literature.</p>
+<p>[Note: HTML markup is below. Please do not edit.]</p>
+<p>Reviewers' comments:</p>
+<p>Reviewer's Responses to Questions</p>
+<p><!-- <font color="black"> --><bold>Comments to the Author</bold></p>
+<p>1. Is the manuscript technically sound, and do the data support the conclusions?</p>
+<p>The manuscript must describe a technically sound piece of scientific research with data that supports the conclusions. Experiments must have been conducted rigorously, with appropriate controls, replication, and sample sizes. The conclusions must be drawn appropriately based on the data presented. <!-- </font> --></p>
+<p>Reviewer #1: Yes</p>
+<p>Reviewer #2: Partly</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->2. Has the statistical analysis been performed appropriately and rigorously? <!-- </font> --></p>
+<p>Reviewer #1: Yes</p>
+<p>Reviewer #2: Yes</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->3. Have the authors made all data underlying the findings in their manuscript fully available?</p>
+<p>The <ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/static/policies.action#sharing" xlink:type="simple">PLOS Data policy</ext-link> requires authors to make all data underlying the findings described in their manuscript fully available without restriction, with rare exception (please refer to the Data Availability Statement in the manuscript PDF file). The data should be provided as part of the manuscript or its supporting information, or deposited to a public repository. For example, in addition to summary statistics, the data points behind means, medians and variance measures should be available. If there are restrictions on publicly sharing data—e.g. participant privacy or use of data from a third party—those must be specified.<!-- </font> --></p>
+<p>Reviewer #1: Yes</p>
+<p>Reviewer #2: No</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->4. Is the manuscript presented in an intelligible fashion and written in standard English?</p>
+<p>PLOS ONE does not copyedit accepted manuscripts, so the language in submitted articles must be clear, correct, and unambiguous. Any typographical or grammatical errors should be corrected at revision, so please note any specific errors here.<!-- </font> --></p>
+<p>Reviewer #1: No</p>
+<p>Reviewer #2: Yes</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->5. Review Comments to the Author</p>
+<p>Please use the space provided to explain your answers to the questions above. You may also include additional comments for the author, including concerns about dual publication, research ethics, or publication ethics. (Please upload your review as an attachment if it exceeds 20,000 characters)<!-- </font> --></p>
+<p>Reviewer #1: The authors have conducted a relatively complete study in which the identification and classification of Beijing urban employment centers were carried out. I think the paper is interesting but have some concerns for the authors to consider:</p>
+<p>1. I recommend separating the study's background and current situation in the first paragraph of the introduction. And summarize the research shortcomings, leading to the research objectives.</p>
+<p>2. The authors should summarize parts 2.1 and 2.2, respectively, summarizing the advantages and disadvantages of the research methods and data.</p>
+<p>3. Figure 1 should have a map of China, illustrating Beijing's location in China. The legend cannot obscure the map.</p>
+<p>4. Line 182: The reference position needs to be adjusted. Please check the entire manuscript.</p>
+<p>5. The second paragraph of 3.2.1 is the research methodology. Please modify its position.</p>
+<p>6. Ethics statement is not methodology. It needs to be deleted.</p>
+<p>7. The authors had to describe the DBSCAN algorithm, XGBoost, and the K-Means clustering algorithm in detail as core methods of the study.</p>
+<p>8. The study's results can guide Beijing's planning, so the discussion needs a separate section, especially policy recommendations.</p>
+<p>Reviewer #2: In this manuscript, the authors proposed a new research direction on urban employment space based on mobile phone location data and micro-enterprise data: the identification and classification of employment center, so as to solve the problems of previous employment center system research due to large space units and lack of commuting data. Overall, the paper is well organized and written, but it needs some improvement before acceptance for publication.</p>
+<p>My major comments are as follows:</p>
+<p>In the Methodology part, four methods were used in the manuscript: Shannon-Wiener Diversity Index, XGBoost, DBSCAN, K-means. Why are those methods chosen? How to justify their appropriateness? It is suggested to add some explanations or comparisons with other similar methods to make your method more convincing. Additionally, it is recommended to draw a large flowchart to illustrate the role of these methods in different stages of the study. This will make it easier for readers to understand the authors’ intentions.</p>
+<p>The classification of employment centers is a little confusing, it could be that I missed some important detail, I would therefore suggest the authors elaborate on the significance of the classification, or analyze the functions or influencing factors of employment centers at different levels.</p>
+<p>The index of commuting data, the authors described it in line 258 as follows: average commuting aggregation force, but actually the authors calculated the commuting time (Table 4) and in line 396, this index became average commuting distance. There are confusion and inconsistency for this index. Please clarify its definition and make it consistent throughout the text.</p>
+<p>In terms of the organization of the paper, firstly, it is better to have a paragraph outlining the rest of the article at the end of the introduction Section. Besides, in the conclusion part, presenting the contributions and innovations of the article in a detailed and organized manner through several points is more recommended.</p>
+<p>Minor comments are as follows:</p>
+<p>1. Language of the manuscript-at-hand needs to be revisited, i.e., particularly, in terms of the sentence structure and the punctuation.</p>
+<p>2. Line 415, “The second type of employment centers” should be “The third type” to be logical.</p>
+<p>3. Maps in figure 1, 2, 4, 5, 6 need to be supplemented with scale bar.</p>
+<p>4. Please supplement Figure 7 with some key to the symbols to illustrate the three types of employment centers you divide.</p>
+<p>Given the above major comments, I recommend a major revision for this manuscript before it can be considered for publication.</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->6. PLOS authors have the option to publish the peer review history of their article (<ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/plosone/s/editorial-and-peer-review-process#loc-peer-review-history" xlink:type="simple">what does this mean?</ext-link>). If published, this will include your full peer review and any attached files.</p>
+<p>If you choose “no”, your identity will remain anonymous but your review may still be made public.</p>
+<p><bold>Do you want your identity to be public for this peer review?</bold> For information about this choice, including consent withdrawal, please see our <ext-link ext-link-type="uri" xlink:href="https://www.plos.org/privacy-policy" xlink:type="simple">Privacy Policy</ext-link>.<!-- </font> --></p>
+<p>Reviewer #1: No</p>
+<p>Reviewer #2: No</p>
+<p>**********</p>
+<p>[NOTE: If reviewer comments were submitted as an attachment file, they will be attached to this email and accessible via the submission site. Please log into your account, locate the manuscript record, and check for the action link "View Attachments". If this link does not appear, there are no attachment files.]</p>
+<p>While revising your submission, please upload your figure files to the Preflight Analysis and Conversion Engine (PACE) digital diagnostic tool, <ext-link ext-link-type="uri" xlink:href="https://pacev2.apexcovantage.com/" xlink:type="simple">https://pacev2.apexcovantage.com/</ext-link>. PACE helps ensure that figures meet PLOS requirements. To use PACE, you must first register as a user. Registration is free. Then, login and navigate to the UPLOAD tab, where you will find detailed instructions on how to use the tool. If you encounter any issues or have any questions when using PACE, please email PLOS at <email xlink:type="simple">figures@plos.org</email>. Please note that Supporting Information files do not need this step.</p>
+</body>
+</sub-article>
+<sub-article article-type="author-comment" id="pone.0299726.r002">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pone.0299726.r002</article-id>
+<title-group>
+<article-title>Author response to Decision Letter 0</article-title>
+</title-group>
+<related-object document-id="10.1371/journal.pone.0299726" document-id-type="doi" document-type="peer-reviewed-article" id="rel-obj002" link-type="rebutted-decision-letter" object-id="10.1371/journal.pone.0299726.r001" object-id-type="doi" object-type="decision-letter"/>
+<custom-meta-group>
+<custom-meta>
+<meta-name>Submission Version</meta-name>
+<meta-value>1</meta-value>
+</custom-meta>
+</custom-meta-group>
+</front-stub>
+<body>
+<p>
+<named-content content-type="author-response-date">3 Dec 2023</named-content>
+</p>
+<p>Response to Reviewer 1 Comments</p>
+<p>Reviewer #1: The authors have conducted a relatively complete study in which the identification and classification of Beijing urban employment centers were carried out. I think the paper is interesting but have some concerns for the authors to consider:</p>
+<p>Point 1: I recommend separating the study's background and current situation in the first paragraph of the introduction. And summarize the research shortcomings, leading to the research objectives.</p>
+<p>Response 1: Thank you very much for your comment. This constructive comment is very helpful to the logic of our article. I have separated the background from the current situation of the study and summarized the shortcomings of the existing studies to draw out the research objectives.</p>
+<p>Point 2: The authors should summarize parts 2.1 and 2.2, respectively, summarizing the advantages and disadvantages of the research methods and data.</p>
+<p>Response 2: Thank you very much for your comments. We have summarized the advantages and disadvantages of their methods and data for 2.1 and 2.2 parts respectively. In terms of research methods, the identification of urban centers in academia is mainly based on employment density or population density data, using employment or population density peak, threshold method, parametric method and semi-parametric method to identify urban centers, but limited by the accuracy of the data, most methods identify employment center boundaries only with streets as the minimum boundary, which is not consistent with In terms of data, the traditional data acquisition methods are more laborious and lead to higher research costs.</p>
+<p>Point 3: Figure 1 should have a map of China, illustrating Beijing's location in China. The legend cannot obscure the map.</p>
+<p>Response 3: Thank you very much for your comments. I have added a map to illustrate the location of Beijing in China, adjusting the location of the legend on the side.</p>
+<p>Point 4: Line 182: The reference position needs to be adjusted. Please check the entire manuscript.</p>
+<p>Response 4: Thank you very much for your comments. I have adjusted accordingly.</p>
+<p>Point 5: The second paragraph of 3.2.1 is the research methodology. Please modify its position.</p>
+<p>Response 5: Thank you very much for your comments. I have adjusted accordingly.</p>
+<p>Point 6: Ethics statement is not methodology. It needs to be deleted.</p>
+<p>Response 6: Thank you very much for your comments. As the Ethics statement was placed in the Research Methods section in conjunction with an earlier issue of plos one as requested by the editor, I appreciate your guidance.</p>
+<p>Point 7: The authors had to describe the DBSCAN algorithm, XGBoost, and the K-Means clustering algorithm in detail as core methods of the study.</p>
+<p>Response 7: Thank you very much for your comments. Your constructive comments are helpful for the logic of our article, I have explained the corresponding methods, DBSCAN is a density-based clustering algorithm, the number of objects (points or other spatial objects) contained in a certain region of the clustering space is not less than a given threshold, the algorithm can discover arbitrarily shaped clusters from a collection of data with noise, XGBoost is an integrated learning algorithm, which builds a strong classifier by training multiple weak classifiers for supervised learning classification such as user's place of residence and employment, K-means is a common clustering algorithm that divides data points into K different clusters, each of which has similar characteristics, and since K-means is an unsupervised learning algorithm, it does not require prior knowledge and can be automatically based on employment center industrial diversity and the average commuting distance of employed persons to classify the employment centers.</p>
+<p>Point 8: The study's results can guide Beijing's planning, so the discussion needs a separate section, especially policy recommendations.</p>
+<p>Response 8: Thank you very much for your comments. I have written the conclusion and discussion sections separately and have added the planning response section.</p>
+<p>Response to Reviewer 2 Comments</p>
+<p>Point 1: In the Methodology part, four methods were used in the manuscript: Shannon-Wiener Diversity Index, XGBoost, DBSCAN, K-means. Why are those methods chosen? How to justify their appropriateness? It is suggested to add some explanations or comparisons with other similar methods to make your method more convincing. </p>
+<p>Response 1: Thank you very much for your comments. Your constructive comments are helpful to the logic of our article, and I have explained the corresponding methodology to study the innovative use of the Shannon Wiener Diversity Index, which describes biodiversity, to analyze employment center industry diversity. The Shannon Wiener Diversity Index is primarily used to measure species richness within a system and The Shannon-Wiener Diversity Index is used to measure the intra-system species richness and the homogeneity of the distribution of individuals across classes. DBSCAN is a density-based clustering algorithm in which the number of objects (points or other spatial objects) contained in a certain region of the clustering space is not less than a given threshold, and the algorithm can discover arbitrarily shaped clusters from a collection of data with noise, XGBoost is an integrated learning algorithm that builds a strong classifier by training multiple weak classifiers for supervised learning classification of users' places of residence and employment, etc. K-means is a common clustering algorithm that divides data points into K different clusters, each of which has similar characteristics, and since K means is an unsupervised learning algorithm that does not require a priori knowledge and can automatically classify employment centers based on their industrial diversity and the average commuting distance of employed people.</p>
+<p>Point 2: It is recommended to draw a large flowchart to illustrate the role of these methods in different stages of the study. This will make it easier for readers to understand the authors’ intentions.</p>
+<p>Response 2: Thank you very much for your comments. I have drawn flowcharts that show the data and methods used more clearly, and modified the language accordingly for good reading.</p>
+<p>Point 3: The classification of employment centers is a little confusing, it could be that I missed some important detail, I would therefore suggest the authors elaborate on the significance of the classification, or analyze the functions or influencing factors of employment centers at different levels.</p>
+<p>Response 3: Thank you very much for your comments, some background and summary discussions have been added to the article. For employment centers, the significance of classification is to better provide targeted planning for different types of employment centers. This paper mainly classifies employment centers in terms of their industries and the average commuting time of employment center's job seekers. On the one hand, the more homogeneous the industry of an employment center is, the less stability it is subject to, and of course, a single employment center will also produce aggregation effects (but it needs to have a dominant industry). On the other hand, the average commuting time of job seekers in employment centers affects their commuting accessibility, and from the perspective of urban planning, convenient transportation facilities need to be provided for job seekers. Therefore, different types of employment centers require different types of support and services. By classifying employment centers, these supports and services can be better located and provided.</p>
+<p>Point 4: The index of commuting data, the authors described it in line 258 as follows: average commuting aggregation force, but actually the authors calculated the commuting time (Table 4) and in line 396, this index became average commuting distance. There are confusion and inconsistency for this index. Please clarify its definition and make it consistent throughout the text.</p>
+<p>Response 4: Thank you very much for your comments. average commuting aggregation force is my translation error, this paper is based on the average commuting time of job seekers in job centers combined with the industrial diversity of job centers to classify job centers, the average commuting time of job seekers in job centers affects their commuting accessibility, from the perspective of urban planning, it is necessary to provide job seekers with From an urban planning perspective, it is necessary to provide convenient transportation facilities for job seekers. Thank you very much for pointing out the mistake I made, and I have revised the average commute time error in this paper.</p>
+<p>Point 5: In terms of the organization of the paper, firstly, it is better to have a paragraph outlining the rest of the article at the end of the introduction Section. Besides, in the conclusion part, presenting the contributions and innovations of the article in a detailed and organized manner through several points is more recommended.</p>
+<p>Response 5: Thank you very much for your suggestions and comments on the organization of the paper. The suggestions you mentioned are very practical and important to help the writer better organize and present the essay. Adding a paragraph outlining the rest of the article at the end of the introduction section can give the reader a better understanding of the structure and content of the article, and in the conclusion section, it is also very important to show the contributions and innovations of the article in a detailed and organized manner. This can help the reader to better understand the value and significance of the article.</p>
+<p>Minor comments are as follows:</p>
+<p>Point 1: Language of the manuscript-at-hand needs to be revisited, i.e., particularly, in terms of the sentence structure and the punctuation.</p>
+<p>Response 1: Thank you very much for your comment. I have modified the language accordingly for a good read.</p>
+<p>Point 2: Line 415, “The second type of employment centers” should be “The third type” to be logical.</p>
+<p>Response 2: Thank you very much for your comment. It was my mistake and I have changed it to “The third type”.</p>
+<p>Point 3: Maps in figure 1, 2, 4, 5, 6 need to be supplemented with scale bar.</p>
+<p>Response 3: Thank you very much for your comment. I have added the scale bar in figure 1, 2, 4, 5, 6.</p>
+<p>Point 4: Please supplement Figure 7 with some key to the symbols to illustrate the three types of employment centers you divide.</p>
+<p>Response 4: Thank you very much for your comment. I have made modifications to Figure 7 and added a legend to illustrate the three types of employment centers.</p>
+<supplementary-material id="pone.0299726.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pone.0299726.s001" xlink:type="simple">
+<label>Attachment</label>
+<caption>
+<p>Submitted filename: <named-content content-type="submitted-filename">Response to Reviewer 2.docx</named-content></p>
+</caption>
+</supplementary-material>
+</body>
+</sub-article>
+<sub-article article-type="aggregated-review-documents" id="pone.0299726.r003" specific-use="decision-letter">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pone.0299726.r003</article-id>
+<title-group>
+<article-title>Decision Letter 1</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author">
+<name name-style="western">
+<surname>Latif</surname>
+<given-names>Zahid</given-names>
+</name>
+<role>Academic Editor</role>
+</contrib>
+</contrib-group>
+<permissions>
+<copyright-year>2024</copyright-year>
+<copyright-holder>Zahid Latif</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<related-object document-id="10.1371/journal.pone.0299726" document-id-type="doi" document-type="article" id="rel-obj003" link-type="peer-reviewed-article"/>
+<custom-meta-group>
+<custom-meta>
+<meta-name>Submission Version</meta-name>
+<meta-value>1</meta-value>
+</custom-meta>
+</custom-meta-group>
+</front-stub>
+<body>
+<p>
+<named-content content-type="letter-date">15 Feb 2024</named-content>
+</p>
+<p>Identification and Classification of Urban Employment Centers Based on Big Data: A Case Study of Beijing</p>
+<p>PONE-D-23-02612R1</p>
+<p>Dear Dr. wang,</p>
+<p>We’re pleased to inform you that your manuscript has been judged scientifically suitable for publication and will be formally accepted for publication once it meets all outstanding technical requirements.</p>
+<p>Within one week, you’ll receive an e-mail detailing the required amendments. When these have been addressed, you’ll receive a formal acceptance letter and your manuscript will be scheduled for publication.</p>
+<p>An invoice for payment will follow shortly after the formal acceptance. To ensure an efficient process, please log into Editorial Manager at <ext-link ext-link-type="uri" xlink:href="http://www.editorialmanager.com/pone/" xlink:type="simple">http://www.editorialmanager.com/pone/</ext-link>, click the 'Update My Information' link at the top of the page, and double check that your user information is up-to-date. If you have any billing related questions, please contact our Author Billing department directly at <email xlink:type="simple">authorbilling@plos.org</email>.</p>
+<p>If your institution or institutions have a press office, please notify them about your upcoming paper to help maximize its impact. If they’ll be preparing press materials, please inform our press team as soon as possible -- no later than 48 hours after receiving the formal acceptance. Your manuscript will remain under strict press embargo until 2 pm Eastern Time on the date of publication. For more information, please contact <email xlink:type="simple">onepress@plos.org</email>.</p>
+<p>Kind regards,</p>
+<p>Zahid Latif, PhD</p>
+<p>Academic Editor</p>
+<p>PLOS ONE</p>
+<p>Additional Editor Comments (optional):</p>
+<p>I hope this letter finds you well. On behalf of PLOS ONE Journal , I am delighted to inform you that your submitted research article titled "Identification and Classification of Urban Employment Centers Based on Big Data: A Case Study of Beijing" has been accepted for publication in our journal.</p>
+<p>We would like to express our sincere appreciation for your significant contribution to the field of enterprise development. Your research findings and insights are valuable additions to the scholarly discourse in our community, and we believe that your work will make a meaningful impact on the academic community and beyond.</p>
+<p>The rigorous review process highlighted the importance and quality of your research, and we commend your dedication and expertise in conducting this study. We anticipate that your article will stimulate further discussion, inspire future research endeavors, and contribute to advancing knowledge in your area of expertise. We are honored to have the opportunity to feature your work in our publication.</p>
+<p>Reviewers' comments:</p>
+<p>Reviewer's Responses to Questions</p>
+<p><!-- <font color="black"> --><bold>Comments to the Author</bold></p>
+<p>1. If the authors have adequately addressed your comments raised in a previous round of review and you feel that this manuscript is now acceptable for publication, you may indicate that here to bypass the “Comments to the Author” section, enter your conflict of interest statement in the “Confidential to Editor” section, and submit your "Accept" recommendation.<!-- </font> --></p>
+<p>Reviewer #3: All comments have been addressed</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->2. Is the manuscript technically sound, and do the data support the conclusions?</p>
+<p>The manuscript must describe a technically sound piece of scientific research with data that supports the conclusions. Experiments must have been conducted rigorously, with appropriate controls, replication, and sample sizes. The conclusions must be drawn appropriately based on the data presented. <!-- </font> --></p>
+<p>Reviewer #3: Yes</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->3. Has the statistical analysis been performed appropriately and rigorously? <!-- </font> --></p>
+<p>Reviewer #3: (No Response)</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->4. Have the authors made all data underlying the findings in their manuscript fully available?</p>
+<p>The <ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/static/policies.action#sharing" xlink:type="simple">PLOS Data policy</ext-link> requires authors to make all data underlying the findings described in their manuscript fully available without restriction, with rare exception (please refer to the Data Availability Statement in the manuscript PDF file). The data should be provided as part of the manuscript or its supporting information, or deposited to a public repository. For example, in addition to summary statistics, the data points behind means, medians and variance measures should be available. If there are restrictions on publicly sharing data—e.g. participant privacy or use of data from a third party—those must be specified.<!-- </font> --></p>
+<p>Reviewer #3: Yes</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->5. Is the manuscript presented in an intelligible fashion and written in standard English?</p>
+<p>PLOS ONE does not copyedit accepted manuscripts, so the language in submitted articles must be clear, correct, and unambiguous. Any typographical or grammatical errors should be corrected at revision, so please note any specific errors here.<!-- </font> --></p>
+<p>Reviewer #3: Yes</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->6. Review Comments to the Author</p>
+<p>Please use the space provided to explain your answers to the questions above. You may also include additional comments for the author, including concerns about dual publication, research ethics, or publication ethics. (Please upload your review as an attachment if it exceeds 20,000 characters)<!-- </font> --></p>
+<p>Reviewer #3: COMMENTS:</p>
+<p>I read the manuscript titled “Identification and Classification of Urban Employment Centers Based on Big Data: A Case Study of Beijing” with keen interest; the idea is worth investigating and well fits to the scope of PLOS ONE. I am thankful to the authors for submitting an interesting manuscript to the PLOS ONE Journal. However, the manuscript has some issue that needs to be corrected before final publication. The study should be enriched with the following related studies regarding Big Data Analytics &amp; Economic Growth: The list of missing research includes (but is not restricted to):</p>
+<p>• Big data challenges: Prioritizing by decision-making process using Analytic Network Process technique. DOI: 10.1007/s11042-017-5161-4.</p>
+<p>• A Review of Policies concerning development of Big Data Industry in Pakistan. DOI: 10.1109/ICOMET.2018.8346315.</p>
+<p>• A New Solution for City Distribution to Achieve Environmental Benefits within the Trend of Green Logistics: A Case Study in China. DOI: 10.3390/su12208312.</p>
+<p>• OVERALL EVALUATION</p>
+<p>I. Accept</p>
+<p>II. Overall, the manuscript deserves to be published in “PLOS ONE”. I would suggest the author consider the above comments and revise the manuscript accordingly. Lastly, although a potential contribution to the research knowledge, I would suggest checking the word limit with the scope of the journal.</p>
+<p>**********</p>
+<p><!-- <font color="black"> -->7. PLOS authors have the option to publish the peer review history of their article (<ext-link ext-link-type="uri" xlink:href="https://journals.plos.org/plosone/s/editorial-and-peer-review-process#loc-peer-review-history" xlink:type="simple">what does this mean?</ext-link>). If published, this will include your full peer review and any attached files.</p>
+<p>If you choose “no”, your identity will remain anonymous but your review may still be made public.</p>
+<p><bold>Do you want your identity to be public for this peer review?</bold> For information about this choice, including consent withdrawal, please see our <ext-link ext-link-type="uri" xlink:href="https://www.plos.org/privacy-policy" xlink:type="simple">Privacy Policy</ext-link>.<!-- </font> --></p>
+<p>Reviewer #3: No</p>
+<p>**********</p>
+</body>
+</sub-article>
+<sub-article article-type="editor-report" id="pone.0299726.r004" specific-use="acceptance-letter">
+<front-stub>
+<article-id pub-id-type="doi">10.1371/journal.pone.0299726.r004</article-id>
+<title-group>
+<article-title>Acceptance letter</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author">
+<name name-style="western">
+<surname>Latif</surname>
+<given-names>Zahid</given-names>
+</name>
+<role>Academic Editor</role>
+</contrib>
+</contrib-group>
+<permissions>
+<copyright-year>2024</copyright-year>
+<copyright-holder>Zahid Latif</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<related-object document-id="10.1371/journal.pone.0299726" document-id-type="doi" document-type="article" id="rel-obj004" link-type="peer-reviewed-article"/>
+</front-stub>
+<body>
+<p>
+<named-content content-type="letter-date">26 Mar 2024</named-content>
+</p>
+<p>PONE-D-23-02612R1 </p>
+<p>PLOS ONE</p>
+<p>Dear Dr.  wang, </p>
+<p>I'm pleased to inform you that your manuscript has been deemed suitable for publication in PLOS ONE. Congratulations! Your manuscript is now being handed over to our production team.</p>
+<p>At this stage, our production department will prepare your paper for publication. This includes ensuring the following:</p>
+<p>* All references, tables, and figures are properly cited</p>
+<p>* All relevant supporting information is included in the manuscript submission,</p>
+<p>* There are no issues that prevent the paper from being properly typeset</p>
+<p>If revisions are needed, the production department will contact you directly to resolve them. If no revisions are needed, you will receive an email when the publication date has been set. At this time, we do not offer pre-publication proofs to authors during production of the accepted work. Please keep in mind that we are working through a large volume of accepted articles, so please give us a few weeks to review your paper and let you know the next and final steps. </p>
+<p>Lastly, if your institution or institutions have a press office, please let them know about your upcoming paper now to help maximize its impact. If they'll be preparing press materials, please inform our press team within the next 48 hours. Your manuscript will remain under strict press embargo until 2 pm Eastern Time on the date of publication. For more information, please contact <email xlink:type="simple">onepress@plos.org</email>.</p>
+<p>If we can help with anything else, please email us at <email xlink:type="simple">customercare@plos.org</email>.</p>
+<p>Thank you for submitting your work to PLOS ONE and supporting open access. </p>
+<p>Kind regards, </p>
+<p>PLOS ONE Editorial Office Staff</p>
+<p>on behalf of</p>
+<p>Dr. Zahid Latif </p>
+<p>Academic Editor</p>
+<p>PLOS ONE</p>
+</body>
+</sub-article>
+</article>

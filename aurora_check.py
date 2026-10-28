@@ -1,18 +1,19 @@
 """
-极光查重 / Aurora Check — 核心模块 v2.0
+Aurora Check — core detection module.
 
-用法：
+Usage (Python):
     from aurora_check import run_check
-    report = run_check(text="你的文章内容")
+    report = run_check(text="Your article text")
     print(report.to_markdown())
 
-命令行：
-    python aurora_check.py <文件> [--json] [--no-html]
-    python aurora_check.py compare <文档A> <文档B>
+Usage (CLI):
+    python aurora_check.py <file> [--json] [--no-html]
+    python aurora_check.py compare <doc_a> <doc_b>
 
-设计原则：
-    只输出能被证据支持的结论。文本过短、重复或非自然语言时拒绝判定，
-    而不是给一个看似精确的分数。
+Design principle:
+    Only emit conclusions that the evidence can support. When the text is too
+    short, too repetitive, or not natural language, this module refuses to judge
+    rather than producing a deceptively precise score.
 """
 
 from __future__ import annotations
@@ -158,10 +159,21 @@ class CheckReport:
     citations: Optional[CitationResult] = None
 
     def to_dict(self) -> dict:
-        """导出为纯 dict，便于 JSON 输出"""
+        """Serialize the report into a plain, JSON-ready dict.
+
+        Returns:
+            dict: A nested dictionary mirroring the dataclass structure, safe to
+                pass to ``json.dumps`` or to a JSON HTTP response.
+        """
         return asdict(self)
 
     def to_markdown(self) -> str:
+        """Render the report as a Markdown document.
+
+        Returns:
+            str: The full report in Markdown, including the AI-detection verdict,
+                per-engine scores, and the high-risk sentence list.
+        """
         lines = ["# 极光查重报告\n"]
         lines.append(f"- **正文长度：** {self.text_length} 字符\n")
         if self.note:
@@ -272,12 +284,20 @@ class CheckReport:
         return "\n".join(lines)
 
     def to_html(self, output_path: str = "") -> str:
-        """生成可视化交互式 HTML 报告（ECharts 雷达图 + 仪表盘 + 高危句高亮气泡）。
+        """Render an interactive HTML report (ECharts gauge + radar + bubbles).
 
-        相比旧版静态表格，新增：
-          - 顶部 ECharts 仪表盘：按 ai_probability 显示红/橙/绿
-          - ECharts 雷达图：排名前 5 的引擎得分，一眼看出哪项指标把分拉高
-          - 高危句红色下划线 + 悬停气泡展示「怎么改」策略（strict 模式）
+        Compared with the old static table this adds:
+          - A top ECharts gauge colored red/orange/green by ``ai_probability``.
+          - An ECharts radar of the top 5 engines, showing at a glance which
+            signal pushed the score up.
+          - Red-underlined high-risk sentences with a hover bubble showing the
+            "how to fix" strategy (strict mode only).
+
+        Args:
+            output_path: If given, the rendered HTML is also written to this path.
+
+        Returns:
+            str: The rendered HTML document.
         """
         # 输入不合格：只输出警告页，不再渲染任何分数
         if self.note and not self.ai:
@@ -945,7 +965,14 @@ def _high_pressure_warning(score: float) -> str:
 # ============================================================
 
 def extract_text_from_file(file_path: str) -> str:
-    """从 txt / md / docx 文件提取纯文本"""
+    """Extract plain text from a .txt / .md / .docx file.
+
+    Args:
+        file_path: Path to the source file.
+
+    Returns:
+        str: The extracted plain text; an empty string if extraction fails.
+    """
     ext = os.path.splitext(file_path)[1].lower()
 
     if ext in (".txt", ".md"):
@@ -4164,16 +4191,17 @@ def run_citation_check(text: str) -> CitationResult:
 # ============================================================
 
 def run_check(text: str = "", file_path: str = "", mode: str = "normal") -> CheckReport:
-    """
-    一键跑完整查重流程
+    """Run the full detection pipeline in one call.
 
-    参数：
-        text: 直接传入的文本（和 file_path 二选一）
-        file_path: 从文件读取（txt/md/docx）
-        mode: "normal"（默认稳健）/ "strict"（自检找茬，排雷视角）
+    Args:
+        text: The text to analyse directly (mutually exclusive with ``file_path``).
+        file_path: Read the text from a file (.txt/.md/.docx) instead.
+        mode: ``"normal"`` (default, balanced) or ``"strict"`` (paranoid
+            pre-submission screening that deliberately over-flags).
 
-    返回：
-        CheckReport 对象，用 .to_markdown() 转报告
+    Returns:
+        CheckReport: The analysis result. Call ``.to_markdown()`` or
+            ``.to_html()`` on it to render a report.
     """
     # 获取文本
     if file_path:
