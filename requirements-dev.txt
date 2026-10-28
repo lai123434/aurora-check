@@ -1,0 +1,2 @@
+# 运行测试所需（引擎本身只需要 requirements.txt）
+pytest>=7.0

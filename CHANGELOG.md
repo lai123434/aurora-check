@@ -1,5 +1,348 @@
 # Changelog
 
+## [3.12.0] — 闭环「改写建议」+ 可视化离线本地化
+
+把 Strict 模式从「只告诉你哪句危险」升级为「直接给你能抄的降维改法」，
+并把 ECharts 依赖从 CDN 拉回本地，断网也能渲染雷达图/仪表盘。
+
+- **新增 `_mock_rewrite_sentence()`**：纯规则 Mock 改写（不调外部大模型）。
+  - 高级词降维：`delve into→talk about`、`utilize→use`、`leverage→use`、
+    `facilitate→help`、`crucial→important`、`moreover→also` 等单向同义替换表。
+  - 模板句首 `In my opinion → I think`。
+  - 超 20 词长句在 `and/but/so` 或逗号处硬拆成两个短句。
+- **Strict 高危句新增 `rewrite_suggestion` 字段**：每条标红句附一条「直接抄」
+  的改写建议，与 `strategy`（怎么改的策略）互补。
+- **渲染闭环**：`to_markdown` 与 `to_html` 都在高危句下方用绿色文字渲染
+  「修改建议」，前端气泡同时展示策略 + 改写。
+- **ECharts 离线化**：`static/echarts.min.js`（v5.5.0）本地落地；
+  `to_html` 生成独立 HTML 时内联本地源码（读不到才降级回 CDN），
+  `static/index.html` 改走 `/static/echarts.min.js`。断网可完整渲染。
+- 回归测试全绿，分数无回归。
+
+## [3.11.0] — 模型瘦身：默认只保留 ModernBERT（砍掉旧 RoBERTa）
+
+体验优化：把默认 ML 检测链从双模型瘦身为单模型，消除旧 RoBERTa 带来的
+延迟与不稳定风险。
+
+- **`_ML_MODEL_CHAIN` 默认只留 `modernbert-ai-detection-raid-mage`**：
+  - 旧 `chatgpt-detector-roberta` 架构老、训练数据旧，对现代 LLM 几乎总给 0%，
+    留着纯属拖慢首载（缓存后仍占 ~955M 内存/磁盘）。
+  - 实测它在缓存不完整时还会 fallback 联网、卡在 httpx 超时重试（一次卡 2 分钟+），
+    是首请求延迟与不稳定的一大隐患。
+- **ML 聚合逻辑简化**：单模型下不再计算 `spread`/`secondary_max`，
+  `ml_disagreement` 恒为 `False`，主力模型分数直接作 `primary`。
+  - 保留 `AURORA_AI_MODEL` 环境变量：需要独立第二意见时可用 `|` 追加模型，
+    聚合逻辑仍兼容多模型。
+- 冷启动实测 ~20.6s，主要构成：MLM 伪困惑度推理 ~7.7s + ModernBERT 加载 ~6.1s
+  + 分类器推理 ~2.9s。删 RoBERTa 的收益是**稳定性**（不再卡联网重试），
+  速度再提需优化 MLM 采样（见 README 性能节）。
+- 38 项回归测试全绿（快 25 + slow 13），分数无回归。
+
+## [3.10.0] — 从"脚本"到"产品"：Web API + 可视化交互报告
+
+本轮把工具从"单机脚本"升级为"可被调用的服务"，同时把报告从静态表格升级成
+Turnitin 风格的交互式网页。
+
+- **新增 `server.py`（FastAPI API 服务）**：
+  - `POST /api/check`：接收 `{"text", "mode"}`，内部用 `asyncio.to_thread` 跑
+    `run_check`（大模型跑 CPU 很慢，绝不阻塞事件循环），返回 `CheckReport.to_dict()`
+    的完整 JSON。
+  - `POST /api/check-file`：上传 .txt/.md/.docx 检测，`mode` 走 query 参数。
+  - `GET /`：可视化首页；`GET /api/health`：健康检查。
+  - 启动：`python server.py` 或 `uvicorn server:app --reload`。
+  - 线程安全：`run_check` 内部 ContextVar + lru_cache 跨线程各自隔离，可放心并发调用。
+- **`to_html` 升级为 ECharts 交互式报告**：
+  - 顶部 ECharts **仪表盘**：按 `ai_probability` 红/橙/绿三区动态显示。
+  - ECharts **雷达图**：排名前 5 的引擎得分（中文释义），一眼看出哪项指标把分拉高。
+  - **高危句红色下划线 + 悬停气泡**：strict 模式气泡展示"怎么改"策略。
+  - 补全旧版缺失的"相似度 / 引用"摘要区。
+  - 本地浏览器直接打开即可用（ECharts 走 CDN，离线时 HTML 结构仍完整、仅图表降级）。
+- **重写 `static/index.html` 可视化首页**：输入框 + normal/strict 切换 + 调
+  `/api/check`，前端 ECharts 渲染仪表盘 / 雷达图 / 高危句气泡，现代卡片式 UI。
+- 旧 `web.py` 保留（兼容 `/api/analyze*` 旧接口），`server.py` 为新的推荐入口。
+
+## [3.9.0] — 自检找茬（Strict）模式：把工具从"审判台"改成"排雷器"
+
+定位切换：工具是**学生自检排雷工具**，不是老师审判工具。新增 `mode="strict"`，
+宁肯把真人误判成 AI（去改），也绝不漏掉任何 Turnitin 会抓到的特征。
+
+- **新增 `mode` 参数**：`run_ai_detection(text, mode)` / `run_check(..., mode)` /
+  `check.py --strict`。默认 `normal`（稳健聚合不变），`strict` 为严苛模式。
+- **取消宽容逻辑**（strict 下）：
+  - 离群剔除：取消——离群高值正是"像 AI"的强信号，全员参与，往高了打。
+  - 恒定输出降权（0.5 引擎 ×0.15）：取消——任何"未触发"引擎不悄悄打折。
+  - 终分公式：`0.5×统计 + 0.5×主力`（温和平均）→ `max(统计, 主力)`（谁凶听谁的）。
+  - 伪困惑度反向锚定门槛 0.60 → 0.50，且用 `max` 覆盖而非 0.5 混合。
+  - 标红阈值：`>0.58` → **`>0.30` 直接标红**（统计/ML 均值过 30% 就吼）。
+- **逐句修改策略**（strict 专属）：每条标红句附"怎么改"——
+  高级词汇（delve/moreover 等）→"换大白话"；模板句（firstly/in conclusion 等）
+  →"太像四六级模板，重写"；长难句（≥22 词）→"拆成短句"；段落节奏过均匀→
+  "拆两短句制造呼吸感"。
+- **过滤无害短句**：<12 词且不含高级词/模板词的短句（如 "I think this is true."）
+  不标红，避免给学生制造噪声。
+- **高压预警**：strict 下综合 AI 率 >40%，报告顶部输出
+  "⚠️ 极度危险！…请立刻检查段落开头镜像 / 第二篇文献缺第三个点 / 高级词汇"。
+- **五级判定向学生解读**（`student_verdict`）：安全（你自己写的）/ 基本安全 /
+  危险（会被老师怀疑用了 AI）/ 高危 / 致命（准备好重写吧），阈值刻意比
+  normal 三档更早拉响警报。
+
+## [3.8.0] — 联网查重：接入 Crossref 学术库（最后一块拼图）
+
+`PlagiarismResult.external_similarity` 从「恒为 None（NOT IMPLEMENTED）」升级为
+**真正的联网学术查重**（不写爬虫，用 Crossref 免费公开 API，千万级文献库）。
+
+- 新增 `_check_external_plagiarism_api(text)`：切长句（>15 词）→ 取前 5 条 →
+  `ThreadPoolExecutor` 并发查 Crossref（5×5s 串行压到 ~2s）→ 用「标题实词重合」
+  判定疑似匹配。含 timeout / 断网容错（断网返回 None + note「网络不可用」）。
+- `run_plagiarism_check(text, enable_network=True)`：外部查重与内部自重叠解耦，
+  可用环境变量 `AURORA_NETWORK=0` 全局关闭联网。
+- `PlagiarismResult` 新增 `external_matches`（疑似匹配句 + 论文标题 + DOI）与
+  `network_note`（网络状态说明）；`external_similarity=None` 语义收紧为
+  「未查 / 断网」，与「查了但命中 0.0」严格区分。
+- **防误报三防线**：① 跳过 Figure/Table 图表题注（非可引用文献）；② 标题实词
+  命中 ≥ 6 且覆盖率 ≥ 50% 的双门槛；③ 排除功能词停用词。实测能精准命中
+  《Artificial intelligence skills...》(10.3389/frai.2025.1629320) 且不误报。
+- 渲染：`CheckReport.to_markdown` 与 `check.py` 相似度段输出「外部文献相似度
+  XX%（通过 Crossref 学术库比对）+ 疑似句 → 论文标题 (DOI)」。
+- 能力边界如实标注：这是「关键词级」比对，非 Turnitin 逐字比对，结论表述为
+  「疑似出自」，不构成抄袭认定。
+
+## [3.7.0] — 工程深水区加固：并发隔离 / 缓存防污染 / 单行段落兜底 / 哨兵加固
+
+针对「接入 MCP / Web 服务（多线程 / 异步并发）」场景的 5 处隐蔽陷阱：
+
+- **ContextVar 隔离缺失引擎登记**：`_ENGINE_GAPS` 从全局 dict 改为
+  `contextvars.ContextVar`，每次 run 前 `set(dict(_PERSISTENT_GAPS))` 建立
+  请求级独立快照；`_PERSISTENT_GAPS` 用 `threading.Lock` 保护写入。修复并发下
+  A 同学 clear() 清空 B 同学 gap 的串线问题。新增 `_current_gaps()` / `_reset_gaps()`。
+- **lru_cache 外层 deepcopy**：`run_ai_detection` 拆为内部 `_run_ai_detection_cached`
+  （持有 `@lru_cache`）+ 公开入口每次 `copy.deepcopy` 返回，调用方可放心原地
+  修改字段而不污染缓存；`cache_info` / `cache_clear` 接口保留兼容。
+- **段落自重叠单行文本兜底**：`run_plagiarism_check` 在 `\n\n` 拆分段落 < 2 段时，
+  按句子（每 4 句）强制切块兜底，修复「单回车 / 全连成一段」时 self_overlap 恒 0 漏报。
+- **伪困惑度硬截断注释**：明确 `words[:400]` 是有意截断（前 400 词足够代表风格、
+  控制 CPU 耗时），并说明「全篇采样」的实现路径。
+- **缩写保护哨兵加固**：`_split_sentences` 的 `<DOT>` 占位符改为不可见哨兵
+  `\x00DOT\x00`（自然语言文本中出现概率严格为 0），消除与正文字面字符冲突的极小概率。
+
+## [3.6.0] — 同学群像从「臆断原型」升级为「群体画像蒸馏」
+
+把同学群像的 10 个臆断角色，按真实语料重构成 **9 个有据可查的群体画像**。
+
+- **真实调研**：在小红书/B站/贴吧/抖音/微博搜真实大学生面对 AI 查重的反应生态，
+  交叉验证新华社（「开水煮白菜，一眼假」）、纽约时报（Leigh Burrell 录屏自证）、
+  信用衢州政府网（纯手写判 37% 无法毕业）、Ashesi 听证会裁决（改 prompt 时间戳被抓）
+  等一手/权威来源。调研落盘 `persona_research/01-真实反应生态.md` + `02-角色校准.md`。
+- **origin 语义升级**：`archetype`（含糊、易被当臆断）→ `group-distilled`（群体画像
+  蒸馏，每角色带 `evidence` 字段记录语料锚点），诚实分层不冒充。
+- **角色重构**：删「学霸室友（打圆场）」「卷王室友（焦虑）」两个刻板角色；新增
+  「被冤枉的手写者」（调研里体量最大、原版缺失的真实群体）；「海归降维打击哥」改为
+  「母语者视角」，去掉「觉得你们太土」的刻板印象。
+- **台词换真实语料**：一眼鉴 AI 的识破依据换成「写得超完整但没回答题目」；听证会
+  PTSD 换成「留草稿/版本记录」；老油条藏味换成「拆短句/删AI口头禅/别用洗稿工具」；
+  躺平换成「逗号换句号从 48% 降到 11%」的荒诞招。
+- 分数梯度 40/52/55/55/62/70/80/80/85，覆盖「分低、分高、分高用 AI、各种同学」。
+
+## [3.5.0] — 第三人格升级：同学群像（群聊互动体 · 赛博学术狼人杀）
+
+把单一的「好朋友」升级为同学群，同学之间互相 @、互相争论，而非各自对作者说一句。
+
+- **解耦**：查重引擎（aurora_check.py）只出机械分数，persona.py 是「可插拔人格视角」，
+  换用户/换课/换学校时引擎不变、人格包可换。
+- **去安慰化**：加入「怀疑者·一眼鉴 AI」（看写得规整就当面质疑你用 AI）、阴阳怪气的
+  助教、只会泼冷水的理工科，还原真实宿舍生态。
+- **群聊互动体**：`render_friend_sections` 输出「📱 班级群聊」，每个角色带 `reply_to`
+  字段自动生成 @ 关系，形成观点交锋（学委 vs 躺平、理工科 vs 海归、PTSD vs AI 老油条）。
+- LLM 可插拔：`generate_friend_review(result, role, llm=None)`；未配置 LLM 返回 None，
+  由上层用 `build_friend_prompt` 取提示词自行生成。
+- `check.py` 新增 `--friend` 参数：结果注入 `friend_reviews` 则渲染群聊，否则输出提示词。
+
+## [3.4.0] — 工程效率与稳定性：数据隔离 / 困惑度性能 / 断句修复 / 缓存 / 词表瘦身
+
+按外部评审的五条工程建议逐条落地，把「逻辑聪明但肌肉乏力」补齐。核心收益：
+单文档检测耗时从「几分钟」降到「约 20 秒」，且同文本重复提交 0 秒命中缓存。
+
+### 1. 修复全局变量 `_ENGINE_GAPS` 数据污染
+- 新增 `_PERSISTENT_GAPS`：区分「全局性缺失」（模型/依赖加载失败，与文档无关）
+  与「单次缺失」。
+- `run_ai_detection()` 开头先 `_ENGINE_GAPS.clear()` 再恢复持久缺失，
+  确保每份文档的 `missing_engines` 绝对独立、不串线。
+- `_record_gap(name, reason, persistent=False)` 新增 `persistent` 参数；ML 检测器
+  与伪困惑度模型加载失败的登记标记为 `persistent=True`。
+
+### 2. MLM 伪困惑度性能上限（CPU 不再卡死）
+- 原来逐个 mask 全文 token，每 token 一次完整前向，CPU 上是灾难。
+- 新增 `AURORA_PPL_MAX_MASKS`（默认 30）硬性上限，最多 mask 30 个词。
+- **均匀采样**而非截取开头：只取开头会撞上标题/作者名/固定句式这些最可预测的
+  位置，实测伪困惑度从 2331 失真到 17.99。改为全文均匀采样后恢复
+  （AI 稿 ≈330，真人稿 ≈4683，分离度保留）。
+
+### 3. 词表抽离到 dictionaries.py
+- 把 11 个长词表（`_AI_FORMULAIC_MARKERS` / `_TRANSITION_WORDS` /
+  `_FILLER_PATTERNS` / `_AI_MARKERS_WEIGHTED` / `_HEDGING_PHRASES` /
+  `_BALANCE_PATTERNS` / `_POSITIVE_WORDS` / `_NEGATIVE_WORDS` /
+  `_ACADEMIC_CONNECTORS` / `_AI_CHINESE_MARKERS` / `_ZH_TEMPLATE`）抽离到独立模块，
+  `aurora_check.py` 由 3761 行瘦身到 3403 行，新增词表只需改 dictionaries.py。
+- （engines.py / report.py 的进一步拆分涉及循环依赖与公开 API 变更，留作
+  独立重构任务，本次未做。）
+
+### 4. 修复英文断句（缩写误切）
+- `_split_sentences` 原来把 `e.g.` / `i.e.` / `et al.` / `Dr.` 等缩写硬切成两半，
+  导致句长分布、burstiness 等统计全错。
+- 新增缩写保护：先把缩写的所有句点替换为 `<DOT>` 占位符（lambda 保留大小写），
+  切完再还原。
+- **附带收益**：断句修复后 AI 稿与真人稿的区分度显著提升（Rev3 改稿 50% vs
+  真人终稿 38%，此前是 44% vs 47% 几乎分不开）。
+
+### 5. 增加 LRU 缓存（MCP 准备）
+- `run_ai_detection()` 加 `@lru_cache(maxsize=32)`：同一文本反复提交
+  （如「查重三次看稳不稳定」）直接返回内存结果，0 秒出报告。
+
+---
+
+## [3.3.2] — 收敛静默异常：缺失引擎可见化
+
+评审第 5 条指出：ML 模型 / 外部 CLI / 本地语言模型失败时**静默回退**，用户
+只看到分数，却不知道「哪些引擎根本没跑、为什么」。本版把缺失从 stderr 捞进报告。
+
+### 改动
+- 新增模块级 `_ENGINE_GAPS` 登记表 + `_record_gap(name, reason)`，在以下失败点
+  登记原因（此前只在 stderr 打一行）：
+  - `ml-detector`：连不上 HuggingFace（及镜像）且无缓存 / transformers/torch 缺失
+  - `mlm-perplexity`：transformers/torch 缺失 / 模型加载失败
+  - `lmscan`：CLI 未安装 / 非零退出码 / 调用异常
+  - `lm-perplexity`：非中文文本（设计行为）/ 无本地中文模型
+- `run_ai_detection()` 扫描注册表，把「本应参与（方向非0且权重>0）却未产出分数」
+  的引擎汇总为 `AIResult.missing_engines`（含引擎名、释义、原因）。
+- 报告渲染层新增「**本次未参与检测的引擎（缺失或不可用）**」段，明确列出，
+  不再折叠隐藏。
+- 新增契约测试 `test_missing_engines_reported_when_ml_unavailable`：ML 检测器与
+  伪困惑度不可用时，必须出现在 `missing_engines` 且带可读原因。
+
+### 说明
+权重为 0 的失效引擎（self-references / logical-connectors 等）**本就不参与**，
+不算「缺失」，仍走原有的 `<details>未参与投票的引擎` 折叠展示。
+
+---
+
+## [3.3.1] — 名实相符修正确（不做查重 / 接口一致 / 回归基线）
+
+一次外部代码评审指出本项目成熟度不足，其中最严重的一条是**名实不符**：
+对外叫「查重」，但 `external_similarity` 实际是写死的 `0.0`，没有接任何外部
+语料库。若用户据此以为「查过外部库、命中 0%」，后果严重。本版按评审意见修正。
+
+### 1. 明确不做外部查重（最高优先级）
+- `PlagiarismResult.external_similarity` 由 `float`（写死 0.0）改为
+  `Optional[float] = None`，语义为 **NOT IMPLEMENTED**。
+- `run_plagiarism_check()` 两处返回点同步改为 `None`，并写明「无外部语料库」。
+- 报告渲染层改为显示「**未实现** — 不接外部语料库，不具备查重能力…此处 None
+  表示『没查』，不是『查了且命中 0%』」，不再伪装成百分比。
+- README 重新定位：产品名改为「**AI 写作特征筛查 + DOI 核验**」，去掉 plagiarism
+  toolkit 表述；Status 徽章改为 Research Prototype；首屏新增能力对照表与三条硬性
+  限制（AI 强度≠发生概率、无外部语料库、校准样本小），并声明**不可作为学术不端
+  判定依据**。
+- 澄清 `compare` 子命令是「本地双文档比对」（真实功能，需自行提供参考文档），
+  不等于查重——原先标为 "Plagiarism Check" 有误导。
+
+### 2. 返回契约与类型一致性
+- `_detect_mlm_perplexity()` 注解 `Optional[float]` → `Optional[Tuple[float, float]]`
+  （实际返回二元组），并在 docstring 写明解包方式。
+- `_compute_engine_scores()` 补返回注解 `Tuple[dict, list, list, dict]`，修正
+  docstring「返回三元组」的错误描述（实际含第 4 个 `ml_detail`）。
+- 补充 `Dict` / `Tuple` 到 typing 导入（此前缺失，会在求值时 NameError）。
+- 注册表 11 条失效引擎的裸三元组 `(0, 0.0, "…")` 统一改为 `EngineSpec(0, 0.0, "…")`，
+  类型不再混用。
+
+### 3. 回归基线（补上此前缺失的测试保障）
+- 新增 `tests/`：pytest 套件，默认快速层 ~4 秒，`--runslow` 跑深度学习快照。
+- `tests/test_contracts.py`（快，无需模型）：外部查重必须 None、自重叠可用、
+  返回契约一致、注册表无裸元组、垃圾输入必须被拒且给出原因。
+- `tests/test_detection_regression.py`（slow）：6 篇样本的数值快照（容差 ±0.06）
+  + **语义不变量**（5 篇纯 AI 绝不被判 human；真人绝不被判 ai；终分必须可解释出
+  ①②③ 三步）。
+- `tests/baseline_scores.json` + `scripts/record_baseline.py`：基线可重录、可审计。
+- 设计约定：**缺失即跳过、不伪装通过**；模型不可用→skip 并说明原因，绝不
+  assert True。真人对照语料不入库（隐私），由 `AURORA_HUMAN_SAMPLE` 指定。
+
+### 未做（按优先级后置）
+- 第 4 项「收敛 11 处静默 `except Exception` 并让报告显示本次缺失了哪些引擎」
+  —— 做内部辅助工具时再做。
+- 拆分 `aurora_check.py`（3600+ 行）—— 最后再说。
+
+## [3.3.0] — 拟人 AI 漏判修复：ML 多检测器集成 + 困惑度第三信号
+
+### 问题（实测暴露）
+用「纯 AI 生成」文本做压力测试，引擎只抓得住典型机翻腔 AI；凡是拟人程度高的
+AI（口语化 / 学生风 / 带瑕疵 / 自然论说）全部被自信判为 human——5 个里 4 个漏判。
+根因：
+1. **统计引擎饱和否决**：拟人 AI 让 20+ 统计引擎大量饱和在 0.00（「无公式化特征 =
+   像人」），这些低信息票把唯一的 ML 一票否决成 human。
+2. **单一分类器风格盲区**：ModernBERT 把「带瑕疵拟人 AI」误判 0.03（97% 人），
+   RoBERTa（旧）对现代 AI 几乎全 0.08~0.16——单模型救不回。
+3. **仅在第一个模型加载即停**：原 `_load_ml_model()` 取链中首个成功模型，
+   RoBERTa 旧模型被当主力，反而拖垮检测（印证用户「RoBERTa 太旧」的判断）。
+
+### 修复
+1. **ML 多检测器集成**：`_load_ml_models()` 加载整条候选链（默认 ModernBERT 主力
+   + RoBERTa 第二意见），二者架构/训练分布完全不同，互补盲区；旧 RoBERTa 不再当主力，
+   只作交叉验证。`AURORA_AI_MODEL="a|b|c"` 可自定义整条链。
+2. **ML 锚定聚合**：`final = 0.5·stat_mean + 0.5·primary(ModernBERT)`。
+   - 主力确信 AI(≥0.6)：统计饱和票不能再把它否决到 mixed 以下；
+   - 主力模糊(0.4~0.6)：与统计均值等权融合；
+   - 主力 >0.33（不像纯人）时**绝不自信判 human**，最低只到 mixed，交人工复核。
+4. **困惑度第三信号**：新增 `mlm-perplexity` 引擎（MLM 头算伪困惑度，
+   `answerdotai/ModernBERT-base`，可用 `AURORA_PPL_MODEL` 覆盖），专攻「表演式不完美」
+   拟人 AI——它表面有错字/跑题，底层分布仍比真人更可预测。
+5. **困惑度标定实测校正**（关键）：最初凭经验设 `PIVOT=12/SCALE=6`，导致全部 6 篇样本
+   一律映射成 0.00（等于给每篇硬塞一张「像人」票，反而把 AI 样本往下拖，实测 S2/S3/S4
+   分别被拉低 0.015/0.011/0.012）。用 `calibrate_pp.py` 实测原始伪困惑度后发现
+   **真实量级是 150~450（AI）vs 9200（真人）**——差 20 倍以上，只是标定差了两个数量级。
+   据实测改为 `PIVOT=1650/SCALE=1950`，并改为环境变量可配（`AURORA_PPL_PIVOT/SCALE`）。
+6. **困惑度反向锚定**：修复「集体盲区」失效模式——高度拟人 AI 让几乎所有统计引擎
+   **一起**饱和在 0.00，此时聚合的离群剔除规则会把唯一说真话的引擎当作噪声删掉
+   （实测 S4：mlm-perplexity 已给出 0.649，仍被判 0.105 human）。现在当该有原则的
+   模型信号 ≥0.60 时，用与 ML 锚定相同方式混合并取较大值，使统计票无法把它压下去。
+
+### 实测（最终版，离线，三模型均已缓存）
+| 样本 | 真实 | 升级前 | 升级后 |
+|------|------|--------|--------|
+| S1 机翻腔 | AI | 0.786 ai | **0.845 ai** ✓ |
+| S2 口语化 | AI | 0.263 human（漏） | **0.485 mixed** ✓ |
+| S3 学生风 | AI | 0.321 human（漏） | **0.488 mixed** ✓ |
+| S4 带瑕疵 | AI | 0.109 human（漏） | **0.416 mixed** ✓ 救回 |
+| S5 自然论说 | AI | 0.210 human（漏） | **0.447 mixed** ✓ |
+| H1 真人稿 | human | 0.246 human | 0.468 mixed（未误杀为 ai）|
+
+5 篇纯 AI 文本**全部不再被判为自信 human**，全部进入 `mixed` 待人工复核。
+
+### ⚠️ 已知取舍（务必知悉）
+- **召回优先的代价**：真人对照 H1 也被抬到 0.468 `mixed`，即本研究批 prioritise「不让 AI
+  冒充 human」，代价是**真人同样会落入待复核区**。这是刻意选择：学术诚信场景下漏判
+  （false human）的代价远高于误报（进复核）。若你的场景反过来，可调低
+  `ml-detector`/`mlm-perplexity` 权重。
+- **样本量有限**：上述标定基于 5 篇 AI + 1 篇真人的英文学术语料小样本，PIVOT/SCALE
+  存在过拟合风险。换领域（如中文、新闻、代码文档）请务必用 `calibrate_pp.py` 在自己的
+  语料上重测后覆盖环境变量。
+
+## [3.2.2] — ML 检测器联网健壮性：自动镜像回退 + 探测跟随 HF_ENDPOINT
+
+### 问题
+默认 `huggingface.co` 直连在受限网络（含国内）常被挡，而 `_hf_reachable()`
+把探测主机硬编码成 `huggingface.co`。结果即便用户设了 `HF_ENDPOINT` 镜像，
+引擎仍因探不到 `huggingface.co` 而空转跳过 ML 引擎——ModernBERT 永远加载不上。
+
+### 修复
+1. `_hf_reachable()` 改为读取 `HF_ENDPOINT`，探用户实际使用的端点（默认
+   `huggingface.co`）；超时 0.6s → 2.5s，避免受限网络握手偏慢误判。
+2. `_load_ml_model()` 新增**自动镜像回退**：直连不可达时自动设
+   `HF_ENDPOINT=https://hf-mirror.com` 并复探，通了就用、都不通才优雅跳过。
+   用户无需手动配置即可在国内开箱联网。
+
+### 实测（沙箱放开网络，经 hf-mirror.com 下载 ModernBERT）
+- 加载成功，`ai_idx=1` 自动识别正确（二分类，1=AI）。
+- 明显 AI 腔文本 ML 分 ≈ **0.986**，自然人类腔文本 ≈ **0.453**。
+- 全引擎集成后：AI 样本综合 83.5%（AI 特征显著）、人类样本 20.2%（未见明显 AI 特征）。
+
 ## [3.2.1] — 段落节奏引擎不再误伤「段落数少」的体裁
 
 ### 问题

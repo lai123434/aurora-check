@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora Check · AI 文本自检排雷</title>
+<script src="/static/echarts.min.js"></script>
+<style>
+:root{
+  --ink:#14161f; --sub:#5b6172; --line:#e6e8ef; --bg:#f7f8fb;
+  --brand:#5b53d6; --brand-2:#8b7cf6;
+  --danger:#dc3f36; --warn:#d98600; --ok:#18864b;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+header{
+  background:#fff; border-bottom:1px solid var(--line);
+  position:sticky; top:0; z-index:20;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.bar{display:flex;align-items:center;gap:12px;height:60px}
+.logo{
+  width:28px;height:28px;border-radius:8px;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;
+}
+.brand{font-weight:650;font-size:15px;letter-spacing:-.01em}
+.tag{font-size:11px;color:var(--sub);border:1px solid var(--line);padding:1px 7px;border-radius:20px}
+.spacer{flex:1}
+.ghost{
+  font-size:13px;color:var(--sub);background:none;border:none;cursor:pointer;
+  padding:6px 10px;border-radius:8px;
+}
+.ghost:hover{background:var(--bg);color:var(--ink)}
+
+main{max-width:1120px;margin:0 auto;padding:28px 24px 80px}
+
+/* ---------- 输入 ---------- */
+.panel{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:32px 28px 28px;text-align:center;
+}
+.panel h1{font-size:22px;font-weight:650;letter-spacing:-.02em;margin-bottom:8px}
+.panel p{color:var(--sub);font-size:14px;margin-bottom:20px}
+
+.mode-toggle{
+  display:inline-flex;background:#eef0f6;border-radius:10px;padding:4px;margin-bottom:18px;
+  gap:4px;
+}
+.mode-toggle label{
+  padding:7px 18px;border-radius:8px;font-size:13.5px;cursor:pointer;
+  color:var(--sub);transition:.15s;user-select:none;
+}
+.mode-toggle input{display:none}
+.mode-toggle input:checked+span{color:var(--ink);font-weight:600}
+.mode-toggle label:has(input:checked){
+  background:#fff;box-shadow:0 1px 4px rgba(20,22,31,.08);color:var(--ink);
+}
+.mode-toggle .strict-badge{font-size:10.5px;color:var(--danger);margin-left:3px}
+
+textarea{
+  width:100%;max-width:680px;height:150px;resize:vertical;
+  border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+  font:inherit;font-size:13.5px;color:var(--ink);background:#fff;display:block;margin:0 auto;
+}
+textarea:focus{outline:2px solid #ddd9fb;border-color:var(--brand)}
+.btn{
+  display:inline-block;background:var(--brand);color:#fff;border:none;
+  padding:12px 30px;border-radius:10px;font-size:14.5px;font-weight:600;
+  cursor:pointer;transition:.15s;margin-top:16px;
+}
+.btn:hover{background:#4b43c4}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.hint{font-size:12px;color:#98a0b3;margin-top:14px}
+
+/* ---------- 结果 ---------- */
+#result{display:none}
+#result.on{display:block;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.warn-banner{
+  background:#fff1f0;border:1px solid #ffa39e;border-left:5px solid var(--danger);
+  border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;
+  color:#cf1322;font-size:13.5px;line-height:1.8;
+}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+.card h2{
+  font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--sub);margin-bottom:16px;display:flex;align-items:center;gap:8px;
+}
+.card h2::before{content:'';display:inline-block;width:3px;height:15px;
+  background:linear-gradient(180deg,var(--brand),var(--brand-2));border-radius:2px}
+
+/* 分数卡 */
+.score-head{display:flex;gap:24px;align-items:stretch;flex-wrap:wrap}
+.gauge-box{flex:1;min-width:260px;height:230px}
+.score-side{flex:1;min-width:240px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.verdict{font-size:20px;font-weight:700}
+.verdict.human{color:var(--ok)}
+.verdict.mixed{color:var(--warn)}
+.verdict.ai{color:var(--danger)}
+.student-verdict{
+  display:inline-block;padding:6px 16px;border-radius:20px;font-size:13.5px;
+  font-weight:600;color:#fff;align-self:flex-start;
+}
+.meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px;font-size:12.5px;color:var(--sub)}
+.meta b{color:var(--ink);font-weight:600}
+.alert{
+  margin-top:14px;padding:12px 14px;border-radius:10px;font-size:12.5px;line-height:1.65;
+  background:#fff8e6;border-left:3px solid var(--warn);color:#7a5b12;
+}
+.radar-box{width:100%;height:340px}
+
+/* 高危句 */
+.sentence{
+  position:relative;display:block;padding:11px 13px;margin:9px 0;
+  background:#fffbfb;border-left:4px solid var(--danger);border-radius:7px;
+}
+.sentence mark{
+  background:rgba(220,63,54,.14);color:#c0392b;padding:0 2px;
+  text-decoration:underline;text-decoration-color:#dc3f36;
+  text-decoration-thickness:2px;text-underline-offset:3px;
+}
+.sentence .score-tag{
+  font-size:11px;color:#98a0b3;margin-right:6px;font-variant-numeric:tabular-nums;
+}
+.bubble{
+  display:none;position:absolute;left:13px;bottom:calc(100% + 8px);
+  max-width:460px;background:#333;color:#fff;padding:9px 13px;border-radius:8px;
+  font-size:12.5px;line-height:1.55;z-index:10;box-shadow:0 4px 16px rgba(0,0,0,.22);
+}
+.bubble::after{content:'';position:absolute;top:100%;left:22px;
+  border:6px solid transparent;border-top-color:#333}
+.sentence:hover .bubble{display:block}
+.empty{color:#98a0b3;font-size:13.5px}
+
+/* 引擎 */
+.eng{display:flex;flex-direction:column;gap:9px}
+.row{display:grid;grid-template-columns:1fr 90px 44px;gap:10px;align-items:center;font-size:12.5px}
+.row .name{color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .name span{color:#a8afc0;font-size:11px;margin-left:4px}
+.track{height:6px;border-radius:3px;background:#eef0f6;overflow:hidden}
+.fill{height:100%;border-radius:3px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.val{text-align:right;color:var(--sub);font-variant-numeric:tabular-nums}
+details{margin-top:14px;font-size:12.5px;color:var(--sub)}
+summary{cursor:pointer;user-select:none}
+details .chip{
+  display:inline-block;background:#f2f3f8;color:#8b93a7;border-radius:20px;
+  padding:2px 9px;font-size:11px;margin:3px 4px 0 0;
+}
+
+/* 相似度/引用 */
+.kv{display:flex;gap:40px;flex-wrap:wrap;font-size:13.5px}
+.kv .label{color:var(--sub);margin-right:8px}
+.kv .value{font-weight:700}
+
+/* 加载 */
+#load{display:none;text-align:center;padding:72px 0}
+#load.on{display:block}
+.spin{
+  width:34px;height:34px;border:3px solid #e6e8ef;border-top-color:var(--brand);
+  border-radius:50%;margin:0 auto 14px;animation:sp .8s linear infinite;
+}
+@keyframes sp{to{transform:rotate(360deg)}}
+#load p{color:var(--sub);font-size:13px}
+.err{
+  background:#fff;border:1px solid #f3d6d4;border-left:4px solid var(--danger);
+  border-radius:var(--radius);padding:22px 26px;
+}
+.err h3{font-size:15px;color:var(--danger);margin-bottom:8px}
+.err p{font-size:13.5px;color:var(--sub)}
+footer{text-align:center;color:#a8afc0;font-size:12px;padding:32px 0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="logo">A</div>
+    <div class="brand">Aurora Check</div>
+    <span class="tag">v3.0 · 自检排雷</span>
+    <div class="spacer"></div>
+    <button class="ghost" id="again" style="display:none">← 重新检测</button>
+  </div>
+</header>
+
+<main>
+  <!-- 输入 -->
+  <section id="home">
+    <div class="panel">
+      <h1>检测文本的 AI 写作痕迹</h1>
+      <p>粘贴正文，本地引擎比对 29 个信号 · 严苛模式专为「交稿前排雷」设计</p>
+      <div class="mode-toggle">
+        <label><input type="radio" name="mode" value="normal" checked><span>稳健 normal</span></label>
+        <label><input type="radio" name="mode" value="strict"><span>严苛找茬 strict<span class="strict-badge">🔥</span></span></label>
+      </div>
+      <textarea id="paste" placeholder="粘贴英文或中文段落……"></textarea>
+      <button class="btn" id="go">开始检测</button>
+      <div class="hint">正文至少 200 字符、5 个句子。严苛模式会把 AI 率往高了打，宁可误判不放过。</div>
+    </div>
+  </section>
+
+  <!-- 加载 -->
+  <section id="load">
+    <div class="spin"></div>
+    <p>正在比对 29 个检测信号……（首次需加载本地模型，约 20 秒）</p>
+  </section>
+
+  <!-- 结果 -->
+  <section id="result"></section>
+</main>
+
+<footer>Aurora Check v3.0 · 面向学生的 AI 文本自检工具 · 结果仅供人工复核参考</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const home=$('#home'), load=$('#load'), result=$('#result'), again=$('#again'), go=$('#go');
+
+function esc(s){
+  return String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+}
+
+function selectedMode(){
+  return document.querySelector('input[name=mode]:checked').value;
+}
+
+function labelColor(label){
+  return {ai:'#dc3f36',mixed:'#d98600',human:'#18864b'}[label]||'#d98600';
+}
+function labelText(label){
+  return {ai:'AI 特征显著',mixed:'特征混杂',human:'未见明显 AI 特征'}[label]||label;
+}
+
+go.onclick=async()=>{
+  const t=$('#paste').value.trim();
+  if(t.length<80){alert('文本太短，请至少粘贴两三个段落');return}
+  const mode=selectedMode();
+  home.style.display='none'; load.classList.add('on'); result.classList.remove('on');
+  go.disabled=true;
+  try{
+    const r=await fetch('/api/check',{method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({text:t, mode})});
+    if(!r.ok){throw new Error((await r.json()).detail||('HTTP '+r.status))}
+    render(await r.json());
+  }catch(e){
+    load.classList.remove('on');
+    result.classList.add('on');
+    result.innerHTML=`<div class="err"><h3>检测失败</h3><p>${esc(e.message)}</p></div>`;
+  }finally{
+    go.disabled=false;
+  }
+};
+
+again.onclick=()=>{result.classList.remove('on');result.innerHTML='';home.style.display='block';again.style.display='none'};
+
+function render(d){
+  load.classList.remove('on'); result.classList.add('on'); again.style.display='block';
+
+  if(d.note && !d.ai){
+    result.innerHTML=`<div class="err"><h3>无法判定</h3><p>${esc(d.note)}</p>
+      <p style="margin-top:10px;color:#98a0b3;font-size:12.5px">正文 ${d.text_length} 字符</p></div>`;
+    return;
+  }
+
+  const ai=d.ai||{};
+  const pct=Math.round((ai.ai_probability||0)*100);
+  const color=labelColor(ai.label);
+
+  let html='';
+
+  // 高压预警
+  if(ai.high_pressure_warning){
+    html+=`<div class="warn-banner">⚠️ ${esc(ai.high_pressure_warning)}</div>`;
+  }
+
+  // 分数卡
+  const studentVerdict=ai.student_verdict
+    ? `<div class="student-verdict" style="background:${color}">${esc(ai.student_verdict)}</div>`:'';
+  const confMap={high:'高',medium:'中',low:'低'};
+  html+=`
+  <div class="card">
+    <h2>检测结果${ai.mode==='strict'?' · 严苛模式':''}</h2>
+    <div class="score-head">
+      <div id="gauge" class="gauge-box"></div>
+      <div class="score-side">
+        <div class="verdict ${esc(ai.label)}">${labelText(ai.label)}</div>
+        ${studentVerdict}
+        <div class="meta">
+          <div>置信度 <b>${confMap[ai.confidence]||ai.confidence||'—'}</b></div>
+          <div>采纳引擎 <b>${(ai.adopted_engines||[]).length}/${Object.keys(ai.engine_scores||{}).length}</b></div>
+          <div>正文 <b>${d.text_length} 字符</b></div>
+        </div>
+        ${ai.rewrite_hint?`<div class="alert"><b>⚠ 疑似改写</b>${esc(ai.rewrite_hint)}</div>`:''}
+      </div>
+    </div>
+  </div>`;
+
+  // 雷达图卡
+  html+=`<div class="card"><h2>引擎得分雷达图（前 5 项）</h2><div id="radar" class="radar-box"></div></div>`;
+
+  // 高危句卡
+  const flagged=ai.flagged_sentences||[];
+  const flaggedHtml=flagged.length?flagged.slice(0,10).map(s=>{
+    const bubble=s.strategy?`怎么改：${esc(s.strategy)}`:`AI 嫌疑度 ${Math.round(s.score*100)}%，建议人工复核`;
+    return `<div class="sentence">
+      <span class="score-tag">${Math.round(s.score*100)}%</span>
+      <mark>${esc(s.text)}</mark>
+      <span class="bubble">${bubble}</span>
+    </div>`;
+  }).join(''):'<div class="empty">没有检测到高风险句子</div>';
+  html+=`<div class="card"><h2>高风险句（悬停查看怎么改）</h2>${flaggedHtml}</div>`;
+
+  // 引擎卡
+  const adopted=ai.adopted_engines||[];
+  const enginesHtml=adopted.map(e=>{
+    const s=Math.round((e.score||0)*100);
+    const c=s>=62?'#e5a7a2':s>=35?'#eccd97':'#a9d3ba';
+    const name=(e.note||e.name);
+    return `<div class="row">
+      <div class="name" title="${esc(name)}">${esc(name)}<span>×${e.weight}</span></div>
+      <div class="track"><div class="fill" style="width:${s}%;background:${c}"></div></div>
+      <div class="val">${s}%</div></div>`;
+  }).join('');
+  const rejected=(ai.rejected_engines||[]);
+  html+=`<div class="card"><h2>参与加权的引擎</h2><div class="eng">${enginesHtml||'<div class="empty">无</div>'}</div>
+    ${rejected.length?`<details><summary>查看未采用的信号（${rejected.length}）</summary>
+      ${rejected.map(x=>`<span class="chip">${esc(x.name||x)}</span>`).join('')}</details>`:''}
+  </div>`;
+
+  // 相似度 / 引用卡
+  const p=d.plagiarism||{};
+  let extText='未启用';
+  if(p.external_similarity!==null && p.external_similarity!==undefined){
+    extText=Math.round(p.external_similarity*100)+'%';
+  }else if(p.network_note){
+    extText='未完成 — '+p.network_note;
+  }
+  const c=d.citations||{};
+  html+=`<div class="card"><h2>相似度与引用</h2><div class="kv">
+    <div><span class="label">外部文献相似度</span><span class="value">${esc(extText)}</span></div>
+    <div><span class="label">内部段落自重叠</span><span class="value">${Math.round((p.self_overlap||0)*100)}%</span></div>
+    ${c.total_extracted!==undefined?`<div><span class="label">引用提取</span><span class="value">${c.total_extracted} 条（成功 ${c.resolved}）</span></div>`:''}
+  </div></div>`;
+
+  result.innerHTML=html;
+
+  // ECharts 渲染（若 CDN 未加载则保留占位，不崩溃）
+  if(typeof echarts!=='undefined'){
+    // 仪表盘
+    const gaugeEl=document.getElementById('gauge');
+    if(gaugeEl){
+      const gauge=echarts.init(gaugeEl);
+      gauge.setOption({
+        series:[{
+          type:'gauge', min:0, max:100, startAngle:210, endAngle:-30,
+          pointer:{show:true,length:'58%',width:5,itemStyle:{color:'#666'}},
+          progress:{show:true,width:20,roundCap:true,itemStyle:{color}},
+          axisLine:{lineStyle:{width:20,color:[[0.4,'#18864b'],[0.7,'#d98600'],[1,'#dc3f36']]}},
+          axisTick:{show:false}, splitLine:{show:false}, axisLabel:{show:false},
+          detail:{formatter:'{value}%',fontSize:42,fontWeight:700,color,offsetCenter:[0,'12%']},
+          data:[{value:pct}]
+        }]
+      });
+    }
+    // 雷达图
+    const radarEl=document.getElementById('radar');
+    if(radarEl){
+      const radarData=(adopted||[]).slice().sort((a,b)=>(b.score||0)-(a.score||0)).slice(0,5)
+        .map(e=>{let n=e.note||e.name; if(n.length>16)n=n.slice(0,13)+'…'; return {name:n,value:+(e.score||0).toFixed(3)};});
+      const radar=echarts.init(radarEl);
+      radar.setOption({
+        radar:{
+          indicator:radarData.map(x=>({name:x.name,max:1})),
+          shape:'circle', radius:'68%', splitNumber:4,
+          axisName:{color:'#666',fontSize:12,overflow:'truncate',width:80},
+          splitArea:{areaStyle:{color:['rgba(91,83,214,0.02)','rgba(91,83,214,0.05)']}},
+          splitLine:{lineStyle:{color:'rgba(0,0,0,0.07)'}},
+          axisLine:{lineStyle:{color:'rgba(0,0,0,0.1)'}}
+        },
+        series:[{
+          type:'radar',
+          data:[{value:radarData.map(x=>x.value),name:'AI 特征强度',
+            areaStyle:{color:'rgba(220,63,54,0.26)'},
+            lineStyle:{color,width:2},itemStyle:{color},symbol:'circle',symbolSize:6}]
+        }]
+      });
+    }
+    window.addEventListener('resize',()=>{
+      [document.getElementById('gauge'),document.getElementById('radar')].forEach(el=>{
+        if(el){const inst=echarts.getInstanceByDom(el); if(inst)inst.resize();}
+      });
+    });
+  }
+}
+</script>
+</body>
+</html>

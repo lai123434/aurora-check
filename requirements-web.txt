@@ -1,0 +1,6 @@
+# Web 界面依赖（可选）
+-r requirements.txt
+fastapi>=0.100
+uvicorn>=0.23
+pydantic>=2.0
+python-multipart>=0.0.6

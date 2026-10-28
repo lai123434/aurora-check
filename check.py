@@ -24,6 +24,7 @@ import aurora_check as ac
 import forensic as fr
 import verify as vf
 import teacher as tc
+import persona as ps
 
 DOI_IN_TEXT = re.compile(r"\b10\.\d{4,9}/[-._;()/:A-Za-z0-9]+\b")
 
@@ -52,7 +53,8 @@ def _tier_cn(t: str) -> str:
             "审稿强度存疑": "⚠️ 审稿强度存疑"}.get(t, "未知")
 
 
-def render_paper(path: str, do_check_ai: bool = True, do_forensic: bool = True) -> dict:
+def render_paper(path: str, do_check_ai: bool = True, do_forensic: bool = True,
+                 mode: str = "normal") -> dict:
     text = extract_text(path)
     name = os.path.basename(path)
 
@@ -61,6 +63,7 @@ def render_paper(path: str, do_check_ai: bool = True, do_forensic: bool = True) 
         "chars": len(text),
         "dois": [],
         "ai": None,
+        "plagiarism": None,
         "forensic": None,
         "warnings": [],
     }
@@ -86,17 +89,60 @@ def render_paper(path: str, do_check_ai: bool = True, do_forensic: bool = True) 
 
     # ---- 3. AI 痕迹 ----
     if do_check_ai:
-        rep = ac.run_check(text=text)
+        rep = ac.run_check(text=text, mode=mode)
         if rep.ai:
+            # 「为什么是这个分」的证据链：不能只给一个数字。
+            # 取贡献最大的若干引擎及其人类可读释义（ENGINE_SPEC 的 note），
+            # 让用户能复核「这条凭什么说像 AI」。
+            final = rep.ai.ai_probability
+            top = []
+            for e in rep.ai.adopted_engines:
+                name = e["name"]
+                spec = getattr(ac, "ENGINE_SPEC", {}).get(name)
+                note = spec[2] if spec else ""
+                top.append({
+                    "name": name,
+                    "score": e["score"],
+                    "weight": e["weight"],
+                    "lift": e["weight"] * (e["score"] - final),
+                    "note": e.get("note") or (spec[2] if spec else ""),
+                })
+            top.sort(key=lambda x: abs(x["lift"]), reverse=True)
             result["ai"] = {
                 "score": rep.ai.ai_probability,
                 "label": rep.ai.label,
                 "confidence": rep.ai.confidence,
+                "mode": rep.ai.mode,
+                "student_verdict": rep.ai.student_verdict,
+                "high_pressure_warning": rep.ai.high_pressure_warning,
                 "rewrite_hint": rep.ai.rewrite_hint,
                 "adopted": len(rep.ai.adopted_engines),
+                "method": rep.ai.method,
+                "top": top,
+                "ml_detail": rep.ai.ml_detail,
+                "ml_note": rep.ai.ml_note,
+                "rejected": rep.ai.rejected_engines,
+                "conflicting": rep.ai.conflicting_engines,
+                "flagged": rep.ai.flagged_sentences,
+                # 可解释性：终分的推导步骤 + 主导信号
+                "aggregation": rep.ai.aggregation,
+                "stat_mean": rep.ai.stat_mean,
+                "primary_score": rep.ai.primary_score,
+                # 透明度：本次未参与检测的引擎及原因
+                "missing": rep.ai.missing_engines,
             }
         else:
             result["ai"] = {"error": rep.note}
+
+        # ---- 3.5 相似度：内部自重叠 + Crossref 外部查重 ----
+        if rep.plagiarism:
+            p = rep.plagiarism
+            result["plagiarism"] = {
+                "external_similarity": p.external_similarity,
+                "self_overlap": p.self_overlap,
+                "external_matches": p.external_matches,
+                "network_note": p.network_note,
+            }
 
     # ---- 4. 文档取证：元数据 / 引用一致性 / 结构同构 ----
     if do_forensic and path.lower().endswith(".docx"):
@@ -176,14 +222,106 @@ def render_markdown(rows: list) -> str:
         else:
             L.append("### DOI 核验\n- 未找到 DOI")
 
+        # 相似度（内部自重叠 + Crossref 外部查重）
+        pl = r.get("plagiarism")
+        if pl:
+            L.append("\n### 相似度")
+            if pl.get("external_similarity") is not None:
+                L.append(f"- 外部文献相似度 **{pl['external_similarity']:.1%}**"
+                         f"（通过 Crossref 学术库比对）")
+                for m in (pl.get("external_matches") or []):
+                    L.append(f"  - ⚠️ 疑似句：\"{m['sentence'][:70]}...\"")
+                    L.append(f"    ↳ 可能出自《{m['title']}》 ({m['doi']})")
+                if not pl.get("external_matches"):
+                    L.append("  - 未发现明显匹配的文献")
+            else:
+                if pl.get("network_note"):
+                    L.append(f"- 外部文献相似度：未完成 — {pl['network_note']}")
+                else:
+                    L.append("- 外部文献相似度：未启用")
+            L.append(f"- 文档内部段落自重叠：{pl.get('self_overlap', 0):.2%}")
+
         # AI
         if r["ai"] and "score" in r["ai"]:
             a = r["ai"]
             L.append("\n### AI 痕迹")
-            L.append(f"- 特征强度 **{a['score']:.0%}**（{a['label']}，置信度 {a['confidence']}）")
-            L.append(f"- 采纳引擎 {a['adopted']} 个")
+            # —— 自检找茬（strict）模式：报告顶部先吼高压预警 ——
+            if a.get("high_pressure_warning"):
+                L.append("")
+                L.append(f"> {a['high_pressure_warning']}")
+            _mode_tag = "　🧨 严苛模式" if a.get("mode") == "strict" else ""
+            L.append(f"- 特征强度 **{a['score']:.0%}**（{a['label']}，置信度 {a['confidence']}，"
+                     f"采纳引擎 {a['adopted']} 个）{_mode_tag}")
+            if a.get("student_verdict"):
+                L.append(f"- **给你（学生）的解读：** {a['student_verdict']}")
+
+            # —— 终分是怎么来的（可解释性：先给算式，再给证据）——
+            if a.get("aggregation"):
+                L.append("\n**这个分数是怎么算出来的：**")
+                L.append("")
+                for step in a["aggregation"]:
+                    L.append(f"- {step}")
+                if a.get("mode") == "strict":
+                    L.append("- 判定带（严苛）：`ai` >0.30 · `mixed` 0.15–0.30 · `human` <0.15")
+                else:
+                    L.append("- 判定带：`ai` >0.58 · `mixed` 0.33–0.58 · `human` <0.33")
+
+            # —— 为什么是这个分：列出把分数推向「AI」的主要证据 ——
+            pushers = [t for t in a.get("top", []) if t["lift"] > 0.004]
+            pullers = [t for t in a.get("top", []) if t["lift"] < -0.004]
+            if pushers:
+                L.append("\n**为什么会被判「有 AI 痕迹」——主要证据：**")
+                L.append("")
+                L.append("| 引擎 | 它测什么 | 得分 | 权重 | 把总分推向AI |")
+                L.append("|---|---|---|---|---|")
+                for t in pushers[:8]:
+                    L.append(f"| `{t['name']}` | {t['note'] or '—'} | {t['score']:.2f} | "
+                             f"{t['weight']:.3f} | +{t['lift'] * 100:.1f} 点 |")
+            if pullers:
+                L.append("\n**反方向（把分数压向「像人」）的证据：**")
+                L.append("")
+                L.append("| 引擎 | 它测什么 | 得分 | 权重 | 把总分压向人 |")
+                L.append("|---|---|---|---|---|")
+                for t in pullers[:5]:
+                    L.append(f"| `{t['name']}` | {t['note'] or '—'} | {t['score']:.2f} | "
+                             f"{t['weight']:.3f} | {t['lift'] * 100:.1f} 点 |")
+
+            mld = a.get("ml_detail") or {}
+            if mld.get("scores"):
+                L.append("\n**深度学习检测器分项（交叉验证）：**")
+                for name, v in mld["scores"].items():
+                    L.append(f"- `{name.split('/')[-1]}`：**{v:.0%}**")
+                if a.get("ml_note"):
+                    L.append(f"- ⚠️ {a['ml_note']}")
+                if mld.get("pseudo_perplexity") is not None:
+                    L.append(f"- 伪困惑度原始值：**{mld['pseudo_perplexity']}**"
+                             f"（越低越可预测＝越像 AI；本域实测 AI 约 150–450，真人约 9000+）")
+
+            if a.get("flagged"):
+                L.append("\n**被标为可疑的句子/段落：**")
+                for s in a["flagged"][:6]:
+                    if isinstance(s, dict):
+                        conf = {"high": "🟢", "medium": "🟡"}.get(
+                            s.get("confidence"), "🔴")
+                        L.append(f"- {conf} ({s.get('score', 0):.2f}) "
+                                 f"{s.get('text', '')[:90]}")
+                        if a.get("mode") == "strict" and s.get("strategy"):
+                            L.append(f"  ↳ 怎么改：{s['strategy']}")
+
+            if a.get("rejected"):
+                L.append("\n<details><summary>未参与投票的引擎（及其原因）</summary>\n")
+                for x in a["rejected"][:12]:
+                    L.append(f"- `{x['name']}`：{x['reason']}")
+                L.append("\n</details>")
+
+            # —— 透明度：本次没跑起来的引擎，必须明确告诉用户（而非静默跳过）——
+            if a.get("missing"):
+                L.append("\n**本次未参与检测的引擎（缺失或不可用）：**")
+                for m in a["missing"]:
+                    L.append(f"- `{m['name']}`（{m['note']}）→ {m['reason']}")
+
             if a.get("rewrite_hint"):
-                L.append(f"- ⚠️ 疑似改写：{a['rewrite_hint'][:80]}")
+                L.append(f"\n- ⚠️ 疑似改写：{a['rewrite_hint'][:120]}")
             if a["label"] == "ai":
                 ppv = ac._positive_predictive_value()
                 L.append(f"- 若据此认定，命中率约 {ppv:.0%}"
@@ -232,6 +370,18 @@ def render_markdown(rows: list) -> str:
     return "\n".join(L)
 
 
+def render_friend_sections(rows: list) -> str:
+    """渲染『第三人格：同学群像』段，供 --friend 时追加到报告末尾。
+
+    委托 persona.render_friend_sections：按 FRIEND_ROLES 顺序取
+    result["friend_reviews"] 里的点评渲染；缺某角色则输出其已填充提示词。
+    """
+    parts = ["\n---\n"]
+    for r in rows:
+        parts.append(ps.render_friend_sections(r))
+    return "\n".join(parts)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("mode", choices=["paper", "doi", "text", "batch"])
@@ -243,6 +393,13 @@ def main():
     ap.add_argument("--teacher", action="store_true",
                     help="在报告末尾追加 rubric 评分表（教师人工复核要点），"
                          "供 academic-english-teacher 人设做最终判断")
+    ap.add_argument("--friend", action="store_true",
+                    help="在报告末尾追加『第三人格：同学/好朋友』点评。"
+                         "若结果已注入 friend 字段（score + review）则渲染正文，"
+                         "否则输出已填充好的提示词，交给 LLM/agent 回填")
+    ap.add_argument("--strict", action="store_true",
+                    help="自检找茬（严苛）模式：取消宽容逻辑，均值>30% 直接标红，"
+                         "并附逐句修改策略与高压预警。定位是学生的『排雷工具』。")
     a = ap.parse_args()
 
     if a.mode == "doi":
@@ -253,7 +410,8 @@ def main():
         return
 
     if a.mode == "text":
-        rep = ac.run_check(text=extract_text(a.target))
+        rep = ac.run_check(text=extract_text(a.target),
+                           mode=("strict" if a.strict else "normal"))
         print(json.dumps(rep.to_dict(), ensure_ascii=False, indent=2) if a.json
               else rep.to_markdown())
         return
@@ -265,11 +423,14 @@ def main():
         print("没有找到可处理的文件")
         sys.exit(1)
 
-    rows = [render_paper(f, do_check_ai=not a.no_ai, do_forensic=not a.no_forensic)
+    rows = [render_paper(f, do_check_ai=not a.no_ai, do_forensic=not a.no_forensic,
+                         mode=("strict" if a.strict else "normal"))
             for f in files]
     md = render_markdown(rows)
     if a.teacher and not a.json:
         md += tc.render_teacher_section(rows)
+    if a.friend and not a.json:
+        md += render_friend_sections(rows)
     print(json.dumps(rows, ensure_ascii=False, indent=2) if a.json
           else "# Aurora Check · 论文核查\n" + md)
 

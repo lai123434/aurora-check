@@ -17,6 +17,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import math
 import os
@@ -25,11 +26,31 @@ import socket
 import statistics
 import subprocess
 import sys
+import threading
 import zlib
 import urllib.parse
+import urllib.request
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
+from contextvars import ContextVar
 from dataclasses import dataclass, field, asdict
-from typing import List, NamedTuple, Optional
+from functools import lru_cache
+from typing import Dict, List, NamedTuple, Optional, Tuple
+
+from dictionaries import (
+    _AI_FORMULAIC_MARKERS,
+    _TRANSITION_WORDS,
+    _FILLER_PATTERNS,
+    _AI_MARKERS_WEIGHTED,
+    _HEDGING_PHRASES,
+    _BALANCE_PATTERNS,
+    _POSITIVE_WORDS,
+    _NEGATIVE_WORDS,
+    _ACADEMIC_CONNECTORS,
+    _AI_CHINESE_MARKERS,
+    _ZH_TEMPLATE,
+)
+
 
 # ------------------------------------------------------------------
 # HuggingFace 默认短超时。
@@ -74,13 +95,32 @@ class AIResult:
     adopted_engines: list = field(default_factory=list)   # 参与加权的引擎
     rejected_engines: list = field(default_factory=list)  # 被弃用的引擎及原因
     rewrite_hint: str = ""           # 改写嫌疑提示（非空表示命中）
+    ml_detail: dict = field(default_factory=dict)   # 各 ML 检测器分数 {name: score}
+    ml_disagreement: bool = False    # 多检测器强烈分歧（可能已被绕过）
+    ml_note: str = ""                # 多检测器分歧说明
+    # —— 可解释性：终分是怎么算出来的、谁主导 ——
+    stat_mean: float = 0.0           # 纯统计引擎加权均值
+    primary_score: Optional[float] = None  # 主力 ML 检测器分数
+    aggregation: list = field(default_factory=list)  # 判定算式步骤（人类可读）
+    # —— 透明度：本次未能参与检测的引擎及原因（此前静默跳过，现写进报告）——
+    missing_engines: list = field(default_factory=list)
+    # —— 自检找茬（Strict）模式 ——
+    mode: str = "normal"                 # normal / strict
+    student_verdict: str = ""            # 向学生解读的五级判定（安全/危险/致命…）
+    high_pressure_warning: str = ""      # 高压预警（strict 下 AI 率>40% 时吼出来）
 
 
 @dataclass
 class PlagiarismResult:
-    external_similarity: float  # 0~1
-    self_overlap: float          # 0~1
-    matched_excerpts: list = field(default_factory=list)
+    # 外部相似度：接入 Crossref 学术库做关键词级比对（非文本级抄袭鉴定）。
+    # None 有三种含义，靠 network_note 区分：未启用 / 断网 / 无足够长句。
+    # 此前这里写死 0.0 会让调用方误以为「查过外部库、相似度为 0」，
+    # 属名实不符；现用 None + network_note 显式区分「没查」与「查了命中 0」。
+    external_similarity: Optional[float] = None   # 0~1；None = 未查/断网
+    self_overlap: float = 0.0                     # 0~1，段落自重叠（词袋余弦）
+    matched_excerpts: list = field(default_factory=list)   # 内部自重叠匹配
+    external_matches: list = field(default_factory=list)   # 外部匹配（Crossref）
+    network_note: str = ""                        # 网络状态/跳过原因说明
 
 
 @dataclass
@@ -133,11 +173,16 @@ class CheckReport:
         if self.ai:
             ai = self.ai
             lines.append("## AI 检测\n")
+            # —— 自检找茬（strict）模式：报告顶部先吼高压预警 ——
+            if getattr(ai, "high_pressure_warning", ""):
+                lines.append(f"### {ai.high_pressure_warning}\n")
             lines.append(f"- **综合判定：** {_label_to_cn(ai.label)}")
             # 「概率」这个词是误导：它是多个信号的加权强度，不是校准过的发生概率。
             # 统计审慎的视角下必须改口，否则用户会把 73% 读成「73% 的可能性是 AI」。
             lines.append(f"- **AI 特征强度：** {ai.ai_probability:.1%}"
                          f"　（多个信号的加权结果，非发生概率）")
+            if getattr(ai, "student_verdict", ""):
+                lines.append(f"- **给你（学生）的解读：** {ai.student_verdict}")
             lines.append(f"- **检测方法：** {ai.method}\n")
             _conf_cn = {"high": "高", "medium": "中", "low": "低"}.get(ai.confidence, ai.confidence)
             if ai.label == "ai":
@@ -173,10 +218,16 @@ class CheckReport:
                     lines.append(f"- {e['name']}：{e['reason']}")
                 lines.append("\n</details>\n")
             if ai.flagged_sentences:
+                _strict_mode = getattr(ai, "mode", "normal") == "strict"
                 lines.append("- **高风险句（Top 5）：**")
                 for s in ai.flagged_sentences[:5]:
                     confidence_icon = "🟢" if s.get("confidence") == "high" else ("🟡" if s.get("confidence") == "medium" else "🔴")
                     lines.append(f"  - {confidence_icon} ({s['score']:.2f}) {s['text'][:80]}...")
+                    if _strict_mode and s.get("strategy"):
+                        lines.append(f"    ↳ 怎么改：{s['strategy']}")
+                    if _strict_mode and s.get("rewrite_suggestion"):
+                        lines.append(f"    ↳ 修改建议：<span style='color:#27ae60'>"
+                                     f"{s['rewrite_suggestion']}</span>")
                 lines.append("")
                 lines.append("  - 🟢 高确信 | 🟡 中等确信 | 🔴 低确信（引擎分歧大）")
                 lines.append("")
@@ -184,9 +235,21 @@ class CheckReport:
         # 相似度
         if self.plagiarism:
             p = self.plagiarism
-            lines.append("## 相似度 / 查重\n")
-            lines.append(f"- **外部相似度：** {p.external_similarity:.2%}")
-            lines.append(f"- **章节自重叠：** {p.self_overlap:.2%}\n")
+            lines.append("## 相似度\n")
+            if p.external_similarity is not None:
+                lines.append(f"- **外部文献相似度：** {p.external_similarity:.1%}"
+                             f"（通过 Crossref 学术库比对）")
+                for m in p.external_matches:
+                    lines.append(f"  - ⚠️ 疑似句：\"{m['sentence'][:70]}...\"")
+                    lines.append(f"    ↳ 可能出自《{m['title']}》 ({m['doi']})")
+                if not p.external_matches:
+                    lines.append("  - 未发现明显匹配的文献")
+            else:
+                if p.network_note:
+                    lines.append(f"- **外部文献相似度：** 未完成 — {p.network_note}")
+                else:
+                    lines.append("- **外部文献相似度：** 未启用（联网查重默认关闭）")
+            lines.append(f"- **文档内部段落自重叠：** {p.self_overlap:.2%}\n")
 
         # 引用验证
         if self.citations:
@@ -209,7 +272,13 @@ class CheckReport:
         return "\n".join(lines)
 
     def to_html(self, output_path: str = "") -> str:
-        """生成 Turnitin 风格的 HTML 报告"""
+        """生成可视化交互式 HTML 报告（ECharts 雷达图 + 仪表盘 + 高危句高亮气泡）。
+
+        相比旧版静态表格，新增：
+          - 顶部 ECharts 仪表盘：按 ai_probability 显示红/橙/绿
+          - ECharts 雷达图：排名前 5 的引擎得分，一眼看出哪项指标把分拉高
+          - 高危句红色下划线 + 悬停气泡展示「怎么改」策略（strict 模式）
+        """
         # 输入不合格：只输出警告页，不再渲染任何分数
         if self.note and not self.ai:
             html = f"""<!DOCTYPE html>
@@ -239,106 +308,165 @@ class CheckReport:
                     f.write(html)
             return html
 
-
-        ai_prob = self.ai.ai_probability if self.ai else 0
+        ai = self.ai
+        ai_prob = ai.ai_probability if ai else 0
         ai_pct = int(round(ai_prob * 100))
 
-        # v2：改用与 to_markdown 相同的 label，避免同一份结果
-        # 在 Markdown 里说"人工写作"、在 HTML 里说"混合"。
+        # 与 to_markdown 共用同一套 label 文案，避免两份报告各说各话
         _LAB = {"ai": ("#e74c3c", "AI 特征显著"),
                 "mixed": ("#f39c12", "特征混杂"),
                 "human": ("#27ae60", "未见明显 AI 特征")}
-        _key = self.ai.label if self.ai else "human"
+        _key = ai.label if ai else "human"
         color, label = _LAB.get(_key, ("#f39c12", "混合（人机各半）"))
 
-        # 引擎评分行
+        # —— strict 模式专属：向学生解读 / 高压预警 ——
+        student_verdict = getattr(ai, "student_verdict", "") if ai else ""
+        high_pressure_warning = getattr(ai, "high_pressure_warning", "") if ai else ""
+        _mode = getattr(ai, "mode", "normal") if ai else "normal"
+
+        # —— 雷达图数据：取得分最高的前 5 个引擎，展示「哪项指标把分拉高」——
+        # 显示名优先用中文释义（note），没有则退回引擎名。
+        radar_data = []
+        if ai:
+            if ai.adopted_engines:
+                pool = sorted(ai.adopted_engines,
+                              key=lambda e: e.get("score", 0), reverse=True)
+            else:
+                pool = [{"name": k, "score": v, "note": ""}
+                        for k, v in sorted(ai.engine_scores.items(),
+                                           key=lambda kv: kv[1], reverse=True)]
+            for e in pool[:5]:
+                _disp = (e.get("note") or e["name"])
+                if len(_disp) > 16:
+                    _disp = _disp[:13] + "…"
+                radar_data.append({
+                    "name": _disp,
+                    "value": round(float(e["score"]), 3),
+                })
+        radar_json = json.dumps(radar_data, ensure_ascii=False)
+
+        # —— 引擎评分表 + 分歧面板（保留旧版逻辑，仅美化）——
         engine_rows = ""
-        if self.ai and self.ai.engine_scores:
-            scores = list(self.ai.engine_scores.values())
+        if ai and ai.engine_scores:
+            scores = list(ai.engine_scores.values())
             avg_score = sum(scores) / len(scores) if scores else 0
             variance = sum((s - avg_score) ** 2 for s in scores) / len(scores) if scores else 0
             std_dev = variance ** 0.5
-
-            # 引擎分歧统计
             high_confidence = sum(1 for s in scores if s > 0.7 or s < 0.3)
-            low_confidence = len(scores) - high_confidence
             consensus = "高共识" if std_dev < 0.2 else "中分歧" if std_dev < 0.35 else "高分歧"
 
-            _adopted = self.ai.adopted_engines or [
-                {"name": k, "score": v, "weight": 0} for k, v in self.ai.engine_scores.items()]
+            _adopted = ai.adopted_engines or [
+                {"name": k, "score": v, "weight": 0, "note": ""}
+                for k, v in ai.engine_scores.items()]
             for e in _adopted:
-                name, score = e["name"], e["score"]
+                name = e.get("note") or e["name"]
+                score = e["score"]
                 pct = int(round(score * 100))
                 bar_color = "#e74c3c" if score > 0.62 else "#f39c12" if score > 0.35 else "#27ae60"
                 engine_rows += f"""
                 <tr>
                     <td>{name}<span style="color:#aaa;font-size:11px;"> ×{e.get('weight', 0)}</span></td>
-                    <td style="width: 200px;">
-                        <div style="background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+                    <td style="width: 220px;">
+                        <div style="background: #eee; height: 18px; border-radius: 9px; overflow: hidden;">
                             <div style="background: {bar_color}; width: {pct}%; height: 100%;"></div>
                         </div>
                     </td>
                     <td style="text-align: right; font-weight: bold;">{pct}%</td>
                 </tr>
                 """
-            if self.ai.rejected_engines:
+            if ai.rejected_engines:
                 _rej = "".join(
                     f'<span style="display:inline-block;margin:2px 6px 2px 0;padding:2px 8px;'
                     f'background:#eee;border-radius:10px;font-size:11px;color:#888;">'
                     f'{x["name"]}</span>'
-                    for x in self.ai.rejected_engines)
+                    for x in ai.rejected_engines)
                 engine_rows += (f'<tr><td colspan="3" style="padding-top:16px;color:#888;font-size:12px;">'
                                 f'已弃用（不参与计算）：<br>{_rej}</td></tr>')
 
-            # 引擎分歧面板
             divergence_panel = f"""
             <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                 <h3 style="font-size: 14px; color: #666; margin-bottom: 10px;">引擎分歧分析</h3>
-                <div style="display: flex; gap: 20px; font-size: 13px;">
-                    <div>
-                        <span style="color: #666;">共识强度:</span>
-                        <span style="font-weight: bold; color: {color};">{consensus}</span>
-                    </div>
-                    <div>
-                        <span style="color: #666;">标准差:</span>
-                        <span style="font-weight: bold;">{std_dev:.3f}</span>
-                    </div>
-                    <div>
-                        <span style="color: #666;">高确信引擎:</span>
-                        <span style="font-weight: bold;">{high_confidence}/{len(scores)}</span>
-                    </div>
+                <div style="display: flex; gap: 20px; font-size: 13px; flex-wrap: wrap;">
+                    <div><span style="color: #666;">共识强度:</span>
+                        <span style="font-weight: bold; color: {color};">{consensus}</span></div>
+                    <div><span style="color: #666;">标准差:</span>
+                        <span style="font-weight: bold;">{std_dev:.3f}</span></div>
+                    <div><span style="color: #666;">高确信引擎:</span>
+                        <span style="font-weight: bold;">{high_confidence}/{len(scores)}</span></div>
                 </div>
             </div>
             """
         else:
             divergence_panel = ""
 
-        # 高风险句
+        # —— 高危句：红色下划线 + 悬停气泡展示「怎么改」+ 绿色改写建议 ——
         flagged_html = ""
-        if self.ai and self.ai.flagged_sentences:
-            for s in self.ai.flagged_sentences[:10]:
+        if ai and ai.flagged_sentences:
+            for s in ai.flagged_sentences[:10]:
                 score_pct = int(s["score"] * 100)
-                # 置信度区间：±15%
-                low = max(0, score_pct - 15)
-                high = min(100, score_pct + 15)
-                bg = "rgba(231, 76, 60, 0.15)" if score_pct > 50 else "rgba(243, 156, 18, 0.15)" if score_pct > 20 else "rgba(39, 174, 96, 0.15)"
+                strategy = s.get("strategy", "")
+                rewrite = s.get("rewrite_suggestion", "")
+                # 气泡：strict 有 strategy/rewrite 就展示「怎么改 + 修改建议」，
+                # 否则退回展示嫌疑度说明
+                if strategy or rewrite:
+                    _bubble_parts = []
+                    if strategy:
+                        _bubble_parts.append(f"怎么改：{strategy}")
+                    if rewrite:
+                        _bubble_parts.append(
+                            f"<span style='color:#7be38a;'>修改建议：{rewrite}</span>")
+                    bubble = "<br>".join(_bubble_parts)
+                else:
+                    bubble = f"AI 嫌疑度 {score_pct}%，建议人工复核这句"
+                # 句子下方常驻的绿色改写建议（不用悬停，直接可见）
+                rewrite_html = ""
+                if rewrite:
+                    rewrite_html = (f"<div class='rewrite'>修改建议：{rewrite}</div>")
                 flagged_html += f"""
-                <div style="background: {bg}; padding: 12px; margin: 8px 0; border-radius: 8px; border-left: 4px solid {color};">
-                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
-                        AI 嫌疑度: {score_pct}%
-                        <span style="color: #999; margin-left: 10px;">置信区间: [{low}% - {high}%]</span>
-                    </div>
-                    <div>{s['text']}</div>
+                <div class="sentence">
+                    <span class="s-text"><mark>{s['text']}</mark></span>
+                    <span class="bubble">{bubble}</span>
+                    {rewrite_html}
                 </div>
                 """
+        if not flagged_html:
+            flagged_html = '<p style="color: #999;">没有检测到高风险句子</p>'
 
         _conf_map = {"high": "高", "medium": "中", "low": "低"}
-        _conf = _conf_map.get(self.ai.confidence, "—") if self.ai else "—"
+        _conf = _conf_map.get(ai.confidence, "—") if ai else "—"
         _hint_html = ""
-        if self.ai and self.ai.rewrite_hint:
+        if ai and ai.rewrite_hint:
             _hint_html = (f'<div style="margin-top:14px;padding:12px 16px;background:#fff8e1;'
                           f'border-left:4px solid #f39c12;border-radius:6px;font-size:13px;'
-                          f'color:#8a6d3b;text-align:left;">⚠️ 改写嫌疑：{self.ai.rewrite_hint}</div>')
+                          f'color:#8a6d3b;text-align:left;">⚠️ 改写嫌疑：{ai.rewrite_hint}</div>')
+
+        # —— 高压预警横幅（strict 且 >40%）——
+        warning_html = ""
+        if high_pressure_warning:
+            warning_html = (f'<div class="warning-banner">{high_pressure_warning}</div>')
+
+        # —— 相似度 / 引用摘要（顺带补全，旧版 HTML 缺失）——
+        plag_html = ""
+        if self.plagiarism:
+            p = self.plagiarism
+            ext = ("未启用" if p.external_similarity is None and not p.network_note
+                   else (f"{p.external_similarity:.1%}" if p.external_similarity is not None
+                         else f"未完成 — {p.network_note}"))
+            plag_html = f"""
+            <div class="mini-card">
+                <div><span class="mini-label">外部文献相似度</span><span class="mini-val">{ext}</span></div>
+                <div><span class="mini-label">内部段落自重叠</span><span class="mini-val">{p.self_overlap:.1%}</span></div>
+            </div>
+            """
+        cite_html = ""
+        if self.citations:
+            c = self.citations
+            cite_html = f"""
+            <div class="mini-card">
+                <div><span class="mini-label">引用提取</span><span class="mini-val">{c.total_extracted} 条</span></div>
+                <div><span class="mini-label">解析成功</span><span class="mini-val">{c.resolved} 条</span></div>
+            </div>
+            """
 
         html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -346,40 +474,78 @@ class CheckReport:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>极光查重报告 - Aurora Check</title>
+    <script>__ECHARTS_INLINE__</script>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }}
-        .container {{ max-width: 900px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.1); overflow: hidden; }}
-        .header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }}
-        .header h1 {{ font-size: 32px; margin-bottom: 8px; }}
-        .header p {{ opacity: 0.9; }}
-        .score-section {{ padding: 40px; text-align: center; }}
-        .big-score {{ font-size: 72px; font-weight: bold; color: {color}; }}
-        .score-label {{ font-size: 20px; color: #666; margin-top: 8px; }}
-        .section {{ padding: 30px 40px; border-top: 1px solid #eee; }}
-        .section h2 {{ font-size: 20px; margin-bottom: 20px; color: #333; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+               background: #f0f2f5; padding: 24px; color: #333; }}
+        .container {{ max-width: 960px; margin: 0 auto; background: #fff; border-radius: 16px;
+                     box-shadow: 0 4px 30px rgba(0,0,0,0.08); overflow: hidden; }}
+        .header {{ background: linear-gradient(135deg, #5b6bf5 0%, #8b5cf6 100%); color: #fff;
+                  padding: 36px 40px; text-align: center; }}
+        .header h1 {{ font-size: 28px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }}
+        .header p {{ opacity: 0.9; font-size: 13px; }}
+        .warning-banner {{ margin: 20px 40px 0; padding: 16px 20px; background: #fff1f0;
+                           border: 1px solid #ffa39e; border-left: 5px solid #e74c3c;
+                           border-radius: 8px; color: #cf1322; font-size: 14px; line-height: 1.7; }}
+        .score-section {{ padding: 32px 40px 8px; text-align: center; }}
+        .gauge-wrap {{ width: 100%; height: 230px; }}
+        .score-label {{ font-size: 20px; font-weight: 600; color: {color}; margin-top: 4px; }}
+        .verdict {{ display: inline-block; margin-top: 10px; padding: 6px 18px; border-radius: 20px;
+                    background: {color}; color: #fff; font-size: 14px; font-weight: 600; }}
+        .meta {{ margin-top: 12px; font-size: 12px; color: #999; }}
+        .section {{ padding: 26px 40px; border-top: 1px solid #f0f0f0; }}
+        .section h2 {{ font-size: 18px; margin-bottom: 18px; color: #222; display: flex; align-items: center; gap: 8px; }}
+        .section h2::before {{ content: ''; display: inline-block; width: 4px; height: 18px;
+                                background: linear-gradient(180deg, #5b6bf5, #8b5cf6); border-radius: 2px; }}
+        .radar-wrap {{ width: 100%; height: 340px; }}
         table {{ width: 100%; border-collapse: collapse; }}
-        th, td {{ padding: 10px; text-align: left; border-bottom: 1px solid #eee; }}
-        th {{ font-weight: 600; color: #666; font-size: 14px; }}
-        .footer {{ padding: 20px 40px; background: #f9f9f9; text-align: center; color: #999; font-size: 12px; }}
+        th, td {{ padding: 10px 12px; text-align: left; border-bottom: 1px solid #f0f0f0; font-size: 13px; }}
+        th {{ font-weight: 600; color: #888; }}
+        .sentence {{ position: relative; display: block; padding: 10px 12px; margin: 8px 0;
+                     background: #fffbfb; border-left: 4px solid {color}; border-radius: 6px; }}
+        .s-text mark {{ background: rgba(231, 76, 60, 0.16); color: #c0392b; padding: 0 2px;
+                        text-decoration: underline; text-decoration-color: #e74c3c;
+                        text-decoration-thickness: 2px; text-underline-offset: 3px; }}
+        .bubble {{ display: none; position: absolute; left: 12px; bottom: calc(100% + 8px);
+                   max-width: 420px; background: #333; color: #fff; padding: 8px 12px;
+                   border-radius: 8px; font-size: 12px; line-height: 1.5; z-index: 10;
+                   box-shadow: 0 4px 16px rgba(0,0,0,0.2); }}
+        .bubble::after {{ content: ''; position: absolute; top: 100%; left: 20px;
+                          border: 6px solid transparent; border-top-color: #333; }}
+        .sentence:hover .bubble {{ display: block; }}
+        .rewrite {{ color: #27ae60; font-size: 12px; margin-top: 6px; line-height: 1.5; }}
+        .mini-card {{ display: flex; gap: 40px; flex-wrap: wrap; font-size: 13px; }}
+        .mini-label {{ color: #888; margin-right: 8px; }}
+        .mini-val {{ font-weight: 700; color: #222; }}
+        .footer {{ padding: 20px 40px; background: #fafafa; text-align: center; color: #aaa;
+                   font-size: 12px; }}
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>极光查重报告</h1>
-            <p>Aurora Check - AI 文本检测</p>
+            <p>Aurora Check · AI 文本检测{'（严苛找茬模式）' if _mode == 'strict' else ''}</p>
         </div>
 
+        {warning_html}
+
         <div class="score-section">
-            <div class="big-score">{ai_pct}%</div>
+            <div id="gauge" class="gauge-wrap"></div>
             <div class="score-label">{label}</div>
-            <div style="margin-top:6px;font-size:12px;color:#999;">特征强度，非发生概率；不构成抄袭认定</div>
-            <div style="margin-top: 10px; font-size: 13px; color: #888;">
-                置信度：{_conf}　·　采纳引擎：{len(self.ai.adopted_engines) if self.ai else 0}/{len(self.ai.engine_scores) if self.ai else 0}
+            {f'<div class="verdict">{student_verdict}</div>' if student_verdict else ''}
+            <div class="meta">
+                特征强度非发生概率，不构成抄袭认定 · 置信度 {_conf} ·
+                采纳引擎 {len(ai.adopted_engines) if ai else 0}/{len(ai.engine_scores) if ai else 0}
             </div>
             {_hint_html}
-            <p style="margin-top: 20px; color: #666; font-size: 14px;">正文长度: {self.text_length} 字符</p>
+            <p style="margin-top: 10px; color: #bbb; font-size: 12px;">正文长度: {self.text_length} 字符</p>
+        </div>
+
+        <div class="section">
+            <h2>引擎得分雷达图（前 5 项）</h2>
+            <div id="radar" class="radar-wrap"></div>
         </div>
 
         <div class="section">
@@ -387,34 +553,117 @@ class CheckReport:
             {divergence_panel}
             <table>
                 <thead>
-                    <tr>
-                        <th>引擎名称</th>
-                        <th>评分</th>
-                        <th style="text-align: right;">百分比</th>
-                    </tr>
+                    <tr><th>引擎名称</th><th>评分</th><th style="text-align: right;">百分比</th></tr>
                 </thead>
-                <tbody>
-                    {engine_rows}
-                </tbody>
+                <tbody>{engine_rows}</tbody>
             </table>
         </div>
 
         <div class="section">
-            <h2>高风险句（AI 嫌疑）</h2>
-            {flagged_html if flagged_html else '<p style="color: #999;">没有检测到高风险句子</p>'}
+            <h2>高风险句（悬停查看怎么改）</h2>
+            {flagged_html}
+        </div>
+
+        <div class="section">
+            <h2>相似度与引用</h2>
+            {plag_html}{cite_html}
         </div>
 
         <div class="footer">
-            由极光查重 (Aurora Check v2) 生成 · 共 29 个引擎，{len(self.ai.adopted_engines) if self.ai else 0} 个参与加权
+            由极光查重 (Aurora Check) 生成 · {len(ai.adopted_engines) if ai else 0} 个引擎参与加权
         </div>
     </div>
+
+    <script>
+        (function () {{
+            // —— 仪表盘 ——
+            var gauge = echarts.init(document.getElementById('gauge'));
+            gauge.setOption({{
+                series: [{{
+                    type: 'gauge',
+                    min: 0, max: 100,
+                    startAngle: 210, endAngle: -30,
+                    pointer: {{ show: true, length: '58%', width: 5, itemStyle: {{ color: '#666' }} }},
+                    progress: {{ show: true, width: 20, roundCap: true, itemStyle: {{ color: '{color}' }} }},
+                    axisLine: {{ lineStyle: {{ width: 20, color: [[0.4, '#27ae60'], [0.7, '#f39c12'], [1, '#e74c3c']] }} }},
+                    axisTick: {{ show: false }},
+                    splitLine: {{ show: false }},
+                    axisLabel: {{ show: false }},
+                    detail: {{ formatter: '{{value}}%', fontSize: 44, fontWeight: 700,
+                               color: '{color}', offsetCenter: [0, '12%'] }},
+                    data: [{{ value: {ai_pct} }}]
+                }}]
+            }});
+
+            // —— 雷达图（前 5 引擎）——
+            var radarData = {radar_json};
+            var radar = echarts.init(document.getElementById('radar'));
+            radar.setOption({{
+                radar: {{
+                    indicator: radarData.map(function (d) {{ return {{ name: d.name, max: 1 }}; }}),
+                    shape: 'circle',
+                    radius: '68%',
+                    splitNumber: 4,
+                    axisName: {{ color: '#666', fontSize: 12, overflow: 'truncate', width: 80 }},
+                    splitArea: {{ areaStyle: {{ color: ['rgba(91,107,245,0.02)', 'rgba(91,107,245,0.05)'] }} }},
+                    splitLine: {{ lineStyle: {{ color: 'rgba(0,0,0,0.07)' }} }},
+                    axisLine: {{ lineStyle: {{ color: 'rgba(0,0,0,0.1)' }} }}
+                }},
+                series: [{{
+                    type: 'radar',
+                    data: [{{
+                        value: radarData.map(function (d) {{ return d.value; }}),
+                        name: 'AI 特征强度',
+                        areaStyle: {{ color: 'rgba(231,76,60,0.28)' }},
+                        lineStyle: {{ color: '{color}', width: 2 }},
+                        itemStyle: {{ color: '{color}' }},
+                        symbol: 'circle', symbolSize: 6
+                    }}]
+                }}]
+            }});
+
+            window.addEventListener('resize', function () {{
+                gauge.resize(); radar.resize();
+            }});
+        }})();
+    </script>
 </body>
 </html>
 """
+        # —— 离线内联 ECharts：把本地 echarts.min.js 塞进 <script>，断网也能渲染 ——
+        _echarts_js = _read_echarts_inline()
+        if _echarts_js:
+            html = html.replace("__ECHARTS_INLINE__", _echarts_js)
+        else:
+            # 读不到本地文件时降级回 CDN（保留联网可用性）
+            html = html.replace(
+                "<script>__ECHARTS_INLINE__</script>",
+                '<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>')
         if output_path:
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html)
         return html
+
+
+_ECHARTS_INLINE_CACHE = None  # 内联 ECharts 内容缓存（避免每次 to_html 都重读 1MB 文件）
+
+
+def _read_echarts_inline() -> str:
+    """读取本地 static/echarts.min.js 内容用于内联（带内存缓存）。
+
+    断网也能渲染雷达图/仪表盘；读不到文件时返回空串，调用方降级回 CDN。
+    """
+    global _ECHARTS_INLINE_CACHE
+    if _ECHARTS_INLINE_CACHE:
+        return _ECHARTS_INLINE_CACHE
+    _base = os.path.dirname(os.path.abspath(__file__))
+    _path = os.path.join(_base, "static", "echarts.min.js")
+    try:
+        with open(_path, encoding="utf-8") as f:
+            _ECHARTS_INLINE_CACHE = f.read()
+    except OSError:
+        _ECHARTS_INLINE_CACHE = ""
+    return _ECHARTS_INLINE_CACHE
 
 
 def _label_to_cn(label: str) -> str:
@@ -423,6 +672,203 @@ def _label_to_cn(label: str) -> str:
         "mixed": "特征混杂",
         "ai": "AI 特征显著",
     }.get(label, label)
+
+
+# ============================================================
+# 自检找茬（Strict）模式：学生向解读 / 高压预警 / 修改策略
+# ============================================================
+
+# 高级词汇（Turnitin 爱抓、AI 爱用的"假学术腔"，学生稿里一出现就该改）
+_STRICT_ADVANCED_WORDS = (
+    "delve", "moreover", "furthermore", "additionally", "consequently",
+    "nevertheless", "nonetheless", "utilize", "leverage", "facilitate",
+    "foster", "comprehensive", "crucial", "significant", "subsequently",
+    "therefore", "thus", "hence", "notably", "overall",
+    "underscore", "highlight", "demonstrate", "elucidate",
+    "paramount", "pivotal", "robust", "multifaceted", "holistic",
+)
+
+# 四六级/模板句式开头（一眼"背模板"）
+_STRICT_TEMPLATE_STARTERS = (
+    "firstly", "secondly", "thirdly", "finally", "in conclusion",
+    "in summary", "to sum up", "in this essay", "this essay will",
+    "it is important to note", "it is worth noting", "as mentioned above",
+    "in my opinion", "from my perspective", "with the development of",
+    "as we all know", "it goes without saying", "last but not least",
+)
+
+
+def _student_verdict(score: float, label: str) -> str:
+    """把机器分翻译成学生听得懂的五级判定（自检视角）。
+
+    阈值刻意比 normal 判定的三档（human/mixed/ai）更早拉响警报：
+    这是"排雷工具"，宁可把真人误判成危险（去改），也不能漏掉 Turnitin 会抓的。
+    """
+    if score < 0.20:
+        return "安全（你自己写的）"
+    if score < 0.33:
+        return "基本安全（轻微润色，别再让 AI 多改）"
+    if score < 0.45:
+        return "危险（会被老师怀疑用了 AI）"
+    if score < 0.60:
+        return "高危（重度辅助痕迹，老师大概率怀疑）"
+    return "致命（准备好重写吧）"
+
+
+def _strict_sentence_strategy(sentence: str, text: str,
+                              engine_scores: dict) -> str:
+    """给一条被标红的高风险句，生成一句"怎么改"的策略（strict 模式专属）。
+
+    规则优先级：高级词汇 > 模板句 > 长难句 > 段落节奏。
+    返回空字符串表示"这条不需要额外策略"（但 strict 下通常不会走到）。
+    """
+    low = sentence.lower()
+    # 1) 高级词汇句：Turnitin 最爱抓的"假学术腔"
+    for w in _STRICT_ADVANCED_WORDS:
+        if re.search(r"\b" + re.escape(w) + r"\b", low):
+            return f"含高级词汇「{w}」，这是 Turnitin 高频抓的假学术腔，请换成大白话。"
+    # 2) 模板句式：四六级背模板痕迹
+    for st in _STRICT_TEMPLATE_STARTERS:
+        if low.startswith(st):
+            return "这句话太像四六级模板，请用大白话重写。"
+    # 3) 长难句：机器堆砌感
+    if _word_count(sentence) >= 22:
+        return "这个长难句像机器堆砌，请故意拆成两三个短句。"
+    # 4) 段落节奏：整篇段落长度太均匀（呼吸感缺失）
+    pr = engine_scores.get("paragraph-rhythm")
+    if pr is not None and pr >= 0.6:
+        return "这一段长度太完美了，请故意拆成两个短句，制造人类写作的呼吸感。"
+    return ""
+
+
+# —— 降维改写的同义替换表（Mock 版，不调外部大模型）——
+# 只做「大白话」方向的替换：高级词 → 基础词。绝不把基础词反向升级成高级词，
+# 因为本工具的目标是帮学生把「假学术腔」降回「学生声线」，方向必须单向。
+
+
+def _verb_map(present: str, past: str = "") -> "callable":
+    """生成动词词形映射：s→第三人称单数，ed/d→过去式，ing→进行时。
+
+    让 demonstrate→show 这类替换保持主谓一致（demonstrates→shows），
+    而不是机械地把 demonstrates 砍成 show 造成病句。
+    """
+    def _fn(m):
+        suf = (m.group(1) or "").lower()
+        if suf == "s":
+            return present + "s"
+        if suf in ("ed", "d"):
+            return past or (present + "ed")
+        if suf == "ing":
+            return present + "ing"
+        return present
+    return _fn
+
+
+_REWRITE_SYNONYMS = (
+    # 顺序敏感：delve into 必须先于 delve，否则 "delve into" 会先被拆成 "talk into"
+    (r"(?i)\bdelve into\b", "talk about"),
+    (r"(?i)\bdelve(s|d)?\b", "talk"),
+    (r"(?i)\butiliz(e|es|ed|ing)\b", "use"),
+    (r"(?i)\bleverag(e|es|ed|ing)\b", "use"),
+    (r"(?i)\bfacilitat(e|es|ed|ing)\b", "help"),
+    (r"(?i)\bfoster(s|ed|ing)?\b", "help"),
+    (r"(?i)\bcomprehensive\b", "full"),
+    (r"(?i)\bcrucial\b", "important"),
+    (r"(?i)\bsignificant\b", "important"),
+    (r"(?i)\bparamount\b", "very important"),
+    (r"(?i)\bpivotal\b", "key"),
+    (r"(?i)\brobust\b", "strong"),
+    (r"(?i)\bmultifaceted\b", "many-sided"),
+    (r"(?i)\bholistic\b", "whole"),
+    (r"(?i)\bsubsequently\b", "later"),
+    (r"(?i)\bconsequently\b", "so"),
+    (r"(?i)\btherefore\b", "so"),
+    (r"(?i)\bthus\b", "so"),
+    (r"(?i)\bhence\b", "so"),
+    (r"(?i)\bmoreover\b", "also"),
+    (r"(?i)\bfurthermore\b", "also"),
+    (r"(?i)\badditionally\b", "also"),
+    (r"(?i)\bnotably\b", "also"),
+    (r"(?i)\bnevertheless\b", "but"),
+    (r"(?i)\bnonetheless\b", "but"),
+    (r"(?i)\boverall\b", "main"),
+    (r"(?i)\bunderscore(s|ed|ing|d)?\b", _verb_map("show", "showed")),
+    (r"(?i)\bhighlight(s|ed|ing|d)?\b", _verb_map("show", "showed")),
+    (r"(?i)\bdemonstrate(s|ed|ing|d)?\b", _verb_map("show", "showed")),
+    (r"(?i)\belucidate(s|ed|ing|d)?\b", _verb_map("explain", "explained")),
+)
+
+
+def _mock_rewrite_sentence(sentence: str) -> str:
+    """Mock 版「AI 降维改写」：不调外部大模型，用纯规则把高危句改成大白话。
+
+    给学生一个「直接抄」的参考改写，方向永远是降维到学生声线，不是完美英语。
+    改写规则：
+      1. 高级词汇 → 基础词（delve into→talk about、utilize→use、crucial→important…）
+      2. 模板句首 In my opinion → I think
+      3. 超 20 词的长句 → 在 and/but/so 或逗号处硬拆成两个短句
+
+    返回改写后的句子；若没有任何可改之处（无高级词、非模板开头、不超长），
+    返回空字符串，表示「这句无需改写」——调用方据此决定是否展示建议。
+    """
+    if not sentence:
+        return ""
+    s = sentence.strip()
+    orig_first_upper = s[:1].isupper()
+    changed = False
+
+    # 1) 高级词汇降维（大小写不敏感，逐条替换）
+    for pat, repl in _REWRITE_SYNONYMS:
+        if re.search(pat, s):
+            s = re.sub(pat, repl, s)
+            changed = True
+
+    # 2) 模板句首 In my opinion → I think
+    if re.search(r"(?i)^in my opinion", s):
+        s = re.sub(r"(?i)^in my opinion[,:]?\s*", "I think ", s)
+        changed = True
+
+    # 3) 超 20 词的长句：在 and/but/so 或逗号处硬拆成两个短句
+    if _word_count(s) > 20:
+        m = re.split(r"(?i)(?<=\s)(and|but|so)(?=\s)", s, maxsplit=1)
+        if len(m) == 3 and m[2].strip():
+            # 连接词归第二句开头，避免第一句以 "and." 结尾
+            left = m[0].rstrip()
+            right = f"{m[1]} {m[2].strip()}".strip()
+        elif "," in s:
+            # 没有连词，退回在第一个逗号处拆
+            idx = s.find(",")
+            left = s[:idx + 1].rstrip()
+            right = s[idx + 1:].strip()
+        else:
+            left, right = "", ""
+        if right and len(left.split()) >= 3:
+            left = left.rstrip(",")
+            if not left.endswith((".", "!", "?")):
+                left += "."
+            right = right[0].upper() + right[1:] if right else right
+            s = f"{left} {right}".strip()
+            changed = True
+
+    if not changed:
+        return ""
+    # 替换可能把句首高级词变成小写（如 "Crucial..." → "important..."），恢复大写。
+    if orig_first_upper and s[:1].islower():
+        s = s[0].upper() + s[1:]
+    return s
+
+
+def _high_pressure_warning(score: float) -> str:
+    """strict 模式下，综合 AI 率 > 40% 时在报告顶部吼出来的高压预警。"""
+    if score <= 0.40:
+        return ""
+    return (
+        "⚠️ 极度危险！当前 AI 特征已进入高危区。请立刻检查："
+        "① 段落开头是否镜像（每段都用同一种句式起头）；"
+        "② 第二篇文献是否少了第三个点（rubric 要求 3 点却只写了 2 点）；"
+        "③ 是否有高级词汇（如 delve / moreover / utilize 等假学术腔）。"
+        "改完再跑一遍，直到它吼不出来为止。"
+    )
 
 
 # ============================================================
@@ -469,8 +915,11 @@ def _detect_with_lmscan(text: str) -> Optional[float]:
         if result.returncode == 0:
             data = json.loads(result.stdout)
             return float(data.get("ai_probability", 0.5))
+        _record_gap("lmscan", f"lmscan CLI 返回非零退出码（{result.returncode}）")
+    except FileNotFoundError:
+        _record_gap("lmscan", "未安装 lmscan CLI（可选外部检测器）")
     except Exception:
-        pass
+        _record_gap("lmscan", "lmscan CLI 调用失败")
     return None
 
 
@@ -548,69 +997,7 @@ def _detect_perplexity_burstiness(text: str) -> Optional[float]:
 # lynote 逆向集成的 4 个新信号
 # ============================================================
 
-# AI 常用短语列表（来自 lynote-ai/ai-text-detector 逆向，打磨扩充）
-_AI_FORMULAIC_MARKERS = [
-    # 原有模式
-    r"\bas an ai\b", r"\bi cannot\b", r"\bit is important to note\b",
-    r"\bdelve\b", r"\bnuanced\b", r"\btestament to\b", r"\bunlock\b",
-    r"\bcomprehensive\b", r"\bin conclusion\b", r"\boverall\b",
-    r"\bnot only .* but also\b", r"\bwhile .* it is also\b",
-    r"\bin today's (rapidly )?(changing|evolving)\b",
-    r"\bplays a (crucial|vital|pivotal) role\b",
-    r"\blandscape\b", r"\brealm\b", r"\btapestry\b",
-    # 新增模式
-    r"\bit is worth noting\b", r"\bit is crucial to\b", r"\bit is essential to\b",
-    r"\bit is important to understand\b", r"\bit is worth considering\b",
-    r"\blet's dive in\b", r"\blet's explore\b", r"\blet's take a look\b",
-    r"\bwhen it comes to\b", r"\bin the realm of\b", r"\bin the world of\b",
-    r"\bparadigm shift\b", r"\bgame-changer\b", r"\bcutting-edge\b",
-    r"\bgroundbreaking\b", r"\brevolutionary\b", r"\btransformative\b",
-    r"\bseamless integration\b", r"\bseamless experience\b",
-    r"\buser-friendly\b", r"\bcutting-edge technology\b",
-    r"\bstate-of-the-art\b", r"\bnext-generation\b",
-    # 继续扩充
-    r"\bit is no secret that\b", r"\bit is widely recognized that\b",
-    r"\bit is undeniable that\b", r"\bit is clear that\b",
-    r"\bit is obvious that\b", r"\bit is evident that\b",
-    r"\bwe live in an era\b", r"\bin today's world\b",
-    r"\bas we all know\b", r"\bas you may know\b",
-    r"\bhave you ever wondered\b", r"\bwhat if i told you\b",
-    r"\blet's face it\b", r"\blet's be honest\b",
-    r"\bthe future is\b", r"\bthe possibilities are\b",
-    r"\bthe journey continues\b", r"\bthe story unfolds\b",
-]
 
-# 过渡词列表（来自 lynote 逆向，打磨扩充）
-_TRANSITION_WORDS = [
-    # 原有词
-    "first", "second", "third", "moreover", "furthermore", "however", "therefore",
-    "ultimately", "additionally", "in summary", "in conclusion", "on the other hand",
-    "consequently", "nevertheless", "nonetheless", "thus", "hence",
-    # 新增词
-    "in addition", "besides", "also", "what's more",
-    "in contrast", "conversely", "on the contrary",
-    "as a result", "for this reason", "because of this",
-    "in other words", "that is", "namely",
-    "for example", "for instance", "such as",
-    "in particular", "specifically", "notably",
-    "generally", "typically", "usually",
-    "essentially", "basically", "effectively",
-    "finally", "lastly", "to sum up",
-    "overall", "all things considered",
-    "in short", "in brief",
-    # 继续扩充
-    "firstly", "secondly", "thirdly",
-    "furthermore", "moreover", "additionally",
-    "consequently", "therefore", "thus", "hence",
-    "nevertheless", "nonetheless", "however",
-    "meanwhile", "meantime", "in the meantime",
-    "subsequently", "afterwards", "after that",
-    "previously", "before that", "earlier",
-    "currently", "at present", "nowadays",
-    "eventually", "ultimately", "in the end",
-    "luckily", "unfortunately", "sadly",
-    "thankfully", "hopefully", "fortunately",
-]
 
 
 def _detect_formulaic_markers(text: str) -> float:
@@ -728,37 +1115,6 @@ _AI_CLOSERS = [
     r"in short,",
 ]
 
-_FILLER_PATTERNS = [
-    # 原有模式
-    r"not only\b.{3,60}\bbut also",
-    r"on (?:the )?one hand\b.{3,120}\bon the other(?: hand)?",
-    r"it(?:'?s| is) (?:important|worth|crucial|essential) to (?:note|remember|mention)",
-    r"first and foremost",
-    r"last but not least",
-    r"without (?:a )?doubt",
-    # 新增模式
-    r"it goes without saying that",
-    r"needless to say,",
-    r"as a matter of fact,",
-    r"in other words,",
-    r"that is to say,",
-    r"to put it simply,",
-    r"basically,",
-    r"essentially,",
-    r"effectively,",
-    r"in essence,",
-    # 继续扩充
-    r"it'?s worth mentioning that",
-    r"it'?s important to understand that",
-    r"it'?s crucial to recognize that",
-    r"it'?s essential to acknowledge that",
-    r"we must also remember that",
-    r"it should be noted that",
-    r"it can be argued that",
-    r"some might say that",
-    r"it'?s often said that",
-    r"many people believe that",
-]
 
 
 def _detect_formulaic(text: str) -> float:
@@ -802,179 +1158,6 @@ def _detect_formulaic(text: str) -> float:
 # sloptotal 逆向集成：Linguistic 语言标志检测
 # ============================================================
 
-_AI_MARKERS_WEIGHTED = [
-    # Tier 1: Very strong AI signals (weight 3)
-    ("delve", 3),
-    ("tapestry", 3),
-    ("multifaceted", 3),
-    ("ever-evolving", 3),
-    ("thought-provoking", 3),
-    ("it's important to note", 3),
-    ("it's worth noting", 3),
-    ("in today's digital age", 3),
-    ("in today's rapidly evolving", 3),
-    ("let's dive in", 3),
-    # Tier 2: Strong signals (weight 2)
-    ("landscape", 2),
-    ("navigate", 2),
-    ("leverage", 2),
-    ("foster", 2),
-    ("pivotal", 2),
-    ("nuanced", 2),
-    ("robust", 2),
-    ("holistic", 2),
-    ("synergy", 2),
-    ("paradigm", 2),
-    ("encompass", 2),
-    ("intricate", 2),
-    ("comprehensive", 2),
-    ("underscores", 2),
-    ("underscore", 2),
-    ("realm", 2),
-    ("cornerstone", 2),
-    ("underpinning", 2),
-    ("facilitating", 2),
-    ("harnessing", 2),
-    ("spearheading", 2),
-    ("revolutionize", 2),
-    ("groundbreaking", 2),
-    ("cutting-edge", 2),
-    ("game-changer", 2),
-    ("deep dive", 2),
-    ("at the forefront", 2),
-    ("at its core", 2),
-    ("in the realm of", 2),
-    ("it is crucial", 2),
-    ("it is essential", 2),
-    ("plays a crucial role", 2),
-    ("serves as a testament", 2),
-    ("is a testament to", 2),
-    ("a myriad of", 2),
-    ("plethora", 2),
-    # Tier 3: Moderate signals (weight 1)
-    ("crucial", 1),
-    ("enhance", 1),
-    ("dynamic", 1),
-    ("innovative", 1),
-    ("streamline", 1),
-    ("optimize", 1),
-    ("elevate", 1),
-    ("empower", 1),
-    ("stakeholder", 1),
-    ("ecosystem", 1),
-    ("actionable", 1),
-    ("seamless", 1),
-    ("seamlessly", 1),
-    ("furthermore", 1),
-    ("moreover", 1),
-    ("consequently", 1),
-    ("nevertheless", 1),
-    ("in conclusion", 1),
-    ("ultimately", 1),
-    ("in essence", 1),
-    ("it is important to", 1),
-    ("not only", 1),
-    ("but also", 1),
-    ("on the other hand", 1),
-    ("having said that", 1),
-    ("that being said", 1),
-    ("with that in mind", 1),
-    ("in this context", 1),
-    ("in light of", 1),
-    ("as we navigate", 1),
-    ("when it comes to", 1),
-    ("it goes without saying", 1),
-    ("needless to say", 1),
-    ("at the end of the day", 1),
-    ("the bottom line", 1),
-    ("key takeaway", 1),
-    ("food for thought", 1),
-    ("resonate", 1),
-    ("aligns with", 1),
-    ("bolster", 1),
-    ("catalyst", 1),
-    ("testament", 1),
-    ("arguably", 1),
-    ("notably", 1),
-    ("specifically", 1),
-    ("essentially", 1),
-    ("fundamentally", 1),
-    ("inherently", 1),
-    ("intricacies", 1),
-    # 新增 Tier 1（打磨扩充）
-    ("unlock", 3),
-    ("unlock the potential", 3),
-    ("unlock opportunities", 3),
-    ("navigate the complexities", 3),
-    ("navigate the challenges", 3),
-    ("embark on a journey", 3),
-    ("a transformative experience", 3),
-    ("a paradigm shift", 3),
-    ("a new era of", 3),
-    ("the dawn of", 3),
-    # 新增 Tier 2（打磨扩充）
-    ("elevate", 2),
-    ("elevate the experience", 2),
-    ("empower", 2),
-    ("empower individuals", 2),
-    ("streamline", 2),
-    ("streamline processes", 2),
-    ("optimize", 2),
-    ("optimize performance", 2),
-    ("foster", 2),
-    ("foster collaboration", 2),
-    ("foster innovation", 2),
-    ("facilitate", 2),
-    ("facilitate communication", 2),
-    ("harness", 2),
-    ("harness the power", 2),
-    ("leverage", 2),
-    ("leverage technology", 2),
-    ("synergize", 2),
-    ("create synergies", 2),
-    ("drive", 2),
-    ("drive growth", 2),
-    ("drive innovation", 2),
-    # 新增 Tier 3（打磨扩充）
-    ("in today's world", 1),
-    ("in the modern era", 1),
-    ("as we move forward", 1),
-    ("as we look ahead", 1),
-    ("the future of", 1),
-    ("the potential of", 1),
-    ("the power of", 1),
-    ("the importance of", 1),
-    ("the value of", 1),
-    ("the benefits of", 1),
-    ("the challenges of", 1),
-    ("the opportunities of", 1),
-    ("it's no secret", 1),
-    ("it's worth noting", 1),
-    ("it's important to understand", 1),
-    ("it's crucial to recognize", 1),
-    ("it's essential to acknowledge", 1),
-    # 新增中文 AI 语言标志
-    ("值得注意的是", 3),
-    ("需要指出的是", 3),
-    ("至关重要的是", 3),
-    ("不可或缺的是", 3),
-    ("众所周知", 2),
-    ("毋庸置疑", 2),
-    ("不言而喻", 2),
-    ("显而易见", 2),
-    ("总而言之", 2),
-    ("综上所述", 2),
-    ("由此可见", 2),
-    ("因此", 1),
-    ("然而", 1),
-    ("此外", 1),
-    ("而且", 1),
-    ("同时", 1),
-    ("最后", 1),
-    ("首先", 1),
-    ("其次", 1),
-    ("再次", 1),
-]
 
 
 def _detect_linguistic_markers(text: str) -> float:
@@ -1171,71 +1354,7 @@ def _detect_structural_patterns(text: str) -> float:
 # sloptotal 逆向集成：Sentiment & Hedging 情感与对冲检测
 # ============================================================
 
-_HEDGING_PHRASES = [
-    # 原有词
-    "it's worth noting",
-    "it is worth noting",
-    "it's important to remember",
-    "it is important to remember",
-    "it's important to note",
-    "it is important to note",
-    "it's crucial to",
-    "it is crucial to",
-    "it's essential to",
-    "it is essential to",
-    "it should be noted",
-    "one might argue",
-    "it could be argued",
-    "some might say",
-    "there are those who",
-    "many experts believe",
-    "studies suggest",
-    "research indicates",
-    "while there are",
-    "although there are",
-    "that said",
-    "having said that",
-    "that being said",
-    "with that being said",
-    "be that as it may",
-    "regardless",
-    "irrespective of",
-    # 新增词
-    "it's important to understand",
-    "it is important to understand",
-    "it's crucial to recognize",
-    "it is crucial to recognize",
-    "it's essential to acknowledge",
-    "it is essential to acknowledge",
-    "it should be mentioned",
-    "it should be pointed out",
-    "one could argue",
-    "one may argue",
-    "it can be argued",
-    "some would say",
-    "many would argue",
-    "there are those who believe",
-    "many experts suggest",
-    "studies indicate",
-    "research suggests",
-    "while it is true that",
-    "although it is true that",
-    "having said this",
-    "that being this",
-    "with that being this",
-    "be that as it may",
-    "nevertheless",
-    "nonetheless",
-    "in any case",
-    "at any rate",
-]
 
-_BALANCE_PATTERNS = [
-    r"on (?:the )?one hand\b.{5,150}\bon the other(?: hand)?",
-    r"while .{5,80}, (?:it |there |we |they )",
-    r"although .{5,80}, (?:it |there |we |they )",
-    r"(?:pros|advantages|benefits) .{5,200}(?:cons|disadvantages|drawbacks)",
-]
 
 _VAGUE_POSITIVITY = [
     # 原有词
@@ -1474,46 +1593,7 @@ def _detect_human_imperfection(text: str) -> float:
 # 创新角度：AI 情感很平，人类有起伏
 # ============================================================
 
-_POSITIVE_WORDS = [
-    # 英文正面词（按强度分级，精雕细琢扩充）
-    # 强正面
-    "excellent", "amazing", "wonderful", "fantastic", "outstanding",
-    "brilliant", "magnificent", "phenomenal", "terrific", "superb",
-    "exceptional", "remarkable", "impressive", "delighted", "thrilled",
-    "incredible", "awesome", "perfect", "extraordinary", "spectacular",
-    # 中等正面
-    "great", "good", "positive", "happy", "excited", "joyful",
-    "pleased", "satisfied", "grateful", "thankful", "optimistic",
-    "hopeful", "confident", "proud", "cheerful", "upbeat",
-    # 弱正面
-    "nice", "fine", "okay", "decent", "pleasant",
-    "beneficial", "helpful", "useful", "valuable", "worthwhile",
-    # 中文正面词
-    "优秀", "出色", "很棒", "很好", "积极", "开心", "进步",
-    "成功", "杰出", "卓越", "优秀", "出色", "棒", "好",
-    "高兴", "快乐", "满意", "感谢", "乐观", "希望",
-    "自信", "自豪", "愉快", "不错", "可以",
-]
 
-_NEGATIVE_WORDS = [
-    # 英文负面词（按强度分级，精雕细琢扩充）
-    # 强负面
-    "terrible", "awful", "horrible", "dreadful", "appalling",
-    "pathetic", "useless", "worthless", "miserable", "devastating",
-    "disgusting", "repulsive", "offensive", "vile", "abysmal",
-    # 中等负面
-    "bad", "poor", "negative", "sad", "angry", "frustrated",
-    "disappointed", "disappointing", "upset", "annoyed", "irritated",
-    "worried", "anxious", "afraid", "scared", "fearful",
-    # 弱负面
-    "mediocre", "subpar", "inferior", "unsatisfactory", "unpleasant",
-    "boring", "tedious", "dull", "monotonous", "tedious",
-    # 中文负面词
-    "差", "糟糕", "不好", "负面", "失望", "沮丧",
-    "失败", "差劲", "劣质", "糟", "坏",
-    "难过", "生气", "烦躁", "担心", "焦虑",
-    "害怕", "恐惧", "一般", "普通", "无聊",
-]
 
 # 否定词（会反转情感，精雕细琢扩充）
 _NEGATIONS = [
@@ -1717,18 +1797,6 @@ _SELF_REF_WEAK = [
 # 打磨版：扩充词表、分类检测
 # ============================================================
 
-# v2：只保留真正标志学术语域的低频/多词连接词。
-# but / also / while / yet / though / although 属于基础功能词，
-# 任何文本都高频，纳入词表会让引擎恒为满分。
-_ACADEMIC_CONNECTORS = [
-    "therefore", "consequently", "thus", "hence", "accordingly",
-    "furthermore", "moreover", "additionally", "in addition",
-    "nevertheless", "nonetheless", "however",
-    "in contrast", "on the other hand", "conversely",
-    "as a result", "as a consequence", "for this reason",
-    "in conclusion", "in summary", "overall", "to sum up",
-    "further", "notably", "specifically", "in particular",
-]
 
 
 def _detect_logical_connectors(text: str) -> float:
@@ -1759,24 +1827,98 @@ def _detect_logical_connectors(text: str) -> float:
 
 
 # ============================================================
-# RoBERTa ChatGPT 检测器（逆向自 sloptotal ClassifierChatGPTEngine）
+# ML 文本检测器（默认单模型 ModernBERT，覆盖现代 LLM）
 # ============================================================
 
-_roberta_model = None
-_roberta_tokenizer = None
-_roberta_ai_idx = None
+# 3.11 起默认只跑单模型：旧 RoBERTa(chatgpt-detector-roberta) 对现代 LLM
+# 几乎总给 0%，留着只是让首次请求多加载一个近 1GB 的模型，还可能在缓存
+# 不全时 fallback 联网、卡在退避重试上。_ml_models 仍是 dict 以兼容通过
+# AURORA_AI_MODEL 追加第二模型，但主干聚合只锚定链首主力、不再交叉验证。
+_ml_models = {}          # name -> {"model","tokenizer","ai_idx"}
+_ml_load_done = False    # 整条链是否已尝试加载完毕
 
 
-_roberta_failed = False
+# —— 本次运行中「未能产出分数」的引擎及原因（供报告透明展示）——
+# 此前这些引擎失败时只往 stderr 打一行就静默跳过，用户拿到报告时
+# 只看到分数，却不知道「哪些引擎根本没跑、为什么」——这正是评审
+# 指出的第 5 条（静默异常）问题。这里把缺失登记下来，最终写进报告。
+# —— 缺失引擎登记（并发安全）——
+# _ENGINE_GAPS 是「本次检测」的缺失记录，属于请求级状态。若做成全局 dict，
+# 一旦接入 MCP/Web（多线程/异步并发），A 同学 clear() 的瞬间会把 B 同学
+# 正在写入的 gap 清空，导致 missing_engines 串线。故改用 ContextVar：
+# 每个执行上下文（线程/协程任务）各自持有一份独立 dict，互不干扰。
+# _PERSISTENT_GAPS 是真正的全局状态（模型/依赖加载失败，跨文档共享），
+# 用 threading.Lock 保护写入，避免并发下字典被并发修改。
+_ENGINE_GAPS: "ContextVar[Dict[str, str]]" = ContextVar("aurora_engine_gaps")
+_PERSISTENT_GAPS: Dict[str, str] = {}  # 全局性缺失（模型/依赖加载失败），与单份文档无关
+_PERSISTENT_GAPS_LOCK = threading.Lock()
 
 
-def _hf_reachable(host: str = "huggingface.co", timeout: float = 0.6) -> bool:
-    """0.6 秒 TCP 探测。
+def _current_gaps() -> Dict[str, str]:
+    """取当前上下文的缺失登记 dict；未初始化则懒建一个。"""
+    gaps = _ENGINE_GAPS.get(None)
+    if gaps is None:
+        gaps = {}
+        _ENGINE_GAPS.set(gaps)
+    return gaps
+
+
+def _reset_gaps() -> None:
+    """把当前上下文的缺失登记重置为空（主要供测试在干净状态下复现）。"""
+    _ENGINE_GAPS.set({})
+
+
+def _record_gap(name: str, reason: str, persistent: bool = False) -> None:
+    """登记一个本次未能参与检测的引擎及原因（多次登记以最后一次为准）。
+
+    persistent=True 表示该缺失是全局性的（如模型/依赖加载失败），
+    与具体文档无关，需要在每次 run_ai_detection 前恢复，避免被 clear 误删。
+    """
+    _current_gaps()[name] = reason
+    if persistent:
+        with _PERSISTENT_GAPS_LOCK:
+            _PERSISTENT_GAPS[name] = reason
+
+
+# ============================================================
+# MLM 伪困惑度检测器（可选第三信号，专攻「表演式不完美」拟人 AI）
+# ------------------------------------------------------------
+# 分类器对刻意模仿人类瑕疵(错字/跑题/情绪化)的 AI 会自信误判成纯人
+# （实测 ModernBERT 给 0.03）。但 AI 文本底层 token 分布仍比它模仿的
+# 真人更「可预测」——伪困惑度(逐个 mask 求真词概率)能抓到这层差异，
+# 这正是 GLTR/DetectGPT 的核心思想。用 ModernBERT-base 的 MLM 头离线算，
+# 模型下载一次后缓存复用。加载失败则优雅跳过，不影响其余引擎。
+# ============================================================
+_mlm_model = None
+_mlm_tokenizer = None
+_mlm_load_done = False
+_MLM_MODEL_NAME = os.environ.get("AURORA_PPL_MODEL", "answerdotai/ModernBERT-base")
+
+
+# 模型候选链（用 | 分隔，全部尝试加载；可用 AURORA_AI_MODEL 覆盖）。
+# 默认只保留 [ModernBERT-RAID/MAGE] 单模型：
+#   - 旧 RoBERTa(chatgpt-detector-roberta) 架构老、训练数据旧，对现代 LLM
+#     几乎总给 0%，留着只会让首次请求多加载一个庞大模型（21 秒→更久）。
+#   - 需要独立第二意见时，可用 AURORA_AI_MODEL 以 | 追加模型，聚合逻辑仍兼容。
+_ML_MODEL_CHAIN = (os.environ.get("AURORA_AI_MODEL")
+                   or "GeorgeDrayson/modernbert-ai-detection-raid-mage").split("|")
+
+
+def _hf_reachable(host: str = "", timeout: float = 2.5) -> bool:
+    """TCP 连通性快速探测（默认 1 秒）。
 
     huggingface_hub 的连接重试不读 HF_HUB_DOWNLOAD_TIMEOUT，
     离线时会按 1→2→4→8→16s 退避 5 次，单次检测多等两分钟。
     这里先做一次快速连通性判断，不通就直接放弃该引擎。
+
+    探测主机跟随 HF_ENDPOINT 环境变量（transformers/huggingface_hub
+    原生支持）：设了镜像就探镜像，否则探 huggingface.co。否则在
+    国内/受限网络里即便配了 HF_ENDPOINT 镜像，引擎也会因探不到
+    huggingface.co 而空转跳过。
     """
+    if not host:
+        endpoint = os.environ.get("HF_ENDPOINT", "").strip().rstrip("/")
+        host = endpoint.split("//", 1)[-1].split("/", 1)[0] or "huggingface.co"
     try:
         with socket.create_connection((host, 443), timeout=timeout):
             return True
@@ -1784,48 +1926,109 @@ def _hf_reachable(host: str = "huggingface.co", timeout: float = 0.6) -> bool:
         return False
 
 
-def _load_roberta_model():
-    """懒加载 RoBERTa ChatGPT 检测器
+def _load_ml_models():
+    """懒加载链中**全部** ML 检测器，返回 {name: {model, tokenizer, ai_idx}}。
 
-    v2：失败后写入 _roberta_failed，后续调用直接返回，不再重复联网重试，
-        也不再向 stderr 打印长篇警告（设 AURORA_VERBOSE=1 可恢复）。
+    每个模型独立尝试加载：某个失败不影响其余；加载过的缓存复用，
+    不重复联网。整条链只整体尝试一次（_ml_load_done）。
     """
-    global _roberta_model, _roberta_tokenizer, _roberta_ai_idx, _roberta_failed
-    if _roberta_failed:
-        return None, None, None
-    if _roberta_model is None:
+    global _ml_models, _ml_load_done
+    if _ml_load_done:
+        return _ml_models
+
+    # 离线优先：若链中已有模型被缓存到本地，直接加载缓存（无需联网），
+    # 这保证「下载过一次后即可永久离线复用」。只有在没有任何缓存、
+    # 可能需要联网下载时，才做连通性探测 + 自动切镜像。
+    def _cached(name: str) -> bool:
+        safe = name.replace("/", "--")
+        d = os.path.join(os.path.expanduser("~"), ".cache", "huggingface", "hub",
+                         f"models--{safe}")
+        return os.path.isdir(d)
+
+    _any_cached = any(_cached(n) for n in _ML_MODEL_CHAIN)
+
+    if not _any_cached:
         if not _hf_reachable():
-            _roberta_failed = True
-            print("[aurora] 连不上 huggingface.co，跳过 roberta-chatgpt 引擎"
-                  "（其余统计引擎照常工作，不影响结论方向）", file=sys.stderr)
-            return None, None, None
-        try:
-            from transformers import AutoModelForSequenceClassification, AutoTokenizer
-            import torch
-
-            model_name = "Hello-SimpleAI/chatgpt-detector-roberta"
-            _roberta_tokenizer = AutoTokenizer.from_pretrained(model_name)
-            _roberta_model = AutoModelForSequenceClassification.from_pretrained(model_name)
-            _roberta_model.eval()
-
-            # 自动检测哪个标签是 AI
-            id2label = _roberta_model.config.id2label
-            for idx, label in id2label.items():
-                label_lower = str(label).lower()
-                if "chatgpt" in label_lower or "ai" in label_lower or "fake" in label_lower:
-                    _roberta_ai_idx = int(idx)
-                    break
-            if _roberta_ai_idx is None:
-                _roberta_ai_idx = max(int(k) for k in id2label.keys())
-        except Exception as e:
-            _roberta_failed = True
-            if _VERBOSE:
-                print(f"[aurora] RoBERTa 模型不可用，已跳过该引擎：{e}", file=sys.stderr)
+            _mirror = "https://hf-mirror.com"
+            if os.environ.get("HF_ENDPOINT", "").strip().rstrip("/") != _mirror:
+                os.environ["HF_ENDPOINT"] = _mirror
+            if _hf_reachable():
+                print("[aurora] 直连 huggingface.co 不可达，已自动切换到"
+                      " hf-mirror.com 镜像下载 ML 检测器", file=sys.stderr)
             else:
-                print("[aurora] RoBERTa 模型不可用（离线），已跳过 roberta-chatgpt 引擎。"
-                      "设 AURORA_VERBOSE=1 查看详情。", file=sys.stderr)
-            return None, None, None
-    return _roberta_model, _roberta_tokenizer, _roberta_ai_idx
+                _ml_load_done = True
+                _record_gap("ml-detector",
+                            "无法连接 HuggingFace（及镜像 hf-mirror.com），且本地无缓存模型",
+                            persistent=True)
+                print("[aurora] 连不上 huggingface.co 及其镜像，跳过 ML 检测器引擎"
+                      "（其余统计引擎照常工作，不影响结论方向）", file=sys.stderr)
+                return _ml_models
+    else:
+        # 已有缓存：仅当直连不可达时补设镜像（缓存缺失的附属文件也可能走镜像）
+        if not _hf_reachable():
+            _mirror = "https://hf-mirror.com"
+            if os.environ.get("HF_ENDPOINT", "").strip().rstrip("/") != _mirror:
+                os.environ["HF_ENDPOINT"] = _mirror
+
+    try:
+        from transformers import AutoModelForSequenceClassification, AutoTokenizer
+        import torch
+    except Exception as e:
+        _ml_load_done = True
+        _record_gap("ml-detector", "transformers/torch 未安装或不可用", persistent=True)
+        if _VERBOSE:
+            print(f"[aurora] transformers/torch 不可用：{e}", file=sys.stderr)
+        return _ml_models
+
+    ai_keys = ("machine", "generated", "ai", "chatgpt", "fake",
+               "bot", "llm", "synthetic", "gpt")
+    for model_name in _ML_MODEL_CHAIN:
+        if model_name in _ml_models:
+            continue
+        try:
+            # 已缓存 → 严格离线加载（不再访问 hub，避免无网时卡在 etag 校验）
+            if _cached(model_name):
+                try:
+                    tok = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
+                    mdl = AutoModelForSequenceClassification.from_pretrained(
+                        model_name, local_files_only=True)
+                except Exception:
+                    tok = AutoTokenizer.from_pretrained(model_name)
+                    mdl = AutoModelForSequenceClassification.from_pretrained(model_name)
+            else:
+                tok = AutoTokenizer.from_pretrained(model_name)
+                mdl = AutoModelForSequenceClassification.from_pretrained(model_name)
+            mdl.eval()
+            id2label = mdl.config.id2label
+            if len(id2label) == 1:
+                ai_idx = 0
+            else:
+                idx = None
+                for k, label in id2label.items():
+                    low = str(label).lower()
+                    if any(key in low for key in ai_keys):
+                        idx = int(k)
+                        break
+                ai_idx = idx if idx is not None else max(int(k) for k in id2label.keys())
+            _ml_models[model_name] = {"model": mdl, "tokenizer": tok, "ai_idx": ai_idx}
+            if _VERBOSE:
+                print(f"[aurora] 已加载 ML 检测器：{model_name} (ai_idx={ai_idx})",
+                      file=sys.stderr)
+        except Exception as e:
+            if _VERBOSE:
+                print(f"[aurora] 模型 {model_name} 加载失败：{e}", file=sys.stderr)
+    _ml_load_done = True
+    return _ml_models
+
+
+def _load_ml_model():
+    """向后兼容：返回链中第一个成功加载的模型（旧调用方用）。"""
+    models = _load_ml_models()
+    if not models:
+        return None, None, None
+    name = next(iter(models))
+    info = models[name]
+    return info["model"], info["tokenizer"], info["ai_idx"]
 
 
 # ============================================================
@@ -2144,36 +2347,8 @@ def _detect_language(text: str) -> str:
 # 针对中文文本的AI特征检测
 # ============================================================
 
-# 中文AI常用短语
-_AI_CHINESE_MARKERS = [
-    "值得注意的是",
-    "需要指出的是",
-    "至关重要的是",
-    "综上所述",
-    "总而言之",
-    "由此可见",
-    "众所周知",
-    "毋庸置疑",
-    "不言而喻",
-    "显而易见",
-    "首先",
-    "其次",
-    "再次",
-    "最后",
-    "此外",
-    "而且",
-    "同时",
-    "因此",
-    "然而",
-]
 
 
-_ZH_TEMPLATE = [
-    "首先", "其次", "再次", "最后", "综上所述", "总而言之", "值得注意的是",
-    "需要指出的是", "与此同时", "此外", "一方面", "另一方面", "由此可见",
-    "总的来说", "简而言之", "不难发现", "众所周知", "毫无疑问", "进一步说",
-    "在此基础上", "从某种意义上说",
-]
 # 公文/官腔词：中文 AI 特别喜欢，人类口语写作极少出现
 _ZH_JARGON = [
     "赋能", "抓手", "闭环", "生态", "维度", "层面", "机制", "体系", "格局", "路径",
@@ -2260,10 +2435,13 @@ def _detect_lm_perplexity(text: str):
     # 实测英文人类文本同样被判"很顺"，等于给所有人加分。
     # 英文侧仍走原有统计信号；将来接入英文模型后可放开。
     if _detect_language(text) != "zh":
+        _record_gap("lm-perplexity",
+                    "仅对中文文本启用（当前挂载中文模型，对英文困惑度不可靠）")
         return None
 
     model, tok = _load_ppl_model()
     if model is None:
+        _record_gap("lm-perplexity", "无本地语言模型（需安装 Qwen2.5 等中文模型）")
         return None
     try:
         import torch
@@ -2496,18 +2674,24 @@ def _detect_vocabulary_diversity(text: str) -> float:
     return round(final_score, 3)
 
 
-def _detect_with_roberta(text: str) -> Optional[float]:
-    """用 RoBERTa 模型检测 AI 概率"""
-    model, tokenizer, ai_idx = _load_roberta_model()
-    if model is None:
+def _detect_with_ml(text: str) -> Optional[Dict[str, float]]:
+    """用链中**全部** ML 检测器各自打分，返回 {模型名: AI 概率}。
+
+    单一分类器有风格盲区（已实测 ModernBERT 把"带瑕疵拟人 AI"误判 0.03），
+    多个架构/训练分布不同的检测器分别打分后由上层做交叉验证，
+    才能互相补盲并识别"一个被骗、另一个识破"的情形。
+    全部加载失败时返回 None。
+    """
+    models = _load_ml_models()
+    if not models:
         return None
 
     import torch
 
-    # 分块处理（每块 512 token）
-    chunks = []
+    # 分块处理（每块约 80 词，避免超长文本截断）
     words = text.split()
-    chunk_size = 80  # 约 80 词一块
+    chunk_size = 80
+    chunks = []
     for i in range(0, len(words), chunk_size):
         chunk = " ".join(words[i:i + chunk_size])
         if len(chunk.strip()) > 10:
@@ -2516,15 +2700,145 @@ def _detect_with_roberta(text: str) -> Optional[float]:
     if not chunks:
         return None
 
-    scores = []
-    for chunk in chunks:
-        inputs = tokenizer(chunk, return_tensors="pt", truncation=True, max_length=512)
-        with torch.no_grad():
-            logits = model(**inputs).logits
-        probs = torch.softmax(logits, dim=-1)[0]
-        scores.append(probs[ai_idx].item())
+    out: Dict[str, float] = {}
+    for name, info in models.items():
+        scores = []
+        for chunk in chunks:
+            inputs = info["tokenizer"](chunk, return_tensors="pt",
+                                        truncation=True, max_length=512)
+            with torch.no_grad():
+                logits = info["model"](**inputs).logits
+            probs = torch.softmax(logits, dim=-1)[0]
+            scores.append(probs[info["ai_idx"]].item())
+        if scores:
+            out[name] = sum(scores) / len(scores)
+    return out or None
 
-    return sum(scores) / len(scores) if scores else None
+
+# —— MLM 伪困惑度：逐个 mask 求真词概率，越低困惑度越像 AI ——
+def _load_mlm_model():
+    """懒加载 MLM 模型（默认 ModernBERT-base）用于伪困惑度。"""
+    global _mlm_model, _mlm_tokenizer, _mlm_load_done
+    if _mlm_load_done:
+        return _mlm_model, _mlm_tokenizer
+    _mlm_load_done = True
+    try:
+        from transformers import AutoModelForMaskedLM, AutoTokenizer
+        import torch
+    except Exception as e:
+        _record_gap("mlm-perplexity", "transformers/torch 未安装或不可用", persistent=True)
+        if _VERBOSE:
+            print(f"[aurora] transformers/torch 不可用，跳过伪困惑度：{e}", file=sys.stderr)
+        return None, None
+    # 离线优先：已缓存则严格离线
+    def _cached(name):
+        d = os.path.join(os.path.expanduser("~"), ".cache", "huggingface", "hub",
+                         f"models--{name.replace('/', '--')}")
+        return os.path.isdir(d)
+    try:
+        if _cached(_MLM_MODEL_NAME):
+            try:
+                _mlm_tokenizer = AutoTokenizer.from_pretrained(_MLM_MODEL_NAME, local_files_only=True)
+                _mlm_model = AutoModelForMaskedLM.from_pretrained(_MLM_MODEL_NAME, local_files_only=True)
+            except Exception:
+                _mlm_tokenizer = AutoTokenizer.from_pretrained(_MLM_MODEL_NAME)
+                _mlm_model = AutoModelForMaskedLM.from_pretrained(_MLM_MODEL_NAME)
+        else:
+            if not _hf_reachable():
+                _mirror = "https://hf-mirror.com"
+                if os.environ.get("HF_ENDPOINT", "").strip().rstrip("/") != _mirror:
+                    os.environ["HF_ENDPOINT"] = _mirror
+            _mlm_tokenizer = AutoTokenizer.from_pretrained(_MLM_MODEL_NAME)
+            _mlm_model = AutoModelForMaskedLM.from_pretrained(_MLM_MODEL_NAME)
+        _mlm_model.eval()
+        if _VERBOSE:
+            print(f"[aurora] 已加载伪困惑度模型：{_MLM_MODEL_NAME}", file=sys.stderr)
+    except Exception as e:
+        _record_gap("mlm-perplexity", f"伪困惑度模型加载失败（{_MLM_MODEL_NAME}）", persistent=True)
+        if _VERBOSE:
+            print(f"[aurora] 伪困惑度模型 {_MLM_MODEL_NAME} 加载失败：{e}", file=sys.stderr)
+        _mlm_model = None
+    return _mlm_model, _mlm_tokenizer
+
+
+def _detect_mlm_perplexity(text: str) -> Optional[Tuple[float, float]]:
+    """用 MLM 头算伪困惑度，返回 (AI 概率, 原始伪困惑度)。
+
+    注意：返回的是二元组，不是单个 float（早期版本注解写 Optional[float]
+    与实际不符，已修正）。调用方需解包：
+        res = _detect_mlm_perplexity(text)
+        if res is not None:
+            ai_score, pseudo_pp = res
+
+    越低困惑度（token 越可预测）越像 AI。对「表演式不完美」拟人 AI
+    尤其有效——它表面有错字/跑题，但底层分布仍比模仿的真人更平滑。
+    """
+    model, tok = _load_mlm_model()
+    if model is None or tok is None:
+        return None
+    import torch
+
+    # 取正文前 400 词（足够统计且控制耗时），分窗处理。
+    # 【有意截断】伪困惑度反映的是文本整体「可预测性」，前 400 词已足够代表
+    # 风格，且能避免长文在 CPU 上耗时爆炸；下方「均匀采样」是在这 400 词的
+    # token 序列上做的，不是只取开头。若要对超长文档做真正「全篇采样」，
+    # 可改为先 tok(text) 取完整 token_ids，再全局均匀挑 max_masks 个位置、
+    # 分别取窗口送入模型（本实现暂不启用，避免长文耗时失控）。
+    words = text.split()
+    if len(words) < 20:
+        return None
+    snippet = " ".join(words[:400])
+    enc = tok(snippet, return_tensors="pt", truncation=True, max_length=512)
+    ids = enc.input_ids[0]
+    special = set(tok.all_special_ids)
+    nlls = []
+    # 【性能上限】逐个 mask 每个 token 都要跑一次完整前向，CPU 上是灾难。
+    # 这里硬性限制最多 mask max_masks 个 token，并【均匀采样】分布到全文——
+    # 若只取开头前 N 个 token，会撞上标题/作者名/固定句式这些最可预测的位置，
+    # 伪困惑度会严重失真（实测 2331 → 17.99）。均匀采样才能保持代表性。
+    # 如需更精确可用 AURORA_PPL_MAX_MASKS 调高。
+    win = 64
+    max_masks = int(os.environ.get("AURORA_PPL_MAX_MASKS", "30"))
+    n = len(ids)
+    # 收集所有非特殊 token 的位置
+    positions = [i for i in range(n) if int(ids[i]) not in special]
+    if len(positions) < 8:
+        return None
+    # 均匀采样 max_masks 个位置，覆盖全文
+    if len(positions) > max_masks:
+        gap = len(positions) / max_masks
+        sampled = [positions[min(int(i * gap), len(positions) - 1)] for i in range(max_masks)]
+    else:
+        sampled = positions
+    for pos in sampled:
+        start = max(0, pos - win // 2)
+        window = ids[start:start + win]
+        j = pos - start
+        tid = ids[pos]
+        masked = window.clone()
+        masked[j] = tok.mask_token_id
+        with torch.no_grad():
+            logits = model(masked.unsqueeze(0)).logits[0, j]
+        probs = torch.softmax(logits, -1)
+        p = probs[tid].item()
+        nlls.append(-math.log(max(p, 1e-12)))
+    if not nlls:
+        return None
+    pseudo_pp = math.exp(sum(nlls) / len(nlls))
+    # 标度：困惑度越低越像 AI。以实测 pivot 为中心做 sigmoid 映射。
+    # 【重要】伪困惑度绝对值高度依赖领域（学术散文整体偏高），固定标定容易失效。
+    # 实测在本语料（英文学术论文）上 AI 与真人的伪困惑度高度重叠、缺乏分离，
+    # 故该引擎默认仅作诊断展示（权重 0），不参与加权投票。
+    # 若你要在自己的语料上启用并校准，用环境变量覆盖：
+    #   AURORA_PPL_PIVOT / AURORA_PPL_SCALE
+    # 默认常数由实测推导（见 calibrate_pp.py）：
+    #   现代 AI 散文 pp ≈ 152~451，真人学生稿 pp ≈ 9200 —— 分离度达 20 倍以上。
+    #   取 PIVOT≈1650 / SCALE≈1950：AI 样本映射到 0.65~0.68，真人映射到 ≈0.02。
+    # 注意：该标定基于 6 篇英文学术语料的小样本，换领域请重新校准。
+    PIVOT = float(os.environ.get("AURORA_PPL_PIVOT", "1650.0"))
+    SCALE = float(os.environ.get("AURORA_PPL_SCALE", "1950.0"))
+    ai_score = 1.0 / (1.0 + math.exp((pseudo_pp - PIVOT) / SCALE))
+    return round(float(ai_score), 3), round(float(pseudo_pp), 2)
 
 
 # ============================================================
@@ -2606,10 +2920,27 @@ def _split_sentences(text: str) -> list:
 
     原实现用 re.split 直接按标点切开，句号被当作分隔符丢弃，
     中文报告里句子会连成一片（"…生活方式和工作模式 从智能手机…"）。
+
+    另外，学术写作里 e.g. / i.e. / et al. / Dr. / Mr. / Ms. / vs. / etc.
+    这类缩写若直接按句号切，会把一句话硬切成两半，导致句长分布、
+    burstiness 等统计指标全错。这里先把缩写的句点替换为占位符保护起来，
+    切完再还原。
     """
     text = re.sub(r"\n+", " ", text)
+    # 保护常见缩写（e.g. / i.e. / et al. / Dr. / Mr. / Ms. / vs. / etc.）
+    # 把缩写里的所有句点替换为不可见哨兵 \x00DOT\x00（\x00 在自然语言文本
+    # 中出现的概率严格为 0，绝不会与正文字面字符冲突），避免被 findall 误切；
+    # 用 lambda 保留原文大小写，切完再统一还原。
+    _dot = "\x00DOT\x00"
+    text = re.sub(
+        r"(?i)\b(?:e\.g\.|i\.e\.|et al\.|dr\.|mr\.|ms\.|vs\.|etc\.)",
+        lambda m: m.group(0).replace(".", _dot),
+        text,
+    )
     parts = re.findall(r"[^.!?。！？]+[.!?。！？]*", text)
-    return [x.strip() for x in parts if len(x.strip()) > 10]
+    # 切分完后，把哨兵还原回小数点
+    parts = [x.replace(_dot, ".") for x in parts if len(x.strip()) > 10]
+    return [x.strip() for x in parts]
 
 
 def _looks_like_reference_line(line: str) -> bool:
@@ -2636,6 +2967,26 @@ def _looks_like_reference_line(line: str) -> bool:
     return False
 
 
+def _is_front_matter_line(line: str) -> bool:
+    """判断是否为文档开头的封面/标题短行（非正文）。
+
+    annotated bibliography / 学生论文的 docx 常在正文前放一页封面
+    （Assignment Cover Sheet、作业标题、Annotated Bibliography 标签）。
+    这些是文档元数据、不是学生写的正文，不该参与 AI 痕迹检测。
+    若不排除，它们会顶在正文最前面，改变 ML 检测器的分块边界，
+    让同一份正文因封面排版不同而得到不同分数（实测可差 9 个百分点）。
+
+    判定特征：短行（< 60 字符）且不是完整句子（行尾无句末标点）。
+    正文注释段落通常是长段落、且以句号结尾，不会命中此规则；
+    纯正文短句（如 "This is my plan."）因有句末标点，同样不会被误伤。
+    """
+    if len(line) >= 60:
+        return False
+    if re.search(r'[.!?]\s*$', line):
+        return False  # 完整句子，是正文（即使较短）
+    return True
+
+
 def _extract_prose_only(text: str) -> tuple:
     """自动排除引用/参考文献部分，只返回正文（prose）"""
     # 找到 References / Bibliography / Works Cited 的位置
@@ -2654,8 +3005,9 @@ def _extract_prose_only(text: str) -> tuple:
     prose = text[:ref_start]
     references = text[ref_start:]
 
-    # 也排除 DOI 行、URL 行
+    # 也排除 DOI 行、URL 行、封面/标题元数据行
     prose_lines = []
+    in_front_matter = True  # 文档开头可能有一串封面/标题短行（非正文）
     for line in prose.split('\n'):
         line = line.strip()
         if not line:
@@ -2671,6 +3023,11 @@ def _extract_prose_only(text: str) -> tuple:
         # 排除参考文献条目（不依赖 "References" 标题是否存在）
         if _looks_like_reference_line(line):
             continue
+        # 文档开头的封面/标题元数据区：连续的短行（非完整句子）跳过，
+        # 直到遇到第一个正文段落（长行或完整句子）为止。
+        if in_front_matter and _is_front_matter_line(line):
+            continue
+        in_front_matter = False
         prose_lines.append(line)
 
     return '\n'.join(prose_lines), references
@@ -2810,14 +3167,16 @@ def validate_text(text: str) -> tuple:
     return True, ""
 
 
-def _compute_engine_scores(prose_text: str):
+def _compute_engine_scores(prose_text: str) -> Tuple[dict, list, list, dict]:
     """跑全部检测引擎，只产出原始读数，不做任何判断。
 
     原来这一段和权重表、聚合、报告组装全塞在 run_ai_detection 里（326 行），
     改一个阈值要重跑全部计算，也没法单独测某个引擎。
     切开之后这里只负责「测到什么」，意味着什么交给后面的 _aggregate。
 
-    返回 (engine_scores, sentences, window_scores)。后两者是逐句标注要用的
+    返回 (engine_scores, sentences, window_scores, ml_detail) —— 四元组。
+    ml_detail 是后来加的第 4 个返回值（承载各 ML 检测器分项与伪困惑度），
+    早期文档字符串漏了它，已修正。sentences / window_scores 是逐句标注要用的
     中间产物，一并带出去，避免重复切句。
     """
     engine_scores = {}
@@ -2866,10 +3225,23 @@ def _compute_engine_scores(prose_text: str):
     # 引擎 14: sloptotal 逆向集成的 Sentiment & Hedging 情感与对冲检测
     engine_scores["sentiment-hedging"] = _detect_sentiment_hedging(prose_text)
 
-    # 引擎 15: RoBERTa ChatGPT 检测器（真正的 ML 分类器）
-    roberta_score = _detect_with_roberta(prose_text)
-    if roberta_score is not None:
-        engine_scores["roberta-chatgpt"] = roberta_score
+    # 引擎 15: ML 检测器（链中全部模型各自打分，上层做集成/交叉验证）
+    ml_result = _detect_with_ml(prose_text)
+    ml_detail = {"scores": {}, "mean": None, "spread": 0.0, "n": 0}
+    if ml_result:
+        ml_detail["scores"] = ml_result
+        vals = list(ml_result.values())
+        ml_detail["n"] = len(vals)
+        ml_detail["mean"] = sum(vals) / len(vals)
+        ml_detail["spread"] = (max(vals) - min(vals)) if len(vals) > 1 else 0.0
+        engine_scores["ml-detector"] = ml_detail["mean"]
+
+    # 引擎 15b: MLM 伪困惑度（可选第三信号，专攻「表演式不完美」拟人 AI）
+    pp_res = _detect_mlm_perplexity(prose_text)
+    if pp_res is not None:
+        _pp_score, _pp_val = pp_res
+        engine_scores["mlm-perplexity"] = _pp_score
+        ml_detail["pseudo_perplexity"] = _pp_val
 
     # 引擎 16: 人类瑕疵检测器（全新角度！越完美越像 AI）
     engine_scores["human-imperfection"] = _detect_human_imperfection(prose_text)
@@ -2930,11 +3302,29 @@ def _compute_engine_scores(prose_text: str):
 
     # 引擎 33: DNA-DetectLLM（零样本范式）
     engine_scores["dna-detect"] = _detect_dna_detect(prose_text)
-    return engine_scores, sentences, window_scores
+    return engine_scores, sentences, window_scores, ml_detail
 
 
-def run_ai_detection(text: str) -> AIResult:
-    """跑所有可用的 AI 检测引擎，返回综合结果"""
+@lru_cache(maxsize=32)
+def _run_ai_detection_cached(text: str, mode: str = "normal") -> AIResult:
+    """AI 检测内部实现（带 LRU 缓存）。
+
+    注意：@lru_cache 缓存的是「可变 AIResult 对象」。若调用方拿到结果后
+    原地修改（如 sort flagged_sentences、改字段），会污染缓存、影响后续命中。
+    故公开入口 run_ai_detection 在返回前会 deepcopy 一份；请勿直接调用本函数。
+
+    mode：
+      - "normal"：默认，稳健聚合（0.5×统计 + 0.5×主力，离群剔除，阈值 0.58/0.33）。
+      - "strict"：自检找茬模式。取消离群剔除/恒定输出降权等宽容逻辑，
+        终分取「最凶信号」往高了打，均值 > 0.30 即标红。
+        定位是学生的"排雷工具"，宁可误判真人，绝不漏掉 Turnitin 会抓的特征。
+    """
+    strict = (mode == "strict")
+
+    # 每次跑新文档前，把当前上下文（线程/协程）的缺失记录重置为持久 gap 快照，
+    # 确保结果绝对独立、不串线。ContextVar 保证并发下 A/B 两份文档互不干扰。
+    _ENGINE_GAPS.set(dict(_PERSISTENT_GAPS))
+
     engine_scores = {}
 
     # 步骤 0: 自动排除引用/参考文献部分
@@ -2942,7 +3332,7 @@ def run_ai_detection(text: str) -> AIResult:
     if len(prose_text.strip()) < 50:
         prose_text = text  # 如果提取后太短，就用原文
 
-    engine_scores, sentences, window_scores = _compute_engine_scores(prose_text)
+    engine_scores, sentences, window_scores, ml_detail = _compute_engine_scores(prose_text)
 
     # ============================================================
     # 集成 v2：显式引擎注册表 + 稳健聚合
@@ -2964,7 +3354,8 @@ def run_ai_detection(text: str) -> AIResult:
     # 名字: (方向, 权重, 备注)  方向 +1 表示分数高 = 像 AI
     ENGINE_SPEC = {
         # —— 实测区分力强 ——
-        "roberta-chatgpt":       EngineSpec(+1, 0.25, "ML 分类器（需联网下载模型）"),
+        "ml-detector":          EngineSpec(+1, 0.25, "ML 检测器（ModernBERT 主力，需联网下载）"),
+        "mlm-perplexity":       EngineSpec(+1, 0.15, "MLM 伪困惑度（专攻表演式不完美拟人 AI，需本地 ModernBERT-base）"),
         "lmscan":                EngineSpec(+1, 0.15, "外部 CLI"),
         "linguistic-markers":    EngineSpec(+1, 0.12, "AI 高频词表"),
         "formulaic-patterns":    EngineSpec(+1, 0.12, "公式化表达"),
@@ -2990,17 +3381,17 @@ def run_ai_detection(text: str) -> AIResult:
         "pawn-perplexity":       EngineSpec(+1, 0.03, "PAWN"),
         "ngram-perplexity":      EngineSpec(+1, 0.02, "对短文本不可靠，仅作参考"),
         # —— 已实测失效，权重置 0（仍显示，便于对照）——
-        "self-references":       (0, 0.0, "AI 同样高频使用 I think，无区分力"),
-        "logical-connectors":    (0, 0.0, "几乎恒为 1.0"),
-        "vocabulary-diversity":  (0, 0.0, "方向相反"),
-        "structural-patterns":   (0, 0.0, "区分力弱"),
-        "structured-shape":      (0, 0.0, "恒为 0"),
-        "hidden-characters":     (0, 0.0, "恒为 0"),
-        "punctuation-patterns":  (0, 0.0, "恒为 1.0"),
-        "statistical-watermark": (0, 0.0, "方向相反"),
-        "spec-detect":           (0, 0.0, "近乎恒定"),
-        "dna-detect":            (0, 0.0, "恒为 1.0，实现有误"),
-        "chinese-ai":            (0, 0.0, "仅中文文本生效"),
+        "self-references":       EngineSpec(0, 0.0, "AI 同样高频使用 I think，无区分力"),
+        "logical-connectors":    EngineSpec(0, 0.0, "几乎恒为 1.0"),
+        "vocabulary-diversity":  EngineSpec(0, 0.0, "方向相反"),
+        "structural-patterns":   EngineSpec(0, 0.0, "区分力弱"),
+        "structured-shape":      EngineSpec(0, 0.0, "恒为 0"),
+        "hidden-characters":     EngineSpec(0, 0.0, "恒为 0"),
+        "punctuation-patterns":  EngineSpec(0, 0.0, "恒为 1.0"),
+        "statistical-watermark": EngineSpec(0, 0.0, "方向相反"),
+        "spec-detect":           EngineSpec(0, 0.0, "近乎恒定"),
+        "dna-detect":            EngineSpec(0, 0.0, "恒为 1.0，实现有误"),
+        "chinese-ai":            EngineSpec(0, 0.0, "仅中文文本生效"),
     }
 
     # 语言自适应：中文文本下，英文词表类引擎基本失效，必须降权，
@@ -3035,44 +3426,168 @@ def run_ai_detection(text: str) -> AIResult:
         # 早期版本把 1.0 也一并降权，导致 AI 检测中最有价值的满分引擎
         # 反而被压到 0.015，属回归。已被弃用的引擎权重在注册表里就是 0，
         # 不依赖这条规则兜底。
-        if abs(s - 0.5) < 1e-9:
+        if abs(s - 0.5) < 1e-9 and not strict:
+            # strict 模式不降权恒定输出：排雷视角下，任何"未触发"的引擎
+            # 都不该被悄悄打折，宁肯让它以 0.5 原权参与，也不漏掉可疑信号。
             w *= 0.15
         adopted[name] = (s, w)
 
     if adopted:
-        # 第一轮加权均值
+        # 第一轮加权均值（纯统计引擎基线）
         tw = sum(w for _, w in adopted.values())
         ws = sum(s * w for s, w in adopted.values())
         mean1 = ws / tw if tw else 0.5
-        # 剔除偏离均值 0.45 以上的引擎后重算
-        filt = {k: v for k, v in adopted.items() if abs(v[0] - mean1) <= 0.45}
-        if not filt:
+        if strict:
+            # strict 模式取消离群剔除：离群高值往往正是"像 AI"的强信号，
+            # 删掉它等于给 AI 稿放水。全员参与，往高了打。
             filt = adopted
+        else:
+            # 剔除偏离均值 0.45 以上的引擎后重算
+            filt = {k: v for k, v in adopted.items() if abs(v[0] - mean1) <= 0.45}
+            if not filt:
+                filt = adopted
         tw = sum(w for _, w in filt.values())
         ws = sum(s * w for s, w in filt.values())
-        final_score = ws / tw if tw else 0.5
+        stat_mean = ws / tw if tw else 0.5
         # 加权标准差 → 置信度
-        wvar = sum(w * (s - final_score) ** 2 for s, w in filt.values()) / tw if tw else 0
+        wvar = sum(w * (s - stat_mean) ** 2 for s, w in filt.values()) / tw if tw else 0
         wstd = wvar ** 0.5
         confidence = "high" if wstd < 0.15 else ("medium" if wstd < 0.25 else "low")
     else:
-        final_score, wstd, confidence = 0.5, 0.0, "low"
+        stat_mean, wstd, confidence = 0.5, 0.0, "low"
+
+    # ============================================================
+    # 集成 v3.3：ML 锚定 + 多检测器交叉验证（拟人 AI 漏判修复）
+    # ------------------------------------------------------------
+    # 实测暴露的致命问题：拟人程度高的 AI 文本（口语化 / 学生风 / 带瑕疵 /
+    # 自然论说）让大量统计引擎饱和在 0.00（"无公式化特征 = 像人"），
+    # 这些低信息饱和票把唯一的 ML 一票否决成「human」；而单一 ML 分类器
+    # 自身还有风格盲区（已实测 ModernBERT 把带瑕疵拟人 AI 误判 0.03）。
+    #
+    # 修复：
+    #   1) ML 锚定：训练好的分类器是最有原则的单信号。当它确信 AI(≥0.6)
+    #      时，给统计均值设下限，统计饱和票不能把它否决到 mixed 以下；
+    #      当它模糊(0.4~0.6)时，与统计均值等权融合，避免硬否决；
+    #      当它确信 human(≤0.4)或不可用，则信任统计均值（不强行抬高）。
+    #   2) 多检测器分歧：链中 ≥2 个模型且分数差 >0.4 → 强烈分歧，
+    #      诚实降级为 mixed（绝不自信 human），并写入说明。
+    #   3) 阈值：保持 ai>0.58 / human<0.33 / 中间 mixed。
+    # ============================================================
+    # ---- 主力检测器为锚（默认单模型 ModernBERT，无第二意见交叉验证）----
+    # 3.10 起默认链只保留 ModernBERT：旧 RoBERTa 对现代 LLM 几乎总给 0%，
+    # 留着既拖慢首载，又常以弱信号污染锚定。单模型下不再计算 spread/分歧。
+    _scores = ml_detail.get("scores", {})
+    ml_n = ml_detail.get("n", 0)
+    _primary_name = (_ML_MODEL_CHAIN[0] if _ML_MODEL_CHAIN[0] in _scores
+                     else (next(iter(_scores)) if _scores else None))
+    primary = _scores.get(_primary_name) if _primary_name else None
+
+    ml_mean = ml_detail.get("mean")
+    ml_disagreement = False   # 单模型下恒为 False（不再有"第二 detector 反证"分支）
+    ml_note = ""
+    aggregation = []   # 判定算式步骤（人类可读，供报告解释「为什么是这个分」）
+
+    if primary is not None:
+        if strict:
+            # strict：往高了打，取统计均值与主力的较大者（谁更凶听谁的）。
+            # 排雷视角下没有"取平均"这回事——只要有一个信号说危险就标红。
+            final_score = max(stat_mean, primary)
+            aggregation.append(
+                f"① 统计引擎加权均值 = **{stat_mean:.2f}**（{len(adopted)} 个引擎，严格模式不剔除离群）")
+            aggregation.append(
+                f"② 主力检测器 {(_primary_name or '').split('/')[-1] or 'ML'} "
+                f"= **{primary:.2f}**")
+            aggregation.append(
+                f"③ 严格模式：终分 = max(统计, 主力) = "
+                f"max({stat_mean:.2f}, {primary:.2f}) = **{final_score:.3f}**"
+                f"（不取平均，谁凶听谁的）")
+        else:
+            # 稳健混合：统计均值与主力检测器各占一半。
+            # 拟人 AI（主力 0.58~0.99）能被抬出 human 带进入 mixed/ai；
+            # 真实人类（主力也常偏高，如 0.62）只到 mixed，不会自信误杀。
+            final_score = 0.5 * stat_mean + 0.5 * primary
+            # 可解释性：把算式步骤留痕，报告要回答「为什么是这个分」
+            aggregation.append(
+                f"① 统计引擎加权均值 = **{stat_mean:.2f}**（{len(adopted)} 个引擎）")
+            aggregation.append(
+                f"② 主力检测器 {(_primary_name or '').split('/')[-1] or 'ML'} "
+                f"= **{primary:.2f}**")
+            aggregation.append(
+                f"③ ML 锚定：终分 = 0.5×统计 + 0.5×主力 = "
+                f"0.5×{stat_mean:.2f} + 0.5×{primary:.2f} = **{final_score:.3f}**")
+    else:
+        final_score = stat_mean
+
+    # 主力分类器分数高于其自身「人」基线(>0.33)时，绝不自信判 human：
+    # 分类器一旦认为文本不像纯人，结论最低只能到 mixed，留待人工复核。
+    # 这直接修复「拟人 AI 被统计饱和票一票否决成 human」的致命漏判。
+    if primary is not None and primary > 0.33 and final_score < 0.33:
+        aggregation.append(
+            f"④ 安全下限：主力 {primary:.2f} 高于「纯人」基线 0.33，"
+            f"终分不得低于 mixed 带 → 抬至 0.34")
+        final_score = 0.34
+
+    # ---- 困惑度反向锚定：对抗「集体盲区」 ----
+    # 失效模式：高度拟人 AI 让几乎所有统计引擎一起饱和在 0.00（集体误判为「像人」），
+    # 此时聚合里的离群剔除规则会把唯一说真话的引擎（困惑度 0.65）当作噪声删掉
+    # ——实测 S4 案例中 mlm-perplexity 给出 0.649 却仍被判 0.105 human。
+    # 修复：当这个「有原则的模型信号」强烈指 AI(≥0.60) 时，用与 ML 锚定同样的方式
+    # 做混合并取二者较大值，使统计票无法把它压下去。
+    pp_score = engine_scores.get("mlm-perplexity")
+    # strict 下困惑度门槛从 0.60 放宽到 0.50，且直接用 max 而非 0.5 混合
+    _pp_thresh = 0.50 if strict else 0.60
+    if pp_score is not None and pp_score >= _pp_thresh:
+        if strict:
+            if pp_score > final_score:
+                aggregation.append(
+                    f"⑤ 严格模式困惑度反向锚定：伪困惑度引擎给出 {pp_score:.2f}"
+                    f"（>=0.50，指 AI），max 覆盖上一步 → {pp_score:.3f}")
+                final_score = pp_score
+        else:
+            pp_anchored = 0.5 * stat_mean + 0.5 * pp_score
+            if pp_anchored > final_score:
+                aggregation.append(
+                    f"⑤ 困惑度反向锚定：伪困惑度引擎给出 {pp_score:.2f}（>=0.60，"
+                    f"强烈指 AI），取 0.5×{stat_mean:.2f}+0.5×{pp_score:.2f}"
+                    f"={pp_anchored:.3f} 覆盖上一步的 {final_score:.3f}")
+                final_score = pp_anchored
 
     engine_scores = dict(engine_scores)  # 保留全部，供报告展示
 
-    # 判定
-    # 阈值随权重体系重标定：人写文本天然得分偏低，故下界放宽
-    # 阈值在 41 篇真实语料上重标定：
-    #   人类上界 0.385 / AI 下界 0.488，中间留出 mixed 带供人工复核
-    if final_score > 0.58:
-        label = "ai"
-    elif final_score < 0.33:
-        label = "human"
-    else:
-        label = "mixed"
+    # —— 本次缺失/未参与的引擎（透明度：报告要告诉用户「少了什么、为什么」）——
+    # 只统计「本应参与投票」（方向非0且权重>0）却未产出分数的引擎。
+    # 权重为0的失效引擎本就不参与，不算缺失。
+    missing_engines = []
+    for _name, _spec in ENGINE_SPEC.items():
+        _d, _w, _note = _spec
+        if _d == 0 or _w <= 0:
+            continue
+        if _name not in engine_scores:
+            _reason = _current_gaps().get(
+                _name, "本次未产出分数（可能因文本不满足该引擎最小长度要求）")
+            missing_engines.append({"name": _name, "note": _note, "reason": _reason})
+    missing_engines.sort(key=lambda x: -ENGINE_SPEC[x["name"]][1])
 
-    # 引擎分歧度：沿用加权标准差（仅统计被采纳的引擎）
-    disagreement = wstd
+    # 判定
+    if strict:
+        # 严苛阈值（排雷视角）：统计/ML 均值 > 0.30 直接标红（ai），
+        # < 0.15 才敢说 human。宁可误判真人，绝不漏掉 Turnitin 会抓的特征。
+        if final_score > 0.30:
+            label = "ai"
+        elif final_score < 0.15:
+            label = "human"
+        else:
+            label = "mixed"
+    else:
+        # 阈值随权重体系重标定：人写文本天然得分偏低，故下界放宽
+        # 阈值在 41 篇真实语料上重标定：
+        #   人类上界 0.385 / AI 下界 0.488，中间留出 mixed 带供人工复核
+        if final_score > 0.58:
+            label = "ai"
+        elif final_score < 0.33:
+            label = "human"
+        else:
+            label = "mixed"
 
     # 高度确信AI的引擎（>0.7）
     confident_engines = [
@@ -3096,8 +3611,23 @@ def run_ai_detection(text: str) -> AIResult:
 
     # 用滑动窗口的逐句分数做高风险句
     flagged_sentences = []
+    # strict 下把标红门槛从 0.5 降到 0.35：宁可多标，不漏掉任何可疑句。
+    _flag_thresh = 0.35 if strict else 0.5
     for i, s in enumerate(sentences):
-        if i < len(window_scores) and window_scores[i] > 0.5:
+        if i < len(window_scores) and window_scores[i] > _flag_thresh:
+            _wc = int(_word_count(s))
+            _low = s.lower()
+            # strict：过滤无害短句（<12 词且不含高级词/模板词），
+            # 只把长难句、模板句、高级词汇句标红。"I think this is true." 这类
+            # 短句无害，不给学生制造噪声。
+            if strict and _wc < 12:
+                _has_signal = (
+                    any(re.search(r"\b" + re.escape(w) + r"\b", _low)
+                        for w in _STRICT_ADVANCED_WORDS)
+                    or any(_low.startswith(st) for st in _STRICT_TEMPLATE_STARTERS)
+                )
+                if not _has_signal:
+                    continue
             # 计算句子级不确定性（基于窗口分数的标准差）
             window_start = max(0, i - 2)
             window_end = min(len(window_scores), i + 3)
@@ -3108,13 +3638,23 @@ def run_ai_detection(text: str) -> AIResult:
                 uncertainty = local_var ** 0.5
             else:
                 uncertainty = 0.0
-            
-            flagged_sentences.append({
+
+            _entry = {
                 "text": s[:100],
                 "score": round(window_scores[i], 3),
                 "uncertainty": round(uncertainty, 3),
                 "confidence": "high" if uncertainty < 0.1 else ("medium" if uncertainty < 0.2 else "low"),
-            })
+            }
+            if strict:
+                # 自检模式：每条标红句都附一句"怎么改"的策略
+                _strategy = _strict_sentence_strategy(s, prose_text, engine_scores)
+                if _strategy:
+                    _entry["strategy"] = _strategy
+                # 闭环"扫雷"：给一条「直接抄」的降维改写建议（Mock 规则版）
+                _rewrite = _mock_rewrite_sentence(s)
+                if _rewrite:
+                    _entry["rewrite_suggestion"] = _rewrite
+            flagged_sentences.append(_entry)
     flagged_sentences.sort(key=lambda x: x["score"], reverse=True)
 
     # —— 改写嫌疑：词汇层仍带 AI 特征，但句式/情感层被打散 ——
@@ -3134,54 +3674,239 @@ def run_ai_detection(text: str) -> AIResult:
             "此类文本的总分通常会被压低，需单独判断。"
         )
 
+    # —— 自检找茬（strict）模式的向学生解读 / 高压预警 ——
+    student_verdict = _student_verdict(final_score, label) if strict else ""
+    high_pressure_warning = _high_pressure_warning(final_score) if strict else ""
+
     return AIResult(
         ai_probability=round(final_score, 4),
         label=label,
-        method=f"ensemble v2 ({len(adopted)}/{len(engine_scores)} engines adopted, confidence={confidence}, references excluded)",
+        method=(f"ensemble v3.3[{mode}] ({len(adopted)}/{len(engine_scores)} engines adopted, "
+                f"ml_models={ml_n}, ml_disagreement={ml_disagreement}, confidence={confidence}, references excluded)"),
         engine_scores=engine_scores,
         flagged_sentences=flagged_sentences[:10],
-        engine_disagreement=round(disagreement, 4),
+        engine_disagreement=round(wstd, 4),
         confident_engines=confident_engines[:5],
         conflicting_engines=conflicting_engines,
         confidence=confidence,
         adopted_engines=sorted(
-            [{"name": k, "score": round(v[0], 3), "weight": round(v[1], 3)}
+            [{"name": k, "score": round(v[0], 3), "weight": round(v[1], 3),
+              # 带上人类可读释义，报告才能解释「这条凭什么」，而不是只给数字
+              "note": ENGINE_SPEC.get(k, EngineSpec(0, 0, ""))[2]}
              for k, v in adopted.items()],
             key=lambda x: x["weight"] * abs(x["score"] - final_score), reverse=True),
         rejected_engines=[{"name": k, "reason": v} for k, v in rejected.items()],
-        rewrite_hint=rewrite_hint,
+        rewrite_hint=(rewrite_hint + (" " + ml_note if ml_note else "")).strip(),
+        ml_detail=ml_detail,
+        ml_disagreement=ml_disagreement,
+        ml_note=ml_note,
+        stat_mean=round(stat_mean, 4),
+        primary_score=(round(primary, 4) if primary is not None else None),
+        aggregation=aggregation,
+        missing_engines=missing_engines,
+        mode=mode,
+        student_verdict=student_verdict,
+        high_pressure_warning=high_pressure_warning,
     )
+
+
+def run_ai_detection(text: str, mode: str = "normal") -> AIResult:
+    """跑所有可用的 AI 检测引擎，返回综合结果。
+
+    mode="normal"：默认稳健聚合（0.5×统计 + 0.5×主力，阈值 0.58/0.33）。
+    mode="strict"：自检找茬模式（排雷视角，取消宽容逻辑，均值>0.30 标红）。
+
+    带 LRU 缓存：同一段文本反复提交（如 MCP 里"查重三次看稳不稳定"）
+    直接返回内存结果，0 秒出报告，不重复跑模型。
+
+    并发安全：每次调用都返回结果的 deepcopy 副本，调用方可以放心原地
+    排序/修改字段，不会污染缓存、也不会影响其他并发的调用方。
+    """
+    return copy.deepcopy(_run_ai_detection_cached(text, mode=mode))
+
+
+# 保留缓存管理接口（供外部 cache_info / cache_clear），但结果一律经 deepcopy。
+run_ai_detection.cache_info = _run_ai_detection_cached.cache_info
+run_ai_detection.cache_clear = _run_ai_detection_cached.cache_clear
 
 
 # ============================================================
 # 相似度检测
 # ============================================================
 
-def run_plagiarism_check(text: str) -> PlagiarismResult:
-    """检测文本自重叠（简单版，没有外部语料库）"""
+# —— Crossref 联网查重（外部文献比对）——
+# 不写爬虫：使用 Crossref 的免费公开学术 API（千万级文献库）。
+# 能力边界：这是「关键词级」比对——把长句丢进 Crossref 全文检索，看返回的
+# top-1 论文标题与句子有多少实词重合。它不是 Turnitin 那种逐字文本比对，
+# 因此结论应表述为「疑似出自某篇文献」，而非「抄袭成立」。
+
+_CROSSREF_USER_AGENT = "AuroraCheck/3.7 (mailto:aurora-check@example.com)"
+_CROSSREF_WORKS_URL = "https://api.crossref.org/works"
+
+# 停用词：计算标题实词重合度时排除功能词，避免 the/of/and 虚高命中
+_EXTERNAL_STOP_WORDS = frozenset({
+    "the", "a", "an", "and", "or", "of", "in", "on", "for", "to", "with",
+    "by", "at", "from", "as", "is", "are", "was", "were", "be", "been",
+    "being", "their", "its", "it", "this", "that", "these", "those",
+    "which", "who", "whom", "whose", "about", "into", "over", "under",
+    "between", "through", "during", "more", "most", "other", "some",
+    "such", "only", "also", "not", "no", "than", "then", "can", "may",
+    "will", "would", "should", "could", "but", "if", "when", "where",
+    "how", "why", "what", "do", "does", "did", "has", "have", "had",
+    "per", "via", "vs", "using", "based", "among", "within", "without",
+    "both", "each", "few", "many", "much", "same", "new", "use", "used",
+})
+
+
+def _title_word_overlap(sentence: str, title: str) -> Tuple[float, int]:
+    """返回 (coverage, hit_count)：标题实词在句子里的命中比例与命中个数。
+
+    coverage = 命中实词数 / 标题实词总数（0~1）。hit_count 是绝对命中数，
+    用于防止「短标题 + 几个通用词巧合」造成的假阳性。
+    """
+    def _words(s: str) -> set:
+        return set(re.findall(r"[a-z]{3,}", s.lower()))
+
+    tw = _words(title) - _EXTERNAL_STOP_WORDS
+    if not tw:
+        return 0.0, 0
+    sw = _words(sentence)
+    hits = sum(1 for w in tw if w in sw)
+    return hits / len(tw), hits
+
+
+def _fetch_crossref_match(sentence: str) -> Optional[dict]:
+    """对单个句子查 Crossref，返回最匹配条目的 {title, doi, score}，失败返回 None。"""
+    url = (_CROSSREF_WORKS_URL + "?query.bibliographic="
+           + urllib.parse.quote(sentence) + "&rows=1")
+    req = urllib.request.Request(url, headers={"User-Agent": _CROSSREF_USER_AGENT})
+    try:
+        with urllib.request.urlopen(req, timeout=5) as r:
+            data = json.loads(r.read().decode("utf-8"))
+    except Exception:
+        return None
+    items = (data.get("message") or {}).get("items") or []
+    if not items:
+        return None
+    it = items[0]
+    title = (it.get("title") or [""])[0]
+    return {"title": title, "doi": it.get("DOI", ""), "score": it.get("score", 0.0)}
+
+
+def _check_external_plagiarism_api(text: str, max_queries: int = 5) -> dict:
+    """用 Crossref 学术库做外部查重，返回
+    {"overall_similarity": 0~1 或 None, "matched": [...], "note": str}。
+
+    None 表示「没查成」（断网 / 无足够长句），note 说明原因；
+    0.0 表示「查了但没发现明显匹配」。
+    """
+    sentences = _split_sentences(text)
+    # 长句是查重高危区（>15 词），取前 max_queries 条
+    long_sents = [s for s in sentences if len(s.split()) > 15][:max_queries]
+    if not long_sents:
+        return {"overall_similarity": None, "matched": [],
+                "note": "无足够长的句子，跳过外部查重"}
+
+    # 并发请求：把 5×5s 串行压到 ~1-2s
+    results = []  # [(sentence, match_dict_or_None)]
+    with ThreadPoolExecutor(max_workers=min(len(long_sents), 5)) as ex:
+        futures = {ex.submit(_fetch_crossref_match, s): s for s in long_sents}
+        for fut in futures:
+            sent = futures[fut]
+            try:
+                res = fut.result(timeout=8)
+            except Exception:
+                res = None
+            if res and res.get("title"):
+                results.append((sent, res))
+
+    if not results:
+        # 全部失败 → 大概率断网
+        return {"overall_similarity": None, "matched": [],
+                "note": "网络不可用，跳过外部查重"}
+
+    _caption_re = re.compile(r"^(figure|table|fig\.|tab\.)", re.IGNORECASE)
+    matched = []
+    for sent, res in results:
+        title = (res.get("title") or "").strip()
+        # 图表题注（Figure X. / Table X.）不是可引用文献，直接跳过
+        if _caption_re.match(title):
+            continue
+        cov, hits = _title_word_overlap(sent, title)
+        # 命中条件（双门槛，宁可漏报不可误报）：
+        #   标题实词命中 ≥ 6 个，且覆盖率 ≥ 50%。
+        # 纯覆盖率会被「短标题 + 几个通用词巧合」骗过（实测出现过 0.5~0.625
+        # 假阳性），故加绝对命中数下限；纯命中数又会被超长标题稀释，故保留覆盖率下限。
+        if hits >= 6 and cov >= 0.5:
+            matched.append({
+                "sentence": sent[:140],
+                "title": title[:160],
+                "doi": res.get("doi", ""),
+                "coverage": round(cov, 3),
+                "hit_words": hits,
+                "score": round(res.get("score", 0.0), 1),
+            })
+
+    if not matched:
+        return {"overall_similarity": 0.0, "matched": [],
+                "note": "已联网查询 Crossref，未发现明显匹配"}
+
+    overall = round(min(1.0, len(matched) / len(long_sents)), 4)
+    return {"overall_similarity": overall, "matched": matched, "note": ""}
+
+
+def run_plagiarism_check(text: str, enable_network: bool = True) -> PlagiarismResult:
+    """相似度检测：内部段落自重叠 + （可选）Crossref 外部文献比对。
+
+    enable_network=True 时用 Crossref 学术库做关键词级查重（不写爬虫）；
+    可用环境变量 AURORA_NETWORK=0 全局关闭联网。
+    外部查重是「关键词命中」近似，非逐字文本比对，结论表述为「疑似出自」。
+    """
+    # —— 1. 内部自重叠（词袋余弦）——
     paragraphs = [p.strip() for p in text.split("\n\n") if len(p.strip()) > 50]
 
+    # 兜底：单回车/全连成一段时按句子切块（每 4 句一段），避免 self_overlap 恒 0
     if len(paragraphs) < 2:
-        return PlagiarismResult(external_similarity=0.0, self_overlap=0.0)
+        _buf: List[str] = []
+        _chunks: List[str] = []
+        for _s in _split_sentences(text):
+            _buf.append(_s)
+            if len(_buf) >= 4:
+                _chunks.append(" ".join(_buf))
+                _buf = []
+        if _buf:
+            _chunks.append(" ".join(_buf))
+        paragraphs = [p for p in _chunks if len(p.strip()) > 50]
 
-    # 简单的词袋余弦相似度
     max_overlap = 0.0
     matched = []
+    if len(paragraphs) >= 2:
+        for i in range(len(paragraphs)):
+            for j in range(i + 1, len(paragraphs)):
+                sim = _cosine_sim(paragraphs[i], paragraphs[j])
+                if sim > max_overlap:
+                    max_overlap = sim
+                    matched = [
+                        {"para1": paragraphs[i][:80] + "...", "sim": round(sim, 3)},
+                        {"para2": paragraphs[j][:80] + "..."},
+                    ]
 
-    for i in range(len(paragraphs)):
-        for j in range(i + 1, len(paragraphs)):
-            sim = _cosine_sim(paragraphs[i], paragraphs[j])
-            if sim > max_overlap:
-                max_overlap = sim
-                matched = [
-                    {"para1": paragraphs[i][:80] + "...", "sim": round(sim, 3)},
-                    {"para2": paragraphs[j][:80] + "..."},
-                ]
+    # —— 2. 外部文献比对（Crossref，可选联网）——
+    ext_sim: Optional[float] = None
+    ext_matches: List[dict] = []
+    net_note = ""
+    if enable_network and os.environ.get("AURORA_NETWORK", "1") != "0":
+        ext = _check_external_plagiarism_api(text)
+        ext_sim = ext["overall_similarity"]
+        ext_matches = ext["matched"]
+        net_note = ext.get("note", "")
 
     return PlagiarismResult(
-        external_similarity=0.0,  # 没有外部语料库
+        external_similarity=ext_sim,
         self_overlap=round(max_overlap, 4),
         matched_excerpts=matched[:5],
+        external_matches=ext_matches,
+        network_note=net_note,
     )
 
 
@@ -3273,13 +3998,14 @@ def run_citation_check(text: str) -> CitationResult:
 # 主入口
 # ============================================================
 
-def run_check(text: str = "", file_path: str = "") -> CheckReport:
+def run_check(text: str = "", file_path: str = "", mode: str = "normal") -> CheckReport:
     """
     一键跑完整查重流程
 
     参数：
         text: 直接传入的文本（和 file_path 二选一）
         file_path: 从文件读取（txt/md/docx）
+        mode: "normal"（默认稳健）/ "strict"（自检找茬，排雷视角）
 
     返回：
         CheckReport 对象，用 .to_markdown() 转报告
@@ -3293,7 +4019,7 @@ def run_check(text: str = "", file_path: str = "") -> CheckReport:
         return CheckReport(text_length=len((text or "").strip()), note=reason)
 
     # 跑各模块
-    ai_result = run_ai_detection(text)
+    ai_result = run_ai_detection(text, mode=mode)
     plagiarism_result = run_plagiarism_check(text)
     citation_result = run_citation_check(text)
 

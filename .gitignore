@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.DS_Store
+*_aurora_report.html
+*.orig
+*.bak
+.pytest_cache/
+models/

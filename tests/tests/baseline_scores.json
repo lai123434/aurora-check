@@ -1,0 +1,54 @@
+{
+  "S1_obvious_ai": {
+    "score": 0.847,
+    "label": "ai",
+    "primary": 0.99,
+    "stat_mean": 0.703,
+    "truth": "AI"
+  },
+  "S2_casual_ai": {
+    "score": 0.485,
+    "label": "mixed",
+    "primary": 0.718,
+    "stat_mean": 0.252,
+    "truth": "AI"
+  },
+  "S3_student_ai": {
+    "score": 0.489,
+    "label": "mixed",
+    "primary": 0.581,
+    "stat_mean": 0.302,
+    "truth": "AI"
+  },
+  "S4_imperfect_ai": {
+    "score": 0.399,
+    "label": "mixed",
+    "primary": 0.027,
+    "stat_mean": 0.13,
+    "truth": "AI",
+    "comment": "两个分类器都被骗，靠困惑度反向锚定救回 mixed"
+  },
+  "S5_natural_essay": {
+    "score": 0.442,
+    "label": "mixed",
+    "primary": 0.366,
+    "stat_mean": 0.226,
+    "truth": "AI"
+  },
+  "H1_real_student_final": {
+    "score": 0.376,
+    "label": "mixed",
+    "primary": 0.47,
+    "stat_mean": 0.283,
+    "truth": "human",
+    "source": "BUS100_A1_Annotated_Bibliography_Final.docx",
+    "comment": "真人稿落在 mixed 是召回优先策略的已知代价，不是 bug"
+  },
+  "_meta": {
+    "recorded_at": "2026-10-28",
+    "engine_version": "3.4.0",
+    "models": "ModernBERT-RAID/MAGE + RoBERTa-openai + ModernBERT-base(ppl)",
+    "tol": 0.06,
+    "note": "3.4.0 断句修复(缩写保护)后重录：真人稿分数由 0.468 修正为更准确的较低值，AI/真人区分度提升"
+  }
+}

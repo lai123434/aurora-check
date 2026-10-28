@@ -1,0 +1,5 @@
+# 可选：RoBERTa ChatGPT 检测器
+# 安装后自动启用 roberta-chatgpt 引擎（权重最高）。
+-r requirements.txt
+torch>=2.0.0
+transformers>=4.30.0
