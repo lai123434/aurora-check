@@ -1,0 +1,227 @@
+Artificial Intelligence (AI) has been a part of business studies since the last decade, prioritising the use of smart technologies to obtain efficiency within organisations [ 1 , 2 ]. Pivotal aspects such as productivity, proactiveness, and effective decision-making are addressed by implementing AI in day-to-day business processes [ 3 ]. Several departmental functions such as sales and marketing [ 4 , 5 ], data analytics and decision support [ 6 ], human resource management [ 7 ], and sustainable development [ 8 ] rely on AI for effectual execution.
+
+The practice of bibliometrics in research can be traced to 1917 [ 9 ]. The current trends in bibliometrics are event tourism [ 10 ], AI ethics and privacy [ 11 ], people analytics [ 12 ], knowledge network management [ 13 ], business intelligence and data analytics [ 14 ], and many more. Researchers across several domains have used bibliometrics as it enables studies with quantitative insights into a specific domain for a specified period [ 15 ].
+
+This study addresses two prominent research gaps. Although AI is one of the most prominent and preferred research areas, only a few studies are dedicated to the bibliometric aspect of it. There is a need to compare studies on AI over different databases to identify the impact and usefulness of those studies in decision-making in business management. A negligible amount of study is found on performance analysis prioritising funding aspects of research.
+
+The study has been designed to analyse the academic landscape of AI on the Scopus and Web of Science (WOS) databases and compare the findings. Performance analysis and science mapping have been used to recognise different networks and metrics. VOSviewer and R Studio have been used for the bibliometric workflow of 1256 Scopus, 209 WOS, and 1300 combined (Scopus & WOS) articles. The USA has produced the highest number of articles on AI. “ Technological Forecasting and Social Change ”, “ Journal of Business Research ” and “ Business Horizon” are the prominent sources. “The National Natural Science Foundation of China ” is the most prominent funding agency. “ Dwivedi, Y.K. ” and “ Huang, Minghui ” are the most productive and impactful authors. The study identified “machine learning”, “neural network”, “sustainable development”, and “blockchain” are emerging areas of research. The outcome of this study aims to benefit researchers, academicians, technology developers, decision-makers, and management enthusiasts in comprehending the academic landscape of AI.
+
+A few distinct motivations fuel this study such as: (i) AI has been the subject of interest for the last few decades. It is quintessential to comprehend the scholarly publication in the said domain to evaluate the quality and impact of the articles. (ii) In present times, the widespread application of AI by several business organisations has engrossed our attention in evaluating the academic growth of the said domain with special reference to future implications. (iii) With the emergence of productivity tools such as ChatGPT, Bard by Google, etc., the researchers are motivated to analyse the parameters that developers keep into consideration to address organisational efficacy. Among the several techniques in the scientometrics discipline, the researchers have selected bibliometrics as their preferred tool to perform performance analysis, content analysis, and science mapping [ 16 ].
+
+This study is the first to perform a comparative analysis of two herculean databases. This study also identifies the prominent funding agencies which sponsor and support research in the aforementioned area. The study's significance can be reflected through detailed performance analysis and comprehensive co-occurrence analysis to scrutinise the academic landscape of AI in business management.
+
+This study has been tabulated into six salient sections. The opening section comprises an introduction to the study, followed by a detailed literature review. The methodology has been discussed in the next part, followed by data analysis and interpretation. The fifth section explains the research findings, followed by discussions, conclusions, limitations of the study, and future research courses.
+
+The concept of AI can be traced back to the early 1970s [ 17 ]. Apart from the traditional usage in the technology domain, AI also has implications in research and policy formulation [ 18 ], marketing [ 19 ], and customer engagement [ 20 ], tourism industry [ 21 ], supply chain management [ 22 ] and overall organisational development [ 23 ]. For the fintech industry, AI is pivotal in facilitating technology, such as blockchain, cryptocurrency, etc., into the traditional economic and legal environment [ 24 ].
+
+The application of AI for business and allied management studies can be tracked in the recent decade. Studies by Refs. [ [25] , [26] , [27] ] highlighted the usage of AI in new product development, value creation, and sustainable economic development [ 28 ]. These studies have identified the positive impact of AI on the said areas [ 29 ]. identified a positive result in customer engagement for tech giants such as Amazon in the Indian context. However [ 30 ], highlighted the importance of entrepreneurial skills apart from AI to formulate effective strategies for sustenance in the competitive marketplace. Another study [ 31 ] foregrounded the increasing cases of cybercrimes, violation of privacy, growing economic injustice, and replacement of human labour as the negative impacts of AI. The authors believe that the positive implications are more compared to negative ones. Besides, AI's growing popularity and usage favour the positive impact more than the latter [ 32 ].
+
+Innovative AI chatbot such as ChatGPT has been the “buzz” in recent times. A study by Ref. [ 33 ] accentuated the positive advancement of this bot in the changing job requirements, transforming the User Interface (UI) landscape and content development for social media platforms. Apart from the traditional utility, ChatGPT is an efficient tool for management research [ 34 ] and for supporting entrepreneurial ventures [ 35 ]. AI tools such as ChatGPT have been criticised for violating ethical conduct, especially in education and research, as they generate false text for academic purposes [ 36 ]. Apart from the fewer limitations, we believe that ChatGPT can be used to assist researchers in the respective studies across every domain.
+
+Amongst the several criticisms in the domain of AI concerning employment generation, the study by [ 37 ] has identified the lack of awareness between the AI utility and the tech-savvyness of labourers. Awareness of the public concerning the four intelligence processes such as mechanical, analytical, empathetic, and intuitive is highly essential in eliminating the negative stigma of AI hampering employment opportunities [ 38 ]. The researchers believe there exists a dormant need for public awareness which provides transparent knowledge on the pros of AI and eradicates ignorance and negative stigma.
+
+This study is channeled by a few limitations. Even though AI has been the most prominent topic of study, only a limited amount of literature is dedicated to the bibliometric approach that too with very few documents. The concept of AI has been introduced in the last five decades. Still, a negligible number of studies have been conducted on the performance analysis of the said area. A significant number of research has been performed across several research databases, but there is a need to compare the different parameters across databases. A latent need to identify the prominent funding agencies sponsoring research works in the field of business and allied management studies on AI.
+
+The present study is centered on “Artificial Intelligence” in academics. Data were collected from the Scopus [ 39 ] and ‘Web of Science (WOS)’ databases on May 27, 2023 using “Artificial Intelligence” as a keyword. Scopus and WOS stand out as the foremost provider of bibliometric data and play a vital role in indexing scientific data for bibliometric analysis [ 40 ]. The study period is 10 years (2013–2022) [ 41 ]. The year 2023 is eliminated as the year is in progress. By limiting subject area (Business, Management and Accounting; and Economics, Econometrics and Finance) [ 32 ], document type (Article), publication stage (Final), sources (Journal) [ 42 ], and language (English) [ 42 ], we got 1256 documents from Scopus database. Similarly, 209 articles were extracted from WOS by limiting subject area (Management, Economics and Economic Theory), period (2013–2022), document type (Article), WOS categories (Business, Management, Economics, Operations research management science, Business finance, Industrial Relations labour, Development studies, and ethics), language (English), and social science citation index. The final dataset comprises 1300 articles after eliminating 165 duplicate documents from the respective databases. This study has concentrated on articles only to include only relevant and impact-worthy studies pertaining to business and allied domains [ 43 ].
+
+Performance analysis and science mapping in bibliometrics are complex. Often relying on one software does not follow a complete recommended workflow of bibliometrics [ 44 ]. We have used VOSviewer [ 45 ], R-studio [ 46 ] and MS Excel for performance analysis and science mapping [ 47 ]. Performance analysis includes the distribution of publications and identification of productive and influential parameters like; authors, countries, funding agencies, affiliation, sources, and commonly occurred keywords [ 48 ]. Science mapping covers social and intellectual structure [ 49 ], out of which we concentrate only on intellectual structure. The systematic process followed is summarised below-
+
+Key bibliometric data on AI obtained from Scopus and WOS database. The data were analysed to estimate the performance and to visualise the intellectual structure through co-occurrence analysis of keywords. A comparison was made over each criterion of analysis across both the database.
+
+Table 2 extracts vital information on the evolution and patterns of published documents (see Table 1 ). We compare both databases to identify the leading and most impactful database in the said domain. In the “Average citations per documents”, “Co-Authors per Documents”, and “International co-authorships %” criteria WOS takes the lead. But the Scopus database leads the list in the rest of the criteria.
+
+Comparison of reviewed publications.
+
+Source: Compiled and computed data
+
+Parameters of data analysis.
+
+Source: Authors' creation
+
+In the last 10 years, 1256 documents were indexed in Scopus whereas 209 were in WOS. The annual growth rate of Scopus and WOS is 63.7 % and 19.62 %, respectively. The sources for Scopus are 527, while for WOS is 121.2925 keywords are recorded in Scopus while 660 keywords are in WOS. The average document age of Scopus is 2.51, whereas WOS is 2.13.
+
+The average citation per document is 22.68 and 34.56, respectively, for Scopus and WOS. 291 ‘Single authored documents’ are identified from Scopus whereas 20 are from WOS. 3100 authors have published their research outcomes in Scopus-indexed journals, whereas 589 researchers have published in WOS indexed journals. It is clear that the authors have a high preference for Scopus indexed journals, but the documents of WOS got the maximum number of citations per document in the said domain.
+
+Table 3 and corresponding Fig. 1 , Fig. 2 summarise the chronological progress in AI research. In the Scopus database, 1256 documents are indexed. Whereas in WOS, 209 documents are indexed. In WOS, no documents were indexed between 2013 and 2014. In the Scopus database, 16.32 % of documents have no citation, but in WOS, it is only 4.78 %. The average citations per document is 22.68 and 34.90 for Scopus and WOS, respectively. It is clear that Scopus is a popular database with a wide range of coverage of documents, but the impact of WOS documents is more as it has the highest average citations and less percentage of non-cited documents.
+
+Year-wise analysis of documents.
+
+Legends: NOD- No of Documents, TC- Total Citation, NCD- Total Non-Cited Documents, CD- Total Cited Documents.
+
+Source: Compiled and Computed from Scopus and Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+Year-wise analysis of documents.
+
+Legends: WOS- Web of Science.
+
+(Source: Compiled and Computed from Scopus and Web of Science Database over a period from January 1, 2013 to December 31, 2022)
+
+Year-wise analysis of citation.
+
+Legends: WOS- Web of Science.
+
+(Source: Compiled and Computed from Scopus and Web of Science Database over a period from January 1, 2013 to December 31, 2022)
+
+A detailed analysis has been made, segregating the study period into two quinquennials. During the first quinquennial (2013–2017), the research on AI was not popular, as only 69 and 6 documents were indexed in Scopus and WOS, respectively. In the second quinquennium, the momentum gained in AI research. During this period, more than 17 and 33 times of documents were indexed, respectively, in Scopus and WOS. A similar trend was also observed in citations for both the database. The study argues the increasing importance of AI for decision-making in business management.
+
+Table 4 and corresponding Fig. 3 & Fig. 4 summarise the most productive countries in AI research. The table enlightens on performance indicators like documents, citations, non-cited documents, and cited documents, whereas the graph expresses the citations. The USA, UK and China are the top three contributing countries. Jointly these 3 counties have contributed more than 50 % of the documents the prominent countries contributed. Regarding citations, the USA, UK and France hold the top three positions in the Scopus database. But the USA, UK and Taiwan hold the top three positions in the WOS database. The result suggests USA and UK are the leading countries in AI research. The findings of this analysis argue advanced research on AI is taken care of by most developed economies.
+
+Prominent countries.
+
+Legends: NOD- No of Documents, TC- Total Citation, NCD- Total Non-Cited Documents, CD- Total Cited Documents.
+
+*Here we have considered UK and England as same.
+
+Source: Compiled and Computed from Scopus and Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+Prominent countries citations (scopus).
+
+Source: Compiled and Computed from Scopus Database over a period from January 1, 2013 to December 31, 2022
+
+Prominent countries citations (web of science).
+
+Source: Compiled and Computed from Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+Table 5 and corresponding Fig. 5 & Fig. 6 discuss prominent sources. Prioritising journal publications, the performance analysis of journals have been carried out to identify the most productive and influential journals from both databases. The comparison criterion is ‘Proportion’ and ‘Total’. “Technological Forecasting and Social Change”, “International Journal of Recent Technology and Engineering” and “Journal of Business Research” are prominent sources in the Scopus database with 1443, 76 and 1213 citations from 32, 27 and 25 documents, respectively. Similarly, “Journal of Business Research”, “Technological Forecasting and Social Change” and “Industrial Marketing Management”, with 362, 406 and 454 citations from 13, 13 and 8 documents, lead the list in the WOS database. “Technological Forecasting and Social Change”, “Journal of Business Research”, and “Business Horizons” are the prominent sources of both databases. These three journals have prominent positions in the Scopus and WOS database with inter-changeable positions. WOS-indexed sources lead the list on proportion, whereas Scopus-indexed sources in the latter. The result indicates greater outreach of Scopus and higher popularity and impact of WOS sources.
+
+Prominent sources.
+
+Legends: NOD- No of Documents, TC- Total Citation, h-h index, g-g index, m-m index.
+
+Source: Compiled and Computed from Scopus and Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+Citations of prominent sources (scopus).
+
+Source: Compiled and Computed from Scopus Database over a period from January 1, 2013 to December 31, 2022
+
+Citations of prominent sources (web of science).
+
+Source: Compiled and Computed from Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+Table 6 and corresponding Fig. 7 & Fig. 8 summarise the highly productive affiliations. Prominent affiliating institutions are identified from Scopus and WOS databases considering the number of documents produced and citations. Affiliations from Scopus-indexed documents are advantageous in total documents, citations, and CD. But institutions identified from WOS documents have prominence in terms of ‘Proportionate’ values.
+
+Prominent affiliations.
+
+Legends: NOD- No of Documents, TC- Total Citation, NCD- Total Non-Cited Documents, CD- Total Cited Documents.
+
+Source: Compiled and Computed from Scopus and Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+Citations of prominent Affiliation's (scopus).
+
+Source: Compiled and Computed from Scopus Database over a period from January 1, 2013 to December 31, 2022
+
+Citations of prominent Affiliation's (web of science).
+
+Source: Compiled and Computed from Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+“NEOMA Business School” has the highest 13 documents in the Scopus database, whereas “N8 Research Partnership” has the highest 9 documents from the WOS database. From the citations point of view, “Babson school” has the highest 1352 TC from 8 documents in the Scopus database. But in the WOS database, “University of South Carolina Columbia” has the highest 466 citations from 4 documents. We observed that WOS has a higher percentage of NCD. The minimum average citation per document of both databases is nearly the same, i.e., approximately 4. But the highest average citation per document is 169 and 117, respectively, for Scopus and WOS.
+
+Table 7 and corresponding Fig. 9 & Fig. 10 summarise the performance of the prominent funding agencies referring to documents produced and citations received. The range of documents published by prominent funding agencies is 5–50 in Scopus, whereas 2 to 14 in WOS. The top three funding agencies are accountable for at least 50 % of the documents produced by all prominent agencies. Among Scopus-indexed documents, The National Natural Science Foundation of China (50), the European Commission (15), and the Horizon 2020 Framework Programme (15) are the three most prominent funding agencies. These three agencies have 2567 cumulative citations. The National Natural Science Foundation of China (14), the National Research Foundation Korea (6), and the Ministry of Science and Technology, Taiwan (5) are the three most prominent funding agencies identified from WOS. The cumulative citation of these three agencies is 981. All 50 documents indexed in WOS have minimum citations of 1. Out of 156 documents indexed in Scopus, 12 documents have 0 citations. The result confirms that WOS-indexed documents have more consistent citations than Scopus. The Scopus database leads the list in total publications and citations. WOS leads the list in each parameter on the proportionate criterion of analysis.
+
+Prominent funding agencies.
+
+Legends: NOD- No of Documents, TC- Total Citation, NCD- Total Non-Cited Documents, CD- Total Cited Documents.
+
+Source: Compiled and Computed from Scopus and web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+Citations of prominent funding agencies (scopus).
+
+Source: Compiled and Computed from Scopus Database over a period from January 1, 2013 to December 31, 2022
+
+Citations of prominent funding agencies (web of science).
+
+Source: Compiled and Computed from Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+Table 8 summarises the prominent authors from Scopus and WOS databases. The parameters of analysis are document produced and citations. The 10 productive authors from Scopus are accountable for little less than 5 % of total documents. Out of 61 documents of the most productive authors, little less than 10 % have funding support, whereas 88.52 % have a minimum of 1 citation. The range of authors' productivity (h-index), impact (g-index), and average citation per publication (m-index) of the ten most productive authors are ‘1 to 8’, ‘1 to 8’ and 0.5 to 2.667, respectively. The 10 productive authors from WOS are accountable for little less than 12 % of total documents. Out of 25 documents, little less than 36 % have funding support, whereas all documents have a minimum of 1 citation. The range of authors' productivity, impact and average citation per publication is ‘1 to 3’, ‘2 to 3’ and 0.33 to 0.667, respectively. On the productivity parameter, impact and average citation per publication, Scopus is in an advantageous position. But in cited documents and funded documents, WOS leads the list.
+
+Prominent author analysis.
+
+Legends: T Doc- Total no of Documents, F Doc- Funded Documents, NF Doc- Non-Funded Documents, TC- Total Citation, NCD- Total Non-Cited Documents, CD- Total Cited Documents, AC- Average Citation, h-h index, g-g index, m-m index.
+
+Source: Compiled and Computed from Scopus and Web of Science Database over a period from January 1, 2013 to December 31, 2022
+
+From the list of 20 prominent authors ‘Kietzmann, J’ is the only common author in both databases. In Scopus ‘Dwivedi, Y.K.’ is the most productive author with 8 documents, followed by Haenlein, M. with 7 documents. Dwivedi, Y.K have a total of 1088 citations, out of which [ 18 ] has the highest 626 citations. In WOS, five authors have produced 3 documents each. Of these five authors, ‘Huang Minghui’ have the highest citations (1008). Of the three documents, [ 54 ] has the highest (731) citations. ‘Dwivedi, Y.K.’ and ‘Huang, Minghui’ are the most productive authors from Scopus and WOS databases in AI.
+
+Table 9 summarises the most frequently used keywords. The Authors' keywords analysis aims to identify the most prominent keywords. Co-occurrence analysis, followed by keyword analysis, aims to map issues discussed so far and issues that have significant importance in the present and future. The most frequently used 15 keywords are identified by analysing the documents. Out of these 15 keywords, 6 are commonly found in both the index and the database created from the mix of both indices. These keywords are Artificial Intelligence, Machine Learning, Big Data, AI, Automation and Artificial Intelligence (AI). Of the 15 keywords, Decision Making, Innovation, Ethics, Knowledge Management, Entrepreneurship, Sustainability and Industry 4.0 are unrelated to technical aspects. These keywords indicate modern businesses' dependency on AI's application in the decision-making and sustainability of the business. Across three databases, Artificial Intelligence, Machine Learning and Big Data are the most frequently used keywords. In Scopus, the occurrence of Artificial Intelligence, Machine Learning and Big Data is 875, 141 and 70, whereas in WOS, it is 139,18 and 9, respectively.
+
+Co-occurrence with authors' keywords.
+
+Legends: TLS- Total Link Strength, OCC- Occurrence.
+
+Source: Compiled and Calculated Data from VOSviewer
+
+Table 10 and corresponding Fig. 11 , Fig. 12 & Fig. 13 explain the Co-Occurrence of the Authors’ Keywords. Forty keywords are selected from Scopus documents in the domain of AI and its surrounding terms. The keywords are classified into 7 clusters. Cluster-1 (green dots) contains 12 keywords focused on integrating AI and business decision-making. Out of these keywords, Human Resource Management, Supply Chain Management, Sustainability and Sustainable Development are the non-AI keyword. The occurrence and TLS are 1202 and 1609, respectively, for these 12 keywords. Similarly, cluster-2 attempts on ethical aspects, cluster-3 on employment, cluster-4 on technology adoption for business development, cluster-5 on Covid −19 and cluster-6 & 7 on forecasting and decision-making aspects of management in the presence of AI.
+
+Cluster analysis of Co-Occurrence with Authors Keywords.
+
+Legends: NOI–No of Documents, L- Links, TLS- Total Link Strength, OCC- Occurrence, H&L TLS- Highest and Lowest Total Link Strength.
+
+Source: Compiled and Calculated Data from VOSviewer
+
+Cluster analysis of Co-Occurrence with Authors Keywords (Scopus).
+
+Source: VOSviewer (Scopus Database)
+
+Cluster analysis of Co-Occurrence with Authors Keywords (Web of Science).
+
+Source: VOSviewer (Web of Science Database)
+
+Cluster analysis of Co-Occurrence with Authors Keywords (Scopus + Web of Science).
+
+Source: VOSviewer (Scopus + Web of Science Database)
+
+With 38 authors' keywords, the co-occurrence analysis has been performed. The keywords from WOS sub-grouped into 7 clusters. Cluster-1 (red dots) has 8 keywords focused on AI's utility in auditing, prioritising ethics and trust. The keywords of this cluster are Audit, Audit Quality, Digital Entrepreneurship, Entrepreneurship, Ethics, Privacy, Technology Adoption and Trust. The occurrence and TLS are 34 and 66, respectively. Similarly, rest six clusters enlighten the diversified use of AI in solving different problems in business management. Cluster-2 discusses the impact of AI on productivity and employment, Cluster-3 on marketing aspects and knowledge management, Cluster-4 on decision-making in retail, Cluster-5 on service management, Cluster-6 on performance and Cluster-7 on customer satisfaction and knowledge sharing.
+
+The combination of keywords from Scopus and WOS produces 36 keywords. Seven clusters were formed from these 36 keywords. The keywords are influenced by more technical terms. The result of cluster analysis is more similar to the results of the Scopus database. Cluster-1 (nine keywords) has two non-AI keywords. The cluster integrates AI for good governance and sustainability of business. Similarly, Cluster-2 integrate AI in entrepreneurship, innovation and marketing, Cluster-3 on decision-making, Cluster-4 on Covid-19, and Cluster-6 and 7 on accounting, decision making and fintech.
+
+Fig. 14 presents a comparative analysis of authors productivity through Lotka's Law. As evident, the majority of authors are found to produce only one document each. For Scopus database, 2745 authors (89 %) have produced only 1 document in the said field. While for WOS, 119 authors (93 %) have produced the same. It is to be noted that only a handful of authors have contributed scholarly works in the said field in both databases. This attracts scholarly intervention for producing more number of impactful research work in the said field.
+
+Lotka's law.
+
+Sources: Compiled and computed data
+
+The study seeks to achieve its objectives by performing a bibliometric analysis. The primary focus of the study is to conduct a bibliometric workflow analysis to recognise different networks and metrics. Comprehensive performance and co-occurrence analysis are carried out to crystalise the future growth and research trends in AI. The major findings of the study are discussed below.
+
+Scopus leads the segment in terms of research consistency while WOS has the highest research impact. “Dwivedi, Y.K.” is identified as the most impactful researcher for Scopus, whereas “Huang, Minghui” is for the latter. Developed countries are found to have higher impactful research. China is the most promising country in terms of research funding. “Machine learning”, “neural networks”, and “blockchain” are some technical trending themes in the field of AI research. About 90 % of documents have been produced by single authors in both the database.
+
+The number of AI publications per year is rising in both the database. The growth rate of publication and coverage of Scopus is consistent, while the publication impact of WOS is higher. The most productive years in AI research are 2022 for Scopus and 2021 for WOS. Author “Dwivedi, Y.K.” stands out as the most productive and impacted author for the Scopus database. In the WOS database, “Huang, Minghui ” is the most impacted author with 1008 citations from 3 documents, of which 2 have funding support. “ Huang, Minghui ” is the most impacted author in the AI research with the highest average citation per document.
+
+The leading countries in AI research are USA, UK and China, with the highest document production in both databases. Among prominent countries, USA and Taiwan have the highest impact, respectively, in Scopus and WOS. “National Natural Science Foundation of China” is the most productive funding agency. “Babson College”, “School of Management” and “Swansea University” are the prominent affiliating institutions for ‘Scopus’ while “The University of South Carolina Columbia” and “State University System of Florida” for WOS indexed documents.
+
+In the Scopus database, the most productive sources are “Technological Forecasting and Social Change”, “International Journal of Recent Technology and Engineering” and “Journal of Business Research”. Whereas in the WOS, “Journal of Business Research”, “Technological Forecasting and Social Change” and “Industrial Marketing Management” are the most productive sources. Among the top 3 prominent sources “Technological Forecasting and Social Change” and “Journal of Business Research” are common in both databases. These sources have a maximum h-index than other sources, which indicates more consistency in publishing documents and gaining citations.
+
+Keyword analysis is one of the important analyses to know the current and expected future trends. Among all keywords, “Artificial Intelligence” is the most frequently used word. “Machine learning”, “neural networks”, and “blockchain” are some trending themes in the technical field. AI research has a presence in the areas of business management. It focuses on issues like ‘Sustainability’, ‘sustainable development’, ‘accounting’, and ‘auditing’ aspects. But in turn, research on ethical aspects of AI is addressed by management research. The future trend of the research can be extended to the adverse impact of AI on employment and human resource management and the positive impact on productivity and efficiency.
+
+Fig. 15 presents a comprehensive agenda of scholarly works in the said field. The agenda can be broadly classified in to four distinctive themes such as basic themes, emerging theme, niche theme and motor theme.
+
+Agenda for future research.
+
+Sources: Compiled and computed data
+
+The basic theme represents the blueprint of initial research works on AI. Themes such as deep learning, artificial intelligence techniques and sustainable development are classified under basic themes. The initial studies on AI represented the aforementioned themes in order to create AI software for addressing complex organisational goals, while achieving sustainable development. Deep learning assist developers to understand and comprehend the business needs and requirements of AI algorithms. Sustainable development presents the inclination of business organisations in achieving the environmental harmony using several AI techniques at their disposal.
+
+Motor themes represent the prominent theme which are preferred for scholarly publications. Themes such as forecasting, neural network, data handling, technological development, innovation, technology adoption, artificial intelligence, decision making, and machine learning represents the most preferred themes in academia. Motor themes presented the technical framework of the AI interface using in business research. Currently AI is used in crucial business functions like innovation, leadership and decision making, and investment decisions.
+
+Emerging themes represents the themes which are likely to be trending in the future time. Scholars across the globe are currently working on themes such as competition, human intervention and robotics. The future research trend priorities the utility of AI in securing competitive advantage across the industry. Studies are currently focusing on the human intervention and robotics on AI to achieve organisational efficiency. Future research is observed for identification of human intervention, extended use of robotics and automation as well as use of AI in strategic formulation.
+
+Niche themes represent the dormant themes craving for scholarly attention. Themes such as commerce, Covid-19, and Industry 4.0 are classified under niche themes. Scholars are advised to study the AI implication on commerce and allied domain to achieve industry 4.0 goals. There is a latent need to comprehend the AI development and utility in managing organisational goals during Covid-19 pandemic. Research on the use of AI in handling pandemic like Covid-19 is encouraged for future researchers. While the proper use of AI for developing industry 4.0 culture in the organisation can result in an excellent finding. Although, the use of AI in business and organisation studies are more, underlying discipline such as commerce can result in interesting work.
+
+There is a special case of themes such as artificial intelligence technologies, data mining and internet of things which have prolific impact on all the themes. The aforementioned themes are perennial in terms of scholarly works and high impact factor-based research.
+
+This study examines, assesses and visualises knowledge mapping by employing performance analysis and science mapping techniques in AI. Performance analysis focuses on evaluating productivity, impact and visibility. At the same time, science mapping helps picturise the structure, trend and relations among different parameters. The concluding remarks of bibliometric analysis on AI are as follows:
+
+The research on AI is in a growing stage. In AI research documentation, the outreach of Scopus is visible, whereas the impact of WOS is significant. USA and Taiwan are the most impactful countries, whereas USA and UK are the most productive nations. “Technological Forecasting and Social Change” and “Journal of Business Research’ are highly preferred sources. “Dwivedi, Y.K.” and “Huang, Minghui” are productive and impactful authors in AI research. [ 54 ] is the most impacted author in both databases.
+
+Out of the total documents published on AI, at least 26 % of documents have any funding support. Leading software firms are extending their funding support. However, the “National Natural Science Foundation of China” is recognised as the most prominent funding agency. In AI, current research focuses on technical as well as managerial aspects. It integrates technical aspects like “Machine learning”, “neural networks”, and “blockchain” with ‘Sustainability’, ‘sustainable development’, ‘accounting’, and ‘auditing’ for managerial decision-making.
+
+Every research has some limitations due to some unavoidable factors. The current study also has some limitations. First of all, data are collected from Scopus and WOS databases only. The results may vary if data are collected from other databases for different timeframes. In science mapping, we have analysed the co-occurrence of authors’ keywords. Other aspects of science mapping may be taken care of.
+
+Ashok Kumar Patra: Methodology, Formal analysis, Conceptualization. Ashyashree Praharaj: Writing – original draft, Visualization, Methodology, Data curation, Conceptualization. Desul Sudarshan: Validation, Supervision, Software, Dr. Biswajit Prasad Chhatoi: Writing – review & editing, Validation, Supervision, Project administration, Methodology, Conceptualization.
+
+The authors declared no potential conflicts of interest with respect to the research, authorship and/or publication of this article.
+
+Ashok Kumar Patra, Email: ashokpatra64@gmail.com.
+
+Ashyashree Praharaj, Email: ashyashree@yahoo.com.
+
+Biswajit Prasad Chhatoi, Email: chhatoiprasad@gmail.com.

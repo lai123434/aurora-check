@@ -4,3 +4,12 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+    volumes:
+      # 挂载宿主机 HuggingFace 缓存：模型只下载一次，
+      # 重启 / 重建容器都不重复下载（约 2GB，首次仍需联网）
+      - ~/.cache/huggingface:/root/.cache/huggingface
+      # 可选：把 SQLite 历史记录持久化到宿主机（去掉注释即可）
+      # - ./data:/app/data
+    environment:
+      # 国内网络下载模型慢时，取消下面注释走镜像加速：
+      # HF_ENDPOINT: https://hf-mirror.com

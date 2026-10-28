@@ -9,3 +9,14 @@ venv/
 *.bak
 .pytest_cache/
 models/
+*.db
+*.db-journal
+
+# 私人/作业相关，不随开源仓库分发
+make_*.py
+persona.py
+persona_research/
+test_ai.txt
+test_human.txt
+screenshot_docs.py
+probe_texts.py

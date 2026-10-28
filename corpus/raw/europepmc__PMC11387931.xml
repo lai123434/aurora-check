@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8"?><article xml:lang="en" article-type="research-article"><front><journal-meta><journal-id journal-id-type="pmc-domain-id">2005</journal-id><journal-id journal-id-type="pmc-domain">f1000res</journal-id><journal-title-group><journal-title>F1000Research</journal-title><abbrev-journal-title>F1000Res</abbrev-journal-title></journal-title-group><publisher><publisher-name>Faculty of 1000 Ltd</publisher-name></publisher></journal-meta><article-meta><article-id pub-id-type="pmcid">PMC11387931</article-id><article-id pub-id-type="pmcaid">11387931</article-id><article-id pub-id-type="pmcaiid">11387931</article-id><article-id pub-id-type="pmid">39262836</article-id><article-id pub-id-type="doi">10.12688/f1000research.148514.1</article-id><article-version>1</article-version><title-group><article-title>Demand for digital skills, skill gaps and graduate employability: Evidence from employers in Malaysia</article-title></title-group><contrib-group content-type="author"><contrib><name name-style="western"><surname>Tee</surname><given-names initials="PK">Poh Kiong</given-names></name><role>Conceptualization, Funding Acquisition, Supervision, Writing – Original Draft Preparation</role><xref ref-type="aff" rid="a1">1</xref><xref rid="c1" ref-type="author-notes">a</xref></contrib><contrib><name name-style="western"><surname>Wong</surname><given-names initials="LC">Ling Chai</given-names></name><role>Data Curation, Formal Analysis, Methodology</role><xref ref-type="aff" rid="a1">1</xref></contrib><contrib><name name-style="western"><surname>Dada</surname><given-names initials="M">Morakinyo</given-names></name><role>Validation, Writing – Original Draft Preparation, Writing – Review &amp; Editing</role><xref ref-type="aff" rid="a1">1</xref></contrib><contrib><name name-style="western"><surname>Song</surname><given-names initials="BL">Bee Lian</given-names></name><role>Project Administration, Visualization, Writing – Original Draft Preparation, Writing – Review &amp; Editing</role><xref ref-type="aff" rid="a1">1</xref></contrib><contrib><name name-style="western"><surname>Ng</surname><given-names initials="CP">Chee Pung</given-names></name><role>Investigation, Resources, Software, Validation</role><xref ref-type="aff" rid="a2">2</xref></contrib></contrib-group><aff id="a1">
+<label>1</label>School of Marketing and Management, Asia Pacific University of Technology &amp; Innovation, Kuala Lumpur, 57000, Federal Territory of Kuala Lumpur, Malaysia</aff><aff id="a2">
+<label>2</label>Faculty of Business and Communication, INTI International University, Nilai, 71800, Negeri Sembilan, Malaysia</aff><author-notes><fn id="c1"><label>a</label><p>Email: <email>poh.kiong@apu.edu.my</email></p></fn><fn id="fn2"><p>No competing interests were disclosed.</p></fn></author-notes><pub-date><day>25</day><month>4</month><year>2024</year></pub-date><volume>13</volume><fpage>389</fpage><page-range>389</page-range><pub-history><event event-type="pmc-release"><date><day>11</day><month>9</month><year>2024</year></date></event></pub-history><permissions><copyright-statement>Copyright: © 2024 Tee PK et al.</copyright-statement><license><license-p>This is an open access article distributed under the terms of the Creative Commons Attribution Licence, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions><self-uri xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="f1000research-13-162834.pdf" content-type="pmc-pdf"><?cloudpmc-path 0f2c/11387931/ad2d0a9ac405/f1000research-13-162834.pdf?><?cloudpmc-bucket app?><?size 465058?></self-uri><abstract id="abstract1"><title>Abstract</title><sec id="sec1" disp-level="2"><title>Background</title><p>A major workforce inadequacy and the change in skill demanded have been observed due to the digital transformation. This study aims to identify the digital skills demanded by employers, focusing on exploring the skills gaps among the graduates that impact graduate employability.</p></sec><sec id="sec2" disp-level="2"><title>Methods</title><p>A cross sectional online survey was conducted among the companies registered with the Malaysian Productivity Corporation (MPC). Demand for digital skills was assessed using descriptive analysis of mean scores of the employers’ rating in digital skills at present and in future. A pair sample t-test was performed to explore the existence of skill gaps, by comparing the demand versus competencies of the graduates’ digital skills in the workplace.</p></sec><sec id="sec3" disp-level="2"><title>Results</title><p>Of the 393 responses collected, 376 responses were used for final analysis. The findings show that the current top three digital skills in demand are “information and data literacy”, “problem-solving”, and “digital content creation”. Whereas the top digital skills for future demand are “problem-solving”, “safety”, and “communication and collaboration”. In addition, the most significant (digital) skill gap is found in “communication and collaboration skills” followed by “problem-solving” and “safety” skills.</p></sec><sec id="sec4" disp-level="2"><title>Conclusions</title><p>These findings provide insights into the digital skills demanded by employers in IR 4.0, allowing the practitioners, education service providers and policymakers to do better planning on human capital management and training development. By focusing on identifying the current and future demand for digital skills while exploring the digital skill gaps among the graduates, this study provides insight into the employability skills required by the graduate before entering the job market.</p></sec><sec id="kwd-group1" sec-type="kwd-group" disp-level="2"><p><bold>Keywords:</bold> Digital transformation, Digital society, Digital economy, Digital skills, IR 4.0, Digital skill gaps, Graduate employability.</p></sec></abstract><custom-meta-group><custom-meta><meta-name>status</meta-name><meta-value>released</meta-value></custom-meta><custom-meta><meta-name>display-pdf</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>is-olf</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>is-manuscript</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>is-preprint</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>is-journal-matter</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>is-scanned</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>is-retracted</meta-name><meta-value>no</meta-value></custom-meta></custom-meta-group></article-meta><notes notes-type="article-notes"><sec id="historyarticle-meta1" sec-type="history" disp-level="2"><p>Accepted 2024 Apr 13; Collection date 2024.</p></sec></notes></front><body><sec id="sec5" disp-level="1"><title>Introduction</title><p>The world has entered the new millennium of the Fourth Industrial Revolution (IR 4.0). New technologies and digitalisation significantly change nearly every aspect of our socioeconomic activities (
+<xref rid="ref29" ref-type="bibr">Khan
+<italic>et al.,</italic> 2021</xref>;
+<xref rid="ref52" ref-type="bibr">Tee
+<italic>et al.,</italic> 2021</xref>). Traditional businesses are adopting new technologies to navigate a more extensive and challenging transformation of their operating processes; in the meantime, governments have made efforts to support the adoption of IR 4.0. The digital transformation affects the company’s operating structure and competitiveness and the need for human capital (
+<xref rid="ref40" ref-type="bibr">Rahmat
+<italic>et al.,</italic> 2021</xref>;
+<xref rid="ref53" ref-type="bibr">Tee
+<italic>et al.</italic>, 2022</xref>). As the traditional model embraces new technologies and transforms into an intelligent environment, jobs will become more complex (
+<xref rid="ref11" ref-type="bibr">Caruso, 2018</xref>;
+<xref rid="ref58" ref-type="bibr">Tsiligiris and Bowyer, 2021</xref>) while a significant workforce deficiency and shift in skill demand have been observed in the workplace [
+<xref rid="ref16" ref-type="bibr">Economic Planning Unit (EPU), 2021</xref>;
+<xref rid="ref41" ref-type="bibr">Rahmat
+<italic>et al.,</italic> 2022</xref>]. Automation and digitalisation in the workplace are reshaping the employment landscape and bringing new challenges to human resources management, particularly in aligning the employees’ digital skills and competencies with the technological revolution [
+<xref rid="ref32" ref-type="bibr">Lee, 2019</xref>;
+<xref rid="ref65" ref-type="bibr">World Economic Forum (WEF) 2016</xref> and
+<xref rid="ref66" ref-type="bibr">2020</xref>]. Indeed, changes in the job requirements due to digital transformation and automation are the primary causes of job loss (
+<xref rid="ref31" ref-type="bibr">Kimball, 2021</xref>).</p><sec id="sec6" disp-level="2"><title>Change in skill demand</title><p>In the transition to IR 4.0, the employees’ roles changed because of the changes to the work’s content, processes, and environment (
+<xref rid="ref33" ref-type="bibr">Lim
+<italic>et al.,</italic> 2021</xref>), which caused a shift in the skills demanded for employment. Beyond technical skills, digital skills in information management, communication, content creation, safety and problem-solving in the digital environment are in high demand (
+<xref rid="ref64" ref-type="bibr">Vuorikari
+<italic>et al.,</italic> 2016</xref>). As highlighted by
+<xref rid="ref35" ref-type="bibr">Mercer (2019)</xref>, recruiting or equipping employees with those digital skills is vital for supporting innovation and technology adoption for economic progress. Specifically, today’s work, employability, education, and social activities are being transformed by digitalisation.</p><p>Considering the skills demand arising from the dynamic transformations in the nature of work, employees, educational institutions, and employers encounter challenges in accurately predicting the requisite skill sets for employment and adequately preparing for the demands of the job market. Nevertheless, past studies [
+<xref rid="ref5" ref-type="bibr">Balcar
+<italic>et al.,</italic> 2018</xref>;
+<xref rid="ref22" ref-type="bibr">Institute of Student Employers (ISE), 2018</xref>;
+<xref rid="ref64" ref-type="bibr">Vuorikari
+<italic>et al.,</italic> 2016</xref>] revealed that graduates today lack the fundamental “digital skills” needed in the workplace. The gaps in digital skills among graduates pose a growing concern to educators, industry and the government, particularly the emergence of IR 4.0, which continues to disrupt business operations and occupations at a pace that outpaces employees’ ability to adapt. This circumstance may lead to unemployment or underemployment among graduates globally (
+<xref rid="ref14" ref-type="bibr">Deloitte, 2015</xref>). As highlighted by the
+<xref rid="ref66" ref-type="bibr">World Economic Forum (2020)</xref>, these digital skill gaps are expected to widen as employers increasingly prioritize digital competencies across various professions in the coming five years (2025).</p></sec><sec id="sec7" disp-level="2"><title>Problem statement and research objectives</title><p>Reviewing the statement above, it is evident that adopting IR 4.0 has substantially impacted the industry concerning the demand for skills, skills shortages, and unemployment. It is apparent that the future workforce needs to be technologically savvy; fresh graduates need to have a solid understanding of digital tools and technologies and job knowledge to add value to their work (
+<xref rid="ref30" ref-type="bibr">Khuraisah
+<italic>et al.,</italic> 2020</xref>). In a similar vein, the digital economy has been recognized as a key economic growth area (KEGA) in accomplishing Wawasan Kemakmuran Bersama 2030 (WKB 2030) and the Twelfth Malaysia Plan (RMKe-12), to transform Malaysia into a nation that achieves sustainable development with inclusive growth. The Malaysian government has implemented various measures to cultivate prospective digital talents and upskill or reskill the existing workforce to enhance the nation’s readiness to embrace the digital economy (
+<xref rid="ref16" ref-type="bibr">Economic Planning Unit, 2021</xref>).</p><p>Given the prevailing employment landscape, characterised by a demand for multiple skills (
+<xref rid="ref51" ref-type="bibr">Tee and Chan, 2016</xref>), one may contemplate whether graduates possess a comprehensive range of requisite abilities, specifically digital proficiencies aligned with the nation’s transition towards a digital economy. Indeed, it is always preferable for young graduates to acquire multiple skill sets, including technical and non-technical digital skills, to enhance their employment prospects (
+<xref rid="ref36" ref-type="bibr">Nair
+<italic>et al.,</italic> 2019</xref>;
+<xref rid="ref41" ref-type="bibr">Rahmat
+<italic>et al.,</italic> 2022</xref>). Nevertheless, information on the actual skill mix and employers’ perspectives on the employability of graduates in IR 4.0 still needs to be explored. This study aims to fill the gaps by (1) discovering the digital skills demanded by employers currently and in the future to justify the change of skills demanded in the workplace due to IR4.0. Thereafter, (2) comparing the entry-level graduates’ level of competencies in digital skills against the important of digital skills to identify the existence of digital skill gaps among entry-level graduates that impact their employability. Most importantly, the views and experiences of employers hiring entry-level graduates will be gathered.</p></sec></sec><sec id="sec8" disp-level="1"><title>Literature review</title><p>This study aimed to explore the perspective of employers concerning the demand for entry-level graduates’ digital skills. This study was grounded by the Resource-based view (
+<xref rid="ref6" ref-type="bibr">Barney, 1991</xref>) in relation to the recruitment of future graduates and sustaining their employability.</p><sec id="sec9" disp-level="2"><title>Graduate employability</title><p>Unemployment and underemployment are pervasive challenges all nations face in light of the ongoing digital transformation [
+<xref rid="ref23" ref-type="bibr">International Labour Organisation (ILO), 2020</xref>]. Similarly, the issue of graduate unemployment in Malaysia has garnered attention in recent years, attributed to the large number of graduates being produced by various higher education institutions in Malaysia, including public and private colleges and universities, polytechnics, and vocational colleges (
+<xref rid="ref46" ref-type="bibr">Silva
+<italic>et al.</italic>, 2019</xref>;
+<xref rid="ref53" ref-type="bibr">Tee
+<italic>et al.,</italic> 2022</xref>). The graduate unemployment rate in Malaysia was reported to increase to 4.1%, equivalent to 197,400 individuals in the same year (Department of Statistics Malaysia,
+<xref rid="ref15" ref-type="bibr">DoSM, 2020</xref>).</p><p>Graduate employability pertains to individuals who have completed higher education and navigated their post-graduation life and employment (
+<xref rid="ref8" ref-type="bibr">Bennett, 2018</xref>;
+<xref rid="ref54" ref-type="bibr">Tee
+<italic>et al.,</italic> 2019</xref>). Universities have been portrayed in this context as producing graduates with the skills employers need. However, previous studies (
+<xref rid="ref8" ref-type="bibr">Bennett, 2018</xref>;
+<xref rid="ref12" ref-type="bibr">Clarke, 2018</xref>;
+<xref rid="ref58" ref-type="bibr">Tsiligiris and Bowyer, 2021</xref>) found that, in addition to graduate skills and attributes, graduate employability depends on many other factors that are external to the educational process, such as changes in the skill demand as a result of the digital transformation. Also, most studies on employability skills were done before the dawn of the digital age. In contrast, the technical and non-technical skills that employers sought after would have changed over time due to the advancement of knowledge, technology, and globalisation. Therefore, it is imperative to investigate employers’ current and future skills demands and evaluate the present workforce’s (digital) skills and competencies to determine the presence of skills gaps or deficiencies. The findings of this study provide insight into the digital skills needed for graduates to succeed in their current and future jobs while lowering the youth unemployment rate.</p></sec><sec id="sec10" disp-level="2"><title>Demand for digital skills</title><p>Digital skills refer to the competencies required to effectively use information and communication technologies (ICT) in various aspects of life (
+<xref rid="ref19" ref-type="bibr">Gałan, 2022</xref>). These skills are essential in the 21st century and enable individuals to navigate and utilize digital tools and technologies for information management, communication, collaboration, critical thinking, creativity, and problem-solving (
+<xref rid="ref43" ref-type="bibr">Saputra
+<italic>et al.,</italic> 2021</xref>).
+<xref rid="ref26" ref-type="bibr">Karacay (2017)</xref> found that employees must have information and communications technology (ICT) skills that facilitate collaboration and communication in the digital environment to perform tasks effectively in an I.R. 4.0-based system. Similarly,
+<xref rid="ref60" ref-type="bibr">Van Laar (2020)</xref> identified the digital skills in the 21st century, inclusive of technical, informational, communicative, and collaborative competencies in a digital environment.
+<xref rid="ref32" ref-type="bibr">Lee (2019)</xref> discovered that the graduates’ ability to use digital media to create creative content, information processing, and social networks is essential and frequently questioned during the job interview. However,
+<xref rid="ref10" ref-type="bibr">Capone (2019)</xref> found that employers expect the graduates to have basic knowledge and understanding of operating digital technology to complete routine tasks instead of extensive statistical and programming knowledge.
+<xref rid="ref60" ref-type="bibr">Van Laar (2020)</xref> further emphasises the importance of these digital skills as the prerequisites for individuals to thrive in today’s workforce.</p><p>The literature has consistently emphasized the critical need for digital skills across various domains in IR 4.0. Indeed, graduates must be equipped with these skills to effectively navigate the challenges and opportunities in the workplace presented in the digital era (
+<xref rid="ref7" ref-type="bibr">Bastian
+<italic>et al.,</italic> 2021</xref>;
+<xref rid="ref25" ref-type="bibr">Joseph and Khan, 2020</xref>). Underpinned by the European Commission’s DigComp 2.0 framework (
+<xref rid="ref64" ref-type="bibr">Vuorikari
+<italic>et al.,</italic> 2016</xref>), this study conceptualizes the digital skills in the IR4.0 landscape consist of five categories: information and data literacy, communication and collaboration, digital content creation, safety, and problem-solving (
+<xref rid="T1" ref-type="table">Table 1</xref>). Specifically, this study aims to identify and rank the set of digital skills currently demanded by employers and likely to be in demand in future (next five years) to answer the following research question:</p><table-wrap id="T1" position="float"><?disp-level 3?><label>Table 1. </label><caption><title>Digital competence framework.</title></caption><table frame="hsides" rules="groups" content-type="article-table"><thead><tr><th align="left" colspan="1" rowspan="1" valign="top">Competence areas</th><th align="left" colspan="1" rowspan="1" valign="top">Skills</th></tr></thead><tbody><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Information and data literacy</td><td align="left" colspan="1" rowspan="1" valign="top">1.1 Browsing, searching and filtering data, information and digital content.
+<break/>1.2 Evaluating data, information and digital content.
+<break/>1.3 Managing data, information and digital content</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Communication and collaboration</td><td align="left" colspan="1" rowspan="1" valign="top">2.1 Interacting through digital technologies.
+<break/>2.2 Sharing through digital technologies.
+<break/>2.3 Engaging in citizenship through digital technologies.
+<break/>2.4 Collaborating through digital technologies.</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Digital content creation</td><td align="left" colspan="1" rowspan="1" valign="top">3.1 Developing digital content.
+<break/>3.2 Integrating and re-elaborating digital content.
+<break/>3.3 Copyright and licences.
+<break/>3.4 Programming.</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Safety</td><td align="left" colspan="1" rowspan="1" valign="top">4.1 Protecting devices.
+<break/>4.2 Protecting personal data and privacy.
+<break/>4.3 Protecting health and well-being.
+<break/>4.4 Protecting the environment</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">5. Problem solving</td><td align="left" colspan="1" rowspan="1" valign="top">5.1 Solving technical problems.
+<break/>5.2 Identifying needs and technological responses.
+<break/>5.3 Creatively using digital technologies.
+<break/>5.4 Identifying Digital Competence Gaps.</td></tr></tbody></table><table-wrap-foot><fn id="_fn_p17"><p>Source:
+<xref rid="ref64" ref-type="bibr">Vuorikari
+<italic>et al.</italic> (2016)</xref>.</p></fn></table-wrap-foot></table-wrap><disp-quote><p>
+<italic>RQ1: “Which areas of digital skills demanded by the Malaysian employers currently and in the future?”</italic>
+</p></disp-quote></sec><sec id="sec11" disp-level="2"><title>Digital skill gaps</title><p>The IR 4.0 has brought about significant changes in the job market, requiring individuals to possess a wide range of skills, making it challenging for fresh graduates to keep up and compete with more experienced candidates (
+<xref rid="ref40" ref-type="bibr">Rahmat
+<italic>et al.,</italic> 2021</xref>). Past studies have identified skill gaps in graduate employability within the framework of IR 4.0 and recognized that non-technical digital skills are regarded as significant qualities for enhancing employability in conjunction with technical skills (
+<xref rid="ref26" ref-type="bibr">Karacay, 2017</xref>;
+<xref rid="ref30" ref-type="bibr">Khuraisah
+<italic>et al.,</italic> 2020</xref>). Indeed, cultivating digital skills is considered essential in higher education, given that they hold equal significance to technical skills (
+<xref rid="ref2" ref-type="bibr">Aidah
+<italic>et al.,</italic> 2019</xref>;
+<xref rid="ref41" ref-type="bibr">Rahmat
+<italic>et al.,</italic> 2022</xref>;
+<xref rid="ref54" ref-type="bibr">Tee
+<italic>et al.,</italic> 2019</xref>). Moreover, a disparity exists between the academic setting and the industry’s demands concerning graduate employability, underscoring the necessity to explore the skill gaps to tackle this concern (
+<xref rid="ref30" ref-type="bibr">Khuraisah
+<italic>et al.,</italic> 2020</xref>;
+<xref rid="ref59" ref-type="bibr">Unni, 2016</xref>).</p><p>The Australian Institute of Management (
+<xref rid="ref4" ref-type="bibr">AIM, 2009</xref>) defines skill gap as the skill disparity between the skills required by the employers and the employees’ competencies in performing tasks. It reflects the employees need for more skills to meet job requirements (
+<xref rid="ref21" ref-type="bibr">Hogarth and Wilson, 2003</xref>;
+<xref rid="ref42" ref-type="bibr">Rathelot and Van Rens, 2017</xref>) since the presence of skill gaps is the main contributing factor towards unemployment, thereby having significant financial implications for a nation’s economic development (
+<xref rid="ref42" ref-type="bibr">Rathelot and Van Rens, 2017</xref>;
+<xref rid="ref49" ref-type="bibr">Suleman and Laranjeiro, 2018</xref>;
+<xref rid="ref65" ref-type="bibr">WEF, 2016</xref>). Employers’ viewpoints should be taken into account in order to address the skills gaps (
+<xref rid="ref5" ref-type="bibr">Balcar
+<italic>et al.,</italic> 2018</xref>;
+<xref rid="ref56" ref-type="bibr">Tomlinson, 2017</xref>;
+<xref rid="ref57" ref-type="bibr">Truong
+<italic>et al.,</italic> 2018</xref>), and most of the past studies employed the same approach to assess the magnitude of the skills gap by comparing employers’ rating score of the important of different skills (i.e., soft skills, technical skills, and digital skills) with the level of satisfaction on the employees’ performance (
+<xref rid="ref1" ref-type="bibr">Abbasi
+<italic>et al.,</italic> 2018</xref>). Through the skill gaps analysis, companies can assess the candidate’s competencies during the recruitment process by matching the skills possessed by candidates with the tasks required, thereby reflecting the employability skills of the individuals.</p><p>This study employs a methodology similar to the previous researchers (
+<xref rid="ref1" ref-type="bibr">Abbasi
+<italic>et al.,</italic> 2018</xref>;
+<xref rid="ref27" ref-type="bibr">Kenayathulla
+<italic>et al.,</italic> 2019</xref>), wherein employers’ expectations of the skills in demand were compared with the employee’s level of competence in similar skills. This study’s findings can ascertain potential gaps between the skills demanded and the skills possessed by the graduates in justifying their employability. Accordingly, this study aims to answer the following questions:</p><disp-quote><p>
+<italic>RQ2: “What are the level of digital competencies of entry-level graduate employees in Malaysia?”</italic>
+</p><p>
+<italic>RQ3: “What are the areas of digital skills gap among the entry-level graduate employees in Malaysia?”</italic>
+</p></disp-quote></sec></sec><sec id="sec12" disp-level="1"><title>Methods</title><p>This study examines the employers’ demand for digital skills against the skill competencies of the entry-level graduate workforce with less than two years of working experience. Areas of digital skill gaps were identified by comparing the employers’ perceptions of the essential digital skills against the digital competencies of the employees (i.e., graduates) in performing their tasks.</p><sec id="sec13" disp-level="2"><title>Ethics and consent</title><p>This study was approved by the Ethics Committee of Asia Pacific University of Technology and Innovation, Kuala Lumpur, Malaysia (APUFE/02/2023) in July 12, 2023. All of the informants gave written and oral informed consent to participate in the study. Under the Personal Data Protection Act (PDPA) 2010, the researchers assure that all information collected is kept confidential and merely for the academic purposes.</p></sec><sec id="sec14" disp-level="2"><title>Population and sample</title><p>The population in this study is the companies registered with the Malaysian Productivity Corporation (MPC) office. MPC is a statutory body govern by the Malaysian Ministry of Investment, Trade and Industry (MITI), aims to drive national productivity at all levels. The list of companies registered with MPC was obtained from MPC. The companies in Klang Valley (i.e., Selangor and Kuala Lumpur), Johor and Penang were selected for this study since these states had the most firms located and registered with MPC. Eight hundred ninety-five online questionnaires were distributed, and 393 responses were collected using a simple random sampling technique (i.e., 44% response rate). After the data screening process, 376 responses, including 215 from Klang Valley, 58 from Johor and 103 from Penang, were used for further analysis. In addition, the sectors in which companies operate are mainly the service sector (43%), manufacturing (32%), retail (18%) and other sectors (7%).</p></sec><sec id="sec15" disp-level="2"><title>Measures</title><p>This study aims to identify the digital skills demanded by employers at present and in the future while investigating the presence of the digital skills gaps among Malaysian entry-level graduate employees by comparing the employers’ expectations against the skill competencies of the graduate employees in performing their work. The measuring items of the digital skills were adapted from the European Commission’s Digital Competence 2.0 (
+<xref rid="ref64" ref-type="bibr">Vuorikari
+<italic>et al.,</italic> 2016</xref>). Nineteen (19) items were adapted to measure the five (5) categories of digital skills (i.e., information and data literacy, communication and collaboration, digital content creation, safety, and problem-solving). One (1) question asks the employers to indicate the importance of the three common employability skills (i.e., technical skills, soft skills and digital skills). Another (1) question to measure graduate employability is asking employers to indicate the importance of digital skills when hiring fresh graduates. All items were measured using a 5-point Likert scale: “1= not at all important to 5= very important”.</p></sec><sec id="sec16" disp-level="2"><title>Data analysis</title><p>A descriptive analysis was conducted using IBM SPSS v26 (
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ibm.com/spss" ext-link-type="uri">https://www.ibm.com/spss</ext-link>), to interpret the respondents’ (i.e., the employers) demographic profile and the phenomenon under study. The data was assessed based on the mean scores of the employers’ rating on the importance of digital skills required for the graduate employees to perform their tasks at present and in the future. The digital skill category with the highest mean score ranked one (1), was deemed the most important.</p><p>A compare mean analysis using IBM SPSS v26, was conducted to identify the differences in mean scores between skills demanded at present with the level of competence to signify the magnitudes of said skill gaps. A higher mean gap value signifies a significant digital skill gap, and a negative value indicates that graduate employees lack the competencies to meet the employer’s expectations and vice versa. Lastly, a paired sample t-test was conducted to justify the existence of digital skills gaps among the entry-level graduate employees.</p></sec></sec><sec id="sec17" disp-level="1"><title>Results</title><p>The data collected was analysed using descriptive analysis (i.e., means and standard deviation) and inferential statistics via comparison of means using a t-test. In addressing the level of preference for technical skills, soft skills and digital skills among employers, digital skills were regarded as very important and extremely important by 99.5% of the respondents (n=374), followed by soft skills (95.5%, n=359) and technical skills (78.5%, n=295). This result indicates that digital skills are highly demanded by employers in today's workplace, particularly by entry-level graduates.</p><sec id="sec18" disp-level="2"><title>Digital skills in demand at present and in the future</title><p>The respondents (i.e., employers) were asked to rate the digital skills demanded at present and in the future using a 5-point Likert scale - “1= not at all important to 5= extremely important”. The results in
+<xref rid="T2" ref-type="table">Table 2</xref> summarise the current and future demand for the five categories of digital skills. All these digital skills have mean scores greater than 3.60 (out of 5), denoting that the employers viewed all these skills as “fairly important” and nearing “very important” in the current state. “Information and data literacy” (μ= 4.048), “digital content creation” (μ=4.015) and “problem-solving skills” (μ=3.999) are the three most demanded digital skills by employers at present. Specifically, the mean score for the measuring item “integrating and re-elaborating digital content” has the highest mean (μ=4.213) and the item “engaging in citizenship through digital technologies” has the lowest mean score (μ=3.626).</p><table-wrap id="T2" position="float"><?disp-level 3?><label>Table 2. </label><caption><title>Digital Skills in Demand (Current and Future).</title></caption><table frame="hsides" rules="groups" content-type="article-table"><thead><tr><th align="left" colspan="1" rowspan="1" valign="top">Categories/Items</th><th align="left" colspan="2" rowspan="1" valign="top">Current</th><th align="left" colspan="2" rowspan="1" valign="top">Future</th></tr><tr><th align="left" colspan="1" rowspan="1" valign="top"/><th align="left" colspan="1" rowspan="1" valign="top">Mean</th><th align="left" colspan="1" rowspan="1" valign="top">Rank
+<xref rid="tfn1" ref-type="table-fn"><sup>*</sup></xref>
+</th><th align="left" colspan="1" rowspan="1" valign="top">Mean</th><th align="left" colspan="1" rowspan="1" valign="top">Rank
+<xref rid="tfn1" ref-type="table-fn"><sup>*</sup></xref>
+</th></tr></thead><tbody><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Information and data literacy</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>4.048</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>1</italic>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>4.123</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>5</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Browsing, searching and filtering information and digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">3.858</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.045</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Evaluating data, information and digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">4.133</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.177</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Managing data, information and digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">4.075</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.146</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Communication and Collaboration</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>3.640</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>5</italic>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>4.431</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>3</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Interacting through digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">3.662</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.500</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Sharing through digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">3.631</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.449</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Engaging in citizenship through digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">3.626</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.343</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Collaborating through digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">3.635</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.423</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Digital content creation</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>4.015</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>2</italic>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>4.407</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>4</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Developing digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">3.981</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.399</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Integrating and re-elaborating digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">4.213</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.414</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Copyright and licenses.</td><td align="left" colspan="1" rowspan="1" valign="top">3.866</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.354</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Programming.</td><td align="left" colspan="1" rowspan="1" valign="top">4.038</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.413</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Safety</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>3.771</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>4</italic>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>4.518</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>2</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Protecting devices.</td><td align="left" colspan="1" rowspan="1" valign="top">3.737</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.541</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Protecting personal data and privacy.</td><td align="left" colspan="1" rowspan="1" valign="top">3.803</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.515</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Protecting health and well-being.</td><td align="left" colspan="1" rowspan="1" valign="top">3.813</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.467</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Protecting the environment.</td><td align="left" colspan="1" rowspan="1" valign="top">3.732</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.334</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Problem-solving</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>3.999</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>3</italic>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>4.553</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>1</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Solving technical problems.</td><td align="left" colspan="1" rowspan="1" valign="top">4.000</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.555</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Identifying needs and technological responses.</td><td align="left" colspan="1" rowspan="1" valign="top">3.981</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.552</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Creatively using digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">3.983</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.549</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Identifying digital competence gaps.</td><td align="left" colspan="1" rowspan="1" valign="top">4.031</td><td colspan="1" rowspan="1"/><td align="left" colspan="1" rowspan="1" valign="top">4.566</td><td colspan="1" rowspan="1"/></tr></tbody></table><table-wrap-foot><fn id="tfn1"><label>*</label><p>Note: “1= very important to 5= very unimportant”.</p></fn></table-wrap-foot></table-wrap><p>On the other hand, all the digital skills are viewed as “very important” and nearing “extremely important” in the future (mean score above 4.0). The three areas of digital skills that are highly demanded in the future are “problem-solving skills” (μ=4.553), “safety” (μ=4.518), and “communication and collaboration” (μ=4.431) (
+<xref rid="T2" ref-type="table">Table 2</xref>). Notably, the results show the difference in the demand for digital skills at present and in the future. Both “safety” (μ=3.771) and “communication and collaboration” (μ=3.640), perceived as “fairly important” at present, were rated nearing “extremely important” in the future. It is observed that the demand for “information and data literacy” and “digital content creation” have been normalised, moving them from first and second in current demand to fourth and fifth in future demand.</p><p>Further study on the rising demand for digital skills in the future, the three categories of digital skills that show a significant increase in mean scores of above 0.50 when comparing the current and future demand are: “communication and collaboration”, “safety” and “problem-solving skills” (change in mean scores: 0.791, 0.747 and 0.554 respectively). Specifically, the mean scores for the measuring item “identifying digital competence gaps” has the highest mean (μ=4.566) and the item “browsing, searching and filtering information and digital content” has the lowest mean score (μ=4.045). The results imply that the digital skills demanded have changed over time due to the advancement of knowledge and technology in IR 4.0.</p></sec><sec id="sec19" disp-level="2"><title>Digital competencies and digital skill gaps</title><p>The entry-level graduate employee’s level of competencies is rated on a 5-point scale – “1=very poor to 5=very good”. The results shown in
+<xref rid="T3" ref-type="table">Table 3</xref> revealed that the existing graduate employees scored “average” to nearing “poor” competence in most of the digital skills (mean score of 2.681 to 3.411, respectively). These employees are poor in “communication and collaboration" skills (μ=2.713), “safety” skills (μ=3.000), and “problem-solving” (μ=3.135).</p><table-wrap id="T3" position="float"><?disp-level 3?><label>Table 3. </label><caption><title>Level of competence in digital skills.</title></caption><table frame="hsides" rules="groups" content-type="article-table"><thead><tr><th align="left" colspan="1" rowspan="1" valign="top">Categories/Items</th><th align="left" colspan="2" rowspan="1" valign="top">Competence</th></tr><tr><th align="left" colspan="1" rowspan="1" valign="top"/><th align="left" colspan="1" rowspan="1" valign="top">Mean</th><th align="left" colspan="1" rowspan="1" valign="top">Rank
+<xref rid="tfn2" ref-type="table-fn"><sup>*</sup></xref>
+</th></tr></thead><tbody><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Information and data literacy</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>3.391</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>5</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Browsing, searching and filtering information and digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">3.411</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Evaluating data, information and digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">3.403</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Managing data, information and digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">3.374</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Communication and Collaboration</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>2.713</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>1</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Interacting through digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">2.701</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Sharing through digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">2.681</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Engaging in citizenship through digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">2.713</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Collaborating through digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">2.724</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Digital content creation</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>3.275</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>4</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Developing digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">3.302</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Integrating and re-elaborating digital content.</td><td align="left" colspan="1" rowspan="1" valign="top">3.307</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Copyright and licenses.</td><td align="left" colspan="1" rowspan="1" valign="top">3.232</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Programming.</td><td align="left" colspan="1" rowspan="1" valign="top">3.289</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Safety</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>3.000</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>2</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Protecting devices.</td><td align="left" colspan="1" rowspan="1" valign="top">2.970</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Protecting personal data and privacy.</td><td align="left" colspan="1" rowspan="1" valign="top">3.061</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Protecting health and well-being.</td><td align="left" colspan="1" rowspan="1" valign="top">2.975</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Protecting the environment.</td><td align="left" colspan="1" rowspan="1" valign="top">2.995</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>Problem-solving</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<bold>3.135</bold>
+</td><td align="left" colspan="1" rowspan="1" valign="top">
+<italic>3</italic>
+</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">1. Solving technical problems.</td><td align="left" colspan="1" rowspan="1" valign="top">3.041</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">2. Identifying needs and technological responses.</td><td align="left" colspan="1" rowspan="1" valign="top">3.233</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">3. Creatively using digital technologies.</td><td align="left" colspan="1" rowspan="1" valign="top">2.987</td><td colspan="1" rowspan="1"/></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">4. Identifying digital competence gaps.</td><td align="left" colspan="1" rowspan="1" valign="top">3.089</td><td colspan="1" rowspan="1"/></tr></tbody></table><table-wrap-foot><fn id="tfn2"><label>*</label><p>Note: “1= lowest to 5= highest”</p></fn></table-wrap-foot></table-wrap><p>A paired sample t-test was conducted to identify digital skills gaps by comparing the differences in mean scores between the skills demanded (level of importance) against the level of competencies. The difference in mean score (i.e., skill gaps) indicates if graduates possess digital skills that meet employers’ expectations. A negative value indicates that the employees lack the competencies to meet the employer's expectations and vice versa.</p><p>As shown in
+<xref rid="T4" ref-type="table">Table 4</xref>, the p-value (2-tailed) is less than 0.05, concluding that there is a significant difference in the skill demand scores and competencies scores for pairs 1-5 (i.e., the five categories of digital skills). All negative values indicate the presence of skill gaps among the existing entry-level graduates in all identified digital skills in this study. Specifically, the highest gap exists in “communication and collaboration” (μ=-0.927), followed by “problem-solving” (μ=-0.864), “safety” (μ=-0.771), “digital content creation” and “information and data literacy” (μ=- 0.740 and μ=-0.654 respectively).</p><table-wrap id="T4" position="float"><?disp-level 3?><label>Table 4. </label><caption><title>Results for paired sample t-test and digital skill gaps.</title></caption><table frame="hsides" rules="groups" content-type="article-table"><thead><tr><th align="left" colspan="1" rowspan="1" valign="top"/><th align="left" colspan="1" rowspan="1" valign="top">Mean</th><th align="left" colspan="1" rowspan="1" valign="top">SD</th><th align="left" colspan="2" rowspan="1" valign="top">95% CI</th><th align="left" colspan="1" rowspan="1" valign="top">t-value</th><th align="left" colspan="1" rowspan="1" valign="top">Sig</th></tr><tr><th align="left" colspan="1" rowspan="1" valign="top"/><th align="left" colspan="1" rowspan="1" valign="top"/><th align="left" colspan="1" rowspan="1" valign="top"/><th align="left" colspan="1" rowspan="1" valign="top">Lower</th><th align="left" colspan="1" rowspan="1" valign="top">Upper</th><th align="left" colspan="1" rowspan="1" valign="top"/><th align="left" colspan="1" rowspan="1" valign="top"/></tr></thead><tbody><tr><td align="left" colspan="1" rowspan="1" valign="top">Information and data literacy</td><td align="left" colspan="1" rowspan="1" valign="top">-0.654</td><td align="left" colspan="1" rowspan="1" valign="top">0.574</td><td align="left" colspan="1" rowspan="1" valign="top">-0.715</td><td align="left" colspan="1" rowspan="1" valign="top">-0.598</td><td align="left" colspan="1" rowspan="1" valign="top">-19.165</td><td align="left" colspan="1" rowspan="1" valign="top">&lt;0.01</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">Communication &amp; collaboration</td><td align="left" colspan="1" rowspan="1" valign="top">-0.927</td><td align="left" colspan="1" rowspan="1" valign="top">0.785</td><td align="left" colspan="1" rowspan="1" valign="top">-0.960</td><td align="left" colspan="1" rowspan="1" valign="top">-0.711</td><td align="left" colspan="1" rowspan="1" valign="top">-28.415</td><td align="left" colspan="1" rowspan="1" valign="top">&lt;0.01</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">Digital content creation</td><td align="left" colspan="1" rowspan="1" valign="top">-0.740</td><td align="left" colspan="1" rowspan="1" valign="top">0.632</td><td align="left" colspan="1" rowspan="1" valign="top">-0.815</td><td align="left" colspan="1" rowspan="1" valign="top">-0.638</td><td align="left" colspan="1" rowspan="1" valign="top">-23.814</td><td align="left" colspan="1" rowspan="1" valign="top">&lt;0.01</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">Safety</td><td align="left" colspan="1" rowspan="1" valign="top">-0.771</td><td align="left" colspan="1" rowspan="1" valign="top">0.707</td><td align="left" colspan="1" rowspan="1" valign="top">-0.884</td><td align="left" colspan="1" rowspan="1" valign="top">-0.698</td><td align="left" colspan="1" rowspan="1" valign="top">-23.986</td><td align="left" colspan="1" rowspan="1" valign="top">&lt;0.01</td></tr><tr><td align="left" colspan="1" rowspan="1" valign="top">Problem-solving</td><td align="left" colspan="1" rowspan="1" valign="top">-0.864</td><td align="left" colspan="1" rowspan="1" valign="top">0.755</td><td align="left" colspan="1" rowspan="1" valign="top">-0.916</td><td align="left" colspan="1" rowspan="1" valign="top">-0.719</td><td align="left" colspan="1" rowspan="1" valign="top">-25.429</td><td align="left" colspan="1" rowspan="1" valign="top">&lt;0.01</td></tr></tbody></table></table-wrap></sec></sec><sec id="sec20" disp-level="1"><title>Discussion</title><p>The results in this study show that the majority of the employers (99.5%) preferred their entry-level graduate employees to possess digital skills compared to technical skills (78.5%) and soft skills (95.5%). Similarly, most employers (μ=4.5 out of 5) consider digital skills “extremely important” in hiring entry-level graduates. These findings are consistent with past studies that emphasise the high demand for digital skills for graduate employability in Malaysia (
+<xref rid="ref29" ref-type="bibr">Khan
+<italic>et al.,</italic> 2021</xref>;
+<xref rid="ref30" ref-type="bibr">Khuraisah
+<italic>et al.,</italic> 2020</xref>;
+<xref rid="ref41" ref-type="bibr">Rahmat
+<italic>et al.,</italic> 2022</xref>). Although hard skills (i.e., technical skills) are in demand during recruitment, digital skills are highly valued by employers, especially in coping with the technological advancement in IR 4.0 (
+<xref rid="ref13" ref-type="bibr">Chen
+<italic>et al.,</italic> 2018</xref>;
+<xref rid="ref24" ref-type="bibr">Jewell
+<italic>et al.,</italic> 2020</xref>;
+<xref rid="ref34" ref-type="bibr">Malik and Venkatraman, 2017</xref>;
+<xref rid="ref45" ref-type="bibr">Siddoo
+<italic>et al.,</italic> 2019</xref>).</p><sec id="sec21" disp-level="2"><title>Demand for digital skills at present</title><p>The results indicate that, at present, these digital skills are fairly important and (or) important to the employers. Among the five categories of digital skills, “information and data literacy”, “digital content creation”, and “problem-solving skills” are in high demand by employers at present. Considering the increasing adoption of new technology and information communication technology (ICT) in the workplace, the demand for information and digital literacy, as well as technology knowledge, is high at present (
+<xref rid="ref30" ref-type="bibr">Khuraisah
+<italic>et al.,</italic> 2020</xref>;
+<xref rid="ref61" ref-type="bibr">Valdés
+<italic>et al.,</italic> 2018</xref>). Thus, entry-level graduates are expected to be capable of “analysing and interpreting data and information” as well as “organising and retrieving data and information” in the digital environment, whereas “browsing and searching information” is considered a less important digital skill. This finding is supported by past studies (
+<xref rid="ref24" ref-type="bibr">Jewell
+<italic>et al.,</italic> 2020</xref>;
+<xref rid="ref44" ref-type="bibr">Saunders, 2018</xref>), which found that browsing, searching and locating data are considered lower-order skills generally performed by clerical staff instead of graduate employees.</p><p>Besides, digital content creation is also in high demand at present due to the rise of new information visualisation tools and the rapid growth of social media (
+<xref rid="ref64" ref-type="bibr">Vuorikari
+<italic>et al.,</italic> 2016</xref>). Consistently, past studies also highlighted the importance of digital content creation for knowledge workers to support their everyday digital practices in presenting, sharing, and reusing information. (
+<xref rid="ref9" ref-type="bibr">Brown
+<italic>et al.,</italic> 2016</xref>;
+<xref rid="ref62" ref-type="bibr">Venkitachalam and Bosua, 2019</xref>). Another vital skill highly demanded in this digitisation era is problem-solving skills. While employers do not expect fresh graduates to possess broad expertise upon entering the job market, they expect the employees to be able to solve technical problems when operating devices in digital environments (
+<xref rid="ref47" ref-type="bibr">Spector and Kinshuk, 2011</xref>).
+<xref rid="ref24" ref-type="bibr">Jewell
+<italic>et al</italic>. (2020)</xref> and
+<xref rid="ref2" ref-type="bibr">Aidah
+<italic>et al.</italic> (2019)</xref> suggest that graduates who can think critically and creatively while using digital tools to solve problems within digital contexts will create a competitive advantage over others.</p></sec><sec id="sec22" disp-level="2"><title>Demand for digital skills in the future</title><p>As technology evolves, the emergence of new technologies introduces additional layers of complexity along with ongoing changes to the demand for digital skills in the future. The findings show a significant increase in the demand for digital skills in the future, in which all categories of digital skills are viewed as nearing “extremely important” (μ=4.5 out of 5) in the future. Consistently, the digital skills demanded by employers have changed along with the emergence of new technologies. “Problem-solving skills”, “safety”, and “communication and collaboration” are rated as the top three digital skills demanded in the future. The demand for “information and data literacy” and “digital content creation” have been normalised. These findings are consistent with past studies (
+<xref rid="ref24" ref-type="bibr">Jewell
+<italic>et al.,</italic> 2020</xref>;
+<xref rid="ref30" ref-type="bibr">Khuraisah
+<italic>et al.,</italic> 2020</xref>;
+<xref rid="ref48" ref-type="bibr">Suarta and Suwintana, 2021</xref>), which addressed the importance of digital problem-solving skills as an instrumental in harnessing the potential of digital innovations while mitigating their risks. Also, the constant emergence of new issues associated with new information and communication technologies elevates the significance of problem-solving as a differentiator in the workforce.</p><p>Along with problem-solving skills, competence in protecting the company’s devices, personal data and privacy (i.e., “safety”) was perceived as an extremely important digital skill in the future. According to
+<xref rid="ref41" ref-type="bibr">Rahmat
+<italic>et al.</italic> (2022)</xref>, companies in digital transformation seem to utilise many digital tools and platforms to integrate internal systems with customer interfaces in their business operation. These companies are exposed to higher risks in data protection and violation of personal privacy. Hence, most employers demand future graduates to have basic “safety” skills to create a safe digital environment in the workplace (
+<xref rid="ref18" ref-type="bibr">Frania, 2014</xref>;
+<xref rid="ref55" ref-type="bibr">Tomczyk, 2019</xref>). Another vital skill highly demanded in the future is “communications and collaborations”. The Employers expect future graduates to have functional digital literacy and the ability to use core computer applications in data processing and information sharing through digital technologies. Entry-level graduates in this era must and should be able to communicate effectively in all digital forms (
+<xref rid="ref13" ref-type="bibr">Chen
+<italic>et al.,</italic> 2018</xref>;
+<xref rid="ref38" ref-type="bibr">Othman
+<italic>et al.,</italic> 2018</xref>). Indeed, virtual communication and collaboration are two vital skills needed in the future workforce (
+<xref rid="ref17" ref-type="bibr">Ellahi
+<italic>et al.,</italic> 2019</xref>;
+<xref rid="ref39" ref-type="bibr">Picatoste
+<italic>et al.,</italic> 2018</xref>;
+<xref rid="ref45" ref-type="bibr">Siddoo
+<italic>et al.,</italic> 2019</xref>).</p></sec><sec id="sec81" disp-level="2"><title>Digital skill competencies and skills gaps of graduate employees</title><p>The results indicate that the existing graduate workforce needs more competence in digital skills to meet their employers’ expectations. Gaps were found in all categories of digital skills. Notably, the finding shows that “information and data literacy” (i.e., digital literacy) was ranked relatively low in the skills gap compared to other digital skills. This statement is due to the fact that new generations are inherently tech-savvy, and these younger generations (graduates) tend to quickly adapt to new digital tools and platforms (
+<xref rid="ref20" ref-type="bibr">Helsper and Eynon, 2010</xref>;
+<xref rid="ref28" ref-type="bibr">Kennedy
+<italic>et al.,</italic> 2008</xref>). The entry-level graduates’ ability to use digital tools (i.e., browsing and searching information) is increasingly seen as a foundational skill, similar to reading and writing, resulting in a small gap in “information and data literacy” compared to other digital skills.</p><p>On the other hand, the highest digital skill gaps were found in “communication and collaboration” and “problem-solving”. Notably, both are highly demanded skills in future employment. This finding has some consonance with the skills gaps identified in past studies. According to
+<xref rid="ref37" ref-type="bibr">Nardo
+<italic>et al.</italic> (2020)</xref> and
+<xref rid="ref40" ref-type="bibr">Rahmat
+<italic>et al.</italic> (2021)</xref>, employees are expected to have (non-technical) knowledge and skills to use digital tools and technologies, interact with modern interfaces, and be aware of digital security in the IR 4.0 environment, to complement the lack of technical skills. However, most employers are unsatisfied with existing graduates’ non-technical skills, including communication and problem-solving skills, where the graduates need to adapt to the real working environment (
+<xref rid="ref49" ref-type="bibr">Suleman and Laranjeiro, 2018</xref>). In a similar vein, a study on Malaysian graduate work-readiness by
+<xref rid="ref63" ref-type="bibr">Verma
+<italic>et al.</italic> (2018)</xref> discovered that the university curriculum at present is unable to foster the skills needed in the workplace, which has a notable impact on students’ capacity to communicate effectively and a lack in critical thinking and problem-solving skills.</p></sec><sec id="sec23" disp-level="2"><title>Implications of the study</title><p>This study obtained feedback from employers on areas of digital skills that graduates need to enhance their employability in the new age. It is of practical relevance as the world is moving into the new age of IR 4.0 while there are changes in technology and skills demand. Following the government's aspiration to transform Malaysia into a digitally enabled and technology-driven nation in a digital economy, the findings of this study help various stakeholders (i.e., higher education providers and the authorities) develop a successful plan by highlighting the digital skills required for better employment opportunities. Employers and human resource professionals can use this information to inform their recruitment and talent development plans, specifically to create training and development program to close the identified skill gaps. A holistic approach to skill development beyond technical proficiency is also required, given the future emphasis on problem-solving, safety, and communication skills in a digital context.</p><p>Moreover, the shift in the demand for digital skills that has been observed offers direction for curricular development in higher education, including modules that emphasize problem-solving, safety, and communication to equip graduates better to meet industry standards. Collaboration between academic institutions and industry can also help align curriculum with practical business demands. Lastly, the empirical findings in this study can also be used as a reference for the policymakers in Ministry of Education (MOE), Ministry of Human Resources (MOHR), Human Resources Development Foundation (HRDF) and training providers to develop policies and strategies for study/training curricula and methodology to ensure the related skills are imparted.</p><p>Theoretically, this study extended from the employers’ perspective, as the “demand” in selecting candidates based on the required skills concerning recruiting future graduates and sustaining their employability. Underpinned by the Resource-based view, the findings of this study elucidate the graduate employment landscape by identifying the digital skills graduates must possess and whether these digital skills can be considered as a firm's resource, which may influence employers' hiring decisions in the 4IR environment.</p></sec><sec id="sec24" disp-level="2"><title>Limitations and direction for future studies</title><p>This study has limitations that should be considered while interpreting the findings, notwithstanding the contributions and implications. The study focused on specific regions (states) within Malaysia, hence the results might not be easily applicable to other nations with diverse technology and economic environments. A more thorough understanding of the demand for digital skills can result from replicating the study in different contexts.</p><p>The data gathered was based on self-reported assessments of the employers. Due to social desirability or incorrect question interpretation, bias could be present. Using additional techniques, such as conducting interviews or carrying out direct observation, could provide a more comprehensive understanding of the skills and competences. Instead of using an objective evaluation, the study’s method for measuring skills depended on self-evaluation. To verify the self-reported data, future studies can include performance reviews or assessments from independent parties. Future research could examine the demand for digital skills within different sectors to provide tailored insights, given the distinct demands across various sectors. Moreover, this study offers an overview of abilities and skill demand at a specific period. A longitudinal study could monitor shifts in competence and demand over time, giving researchers a more dynamic knowledge of digital skill trends.</p><p>This study was primarily based on the premise that enhancing digital skills able to increase the entry-level graduates’ employability. However, personal qualities of the graduates seem to play crucial roles in their employment ability because higher quality person (i.e., a person with better soft skills) can contribute more to his or her employment ability. Moreover, recent studies have shown personal qualities as an important concern during employment (
+<xref rid="ref3" ref-type="bibr">Al Asefer and Zainal Abidin, 2021</xref>;
+<xref rid="ref58" ref-type="bibr">Tsiligiris and Bowyer, 2021</xref>). This study focused on the demand for digital skills, digital skills gaps and employability without contemplating the roles of personal qualities. We see this as a significant limitation of this study and suggest future studies to explore this aspect.</p></sec></sec><sec id="sec25" disp-level="1"><title>Conclusion</title><p>In light of the growing significance of digital skills in today’s society, this study offers an essential viewpoint concerning the demand for digital skills and the digital skill gaps in IR 4.0. The model developed in this study aims to specify metrics for evaluating digital skills that improve employability in Malaysia. Beyond the current study, future research will examine additional metrics for digital skills that affect graduate employability in Malaysia.</p><sec id="sec26" disp-level="2"><title>Ethics and consent</title><p>This study was approved by the Ethics Committee of Asia Pacific University of Technology and Innovation, Kuala Lumpur, Malaysia (APUFE/02/2023) in July 13, 2023. All of the informants gave written and oral informed consent to participate in the study. Under the Personal Data Protection Act (PDPA) 2010, the researchers assure that all information collected is kept confidential and merely for the academic purposes.</p></sec></sec><sec id="ack1" sec-type="ack" disp-level="1"><title>Acknowledgments</title><p>We acknowledge the support from the Asia Pacific University (APU) for awarding the Research Development Internal Grant (RDIG/08/2022) in sponsoring for the publication of this article.</p></sec><sec id="funding-statement1" xml:lang="en" disp-level="1"><title>Funding Statement</title><p>Asia Pacific University of Technology and Innovation (APU), grant number RDIG/08/2022</p><p>
+<italic>The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</italic>
+</p></sec><sec id="fn-group1" sec-type="fn-group" disp-level="1"><fn-group><fn id="fn1"><p>[version 1; peer review: 3 approved</p></fn></fn-group></sec><sec id="sec29" disp-level="1"><title>Data availability</title><p>Figshare: Digital Skills_ Questionnaire &amp; Dataset. figshare. Dataset.
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://doi.org/10.6084/m9.figshare.25540798.v2" ext-link-type="uri">https://doi.org/10.6084/m9.figshare.25540798.v2</ext-link> (
+<xref rid="ref50" ref-type="bibr">Tee, 2024</xref>).</p><p>This project contains the following underlying data:
+</p><list list-type="label"><list-item><label>•</label><p>Data set: Full Data TPK_DS_092023.xlxs.</p></list-item><list-item><label>•</label><p>Letter for Participation &amp; Questionnaire_TPK_DS.pdf.</p></list-item></list><p>Data are available under the terms of the
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://creativecommons.org/licenses/by/4.0/" ext-link-type="uri">Creative Commons Zero “No rights reserved” Attribution 4.0 International</ext-link> (CC BY 4.0)</p></sec><sec id="ref-list1" sec-type="ref-list" disp-level="1"><title>References</title><sec id="ref-list1_sec2" disp-level="2"><ref-list><ref id="ref1"><mixed-citation><named-content content-type="citation-string">
+Abbasi FK, Ali A, Bibi N:
+Analysis of skill gap for business graduates: A managerial perspective from the banking industry.
+
+<italic>Educ. Train.</italic>
+
+2018;60(4):354–367.
+10.1108/ET-08-2017-0120
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1108/ET-08-2017-0120"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Educ. Train.&amp;title=Analysis of skill gap for business graduates: A managerial perspective from the banking industry.&amp;author=FK Abbasi&amp;author=A Ali&amp;author=N Bibi&amp;volume=60&amp;issue=4&amp;publication_year=2018&amp;pages=354-367&amp;doi=10.1108/ET-08-2017-0120&amp;"/></mixed-citation></ref><ref id="ref2"><mixed-citation><named-content content-type="citation-string">
+Aidah AK, Kamariah AB, Parilah MS:
+Strategic university practices in student information literacy development.
+2019;4(18):9–15.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="Aidah AK, Kamariah AB, Parilah MS: Strategic university practices in student information literacy development. 2019;4(18):9–15."/></mixed-citation></ref><ref id="ref3"><mixed-citation><named-content content-type="citation-string">
+Al Asefer MI, Zainal Abidin NS:
+Soft skills and graduates’ employability in the 21
+<sup>st</sup> century from employers’ perspectives: a review of literature.
+
+<italic>International Journal of Infrastructure Research and Management.</italic>
+
+2021;9(2):44–59.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=International Journal of Infrastructure Research and Management.&amp;title=Soft skills and graduates’ employability in the 21 st century from employers’ perspectives: a review of literature.&amp;author=MI Al Asefer&amp;author=NS Zainal Abidin&amp;volume=9&amp;issue=2&amp;publication_year=2021&amp;pages=44-59&amp;"/></mixed-citation></ref><ref id="ref4"><mixed-citation><named-content content-type="citation-string">
+Australian Institute of Management (AIM):
+Australia's workforce skills gap.
+2009. (accessed 19 June 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.scribd.com/document/221503157/Australia-s-WorkforceSkills-Gap-09" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref5"><mixed-citation><named-content content-type="citation-string">
+Balcar J, Šimek M, Filipová L:
+Soft skills of Czech graduates.
+
+<italic>Review of Economic Perspectives.</italic>
+
+2018;18(1):45–60.
+10.2478/revecp-2018-0003
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.2478/revecp-2018-0003"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Review of Economic Perspectives.&amp;title=Soft skills of Czech graduates.&amp;author=J Balcar&amp;author=M Šimek&amp;author=L Filipová&amp;volume=18&amp;issue=1&amp;publication_year=2018&amp;pages=45-60&amp;doi=10.2478/revecp-2018-0003&amp;"/></mixed-citation></ref><ref id="ref6"><mixed-citation><named-content content-type="citation-string">
+Barney JB:
+Firm resources and sustained competitive advantage.
+
+<italic>J. Manag.</italic>
+
+1991;17(1):99–120.
+10.1177/014920639101700108
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1177/014920639101700108"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=J. Manag.&amp;title=Firm resources and sustained competitive advantage.&amp;author=JB Barney&amp;volume=17&amp;issue=1&amp;publication_year=1991&amp;pages=99-120&amp;doi=10.1177/014920639101700108&amp;"/></mixed-citation></ref><ref id="ref7"><mixed-citation><named-content content-type="citation-string">
+Bastian OA, Rahmat HK, Basri ASH, et al. :
+Urgensi literasi digital dalam menangkal radikalisme pada generasi millenial di era Revolusi Industri 4.0.
+
+<italic>Jurnal Dinamika Sosial Budaya.</italic>
+
+2021;23(1):126–133.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Jurnal Dinamika Sosial Budaya.&amp;title=Urgensi literasi digital dalam menangkal radikalisme pada generasi millenial di era Revolusi Industri 4.0.&amp;author=OA Bastian&amp;author=HK Rahmat&amp;author=ASH Basri&amp;volume=23&amp;issue=1&amp;publication_year=2021&amp;pages=126-133&amp;"/></mixed-citation></ref><ref id="ref8"><mixed-citation><named-content content-type="citation-string">
+Bennett D:
+Graduate employability and higher education: past, present and future.
+
+<italic>HERDSA Review of Higher Education.</italic>
+
+2018;5:31–61.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=HERDSA Review of Higher Education.&amp;title=Graduate employability and higher education: past, present and future.&amp;author=D Bennett&amp;volume=5&amp;publication_year=2018&amp;pages=31-61&amp;"/></mixed-citation></ref><ref id="ref9"><mixed-citation><named-content content-type="citation-string">
+Brown C, Czerniewicz L, Noakes T:
+Online content creation: Looking at students’ social media practices through a connected learning lens.
+
+<italic>Learn. Media Technol.</italic>
+
+2016;41(1):140–159.
+10.1080/17439884.2015.1107097
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1080/17439884.2015.1107097"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Learn. Media Technol.&amp;title=Online content creation: Looking at students’ social media practices through a connected learning lens.&amp;author=C Brown&amp;author=L Czerniewicz&amp;author=T Noakes&amp;volume=41&amp;issue=1&amp;publication_year=2016&amp;pages=140-159&amp;doi=10.1080/17439884.2015.1107097&amp;"/></mixed-citation></ref><ref id="ref10"><mixed-citation><named-content content-type="citation-string">
+Capone M:
+Data skills and the fourth industrial revolution.
+2019. (accessed 08 August 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.forbes.com/sites/forbestechcouncil/2019/05/03/data-skills-and-the-fourth-industrial-revolution/?sh=2af22c32509d" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref11"><mixed-citation><named-content content-type="citation-string">
+Caruso L:
+Digital innovation and the fourth industrial revolution: epochal social changes?
+
+<italic>A.I. and Society.</italic>
+
+2018;33(3):379–392.
+10.1007/s00146-017-0736-1
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1007/s00146-017-0736-1"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=A.I. and Society.&amp;title=Digital innovation and the fourth industrial revolution: epochal social changes?&amp;author=L Caruso&amp;volume=33&amp;issue=3&amp;publication_year=2018&amp;pages=379-392&amp;doi=10.1007/s00146-017-0736-1&amp;"/></mixed-citation></ref><ref id="ref12"><mixed-citation><named-content content-type="citation-string">
+Clarke M:
+Rethinking graduate employability: the role of capital, individual attributes and context.
+
+<italic>High. Educ.</italic>
+
+2018;43(9):1–15.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=High. Educ.&amp;title=Rethinking graduate employability: the role of capital, individual attributes and context.&amp;author=M Clarke&amp;volume=43&amp;issue=9&amp;publication_year=2018&amp;pages=1-15&amp;"/></mixed-citation></ref><ref id="ref13"><mixed-citation><named-content content-type="citation-string">
+Chen PSL, Cahoon S, Pateman H, et al. :
+Employability skills of maritime business graduates: industry perspectives.
+
+<italic>WMU J. Marit. Aff.</italic>
+
+2018;17:267–292.
+10.1007/s13437-018-0140-9
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1007/s13437-018-0140-9"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=WMU J. Marit. Aff.&amp;title=Employability skills of maritime business graduates: industry perspectives.&amp;author=PSL Chen&amp;author=S Cahoon&amp;author=H Pateman&amp;volume=17&amp;publication_year=2018&amp;pages=267-292&amp;doi=10.1007/s13437-018-0140-9&amp;"/></mixed-citation></ref><ref id="ref14"><mixed-citation><named-content content-type="citation-string">
+Deloitte:
+
+<italic>Industry 4.0 Challenges and Solutions for The Digital Transformation and Use of Exponential Technologies.</italic>
+
+UK:
+Deloitte AG;2015.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="title=Industry 4.0 Challenges and Solutions for The Digital Transformation and Use of Exponential Technologies.&amp;publication_year=2015&amp;"/></mixed-citation></ref><ref id="ref15"><mixed-citation><named-content content-type="citation-string">
+DoSM:
+Unemployment rate.
+2020. (accessed 10 June 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://dosm.gov.my/v1/index.php?r=column/cthemeByCat&amp;cat=126&amp;bul_id=ekU0SG1yQk1wcExKUDhvN2RHTlhjZz09&amp;menu_id=U3VPMldoYUxzVzFaYmNkWXZt" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref16"><mixed-citation><named-content content-type="citation-string">
+Economic Planning Unit:
+
+<italic>Malaysia Digital Economy Blueprint.</italic>
+
+Putrajaya:
+Perpustakaan Negara Malaysia;2021.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="title=Malaysia Digital Economy Blueprint.&amp;publication_year=2021&amp;"/></mixed-citation></ref><ref id="ref17"><mixed-citation><named-content content-type="citation-string">
+Ellahi RM, Ali Khan MU, Shah A:
+Redesigning curriculum in line with Industry 4.0.
+
+<italic>Procedia Computer Science.</italic>
+
+2019;151:699–708.
+10.1016/j.procs.2019.04.093
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1016/j.procs.2019.04.093"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Procedia Computer Science.&amp;title=Redesigning curriculum in line with Industry 4.0.&amp;author=RM Ellahi&amp;author=MU Ali Khan&amp;author=A Shah&amp;volume=151&amp;publication_year=2019&amp;pages=699-708&amp;doi=10.1016/j.procs.2019.04.093&amp;"/></mixed-citation></ref><ref id="ref18"><mixed-citation><named-content content-type="citation-string">
+Frania M:
+New educational trends connected with the development of media and innovative technologies – A few reflections on the future perspectives on learning and teaching.
+
+<italic>Journal of Educational and Social Research.</italic>
+
+2014;4(4):231–237.
+10.5901/jesr.2014.v4n4p232
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.5901/jesr.2014.v4n4p232"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Journal of Educational and Social Research.&amp;title=New educational trends connected with the development of media and innovative technologies – A few reflections on the future perspectives on learning and teaching.&amp;author=M Frania&amp;volume=4&amp;issue=4&amp;publication_year=2014&amp;pages=231-237&amp;doi=10.5901/jesr.2014.v4n4p232&amp;"/></mixed-citation></ref><ref id="ref19"><mixed-citation><named-content content-type="citation-string">
+Gałan B:
+The role of digital competencies in the glottodidactic process from the perspective of the representatives of the digital native community.
+
+<italic>e-mentor.</italic>
+
+2022;93(1):64–76.
+10.15219/em93.1555
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.15219/em93.1555"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=e-mentor.&amp;title=The role of digital competencies in the glottodidactic process from the perspective of the representatives of the digital native community.&amp;author=B Gałan&amp;volume=93&amp;issue=1&amp;publication_year=2022&amp;pages=64-76&amp;doi=10.15219/em93.1555&amp;"/></mixed-citation></ref><ref id="ref20"><mixed-citation><named-content content-type="citation-string">
+Helsper EJ, Eynon R:
+Digital natives: where is the evidence?.
+
+<italic>Br. Educ. Res. J.</italic>
+
+2010;36(3):503–520.
+10.1080/01411920902989227
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1080/01411920902989227"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Br. Educ. Res. J.&amp;title=Digital natives: where is the evidence?.&amp;author=EJ Helsper&amp;author=R Eynon&amp;volume=36&amp;issue=3&amp;publication_year=2010&amp;pages=503-520&amp;doi=10.1080/01411920902989227&amp;"/></mixed-citation></ref><ref id="ref21"><mixed-citation><named-content content-type="citation-string">
+Hogarth T, Wilson R:
+Skill shortages, vacancies, and local unemployment: a synthesis of the exploring local areas, skills and unemployment analysis.
+2003. (accessed 19 June 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://hdl.voced.edu.au/10707/155962" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref22"><mixed-citation><named-content content-type="citation-string">
+Institute of Student Employers (ISE):
+The global skills gap in the 21st century.
+2018. (accessed 15 June 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://info.qs.com/rs/335-VIN535/images/The%20Global%20Skills%20Gap%2021st%20Century.pdf" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref23"><mixed-citation><named-content content-type="citation-string">
+International Labour Organisation (ILO):
+The socioeconomic impacts of COVID-19 in Malaysia: Policy review and guidance for protecting the most vulnerable and supporting enterprises.
+2020. (accessed 15 June 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://ilo.org/wcmsp5/groups/public/---asia/---ro-bangkok/documents/publication/wcms_751600.pdf" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref24"><mixed-citation><named-content content-type="citation-string">
+Jewell P, Reading J, Clarke M, et al. :
+Information skills for business acumen and employability: A competitive advantage for graduates in Western Sydney.
+
+<italic>J. Educ. Bus.</italic>
+
+2020;95(2):88–105.
+10.1080/08832323.2019.1610346
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1080/08832323.2019.1610346"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=J. Educ. Bus.&amp;title=Information skills for business acumen and employability: A competitive advantage for graduates in Western Sydney.&amp;author=P Jewell&amp;author=J Reading&amp;author=M Clarke&amp;volume=95&amp;issue=2&amp;publication_year=2020&amp;pages=88-105&amp;doi=10.1080/08832323.2019.1610346&amp;"/></mixed-citation></ref><ref id="ref25"><mixed-citation><named-content content-type="citation-string">
+Joseph V, Khan N:
+Digital literacy tools to enhance English reading and writing skills: a detailed literature.
+
+<italic>Global Language Review.</italic>
+
+2020;3:21–33.
+10.31703/glr.2020(V-III).03
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.31703/glr.2020(V-III).03"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Global Language Review.&amp;title=Digital literacy tools to enhance English reading and writing skills: a detailed literature.&amp;author=V Joseph&amp;author=N Khan&amp;volume=3&amp;publication_year=2020&amp;pages=21-33&amp;doi=10.31703/glr.2020(V-III).03&amp;"/></mixed-citation></ref><ref id="ref26"><mixed-citation><named-content content-type="citation-string">
+Karacay G:
+Talent development for Industry 4.0: managing digital transformation
+
+<italic>Springer Series in Advanced Manufacturing.</italic>
+
+Cham:
+Springer;2017.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="title=Springer Series in Advanced Manufacturing.&amp;author=G Karacay&amp;publication_year=2017&amp;"/></mixed-citation></ref><ref id="ref27"><mixed-citation><named-content content-type="citation-string">
+Kenayathulla HB, Ahmad NA, Idris AR:
+Gaps between competence and importance of employability skills: evidence from Malaysia.
+
+<italic>Higher Education Evaluation and Development.</italic>
+
+2019;13(2):97–112.
+10.1108/HEED-08-2019-0039
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1108/HEED-08-2019-0039"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Higher Education Evaluation and Development.&amp;title=Gaps between competence and importance of employability skills: evidence from Malaysia.&amp;author=HB Kenayathulla&amp;author=NA Ahmad&amp;author=AR Idris&amp;volume=13&amp;issue=2&amp;publication_year=2019&amp;pages=97-112&amp;doi=10.1108/HEED-08-2019-0039&amp;"/></mixed-citation></ref><ref id="ref28"><mixed-citation><named-content content-type="citation-string">
+Kennedy GE, Judd TS, Churchward A, et al. :
+First-year students' experiences with technology: are they really digital natives?.
+
+<italic>Australas. J. Educ. Technol.</italic>
+
+2008;24(1):108–122.
+10.14742/ajet.1233
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.14742/ajet.1233"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Australas. J. Educ. Technol.&amp;title=First-year students' experiences with technology: are they really digital natives?.&amp;author=GE Kennedy&amp;author=TS Judd&amp;author=A Churchward&amp;volume=24&amp;issue=1&amp;publication_year=2008&amp;pages=108-122&amp;doi=10.14742/ajet.1233&amp;"/></mixed-citation></ref><ref id="ref29"><mixed-citation><named-content content-type="citation-string">
+Khan N, Khan S, Tan BC, et al. :
+Driving digital competency model towards IR 4.0 in Malaysia.
+
+<italic>J. Phys. Conf. Ser.</italic>
+
+2021;1793.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=J. Phys. Conf. Ser.&amp;title=Driving digital competency model towards IR 4.0 in Malaysia.&amp;author=N Khan&amp;author=S Khan&amp;author=BC Tan&amp;volume=1793&amp;publication_year=2021&amp;"/></mixed-citation></ref><ref id="ref30"><mixed-citation><named-content content-type="citation-string">
+Khuraisah MN, Khalid F, Husnin H:
+Preparing graduates with digital literacy skills toward fulfilling employability need in 4IR era: a review.
+
+<italic>Int. J. Adv. Comput. Sci. Appl.</italic>
+
+2020;11(6):307–316.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Int. J. Adv. Comput. Sci. Appl.&amp;title=Preparing graduates with digital literacy skills toward fulfilling employability need in 4IR era: a review.&amp;author=MN Khuraisah&amp;author=F Khalid&amp;author=H Husnin&amp;volume=11&amp;issue=6&amp;publication_year=2020&amp;pages=307-316&amp;"/></mixed-citation></ref><ref id="ref31"><mixed-citation><named-content content-type="citation-string">
+Kimball D:
+How digital transformation impacts the future of career transitions.
+2021.
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.forbes.com/sites/forbeshumanresourcescouncil/2021/04/29/how-digital-transformation-impacts-the-future-of-career-transitions/?sh=34e17b1f3f71" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref32"><mixed-citation><named-content content-type="citation-string">
+Lee MF:
+Digital skills measurement: a study on the Malaysian youth.
+
+<italic>2018 IEEE Conference on e-Learning, eManagement and e-Services.</italic>
+
+2019; pp.52–55.</named-content></mixed-citation></ref><ref id="ref33"><mixed-citation><named-content content-type="citation-string">
+Lim TL, Omar R, Ho TCF, et al. :
+“The roles of work–family conflict and family–work conflict linking job satisfaction and turnover intention of academic staff”,
+<italic>Australian.</italic>
+
+
+<italic>J. Career Dev.</italic>
+
+2021;30(3):177–188.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=J. Career Dev.&amp;title=“The roles of work–family conflict and family–work conflict linking job satisfaction and turnover intention of academic staff”, Australian.&amp;author=TL Lim&amp;author=R Omar&amp;author=TCF Ho&amp;volume=30&amp;issue=3&amp;publication_year=2021&amp;pages=177-188&amp;"/></mixed-citation></ref><ref id="ref34"><mixed-citation><named-content content-type="citation-string">
+Malik G, Venkatraman A:
+The great divide: skill gap between the employer’s expectations and skills possessed by employees.
+
+<italic>Ind. Commer. Train.</italic>
+
+2017;49(4):175–182.
+10.1108/ICT-11-2016-0071
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1108/ICT-11-2016-0071"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Ind. Commer. Train.&amp;title=The great divide: skill gap between the employer’s expectations and skills possessed by employees.&amp;author=G Malik&amp;author=A Venkatraman&amp;volume=49&amp;issue=4&amp;publication_year=2017&amp;pages=175-182&amp;doi=10.1108/ICT-11-2016-0071&amp;"/></mixed-citation></ref><ref id="ref35"><mixed-citation><named-content content-type="citation-string">
+Mercer:
+Global talent trends 2019.
+2019. (accessed 20 July 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://mmc.com/content/dam/mmc-web/insights/publications/2019/feb/gl-2019-global-talent-trends-study.pdf" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref36"><mixed-citation><named-content content-type="citation-string">
+Nair S, Kaushik A, Dhoot H:
+Conceptual framework of a skill-based interactive employee engaging system: in the context of upskilling the present I.T. organisation.
+
+<italic>Applied Computing and Informatics.</italic>
+
+2019;19(1/2):82–107.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Applied Computing and Informatics.&amp;title=Conceptual framework of a skill-based interactive employee engaging system: in the context of upskilling the present I.T. organisation.&amp;author=S Nair&amp;author=A Kaushik&amp;author=H Dhoot&amp;volume=19&amp;issue=1/2&amp;publication_year=2019&amp;pages=82-107&amp;"/></mixed-citation></ref><ref id="ref37"><mixed-citation><named-content content-type="citation-string">
+Nardo M, Forino D, Murino T:
+The evolution of man–machine interaction: the role of the human in Industry 4.0 paradigm.
+
+<italic>Production &amp; Manufacturing Research.</italic>
+
+2020;8(1):20–34.
+10.1080/21693277.2020.1737592
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1080/21693277.2020.1737592"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Production &amp; Manufacturing Research.&amp;title=The evolution of man–machine interaction: the role of the human in Industry 4.0 paradigm.&amp;author=M Nardo&amp;author=D Forino&amp;author=T Murino&amp;volume=8&amp;issue=1&amp;publication_year=2020&amp;pages=20-34&amp;doi=10.1080/21693277.2020.1737592&amp;"/></mixed-citation></ref><ref id="ref38"><mixed-citation><named-content content-type="citation-string">
+Othman Z, Shan SW, Yusoff I, et al. :
+Classification techniques for predicting graduate employability.
+
+<italic>International Journal on Advanced Science Engineering and Information Technology.</italic>
+
+2018;8(4–2):1712–1720.
+10.18517/ijaseit.8.4-2.6832
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.18517/ijaseit.8.4-2.6832"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=International Journal on Advanced Science Engineering and Information Technology.&amp;title=Classification techniques for predicting graduate employability.&amp;author=Z Othman&amp;author=SW Shan&amp;author=I Yusoff&amp;volume=8&amp;issue=4–2&amp;publication_year=2018&amp;pages=1712-1720&amp;doi=10.18517/ijaseit.8.4-2.6832&amp;"/></mixed-citation></ref><ref id="ref39"><mixed-citation><named-content content-type="citation-string">
+Picatoste J, Pérez-Ortiz L, Ruesga-Benito SM:
+A new educational pattern in response to new technologies and sustainable development. Enlightening ICT skills for youth employability in the European Union.
+
+<italic>Telematics Inform.</italic>
+
+2018;35(4):1031–1038.
+10.1016/j.tele.2017.09.014
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1016/j.tele.2017.09.014"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Telematics Inform.&amp;title=A new educational pattern in response to new technologies and sustainable development. Enlightening ICT skills for youth employability in the European Union.&amp;author=J Picatoste&amp;author=L Pérez-Ortiz&amp;author=SM Ruesga-Benito&amp;volume=35&amp;issue=4&amp;publication_year=2018&amp;pages=1031-1038&amp;doi=10.1016/j.tele.2017.09.014&amp;"/></mixed-citation></ref><ref id="ref40"><mixed-citation><named-content content-type="citation-string">
+Rahmat AM, Mohd Adnan AH, Mohtar NM:
+Hybrid capabilities and Industry 4.0 job demands in recruiting Malaysian graduates.
+
+<italic>The International Journal of Academic Research in Business and Social Sciences.</italic>
+
+2021;11(1):789–799.
+10.6007/IJARBSS/v11-i1/9000
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.6007/IJARBSS/v11-i1/9000"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=The International Journal of Academic Research in Business and Social Sciences.&amp;title=Hybrid capabilities and Industry 4.0 job demands in recruiting Malaysian graduates.&amp;author=AM Rahmat&amp;author=AH Mohd Adnan&amp;author=NM Mohtar&amp;volume=11&amp;issue=1&amp;publication_year=2021&amp;pages=789-799&amp;doi=10.6007/IJARBSS/v11-i1/9000&amp;"/></mixed-citation></ref><ref id="ref41"><mixed-citation><named-content content-type="citation-string">
+Rahmat AM, Mohd IH, Omar MK, et al. :
+Integrating socio-digital skills in the industry 4.0 era for graduates' employability: an employers’ perspective.
+
+<italic>Journal of Positive School Psychology.</italic>
+
+2022;6(3):8493–8507.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Journal of Positive School Psychology.&amp;title=Integrating socio-digital skills in the industry 4.0 era for graduates' employability: an employers’ perspective.&amp;author=AM Rahmat&amp;author=IH Mohd&amp;author=MK Omar&amp;volume=6&amp;issue=3&amp;publication_year=2022&amp;pages=8493-8507&amp;"/></mixed-citation></ref><ref id="ref42"><mixed-citation><named-content content-type="citation-string">
+Rathelot R, Van Rens T:
+Rethinking the skills gap: a better understanding of skills mismatch is essential to finding effective policy options.
+
+<italic>IZA World of Labour.</italic>
+
+2017;391:1–11.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=IZA World of Labour.&amp;title=Rethinking the skills gap: a better understanding of skills mismatch is essential to finding effective policy options.&amp;author=R Rathelot&amp;author=T Van Rens&amp;volume=391&amp;publication_year=2017&amp;pages=1-11&amp;"/></mixed-citation></ref><ref id="ref43"><mixed-citation><named-content content-type="citation-string">
+Saputra N, Nugroho R, Aisyah H, et al. :
+Digital skill during Covid-19: Effects of digital leadership and digital collaboration.
+
+<italic>Journal of Applied Management.</italic>
+
+2021;19(2):272–281.
+10.21776/ub.jam.2021.019.02.04
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.21776/ub.jam.2021.019.02.04"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Journal of Applied Management.&amp;title=Digital skill during Covid-19: Effects of digital leadership and digital collaboration.&amp;author=N Saputra&amp;author=R Nugroho&amp;author=H Aisyah&amp;volume=19&amp;issue=2&amp;publication_year=2021&amp;pages=272-281&amp;doi=10.21776/ub.jam.2021.019.02.04&amp;"/></mixed-citation></ref><ref id="ref44"><mixed-citation><named-content content-type="citation-string">
+Saunders L:
+Information literacy in practice: content and delivery of library instruction tutorials.
+
+<italic>J. Acad. Librariansh.</italic>
+
+2018;44(2:269–278.
+10.1016/j.acalib.2017.12.022
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1016/j.acalib.2017.12.022"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=J. Acad. Librariansh.&amp;title=Information literacy in practice: content and delivery of library instruction tutorials.&amp;author=L Saunders&amp;volume=44(2&amp;publication_year=2018&amp;pages=269-278&amp;doi=10.1016/j.acalib.2017.12.022&amp;"/></mixed-citation></ref><ref id="ref45"><mixed-citation><named-content content-type="citation-string">
+Siddoo V, Sawattawee J, Janchai W, et al. :
+An exploratory study of digital workforce competency in Thailand.
+
+<italic>Heliyon.</italic>
+
+2019;5(5):e01723–e01728.
+10.1016/j.heliyon.2019.e01723
+
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1016/j.heliyon.2019.e01723"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="pmcid" xlink:href="PMC6525311"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="pmid" xlink:href="31193339"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Heliyon.&amp;title=An exploratory study of digital workforce competency in Thailand.&amp;author=V Siddoo&amp;author=J Sawattawee&amp;author=W Janchai&amp;volume=5&amp;issue=5&amp;publication_year=2019&amp;pages=e01723-e01728&amp;pmid=31193339&amp;doi=10.1016/j.heliyon.2019.e01723&amp;"/></mixed-citation></ref><ref id="ref46"><mixed-citation><named-content content-type="citation-string">
+Silva VL, Kovaleski JL, Pagani RN:
+Technology transfer and human capital in the Industrial 4.0 scenario: a theoretical study.
+
+<italic>Future Studies Research Journal: Trends and Strategies.</italic>
+
+2019;11(1):102–122.
+10.24023/FutureJournal/2175-5825/2019.v11i1.369
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.24023/FutureJournal/2175-5825/2019.v11i1.369"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Future Studies Research Journal: Trends and Strategies.&amp;title=Technology transfer and human capital in the Industrial 4.0 scenario: a theoretical study.&amp;author=VL Silva&amp;author=JL Kovaleski&amp;author=RN Pagani&amp;volume=11&amp;issue=1&amp;publication_year=2019&amp;pages=102-122&amp;doi=10.24023/FutureJournal/2175-5825/2019.v11i1.369&amp;"/></mixed-citation></ref><ref id="ref47"><mixed-citation><named-content content-type="citation-string">
+Spector JM, Kinshuk:
+Learning to solve problems in the digital age: introduction.
+Ifenthaler D, Spector J, Isaias P, et al., editors.
+
+<italic>Multiple Perspectives on Problem-solving and Learning in The Digital Age.</italic>
+
+New York:
+Springer;2011.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="title=Multiple Perspectives on Problem-solving and Learning in The Digital Age.&amp;author=JM Spector&amp;author= Kinshuk&amp;publication_year=2011&amp;"/></mixed-citation></ref><ref id="ref48"><mixed-citation><named-content content-type="citation-string">
+Suarta IM, Suwintana IK:
+The new framework of employability skills for digital business.
+
+<italic>J. Phys. Conf. Ser.</italic>
+
+2021;1833:012034.
+10.1088/1742-6596/1833/1/012034
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1088/1742-6596/1833/1/012034"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=J. Phys. Conf. Ser.&amp;title=The new framework of employability skills for digital business.&amp;author=IM Suarta&amp;author=IK Suwintana&amp;volume=1833&amp;publication_year=2021&amp;pages=012034&amp;doi=10.1088/1742-6596/1833/1/012034&amp;"/></mixed-citation></ref><ref id="ref49"><mixed-citation><named-content content-type="citation-string">
+Suleman F, Laranjeiro AMC:
+The employability skills of graduates and employers’ options in Portugal.
+
+<italic>Educ. Train.</italic>
+
+2018;60(9):1097–1111.
+10.1108/ET-10-2017-0158
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1108/ET-10-2017-0158"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Educ. Train.&amp;title=The employability skills of graduates and employers’ options in Portugal.&amp;author=F Suleman&amp;author=AMC Laranjeiro&amp;volume=60&amp;issue=9&amp;publication_year=2018&amp;pages=1097-1111&amp;doi=10.1108/ET-10-2017-0158&amp;"/></mixed-citation></ref><ref id="ref50"><mixed-citation><named-content content-type="citation-string">
+Tee PK:
+Digital Skills_ Questionnaire &amp; Dataset.Dataset.
+
+<italic>Figshare.</italic>
+
+2024.
+10.6084/m9.figshare.25540798.v2
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.6084/m9.figshare.25540798.v2"/></mixed-citation></ref><ref id="ref51"><mixed-citation><named-content content-type="citation-string">
+Tee PK, Chan YF:
+Exploring factors towards career success in Malaysia.
+
+<italic>Int. Bus. Manag.</italic>
+
+2016;10(17):3936–3943.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Int. Bus. Manag.&amp;title=Exploring factors towards career success in Malaysia.&amp;author=PK Tee&amp;author=YF Chan&amp;volume=10&amp;issue=17&amp;publication_year=2016&amp;pages=3936-3943&amp;"/></mixed-citation></ref><ref id="ref52"><mixed-citation><named-content content-type="citation-string">
+Tee PK, Cham TH, Low MP, et al. :
+The role of organisational career management: comparing the academic staff's perception of internal and external employability in determining academic success.
+
+<italic>Malaysian Online Journal of Educational Management.</italic>
+
+2021;9(3):41–58.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Malaysian Online Journal of Educational Management.&amp;title=The role of organisational career management: comparing the academic staff's perception of internal and external employability in determining academic success.&amp;author=PK Tee&amp;author=TH Cham&amp;author=MP Low&amp;volume=9&amp;issue=3&amp;publication_year=2021&amp;pages=41-58&amp;"/></mixed-citation></ref><ref id="ref53"><mixed-citation><named-content content-type="citation-string">
+Tee PK, Cham TH, Low MP, et al. :
+The role of perceived employability in the relationship between protean career attitude and career success.
+
+<italic>Aust. J. Career Dev.</italic>
+
+2022;31(1):66–76.
+10.1177/10384162211021940
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1177/10384162211021940"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Aust. J. Career Dev.&amp;title=The role of perceived employability in the relationship between protean career attitude and career success.&amp;author=PK Tee&amp;author=TH Cham&amp;author=MP Low&amp;volume=31&amp;issue=1&amp;publication_year=2022&amp;pages=66-76&amp;doi=10.1177/10384162211021940&amp;"/></mixed-citation></ref><ref id="ref54"><mixed-citation><named-content content-type="citation-string">
+Tee PK, Eaw HC, Oh SP, et al. :
+The employability of Chinese graduates in Malaysia upon returning to China employment market.
+
+<italic>International Journal of Recent Technology &amp; Engineering.</italic>
+
+2019;8(2S):358–365.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=International Journal of Recent Technology &amp; Engineering.&amp;title=The employability of Chinese graduates in Malaysia upon returning to China employment market.&amp;author=PK Tee&amp;author=HC Eaw&amp;author=SP Oh&amp;volume=8&amp;issue=2S&amp;publication_year=2019&amp;pages=358-365&amp;"/></mixed-citation></ref><ref id="ref55"><mixed-citation><named-content content-type="citation-string">
+Tomczyk L:
+Skills in the area of digital safety as a key component of digital literacy among teachers.
+
+<italic>Educ. Inf. Technol.</italic>
+
+2019;25:471–486.
+10.1007/s10639-019-09980-6
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1007/s10639-019-09980-6"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Educ. Inf. Technol.&amp;title=Skills in the area of digital safety as a key component of digital literacy among teachers.&amp;author=L Tomczyk&amp;volume=25&amp;publication_year=2019&amp;pages=471-486&amp;doi=10.1007/s10639-019-09980-6&amp;"/></mixed-citation></ref><ref id="ref56"><mixed-citation><named-content content-type="citation-string">
+Tomlinson M:
+Forms of graduate capital and their relationship to graduate employability.
+
+<italic>Educ. Train.</italic>
+
+2017;59(4):338–352.
+10.1108/ET-05-2016-0090
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1108/ET-05-2016-0090"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Educ. Train.&amp;title=Forms of graduate capital and their relationship to graduate employability.&amp;author=M Tomlinson&amp;volume=59&amp;issue=4&amp;publication_year=2017&amp;pages=338-352&amp;doi=10.1108/ET-05-2016-0090&amp;"/></mixed-citation></ref><ref id="ref57"><mixed-citation><named-content content-type="citation-string">
+Truong TTH, Laura RS, Shaw K:
+The importance of developing soft skill sets for the employability of business graduates in Vietnam: a field study on selected business employers.
+
+<italic>Journal of Education and Culture Studies.</italic>
+
+2018;2(1):32–45.
+10.22158/jecs.v2n1p32
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.22158/jecs.v2n1p32"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Journal of Education and Culture Studies.&amp;title=The importance of developing soft skill sets for the employability of business graduates in Vietnam: a field study on selected business employers.&amp;author=TTH Truong&amp;author=RS Laura&amp;author=K Shaw&amp;volume=2&amp;issue=1&amp;publication_year=2018&amp;pages=32-45&amp;doi=10.22158/jecs.v2n1p32&amp;"/></mixed-citation></ref><ref id="ref58"><mixed-citation><named-content content-type="citation-string">
+Tsiligiris V, Bowyer D:
+Exploring the impact of 4IR on skills and personal qualities for future accountants: a proposed conceptual framework for university accounting education.
+
+<italic>Acc. Educ.</italic>
+
+2021;30(6):621–649.
+10.1080/09639284.2021.1938616
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1080/09639284.2021.1938616"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Acc. Educ.&amp;title=Exploring the impact of 4IR on skills and personal qualities for future accountants: a proposed conceptual framework for university accounting education.&amp;author=V Tsiligiris&amp;author=D Bowyer&amp;volume=30&amp;issue=6&amp;publication_year=2021&amp;pages=621-649&amp;doi=10.1080/09639284.2021.1938616&amp;"/></mixed-citation></ref><ref id="ref59"><mixed-citation><named-content content-type="citation-string">
+Unni J:
+Skill gaps and employability: higher education in India.
+
+<italic>Journal of Development Policy and Practice.</italic>
+
+2016;1(1):18–34.
+10.1177/2455133315612310
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1177/2455133315612310"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Journal of Development Policy and Practice.&amp;title=Skill gaps and employability: higher education in India.&amp;author=J Unni&amp;volume=1&amp;issue=1&amp;publication_year=2016&amp;pages=18-34&amp;doi=10.1177/2455133315612310&amp;"/></mixed-citation></ref><ref id="ref60"><mixed-citation><named-content content-type="citation-string">
+Van Laar E, Van Deursen AJ, Van Dijk JA, et al. :
+Determinants of 21st-century skills and 21st-century digital skills for workers: a systematic literature review.
+
+<italic>SAGE Open.</italic>
+
+2020;10(1).
+10.1177/2158244019900176
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1177/2158244019900176"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=SAGE Open.&amp;title=Determinants of 21st-century skills and 21st-century digital skills for workers: a systematic literature review.&amp;author=E Van Laar&amp;author=AJ Van Deursen&amp;author=JA Van Dijk&amp;volume=10&amp;issue=1&amp;publication_year=2020&amp;doi=10.1177/2158244019900176&amp;"/></mixed-citation></ref><ref id="ref61"><mixed-citation><named-content content-type="citation-string">
+Valdés RMT, Soriano AS, Álvarez CL:
+Resignification of educational e-innovation to enhance opportunities for graduate employability in the context of new university degrees.
+
+<italic>Journal of New Approaches in Educational Research.</italic>
+
+2018;7(1):70–78.
+10.7821/naer.2018.1.263
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.7821/naer.2018.1.263"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Journal of New Approaches in Educational Research.&amp;title=Resignification of educational e-innovation to enhance opportunities for graduate employability in the context of new university degrees.&amp;author=RMT Valdés&amp;author=AS Soriano&amp;author=CL Álvarez&amp;volume=7&amp;issue=1&amp;publication_year=2018&amp;pages=70-78&amp;doi=10.7821/naer.2018.1.263&amp;"/></mixed-citation></ref><ref id="ref62"><mixed-citation><named-content content-type="citation-string">
+Venkitachalam K, Bosua R:
+Perspectives on effective digital content management in organisations.
+
+<italic>Knowl. Process. Manag.</italic>
+
+2019;26(3):202–209.
+10.1002/kpm.1600
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1002/kpm.1600"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Knowl. Process. Manag.&amp;title=Perspectives on effective digital content management in organisations.&amp;author=K Venkitachalam&amp;author=R Bosua&amp;volume=26&amp;issue=3&amp;publication_year=2019&amp;pages=202-209&amp;doi=10.1002/kpm.1600&amp;"/></mixed-citation></ref><ref id="ref63"><mixed-citation><named-content content-type="citation-string">
+Verma P, Nankervis A, Priyono S, et al. :
+Graduate work-readiness challenges in the Asia-Pacific region and the role of HRM.
+
+<italic>Equality, Diversity and Inclusion.</italic>
+
+2018;37(2):121–137.
+10.1108/EDI-01-2017-0015
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.1108/EDI-01-2017-0015"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=Equality, Diversity and Inclusion.&amp;title=Graduate work-readiness challenges in the Asia-Pacific region and the role of HRM.&amp;author=P Verma&amp;author=A Nankervis&amp;author=S Priyono&amp;volume=37&amp;issue=2&amp;publication_year=2018&amp;pages=121-137&amp;doi=10.1108/EDI-01-2017-0015&amp;"/></mixed-citation></ref><ref id="ref64"><mixed-citation><named-content content-type="citation-string">
+Vuorikari R, Punie Y, Carretero GS, et al. :
+
+<italic>DigComp 2.0: The Digital Competence Framework for Citizens.</italic>
+
+Luxembourg Publication Office of the European Union. EUR 27948;2016.</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="title=DigComp 2.0: The Digital Competence Framework for Citizens.&amp;author=R Vuorikari&amp;author=Y Punie&amp;author=GS Carretero&amp;publication_year=2016&amp;"/></mixed-citation></ref><ref id="ref65"><mixed-citation><named-content content-type="citation-string">
+World Economic Forum (WEF):
+The future of jobs employment, skills and workforce strategy for the fourth industrial revolution.
+2016. (accessed 20 June 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www3.weforum.org/docs/WEF_Future_of_Jobs.pdf" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref><ref id="ref66"><mixed-citation><named-content content-type="citation-string">
+World Economic Forum (WEF):
+The future of jobs report 2020.
+2020. (accessed 20 June 2023).
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www3.weforum.org/docs/WEF_Future_of_Jobs_2020.pdf" ext-link-type="uri">Reference Source</ext-link>
+</named-content></mixed-citation></ref></ref-list></sec></sec></body><sub-article article-type="reviewer-report" id="report314046"><front><journal-meta><journal-title-group><journal-title>F1000Research</journal-title><abbrev-journal-title>F1000Res</abbrev-journal-title></journal-title-group></journal-meta><article-meta><article-id pub-id-type="doi">10.5256/f1000research.162834.r314046</article-id><title-group><article-title>Reviewer response for version 1</article-title></title-group><contrib-group content-type="author"><contrib><name name-style="western"><surname>Shahpo</surname><given-names initials="SM">Samia Mokhtar</given-names></name><role>Referee</role><xref ref-type="aff" rid="r314046a1">1</xref></contrib></contrib-group><aff id="r314046a1">
+<label>1</label>Imam Abdulrahman Bin Faisal University, Dammam, Eastern Province, Saudi Arabia</aff><author-notes><fn id="fn5"><p>
+<bold>Competing interests: </bold>No competing interests were disclosed.</p></fn></author-notes><pub-date><day>20</day><month>9</month><year>2024</year></pub-date><permissions><copyright-statement>Copyright: © 2024 Shahpo SM</copyright-statement><license><license-p>This is an open access peer review report distributed under the terms of the Creative Commons Attribution Licence, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions></article-meta></front><body><p>The subject of skills necessary to employ graduates is one of the topics that receive attention from the relevant authorities. The researchers formulated a title expressing the content of the research and provided a complete and interesting abstract. The research problem is specific and clear, and the questions are compatible with the objectives of the study. The methodology used is appropriate, and the statistical methods used are appropriate for the study design. Reviewing and discussing the results were logical and supported by evidence. However, the terms in the study were not defined in a specific, measurable procedural form. Benefits from previous studies have not been presented in the present study. For results, I recommend adding open-ended questions to the questionnaire or using interviews with employers and not just using the closed questionnaire.</p><p>Is the work clearly and accurately presented and does it cite the current literature?</p><p>Yes</p><p>If applicable, is the statistical analysis and its interpretation appropriate?</p><p>Yes</p><p>Are all the source data underlying the results available to ensure full reproducibility?</p><p>Yes</p><p>Is the study design appropriate and is the work technically sound?</p><p>Yes</p><p>Are the conclusions drawn adequately supported by the results?</p><p>Yes</p><p>Are sufficient details of methods and analysis provided to allow replication by others?</p><p>Yes</p><p>Reviewer Expertise:</p><p>EducationLearnersPsychology</p><p>I confirm that I have read this submission and believe that I have an appropriate level of expertise to confirm that it is of an acceptable scientific standard.</p><sec id="ref-list2" sec-type="ref-list" disp-level="1"><title>References</title><sec id="ref-list2_sec2" disp-level="2"><ref-list><ref id="rep-ref-314046-1"><label>1.</label><mixed-citation><named-content content-type="citation-string">
+:
+Demand for digital skills, skill gaps and graduate employability: Evidence from employers in Malaysia.
+
+<italic>F1000Research</italic>
+.2024;13:
+10.12688/f1000research.148514.1
+10.12688/f1000research.148514.1
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.12688/f1000research.148514.1"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="pmcid" xlink:href="PMC11387931"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="pmid" xlink:href="39262836"/><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="google-scholar" xlink:href="journal=F1000Research&amp;title=Demand for digital skills, skill gaps and graduate employability: Evidence from employers in Malaysia&amp;volume=13&amp;publication_year=2024&amp;pages=10.12688/f1000research.148514.1&amp;pmid=39262836&amp;doi=10.12688/f1000research.148514.1&amp;"/></mixed-citation></ref></ref-list></sec></sec></body></sub-article><sub-article article-type="reviewer-report" id="report303733"><front><journal-meta><journal-title-group><journal-title>F1000Research</journal-title><abbrev-journal-title>F1000Res</abbrev-journal-title></journal-title-group></journal-meta><article-meta><article-id pub-id-type="doi">10.5256/f1000research.162834.r303733</article-id><title-group><article-title>Reviewer response for version 1</article-title></title-group><contrib-group content-type="author"><contrib><name name-style="western"><surname>Alam</surname><given-names initials="MJ">Md Jahangir</given-names></name><role>Referee</role><xref ref-type="aff" rid="r303733a1">1</xref></contrib></contrib-group><aff id="r303733a1">
+<label>1</label>University of Dhaka, Dhaka, Dhaka Division, Bangladesh</aff><author-notes><fn id="fn6"><p>
+<bold>Competing interests: </bold>No competing interests were disclosed.</p></fn></author-notes><pub-date><day>18</day><month>9</month><year>2024</year></pub-date><permissions><copyright-statement>Copyright: © 2024 Alam MJ</copyright-statement><license><license-p>This is an open access peer review report distributed under the terms of the Creative Commons Attribution Licence, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions></article-meta></front><body><p>This research has a very high significance. However, I recommend the authors review the following articles:.</p><p> As the conceptual and theoretical frameworks are missing, I recommend developing a conceptual framework for this study. To align the result with the discussion, there is still room for improvement. The auditors started with RQ2 and RQ3, but I did not find RQ1.  
+</p><list list-type="order"><list-item><p>Digitalization of higher education to achieve sustainability: Investigating students’ attitudes toward digitalization in Bangladesh</p></list-item><list-item><p>Skills development for graduate employability in Bangladesh: Japanese language in TVET program</p></list-item><list-item><p>e-Learning as a Doubled-Edge Sword for Academic Achievements of University Students in Developing Countries: Insights from Bangladesh</p></list-item><list-item><p>Importance of Skills Development for Ensuring Graduates Employability: The Case of Bangladesh</p></list-item><list-item><p>Skills development for sustainable career planning in Bangladesh: the case of gender equality in education</p></list-item><list-item><p>Future-readiness and employable ICT skills of university graduates in Bangladesh: an analysis during the post-covid era</p></list-item><list-item><p>Japanese investment for skills development program in attaining sustainable employability: The case of Bangladesh</p></list-item><list-item><p>Sustainable employment for vocational education and training graduates: the case of future skills matching in Bangladesh</p></list-item></list><p>Is the work clearly and accurately presented and does it cite the current literature?</p><p>Partly</p><p>If applicable, is the statistical analysis and its interpretation appropriate?</p><p>Partly</p><p>Are all the source data underlying the results available to ensure full reproducibility?</p><p>Yes</p><p>Is the study design appropriate and is the work technically sound?</p><p>Yes</p><p>Are the conclusions drawn adequately supported by the results?</p><p>Partly</p><p>Are sufficient details of methods and analysis provided to allow replication by others?</p><p>Partly</p><p>Reviewer Expertise:</p><p>The authors need to develop the conceptual framework of this research The result and findings do not align and I recommend reviewing further article.</p><p>I confirm that I have read this submission and believe that I have an appropriate level of expertise to confirm that it is of an acceptable scientific standard, however I have significant reservations, as outlined above.</p></body></sub-article><sub-article article-type="reviewer-report" id="report288764"><front><journal-meta><journal-title-group><journal-title>F1000Research</journal-title><abbrev-journal-title>F1000Res</abbrev-journal-title></journal-title-group></journal-meta><article-meta><article-id pub-id-type="doi">10.5256/f1000research.162834.r288764</article-id><title-group><article-title>Reviewer response for version 1</article-title></title-group><contrib-group content-type="author"><contrib><name name-style="western"><surname>Abu Seman</surname><given-names initials="NA">Noor Aslinda</given-names></name><role>Referee</role><xref ref-type="aff" rid="r288764a1">1</xref></contrib></contrib-group><aff id="r288764a1">
+<label>1</label>Universiti Tun Hussein Onn Malaysia, Parit Raja, Malaysia</aff><author-notes><fn id="fn7"><p>
+<bold>Competing interests: </bold>No competing interests were disclosed.</p></fn></author-notes><pub-date><day>10</day><month>9</month><year>2024</year></pub-date><permissions><copyright-statement>Copyright: © 2024 Abu Seman NA</copyright-statement><license><license-p>This is an open access peer review report distributed under the terms of the Creative Commons Attribution Licence, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions></article-meta></front><body><p>Overall, this study is well-executed and provides significant insights into the digital skills demanded by employers in Malaysia, along with highlighting the skill gaps among graduates. The methodology is robust, and the findings are presented clearly. However, there are areas where improvements can be made:
+</p><list list-type="order"><list-item><p>
+<bold>Graduate Employability Section</bold>
+<list list-type="bullet"><list-item><p>
+<bold>Current Text:</bold> "The graduate unemployment rate in Malaysia was reported to increase to 4.1%, equivalent to 197,400 individuals in the same year."</p></list-item><list-item><p>
+<bold>Improvement:</bold> Please specify the year to which this data refers. For example, "The graduate unemployment rate in Malaysia was reported to increase to 4.1%, equivalent to 197,400 individuals in 20xx." This adds clarity and context for the reader.</p></list-item></list>
+</p></list-item><list-item><p>
+<bold>Table Placement</bold>
+<list list-type="bullet"><list-item><p>
+<bold>Current Placement:</bold> Table 1 is not optimally placed in the manuscript.</p></list-item><list-item><p>
+<bold>Improvement:</bold> Table 1 should be placed immediately after the Research Question 1 (RQ1) statement. This will help in better aligning the table with the relevant section of the text, making it easier for readers to follow and understand the presented data.</p></list-item></list>
+</p></list-item></list><p>Is the work clearly and accurately presented and does it cite the current literature?</p><p>Yes</p><p>If applicable, is the statistical analysis and its interpretation appropriate?</p><p>Yes</p><p>Are all the source data underlying the results available to ensure full reproducibility?</p><p>No source data required</p><p>Is the study design appropriate and is the work technically sound?</p><p>Yes</p><p>Are the conclusions drawn adequately supported by the results?</p><p>Yes</p><p>Are sufficient details of methods and analysis provided to allow replication by others?</p><p>Yes</p><p>Reviewer Expertise:</p><p>Management, Marketing, Green Supply Chain Management, SMEs</p><p>I confirm that I have read this submission and believe that I have an appropriate level of expertise to confirm that it is of an acceptable scientific standard.</p></body></sub-article><sub-article article-type="reviewer-report" id="report274442"><front><journal-meta><journal-title-group><journal-title>F1000Research</journal-title><abbrev-journal-title>F1000Res</abbrev-journal-title></journal-title-group></journal-meta><article-meta><article-id pub-id-type="doi">10.5256/f1000research.162834.r274442</article-id><title-group><article-title>Reviewer response for version 1</article-title></title-group><contrib-group content-type="author"><contrib><name name-style="western"><surname>Coetzee</surname><given-names initials="M">Melinde</given-names></name><role>Referee</role><xref ref-type="aff" rid="r274442a1">1</xref></contrib></contrib-group><aff id="r274442a1">
+<label>1</label>Department Industrial &amp; Organisational Psychology, University of South Africa, Pretoria, Gauteng, South Africa</aff><author-notes><fn id="fn8"><p>
+<bold>Competing interests: </bold>No competing interests were disclosed.</p></fn></author-notes><pub-date><day>25</day><month>5</month><year>2024</year></pub-date><permissions><copyright-statement>Copyright: © 2024 Coetzee M</copyright-statement><license><license-p>This is an open access peer review report distributed under the terms of the Creative Commons Attribution Licence, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions></article-meta></front><body><p>The study is of value and high relevance to the field of employability, especially gathering views from employers hiring entry level graduates. The problem statement is well-justified. The study aims are clear.</p><p> Contextualization of study: The authors focused primarily on 4IR as context. The recommendation is to critically review and elaborate briefly on the relevance of the study to 5IR technology as well. Apart from 4IR informing the change in skill demand, the authors should critically review the 5IR’s (the future) impact on skills demands</p><p> Check for grammatical errors- e.g. sentence in paragraph before literature review</p><p> Thereafter, (2) comparing the entry-level graduates’ level of competencies in digital skills against the</p><p>
+<underline>important</underline> of digital skills to…… - should read importance</p><p> Literature review- the authors should briefly justify why and how the study is grounded by the Resource-based view </p><p> Although the paper reflects relatively recent sources from the research literature (2020-2022), one would like to see more recent research literature added (2023/2024) to strengthen the contemporary relevance of the work.</p><p> Table 1 used a 2016 source of digital competence as framework- what are current digital competence frameworks for 5IR? Is the 2016 competence framework still of relevance? The authors need to justify their assumptions of digital competencies needed by integrating more recent research literature corroborating the 2016 framework and measure.</p><p> Overall, the paper is well-written and arguments flow logically</p><p> The research methodology is suitable for the research aims</p><p> The discussion is enriching and convincing.</p><p>Is the work clearly and accurately presented and does it cite the current literature?</p><p>Partly</p><p>If applicable, is the statistical analysis and its interpretation appropriate?</p><p>Yes</p><p>Are all the source data underlying the results available to ensure full reproducibility?</p><p>No source data required</p><p>Is the study design appropriate and is the work technically sound?</p><p>Yes</p><p>Are the conclusions drawn adequately supported by the results?</p><p>Yes</p><p>Are sufficient details of methods and analysis provided to allow replication by others?</p><p>Yes</p><p>Reviewer Expertise:</p><p>NA</p><p>I confirm that I have read this submission and believe that I have an appropriate level of expertise to confirm that it is of an acceptable scientific standard.</p></body></sub-article><sub-article article-type="associated-data" id="_ad93_"><front><article-meta><title-group><article-title>Associated Data</article-title></title-group></article-meta></front><body><sec id="_adc93_" xml:lang="en" sec-type="data-citations" disp-level="1"><title>Data Citations</title><ref-list><ref id="_dbx_ref_mixed-citation50"><mixed-citation><named-content content-type="citation-string">
+Tee PK:
+Digital Skills_ Questionnaire &amp; Dataset.Dataset.
+
+<italic>Figshare.</italic>
+
+2024.
+10.6084/m9.figshare.25540798.v2
+</named-content><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="doi" xlink:href="10.6084/m9.figshare.25540798.v2"/></mixed-citation></ref></ref-list></sec><sec id="_adda93_" xml:lang="en" sec-type="data-availability-statement" disp-level="1"><title>Data Availability Statement</title><p>Figshare: Digital Skills_ Questionnaire &amp; Dataset. figshare. Dataset.
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://doi.org/10.6084/m9.figshare.25540798.v2" ext-link-type="uri">https://doi.org/10.6084/m9.figshare.25540798.v2</ext-link> (
+<xref rid="ref50" ref-type="bibr">Tee, 2024</xref>).</p><p>This project contains the following underlying data:
+</p><list list-type="label"><list-item><label>•</label><p>Data set: Full Data TPK_DS_092023.xlxs.</p></list-item><list-item><label>•</label><p>Letter for Participation &amp; Questionnaire_TPK_DS.pdf.</p></list-item></list><p>Data are available under the terms of the
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://creativecommons.org/licenses/by/4.0/" ext-link-type="uri">Creative Commons Zero “No rights reserved” Attribution 4.0 International</ext-link> (CC BY 4.0)</p></sec></body></sub-article></article>

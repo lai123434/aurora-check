@@ -1,0 +1,752 @@
+
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD with MathML3 v1.4 20241031//EN" "JATS-archivearticle1-4-mathml3.dtd">
+<article id="pchj70064" xml:lang="en" article-type="research-article" dtd-version="1.4"><processing-meta base-tagset="archiving" mathml-version="3.0" table-model="xhtml" tagset-family="jats"><restricted-by>pmc</restricted-by></processing-meta><front><journal-meta><journal-id journal-id-type="nlm-ta">Psych J</journal-id><journal-id journal-id-type="iso-abbrev">Psych J</journal-id><journal-id journal-id-type="pmc-domain-id">4565</journal-id><journal-id journal-id-type="pmc-domain">psychj</journal-id><journal-id journal-id-type="nlm-id">101598595</journal-id><journal-id journal-id-type="publisher-id">PCHJ</journal-id><journal-title-group><journal-title>PsyCh Journal</journal-title></journal-title-group><issn pub-type="ppub">2046-0252</issn><issn pub-type="epub">2046-0260</issn><?publisher_abbrev blackwell?><publisher><publisher-name>Wiley</publisher-name></publisher></journal-meta><article-meta><article-id pub-id-type="pmcid">PMC12897570</article-id><article-id pub-id-type="pmcid-ver">PMC12897570.1</article-id><article-id pub-id-type="pmcaid">12897570</article-id><article-id pub-id-type="pmcaiid">12897570</article-id><article-id pub-id-type="pmid">41187985</article-id><article-id pub-id-type="doi">10.1002/pchj.70064</article-id><article-id pub-id-type="publisher-id">PCHJ70064</article-id><article-id pub-id-type="other">PsyCh-2025-142</article-id><article-version article-version-type="pmc-version">1</article-version><article-categories><subj-group subj-group-type="overline"><subject>Original Article</subject></subj-group><subj-group subj-group-type="heading"><subject>Original Article</subject></subj-group></article-categories><title-group><article-title>Empowering Leadership and Unethical Pro‐Organizational Behavior: A Social Exchange Perspective in Uncertain Environments</article-title></title-group><contrib-group><contrib id="pchj70064-cr-0001" contrib-type="author"><name name-style="western"><surname>Jia</surname><given-names initials="Y">Yang</given-names></name><xref rid="pchj70064-aff-0001" ref-type="aff">
+<sup>1</sup>
+</xref></contrib><contrib id="pchj70064-cr-0002" contrib-type="author" corresp="yes"><name name-style="western"><surname>Pan</surname><given-names initials="C">Chao</given-names></name><contrib-id contrib-id-type="orcid" authenticated="false">https://orcid.org/0000-0002-7376-0305</contrib-id><xref rid="pchj70064-aff-0002" ref-type="aff">
+<sup>2</sup>
+</xref><address><email>panokey@163.com</email></address></contrib></contrib-group><aff id="pchj70064-aff-0001">
+<label>
+<sup>1</sup>
+</label>
+<institution>The Tourism College of Changchun University</institution>
+<city>Changchun</city>
+<country country="CN">China</country>
+</aff><aff id="pchj70064-aff-0002">
+<label>
+<sup>2</sup>
+</label>
+<institution>School of Public Affairs, Zhejiang University</institution>
+<city>Hangzhou</city>
+<country country="CN">China</country>
+</aff><author-notes><corresp id="correspondenceTo">
+<label>*</label>
+<bold>Correspondence:</bold>
+<break/>
+Chao Pan (<email>panokey@163.com</email>)<break/>
+</corresp></author-notes><pub-date pub-type="epub"><day>04</day><month>11</month><year>2025</year></pub-date><pub-date pub-type="collection"><month>2</month><year>2026</year></pub-date><volume>15</volume><issue seq="41">1</issue><issue-id pub-id-type="pmc-issue-id">504596</issue-id><issue-id pub-id-type="doi">10.1002/pchj.v15.1</issue-id><elocation-id>e70064</elocation-id><history>
+<date date-type="rev-recd"><day>21</day><month>7</month><year>2025</year></date>
+<date date-type="received"><day>22</day><month>5</month><year>2025</year></date>
+<date date-type="accepted"><day>04</day><month>9</month><year>2025</year></date>
+</history><pub-history><event event-type="pmc-release"><date><day>04</day><month>11</month><year>2025</year></date></event><event event-type="pmc-live"><date><day>13</day><month>02</month><year>2026</year></date></event><event event-type="pmc-last-change"><date iso-8601-date="2026-02-13 11:25:16.503"><day>13</day><month>02</month><year>2026</year></date></event></pub-history><permissions><copyright-statement content-type="article-copyright">© 2025 The Author(s). <italic toggle="yes">PsyCh Journal</italic> published by Institute of Psychology, Chinese Academy of Sciences and John Wiley &amp; Sons Australia, Ltd.</copyright-statement><license><ali:license_ref xmlns:ali="http://www.niso.org/schemas/ali/1.0/" specific-use="textmining" content-type="ccbylicense">https://creativecommons.org/licenses/by/4.0/</ali:license_ref><license-p>This is an open access article under the terms of the <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by/4.0/">http://creativecommons.org/licenses/by/4.0/</ext-link> License, which permits use, distribution and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions><self-uri xmlns:xlink="http://www.w3.org/1999/xlink" content-type="pmc-pdf" xlink:href="PCHJ-15-e70064.pdf"><?pdf-name PCHJ-15-e70064.pdf?><?pdf-size 569306?><?pdf-md5 5471cddaf2a426234ac9b765e4b251d8?><?pdf-image-server-status NEVER_LOAD?><?pdf-cloudpmc-urn urn:app:c676/12897570/5471cddaf2a4/PCHJ-15-e70064.pdf?></self-uri><self-uri xmlns:xlink="http://www.w3.org/1999/xlink" content-type="pdf" xlink:href="file:PCHJ-15-e70064.pdf"/><abstract><title>ABSTRACT</title><p>Previous literature has overlooked the impact of environmental factors on the effectiveness of empowering leadership, and this study introduced the important boundary factor of environmental uncertainty as a moderating role, and constructed a moderated mediation model to investigate how empowering leadership influences employees' unethical pro‐organizational behavior from a social exchange perspective. We collected data at three different time points and administered questionnaires to 431 employees. Hypotheses were tested in PROCESS using the bootstrapping method. The results showed that: (1) There was a positive relationship between empowering leadership and unethical pro‐organizational behavior, and leader‐member exchange played a mediating role in this relationship. (2) Environmental uncertainty played a moderating role between empowering leadership and leader‐member exchange. With the increase of environmental uncertainty, the positive relationship between the two is weakened. This study contributes to leadership literature by integrating environmental uncertainty into the social exchange framework, highlighting its impact on leader‐member exchange and unethical pro‐organizational behavior, thereby offering fresh insights into leadership effectiveness in dynamic environments.</p></abstract><kwd-group kwd-group-type="author-generated"><kwd id="pchj70064-kwd-0001">empowering leadership</kwd><kwd id="pchj70064-kwd-0002">environmental uncertainty</kwd><kwd id="pchj70064-kwd-0003">leader‐member exchange</kwd><kwd id="pchj70064-kwd-0004">social exchange theory</kwd><kwd id="pchj70064-kwd-0005">unethical pro‐organizational behavior</kwd></kwd-group><counts><fig-count count="3"/><table-count count="3"/><page-count count="10"/><word-count count="7600"/></counts><custom-meta-group><custom-meta><meta-name>pmc-status-qastatus</meta-name><meta-value>0</meta-value></custom-meta><custom-meta><meta-name>pmc-status-live</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-status-embargo</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-status-released</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-open-access</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-olf</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-manuscript</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-legally-suppressed</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-has-pdf</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-has-supplement</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-pdf-only</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-suppress-copyright</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-is-real-version</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-is-scanned-article</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-preprint</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-in-epmc</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-license-ref</meta-name><meta-value>CC BY</meta-value></custom-meta><custom-meta><meta-name>source-schema-version-number</meta-name><meta-value>2.0</meta-value></custom-meta><custom-meta><meta-name>cover-date</meta-name><meta-value>February 2026</meta-value></custom-meta><custom-meta><meta-name>details-of-publishers-convertor</meta-name><meta-value>Converter:WILEY_ML3GV2_TO_JATSPMC version:6.6.8 mode:remove_FC converted:12.02.2026</meta-value></custom-meta></custom-meta-group></article-meta><notes><p content-type="self-citation">
+<mixed-citation publication-type="journal" id="pchj70064-cit-1001">
+<string-name name-style="western">
+<surname>Jia</surname>, <given-names>Y.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>C.</given-names>
+<surname>Pan</surname>
+</string-name>. <year>2026</year>. “<article-title>Empowering Leadership and Unethical Pro‐Organizational Behavior: A Social Exchange Perspective in Uncertain Environments</article-title>.” <source>PsyCh Journal</source>
+<volume>15</volume>, no. <issue>1</issue>: <elocation-id>e70064</elocation-id>. <pub-id pub-id-type="doi">10.1002/pchj.70064</pub-id>.<pub-id pub-id-type="pmid">41187985</pub-id>
+<pub-id pub-id-type="pmcid">PMC12897570</pub-id></mixed-citation>
+</p></notes></front><body id="pchj70064-body-0001"><sec id="pchj70064-sec-0001"><label>1</label><title>Introduction</title><p>As the economist Friedman explained, the instability and unpredictability of globalization and technological change make even the most capable leaders obsolete in this dynamic environment (Freidman <xref rid="pchj70064-bib-0023" ref-type="bibr">2005</xref>). For a long period of time in the past, the external environment of organizations was relatively stable, and the internal mobility of organization members was also low, so less research was focused on and discussed on the effectiveness of leadership. Since the beginning of the 21st century, with the help of information technology, global competition has intensified, and the factors affecting organizational development have become increasingly complex and uncontrollable. The uncertain environment has posed unprecedented challenges to the effectiveness of leadership (Cicero et al. <xref rid="pchj70064-bib-0015" ref-type="bibr">2010</xref>; Rast III <xref rid="pchj70064-bib-0055" ref-type="bibr">2015</xref>). Therefore, some researchers believe that it is necessary to include environmental factors in the study of the effectiveness of leadership models (Cheong et al. <xref rid="pchj70064-bib-0014" ref-type="bibr">2019</xref>).</p><p>As the competitive environment in business becomes increasingly intense, many organizations are forced to transform their internal management models to adapt to this complex and highly uncertain environment. For example, to maximize efficiency, organizations have been flattening their organizational structures by expanding employees' responsibilities and scope of work (Biemann et al. <xref rid="pchj70064-bib-0005" ref-type="bibr">2015</xref>). In this process, empowering leadership (EL) plays a key role because of its characteristics in promoting employee self‐management and reducing unnecessary organizational norms for the employee (Lee et al. <xref rid="pchj70064-bib-0035" ref-type="bibr">2018</xref>). Despite the obvious benefits that EL brings to organizations in an uncertain business environment, it may not be the same for employees. An uncertain environment represents a lack of control and unknown risks, and employees may struggle to bear the risks of making mistakes when authorized to make some decision‐making work in such an environment (Twyford and Le Fevre <xref rid="pchj70064-bib-0060" ref-type="bibr">2019</xref>). Therefore, environmental uncertainty (EU) may be an important challenge to the effectiveness of EL, and the aim of this study is to verify this possibility.</p><p>This study takes a social exchange perspective to explore the impact of EL on employees' work outcomes. According to social exchange theory, there is a reciprocity principle in social interactions; that is, individuals adjust their responses to others according to the material or non‐material levels of others' contributions to individuals (Cropanzano and Mitchell <xref rid="pchj70064-bib-0016" ref-type="bibr">2005</xref>). However, research on social exchange in the field of organizational management has ignored environmental factors. This study responded to the call made by Cheong et al. (<xref rid="pchj70064-bib-0013" ref-type="bibr">2016</xref>) to consider boundary conditions that may alter the relationship between authorized leadership and work‐related outcomes, thus integrating EU, an environmental factor, into the framework of social exchange theory and combining it with the EL literature, thereby opening up a new agenda for future research on the effectiveness of EL.</p><sec id="pchj70064-sec-0002"><label>1.1</label><title>Empowering Leadership and Unethical Pro‐Organizational Behavior</title><p>EL is defined as allocating autonomy and responsibilities to individual employees or teams from the leaders, resulting in employees' promoted internal motivation and external performance (Cheong et al. <xref rid="pchj70064-bib-0014" ref-type="bibr">2019</xref>). As defined, EL is bound to have a series of psychological and behavioral effects on employees, and numerous studies have confirmed this view. For instance, EL could have a positive impact on employees' job satisfaction (Amundsen and Martinsen <xref rid="pchj70064-bib-0004" ref-type="bibr">2015</xref>; Kim et al. <xref rid="pchj70064-bib-0031" ref-type="bibr">2018</xref>), job performance (Ahmed et al. <xref rid="pchj70064-bib-0002" ref-type="bibr">2022</xref>; Wang et al. <xref rid="pchj70064-bib-0066" ref-type="bibr">2022</xref>), and innovative behavior (Guo et al. <xref rid="pchj70064-bib-0025" ref-type="bibr">2023</xref>; Rao Jada et al. <xref rid="pchj70064-bib-0054" ref-type="bibr">2019</xref>). However, recent research has also found that the effectiveness of EL is not universally supported (Cheong et al. <xref rid="pchj70064-bib-0014" ref-type="bibr">2019</xref>; Hassan et al. <xref rid="pchj70064-bib-0027" ref-type="bibr">2013</xref>). Some researchers believe that EL may lead to potential negative effects, which will have adverse effects on employees and organizations (Cheng et al. <xref rid="pchj70064-bib-0012" ref-type="bibr">2024</xref>; Lee et al. <xref rid="pchj70064-bib-0034" ref-type="bibr">2017</xref>). For example, Cheong et al. (<xref rid="pchj70064-bib-0013" ref-type="bibr">2016</xref>) found that EL objectively increases the workload of subordinates, which leads to work stress and a decrease in their work performance. Other researchers also found that EL would intensify employees' perception of leadership expectations, which would require them to work hard to prove their worth, leading to controlled work emotions and further reducing employee performance (Hao et al. <xref rid="pchj70064-bib-0026" ref-type="bibr">2018</xref>). Therefore, EL is a double‐edged sword, but the discussion of its negative impacts is still insufficient compared to its positive effects.</p><p>Unethical pro‐organizational behavior (UPOB) refers to actions that are intended to benefit the organization potentially while violating core social values (Umphress and Bingham <xref rid="pchj70064-bib-0061" ref-type="bibr">2011</xref>), which is an interesting topic, because it represents a dilemma faced by employees, where they must choose between benefiting the organization and adhering to universal ethical standards. There are many explanations for UPOB, and two of the most prominent perspectives are the social identity theory and the social exchange theory (Mishra et al. <xref rid="pchj70064-bib-0047" ref-type="bibr">2021</xref>). The former view is that employees who have a high level of organizational identification will prioritize organizational interests over the interests of victims of unethical behavior because a strong sense of organizational identification will prompt them to ignore ethics and view UPOB as responsible behavior (Effelsberg et al. <xref rid="pchj70064-bib-0020" ref-type="bibr">2014</xref>; Umphress and Bingham <xref rid="pchj70064-bib-0061" ref-type="bibr">2011</xref>). The latter view is based on the principle of reciprocity in interpersonal relationships, which suggests that employees try to use UPOB as a means of repaying the favor and benefits they have received from their superiors and the organization in order to establish long‐term social exchange relationships characterized by mutual trust and respect (Wang et al. <xref rid="pchj70064-bib-0065" ref-type="bibr">2019</xref>). Therefore, some scholars believe that individuals who have positive social exchange relationships with their employers are more likely to engage in UPOB (Umphress and Bingham <xref rid="pchj70064-bib-0061" ref-type="bibr">2011</xref>).</p><p>Currently, UPOB has been proven to be closely related to leadership (Manelkar and Mishra <xref rid="pchj70064-bib-0043" ref-type="bibr">2024</xref>; Mishra et al. <xref rid="pchj70064-bib-0047" ref-type="bibr">2021</xref>). As for the relationship between EL and UPOB, we believe that the social exchange perspective is more appropriate among the two prominent explanatory mechanisms of UPOB. Because the core of social identity theory focuses on the belonging relationship between individuals and groups as well as the consensus at the group level, while the core of social exchange theory is that individuals maintain relationships through “giving and receiving” exchanges, focusing on the dynamic balance in specific interactive relationships, which is highly consistent with the core attributes of leader‐member exchange (LMX). In other words, the social exchange theory can precisely explain the mediation mechanism of LMX, while the social identity theory cannot. According to the social exchange perspective, the power and opportunity granted to employees by EL to participate in decision‐making are viewed by employees as a motivational factor, representing respect and trust from the superior (O'Donoghue and Van Der Werff <xref rid="pchj70064-bib-0049" ref-type="bibr">2022</xref>). When leaders express confidence in their employees' abilities and grant them partial autonomy, employees feel obliged to choose the best attitudes and behaviors to demonstrate their abilities in order to reciprocate the trust that the leaders have shown in their abilities (Rai and Kim <xref rid="pchj70064-bib-0053" ref-type="bibr">2021</xref>). However, this “repay” for EL may not necessarily lead to good behavior outcomes. Because individuals with higher task autonomy will have more opportunities to participate in task‐related decision‐making, thus requiring additional, differently categorized information processing, which will increase their cognitive interference and role stress (Cheong et al. <xref rid="pchj70064-bib-0014" ref-type="bibr">2019</xref>; Langfred and Moye <xref rid="pchj70064-bib-0033" ref-type="bibr">2004</xref>), causing incorrect decisions to be made during the work process, such as ignoring unethical attributes and only considering pro‐organizational attributes of UPOB. Therefore, we suggest that:<statement content-type="Hypothesis" id="pchj70064-mthst-0001"><label>Hypothesis 1</label><p>
+<italic toggle="yes">There is a positive relationship between EL and UPOB</italic>.</p></statement>
+</p></sec><sec id="pchj70064-sec-0003"><label>1.2</label><title>The Mediating Role of Leader‐Member Exchange</title><p>LMX refers to the mutual relationship that is established between the leaders and employees during the work process and emphasizes the quality of relationships between them (Liden et al. <xref rid="pchj70064-bib-0041" ref-type="bibr">1993</xref>; Martin et al. <xref rid="pchj70064-bib-0045" ref-type="bibr">2018</xref>). The establishment of this relationship requires the leader to provide subordinates with certain benefits, such as fair treatment, support, or autonomy (Liang et al. <xref rid="pchj70064-bib-0040" ref-type="bibr">2022</xref>; Matta et al. <xref rid="pchj70064-bib-0046" ref-type="bibr">2024</xref>; Volmer et al. <xref rid="pchj70064-bib-0064" ref-type="bibr">2012</xref>). Under this premise, EL seems to be the best choice for improving leader‐employee relations, as evidenced by previous research (Amundsen and Martinsen <xref rid="pchj70064-bib-0003" ref-type="bibr">2014</xref>; Lee et al. <xref rid="pchj70064-bib-0035" ref-type="bibr">2018</xref>). Specifically, from a social exchange perspective, when leaders emphasize the importance of the employees' work and allow them to participate in decision‐making, it expresses trust in the employees, which can be seen as a benefit that leaders give to employees (Cheong et al. <xref rid="pchj70064-bib-0013" ref-type="bibr">2016</xref>). It may enhance employees' own perceptions of their impact on the organization and encourage them to pay attention to their roles in the organization. Then, LMX is promoted when employees attempt to reciprocate leaders' trust and establish further positive exchanges with leaders and organizations (Kwak and Jackson <xref rid="pchj70064-bib-0032" ref-type="bibr">2015</xref>).</p><p>Although previous studies have had some discussions about the relationship between EL and LMX, LMX and UPOB respectively (Amundsen and Martinsen <xref rid="pchj70064-bib-0003" ref-type="bibr">2014</xref>; Li et al. <xref rid="pchj70064-bib-0038" ref-type="bibr">2024</xref>), this study will for the first time validate the mediating role of LMX between EL and UPOB from a social exchange perspective. Specifically, employees may recognize EL as the signal that the leader is committed to a long‐term relationship, which in turn creates more socio‐emotional connections, like LMX (Cheong et al. <xref rid="pchj70064-bib-0013" ref-type="bibr">2016</xref>). Employees who perceive high‐quality LMX tend to have higher levels of belonging, responsibility, and organizational commitment (Chen et al. <xref rid="pchj70064-bib-0008" ref-type="bibr">2008</xref>; Eisenberger et al. <xref rid="pchj70064-bib-0021" ref-type="bibr">2010</xref>), and are therefore more willing to put in extra effort and demonstrate higher levels of job performance and extra‐role behavior (Martin et al. <xref rid="pchj70064-bib-0044" ref-type="bibr">2016</xref>). Meanwhile, they will feel that they are more likely to receive trust and support from their leaders or the organization, may enjoy additional privileges and protection, and thus have a stronger sense of psychological security (Hu et al. <xref rid="pchj70064-bib-0030" ref-type="bibr">2018</xref>; Venkatesh et al. <xref rid="pchj70064-bib-0062" ref-type="bibr">2023</xref>).</p><p>In return for the leaders, they are also willing to take risks and do their best to assist the leadership in their work, even going beyond their assigned tasks. However, UPOB is very likely to occur during the LMX process. The possible reasons might be: First, it is very easy to trigger the moral licensing effect in this process (employees may feel entitled to engage in unethical behavior, such as UPOB, after performing ethical behaviors such as working overtime or making sacrifices for the team) (Mishra et al. <xref rid="pchj70064-bib-0047" ref-type="bibr">2021</xref>). Second, emotional connection leads to the blurring of moral boundaries. Employees will extend their emotional obligations to the leader into special responsibilities to the organization and tacitly assume that actions that do not disappoint the leader are in line with the organization's interests, thereby weakening their independent judgment on the morality of behavior (Bryant and Merritt <xref rid="pchj70064-bib-0006" ref-type="bibr">2021</xref>). Finally, trust spillover leads to the expectation of risk sharing (Chen et al. <xref rid="pchj70064-bib-0009" ref-type="bibr">2015</xref>), that is, high‐quality LMX makes employees have the risk perception that “the leader will take the safety net for me.” Conversely, in low‐quality LMX, employees have difficulty perceiving their leaders' recognition and support. As a result, they are unwilling to take risks for their leaders or do extra work to repay their leaders (Matta et al. <xref rid="pchj70064-bib-0046" ref-type="bibr">2024</xref>), so they may have a lower UPOB. Therefore, we propose that:<statement content-type="Hypothesis" id="pchj70064-mthst-0002"><label>Hypothesis 2</label><p>
+<italic toggle="yes">LMX plays a mediating role between EL and UPOB. Specifically, EL promotes an emotional connection with its employees through trust and empowerment, namely LMX. This high‐quality connection may drive employees to implement UPOB through mechanisms such as moral permission, emotional obligation, and trust spillover</italic>.</p></statement>
+</p></sec><sec id="pchj70064-sec-0004"><label>1.3</label><title>The Moderating Role of Environmental Uncertainty</title><p>EU refers to the degree to which individuals perceive it difficult to accurately predict the future state of the external environment (López‐Gamero et al. <xref rid="pchj70064-bib-0042" ref-type="bibr">2011</xref>). As an essential characteristic of the organizational environment, EU has significant effects on the psychological behavior and motives of leaders and employees (Shirokova et al. <xref rid="pchj70064-bib-0058" ref-type="bibr">2016</xref>). Meanwhile, EU has posed new chances and challenges to the effectiveness of EL. From a leadership and organizational perspective, the benefits of EL in dynamic environments can be more pronounced, as in fast‐changing and uncertain business environments, organizations need to be flexible in responding to market changes, and EL allows employees to have more autonomy, enabling them to quickly adjust their work methods, innovate and solve problems, thereby helping organizations better respond to external challenges (Carmeli et al. <xref rid="pchj70064-bib-0007" ref-type="bibr">2011</xref>; Hmieleski and Ensley <xref rid="pchj70064-bib-0029" ref-type="bibr">2007</xref>; Sharma and Kirkman <xref rid="pchj70064-bib-0057" ref-type="bibr">2015</xref>).</p><p>However, from the employee's perspective, the situation reverses. Because in uncertain environments, individuals perceive higher levels of risk, and to avoid this risk, they reduce their proactive risk‐taking behavior and seek more additional information and feedback (Foster‐Fishman and Keys <xref rid="pchj70064-bib-0022" ref-type="bibr">1997</xref>; Viscusi et al. <xref rid="pchj70064-bib-0063" ref-type="bibr">1991</xref>). As for employees, they will feel more insecure when they perceive an uncertain environment (Glambek et al. <xref rid="pchj70064-bib-0024" ref-type="bibr">2023</xref>; Lian et al. <xref rid="pchj70064-bib-0039" ref-type="bibr">2022</xref>), and this insecurity will increase their stress and anxiety (Cheng and McCarthy <xref rid="pchj70064-bib-0011" ref-type="bibr">2018</xref>). In this situation, they may prefer clear guidance rather than more autonomy granted by EL. For example, after conducting a survey of the reform measures of a large service organization, Foster‐Fishman and Keys (<xref rid="pchj70064-bib-0022" ref-type="bibr">1997</xref>) found that measures that conflicted with the organization's culture brought about ambiguity and dynamism. Despite the good intentions of the organizational leadership and the opportunities for employees to participate in decision‐making, most employees rejected these new opportunities and did not trust the intentions of the leaders. Therefore, this study suggests that when the environment is highly uncertain, EL may actually exacerbate employees' anxiety in such situations because employees lack the necessary resources and information to make effective decisions, leading to delegation behaviors that fail to meet their actual needs. In other words, although EL has a natural advantage in increasing LMX, in high EU situations, the empowering behavior of EL may backfire, even weakening employees' trust in the leader and affecting the quality of LMX. Based on this, we propose that:<statement content-type="Hypothesis" id="pchj70064-mthst-0003"><label>Hypothesis 3</label><p>
+<italic toggle="yes">EU plays a negative moderating role between EL and LMX. With the increase of EU, the positive relationship between EL and LMX is weakened</italic>.</p></statement>
+</p><p>Overall, the model in this study showed in Figure <xref rid="pchj70064-fig-0001" ref-type="fig">1</xref>.</p><fig position="float" fig-type="FIGURE" id="pchj70064-fig-0001" orientation="portrait"><label>FIGURE 1</label><caption><p>Hypothesis model in this study.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="anchor" id="jats-graphic-1" orientation="portrait" xlink:href="PCHJ-15-e70064-g001.jpg"><?image-name PCHJ-15-e70064-g001.jpg?><?image-size 67760?><?image-md5 2c3eb45a8f0c8199c312cc0790cb566f?><?image-image-server-status LOAD_COMPLETED?><?image-original-height 454?><?image-original-width 1064?><?image-scaled-height 303?><?image-scaled-width 709?><?image-cloudpmc-urn urn:cdn:blobs/c676/12897570/2c3eb45a8f0c/PCHJ-15-e70064-g001.jpg?><?thumb-name PCHJ-15-e70064-g001.gif?><?thumb-size 10291?><?thumb-md5 b5f9b4377228b2e9dc569943d4600dc9?><?thumb-image-server-status NEVER_LOAD?><?thumb-scaled-height 80?><?thumb-scaled-width 187?><?thumb-cloudpmc-urn urn:cdn:blobs/c676/12897570/b5f9b4377228/PCHJ-15-e70064-g001.gif?></graphic></fig></sec></sec><sec sec-type="methods" id="pchj70064-sec-0005"><label>2</label><title>Method</title><sec id="pchj70064-sec-0006"><label>2.1</label><title>Participants and Procedure</title><p>A questionnaire survey was adopted in this study, and the samples were collected from dozens of enterprises in Henan Province, China. Henan Province is the province with the largest population in China, which is why labor‐intensive industries such as manufacturing are very developed, including new energy vehicles and smartphones. In addition, researchers have previously investigated this site (Li et al. <xref rid="pchj70064-bib-0037" ref-type="bibr">2018</xref>). In this context, the participants in this study were all from the manufacturing industry of Henan Province. The data collection was completed with the consent of the person in charge of the enterprise and the human resources department. To minimize common method bias, the study was completed in three time points with a one‐month interval between each time point (Podsakoff et al. <xref rid="pchj70064-bib-0052" ref-type="bibr">2012</xref>). At time 1 (MAR, 2024), we directly collected offline data on EL and EU from 715 employees (the valid data was 644). At time 2 (APR, 2024), the data on LMX was collected (the valid data was 502). At time 3 (MAY, 2024), the data on UPOB and demographic information were collected (the valid data was 431). According to the recommendations of previous researchers (DeSimone et al. <xref rid="pchj70064-bib-0019" ref-type="bibr">2015</xref>), the criteria we used to screen effective questionnaires were: incomplete response (i.e., some options have not been filled in), lengthy strings of invariant responses (i.e., the same option being selected repeatedly), and more importantly, failed the attention test (i.e., an additional item was set up, called “Please select ‘Most Disagree’ option for this question.” And if this option is not selected, we assume that this participant was not paying attention while taking this survey). Finally, 431 valid data were collected (60.2%). There were 282 males (65.4%) and 149 females (34.6%). The mean age was 37.78 years (SD = 9.77). All participants agreed to participate in the study and received a ¥10 payment at the end.</p></sec><sec id="pchj70064-sec-0007"><label>2.2</label><title>Measures</title><p>To ensure the quality of the scales, only those scales were chosen that had been validated in important international journals, and all scales were subjected to a two‐way translation process to ensure accuracy by bilingual experts (Ozolins et al. <xref rid="pchj70064-bib-0050" ref-type="bibr">2020</xref>). More importantly, these scales have corresponding Chinese versions, which have been well validated in other research (Cheng <xref rid="pchj70064-bib-0010" ref-type="bibr">2017</xref>; Li et al. <xref rid="pchj70064-bib-0036" ref-type="bibr">2017</xref>; Su et al. <xref rid="pchj70064-bib-0059" ref-type="bibr">2010</xref>; Zhang <xref rid="pchj70064-bib-0067" ref-type="bibr">2020</xref>).</p><p>
+<italic toggle="yes">Empowering Leadership Scale</italic>: We used the EL scale with 12 items (Ahearne et al. <xref rid="pchj70064-bib-0001" ref-type="bibr">2005</xref>), which is rated on a five‐point Likert scale. An example item is “My manager makes many decisions together with me.” In this study, the Cronbach's α was 0.94.</p><p>
+<italic toggle="yes">Environmental Uncertainty Scale</italic>: We used the EU scale with 3 items (De Hoogh et al. <xref rid="pchj70064-bib-0017" ref-type="bibr">2005</xref>), which is rated on a seven‐point Likert scale. An example item is “To which degree is your work environment dynamic.” In this study, the Cronbach's α was 0.93.</p><p>
+<italic toggle="yes">Leader‐Member Exchange Scale</italic>: We used the LMX scale with 7 items (Scandura and Graen <xref rid="pchj70064-bib-0056" ref-type="bibr">1984</xref>), which is rated on a four‐point Likert scale. An example item is “How certain are you that your leader is satisfied with your performance.” In this study, the Cronbach's α was 0.93.</p><p>
+<italic toggle="yes">Unethical Pro‐organizational Behavior Scale</italic>: We used the UPOB scale with 6 items (Scandura and Graen <xref rid="pchj70064-bib-0056" ref-type="bibr">1984</xref>), which is rated on a five‐point Likert scale. An example item is “If it helps the company, I will distort the facts to maintain the image of the organization.” In this study, the Cronbach's α was 0.82.</p><p>
+<italic toggle="yes">Control Variables</italic>: Based on the previous studies (Dennerlein and Kirkman <xref rid="pchj70064-bib-0018" ref-type="bibr">2022</xref>), we asked the employees to provide the following demographic information: gender, age, education, position, and working duration with their superior as control variables, as shown in Appendix <xref rid="pchj70064-app-0001" ref-type="app">A</xref> (Table <xref rid="pchj70064-tbl-0003" ref-type="table">A1</xref>).</p></sec><sec id="pchj70064-sec-0008"><label>2.3</label><title>Data Analysis</title><p>We analyzed the data using SPSS 26.0 and Mplus 7.0. First, the confirmatory factor analysis was conducted by Mplus. Second, descriptive statistics and a correlation matrix were performed. Finally, the hypothesized moderated mediation model was tested using Model 7 of the Process 3.3 procedure in SPSS (Hayes et al. <xref rid="pchj70064-bib-0028" ref-type="bibr">2017</xref>).</p></sec></sec><sec sec-type="results" id="pchj70064-sec-0009"><label>3</label><title>Results</title><sec id="pchj70064-sec-0010"><label>3.1</label><title>Common Method Bias Test</title><p>This study specially adopted multiple time points for data collection, and used common latent factor (CLF) analysis to test common method bias. According to the suggestion of Podsakoff et al. (<xref rid="pchj70064-bib-0052" ref-type="bibr">2012</xref>), after we added a common latent factor, although <italic toggle="yes">χ</italic>
+<sup>
+<italic toggle="yes">2</italic>
+</sup> and df were slightly improved, the variation of fitting indicators such as CFI, TLI, SRMR, and RMSEA ranged only from 0.001 to 0.1 (see Table <xref rid="pchj70064-tbl-0001" ref-type="table">1</xref>). Therefore, we believe that although the common method bias problem is smaller in this study and is still foreseen to have a minor impact on the research results, we believe that this impact is acceptable.</p><table-wrap position="float" id="pchj70064-tbl-0001" content-type="TABLE" orientation="portrait"><label>TABLE 1</label><caption><p>Fit indices of different models.</p></caption><table frame="hsides" rules="groups"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><thead valign="bottom"><tr style="border-bottom:solid 1px #000000"><th align="left" valign="bottom" rowspan="1" colspan="1">Models</th><th align="center" valign="bottom" rowspan="1" colspan="1">Factor</th><th align="center" valign="bottom" rowspan="1" colspan="1">
+<italic toggle="yes">χ</italic>
+<sup>2</sup>
+</th><th align="center" valign="bottom" rowspan="1" colspan="1">df</th><th align="center" valign="bottom" rowspan="1" colspan="1">CFI</th><th align="center" valign="bottom" rowspan="1" colspan="1">TLI</th><th align="center" valign="bottom" rowspan="1" colspan="1">SRMR</th><th align="center" valign="bottom" rowspan="1" colspan="1">RMSEA</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top" rowspan="1" colspan="1">M1</td><td align="center" valign="top" rowspan="1" colspan="1">EL, EU, LMX, UPOB, CLF</td><td align="center" valign="top" rowspan="1" colspan="1">1301</td><td align="center" valign="top" rowspan="1" colspan="1">343</td><td align="center" valign="top" rowspan="1" colspan="1">0.91</td><td align="center" valign="top" rowspan="1" colspan="1">0.91</td><td align="center" valign="top" rowspan="1" colspan="1">0.05</td><td align="center" valign="top" rowspan="1" colspan="1">0.06</td></tr><tr><td align="left" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">M2</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">EL, EU, LMX, UPOB</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">1382</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">344</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.90</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.91</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.05</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.07</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">M3</td><td align="center" valign="top" rowspan="1" colspan="1">EL + EU, LMX, UPOB</td><td align="center" valign="top" rowspan="1" colspan="1">2421</td><td align="center" valign="top" rowspan="1" colspan="1">347</td><td align="center" valign="top" rowspan="1" colspan="1">0.78</td><td align="center" valign="top" rowspan="1" colspan="1">0.76</td><td align="center" valign="top" rowspan="1" colspan="1">0.08</td><td align="center" valign="top" rowspan="1" colspan="1">0.12</td></tr><tr><td align="left" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">M4</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">EL + EU + LMX, UPOB</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">3148</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">349</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.70</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.67</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.09</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.14</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">M5</td><td align="center" valign="top" rowspan="1" colspan="1">EL + EU + LMX + UPOB</td><td align="center" valign="top" rowspan="1" colspan="1">3815</td><td align="center" valign="top" rowspan="1" colspan="1">350</td><td align="center" valign="top" rowspan="1" colspan="1">0.63</td><td align="center" valign="top" rowspan="1" colspan="1">0.60</td><td align="center" valign="top" rowspan="1" colspan="1">0.11</td><td align="center" valign="top" rowspan="1" colspan="1">0.15</td></tr></tbody></table><table-wrap-foot id="pchj70064-ntgp-0001"><fn id="pchj70064-note-0001"><p>
+<italic toggle="yes">Note:</italic> EL = Empowering leadership, EU = Environmental Uncertainty, LMX = Leader‐Member Exchange, UPOB = Unethical Pro‐organizational Behavior. M1 is a model with four factors that are mutually independent and have a common latent factor added; M2 is a model with four independent factors; M3 is a model in which EL and EU are combined, with other factors being independent; M4 is a model in which EL, EU, and LMX are combined, with UPOB being independent; M5 is a model in which all four factors are combined together.</p></fn></table-wrap-foot></table-wrap></sec><sec id="pchj70064-sec-0011"><label>3.2</label><title>Reliability and Validity Test</title><p>First, internal consistency reliability (Cronbach's α) was assessed for each scale. The results indicated that Cronbach's α for EL, EU, LMX, and UPOB were 0.94, 0.93, 0.93, and 0.82 respectively, exceeding 0.8 and demonstrating excellent reliability. Then, we used Mplus to conduct confirmatory factor analysis. We first sorted out the original survey data, including coding and standardization of all variables, and then we chose the maximum likelihood estimation (ML) method in Mplus. By comparing the fit indices of the different models, it was found that the fit indices of the M2 (<italic toggle="yes">χ</italic>
+<sup>
+<italic toggle="yes">2</italic>
+</sup> = 1382, df = 244, CFI = 0.90, TLI = 0.91, SRMR = 0.05, RMSEA = 0.07) were better than those of M3–5, indicating better discriminant validity of the variables. The findings are summarized in Table <xref rid="pchj70064-tbl-0001" ref-type="table">1</xref>.</p></sec><sec id="pchj70064-sec-0012"><label>3.3</label><title>Correlation Analysis</title><p>The correlation analysis (see Figure <xref rid="pchj70064-fig-0002" ref-type="fig">2</xref>) found that EL was significantly positively correlated with LMX and UPOB. Furthermore, LMX was significantly positively correlated with UPOB. The findings are summarized in Figure <xref rid="pchj70064-fig-0002" ref-type="fig">2</xref>.</p><fig position="float" fig-type="FIGURE" id="pchj70064-fig-0002" orientation="portrait"><label>FIGURE 2</label><caption><p>Correlation matrix and scatter plot. EL = Empowering leadership, EU = Environmental Uncertainty, LMX = Leader‐Member Exchange, UPOB = Unethical Pro‐organizational Behavior. ***<italic toggle="yes">p</italic> &lt; 0.001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="anchor" id="jats-graphic-3" orientation="portrait" xlink:href="PCHJ-15-e70064-g002.jpg"><?image-name PCHJ-15-e70064-g002.jpg?><?image-size 93994?><?image-md5 63c8a893d8c0738742b48842007a96b6?><?image-image-server-status LOAD_COMPLETED?><?image-original-height 1061?><?image-original-width 1064?><?image-scaled-height 707?><?image-scaled-width 709?><?image-cloudpmc-urn urn:cdn:blobs/c676/12897570/63c8a893d8c0/PCHJ-15-e70064-g002.jpg?><?thumb-name PCHJ-15-e70064-g002.gif?><?thumb-size 11741?><?thumb-md5 6c5bb4e988d6c8de126357f7f029e23f?><?thumb-image-server-status NEVER_LOAD?><?thumb-scaled-height 100?><?thumb-scaled-width 100?><?thumb-cloudpmc-urn urn:cdn:blobs/c676/12897570/6c5bb4e988d6/PCHJ-15-e70064-g002.gif?></graphic></fig></sec><sec id="pchj70064-sec-0013"><label>3.4</label><title>Hypothesis Test</title><p>We first built a moderated mediation model using Model 7 in the Process procedure of SPSS. After controlling the variables like gender, age, education, position, and working duration with their superior, the results showed that EL and UPOB had a significant positive relationship (β = 0.17, SE = 0.06, <italic toggle="yes">t</italic> = 2.66, <italic toggle="yes">p</italic> &lt; 0.01), supporting <xref rid="pchj70064-mthst-0001" ref-type="statement">H1</xref>. The interaction item of EL and EU had a significant relationship with LMX (β = −0.11, SE = 0.03, <italic toggle="yes">t</italic> = −3.50, <italic toggle="yes">p</italic> &lt; 0.01), supporting <xref rid="pchj70064-mthst-0003" ref-type="statement">H3</xref>. Additionally, based on bootstrap analyses with 5000 repetitions, it was found that LMX played a mediating role between EL and UPOB (β = 0.22, SE = 0.06, 95%CI = [0.11, 0.33], <italic toggle="yes">p</italic> &lt; 0.001), verifying <xref rid="pchj70064-mthst-0002" ref-type="statement">H2</xref>. It is worth noting that the control variables seem to have no significant impact on LMX and UPOB. The possible reasons are that the core variables have a stronger influence on the explained variables. In addition, the samples are all from the manufacturing industry and have relatively high homogeneity. The detailed results are presented in Figure <xref rid="pchj70064-fig-0001" ref-type="fig">1</xref> and Table <xref rid="pchj70064-tbl-0002" ref-type="table">2</xref>.</p><table-wrap position="float" id="pchj70064-tbl-0002" content-type="TABLE" orientation="portrait"><label>TABLE 2</label><caption><p>Results of regression analysis.</p></caption><table frame="hsides" rules="groups"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><thead valign="bottom"><tr style="border-bottom:solid 1px #000000"><th align="left" rowspan="2" valign="bottom" colspan="1">Variables</th><th align="center" colspan="3" valign="bottom" rowspan="1">LMX</th><th align="center" colspan="3" valign="bottom" rowspan="1">UPOB</th></tr><tr style="border-bottom:solid 1px #000000"><th align="center" valign="bottom" rowspan="1" colspan="1">β</th><th align="center" valign="bottom" rowspan="1" colspan="1">SE</th><th align="center" valign="bottom" rowspan="1" colspan="1">
+<italic toggle="yes">t</italic>
+</th><th align="center" valign="bottom" rowspan="1" colspan="1">β</th><th align="center" valign="bottom" rowspan="1" colspan="1">SE</th><th align="center" valign="bottom" rowspan="1" colspan="1">
+<italic toggle="yes">t</italic>
+</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top" rowspan="1" colspan="1">Control Variables</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Gender</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−0.12</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.07</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−1.65</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.03</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.09</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.31</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Age</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.00</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.00</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−0.83</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−0.01</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.00</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−1.84</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Education</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.02</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.04</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.49</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−0.04</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.05</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−0.87</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Position</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.01</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.03</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.34</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.02</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.05</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.52</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Working duration with their superior</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.00</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.00</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.80</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.00</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.00</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">1.82</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">Independent Variable</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">EL</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.59</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.03</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">16.43<xref rid="pchj70064-note-0004" ref-type="table-fn">***</xref>
+</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.17</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.06</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">2.66<xref rid="pchj70064-note-0003" ref-type="table-fn">**</xref>
+</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">Moderating Variable</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">EU</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.21</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.04</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">5.83<xref rid="pchj70064-note-0004" ref-type="table-fn">***</xref>
+</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">Interaction Item</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">EL × EU</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−0.11</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.03</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">−3.50<xref rid="pchj70064-note-0003" ref-type="table-fn">**</xref>
+</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">Mediating Variable</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">LMX</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1"/><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.30</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">0.06</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">4.89<xref rid="pchj70064-note-0004" ref-type="table-fn">***</xref>
+</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">
+<italic toggle="yes">R</italic>
+<sup>
+<italic toggle="yes">2</italic>
+</sup>
+</td><td align="center" colspan="3" valign="top" rowspan="1">0.55</td><td align="center" colspan="3" valign="top" rowspan="1">0.20</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">
+<italic toggle="yes">F</italic>
+</td><td align="center" colspan="3" valign="top" rowspan="1">67.77<xref rid="pchj70064-note-0004" ref-type="table-fn">***</xref>
+</td><td align="center" colspan="3" valign="top" rowspan="1">15.44<xref rid="pchj70064-note-0004" ref-type="table-fn">***</xref>
+</td></tr></tbody></table><table-wrap-foot id="pchj70064-ntgp-0002"><fn id="pchj70064-note-0002"><p>
+<italic toggle="yes">Note:</italic> EL = Empowering leadership, EU = Environmental Uncertainty, LMX = Leader‐Member Exchange, UPOB = Unethical Pro‐organizational Behavior. The standardized coefficient is shown in the table.</p></fn><fn id="pchj70064-note-0003"><label>**</label><p>
+<italic toggle="yes">p</italic> &lt; 0.01.</p></fn><fn id="pchj70064-note-0004"><label>***</label><p>
+<italic toggle="yes">p</italic> &lt; 0.001.</p></fn></table-wrap-foot></table-wrap><p>To further explore how EU affects the relationship between EL and LMX, a simple slope analysis of the moderating effect was performed (see Figure <xref rid="pchj70064-fig-0003" ref-type="fig">3</xref>). It was found that with an increase in EU, the positive influence of EL on LMX weakened (<italic toggle="yes">M‐1SD</italic>: β = 0.21, SE = 0.06, 95%CI = [0.11, 0.33]; <italic toggle="yes">M + 1SD</italic>: β = 0.15, SE = 0.04, 95%CI = [0.07, 0.25]), verifying <xref rid="pchj70064-mthst-0003" ref-type="statement">H3</xref>.</p><fig position="float" fig-type="FIGURE" id="pchj70064-fig-0003" orientation="portrait"><label>FIGURE 3</label><caption><p>Simple slope analysis. EL = Empowering leadership, EU = Environmental Uncertainty, LMX = Leader‐Member Exchange.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="anchor" id="jats-graphic-5" orientation="portrait" xlink:href="PCHJ-15-e70064-g003.jpg"><?image-name PCHJ-15-e70064-g003.jpg?><?image-size 21714?><?image-md5 801bf43b642fc133f45633394b01429d?><?image-image-server-status LOAD_COMPLETED?><?image-original-height 567?><?image-original-width 997?><?image-scaled-height 378?><?image-scaled-width 664?><?image-cloudpmc-urn urn:cdn:blobs/c676/12897570/801bf43b642f/PCHJ-15-e70064-g003.jpg?><?thumb-name PCHJ-15-e70064-g003.gif?><?thumb-size 2304?><?thumb-md5 78a4a35411335f7db693e021d9f5fca5?><?thumb-image-server-status NEVER_LOAD?><?thumb-scaled-height 80?><?thumb-scaled-width 140?><?thumb-cloudpmc-urn urn:cdn:blobs/c676/12897570/78a4a3541133/PCHJ-15-e70064-g003.gif?></graphic></fig></sec></sec><sec sec-type="discussion" id="pchj70064-sec-0014"><label>4</label><title>Discussion</title><p>Based on the social exchange perspective, this research discussed the effect of EL on UPOB, and explored the roles of LMX and EU in this effect. Overall, our results generally supported our hypotheses. We found that there was a positive relationship between EL and UPOB, and LMX played a mediating role in this relationship. EL tends to give employees more autonomy and provide opportunities for them to participate in decision‐making (Cheong et al. <xref rid="pchj70064-bib-0014" ref-type="bibr">2019</xref>). These behaviors are seen by employees as a sign of trust and respect from the leader, which leads to gratitude towards the leader and a desire to build a closer, long‐term friendly relationship (LMX). Employees are also motivated to complete their role‐based tasks and even go beyond their roles to repay the leader (Umphress and Bingham <xref rid="pchj70064-bib-0061" ref-type="bibr">2011</xref>). However, as pointed out by Cheong et al. (<xref rid="pchj70064-bib-0013" ref-type="bibr">2016</xref>), EL not only has positive effects but also poses a burden and pressure on employees. On the one hand, in order to repay the leader, employees are willing to take risks and engage in UPOB (Umphress and Bingham <xref rid="pchj70064-bib-0061" ref-type="bibr">2011</xref>). On the other hand, the existence of the moral licensing effect weakens employees' moral concepts and encourages them to engage in some deviant behaviors such as UPOB (Mishra et al. <xref rid="pchj70064-bib-0047" ref-type="bibr">2021</xref>).</p><p>Additionally, the result showed that EU played a moderating role between EL and LMX. An uncertain and ambiguous business environment obviously brings challenges to the effectiveness of leadership. In this context, it is necessary to explore the role of EU. Individuals are inherently averse to uncertainty because it represents a lack of control, which can cause anxiety and stress (Nau <xref rid="pchj70064-bib-0048" ref-type="bibr">2006</xref>). As for employees, when they perceive a high level of EU, they may feel insecure and want to find support and instruction from their leaders (Glambek et al. <xref rid="pchj70064-bib-0024" ref-type="bibr">2023</xref>; Twyford and Le Fevre <xref rid="pchj70064-bib-0060" ref-type="bibr">2019</xref>). In this case, EL empowering employees can seem counterproductive, as employees are not clear on how they should act in this uncertain environment with ambiguous information. Consequently, from the perspective of social exchange, if employees cannot receive support from EL, their emotional attachment and feedback to EL will decrease, thus weakening EL's impact on LMX.</p><sec id="pchj70064-sec-0015"><label>4.1</label><title>Theoretical Contribution</title><p>First, from the perspective of social exchange, this study delves into how EL can influence employee UPOB through LMX. The social exchange theory posits that the relationship between leaders and employees is based on mutual trust and support, and that employees will repay the leader's trust by working hard or engaging in extra‐role behaviors. However, this study further reveals that, employees may take not only positive actions but also certain morally risky behaviors (such as UPOB) to repay the leader. This perspective enriches the existing research on social exchange theory, pointing out the complexity and double‐edged sword effects of social exchange processes in empowering leadership contexts, where granting employees more autonomy may also bring certain moral dilemmas.</p><p>Second, this study is the first to explore the impact of EU on the effectiveness of EL, filling a critical gap in current research. Traditionally, most EL studies have focused on its positive effects on employee job satisfaction and performance, but have neglected the constraining role of different environmental factors. This study extends our understanding of the challenges that EL may face in uncertain contexts by revealing the moderating role of EU. This finding not only enriches the theoretical framework of EL but also calls for future research to pay attention to the influence of situational factors on leadership style effectiveness.</p></sec><sec id="pchj70064-sec-0016"><label>4.2</label><title>Management Implication</title><p>Based on the research findings, here are some management recommendations. First, the organization needs to take a series of measures for employees' UPOB, including: establishing an ethically oriented performance evaluation mechanism and incorporating ethical behaviors in employees' work into core performance assessment indicators, in order to reduce their undesirable behaviors in pursuit of performance; establishing a clear and secure reporting mechanism, and setting up a standardized UPOB reporting mechanism (dedicated online platform, independent supervision department, clear feedback time limit, etc.); promoting a leadership style that combines ethical leadership with empowerment, on the one hand, strengthens employees' ethical behavior through demonstration effects, and on the other hand, grants employees a certain degree of autonomy.</p><p>Second, leaders should adopt an adaptive leadership strategy: flexibly adjusting their leadership style based on the uncertain environment. For example, in highly uncertain environments, leaders should adjust their leadership style in a timely manner, providing more guidance and support, rather than simply delegating authority to employees. By enhancing the leadership's decision support and communication in ambiguous situations, employees can feel more security and clarity, thereby maintaining a good LMX.</p><p>Third, organizations should enhance the level of information sharing to reduce employees' sense of uncertainty. Organizations can achieve this by increasing the transparency of information and ensuring that employees have timely access to the challenges the organization is facing and the strategies being implemented to address them. For example, regular all‐staff meetings, internal reports, or leadership communication can reduce information asymmetry between the organization and employees, enhance employees' understanding of the current situation, and thus maintain confidence and stability in an uncertain environment.</p></sec><sec id="pchj70064-sec-0017"><label>4.3</label><title>Limitation and Future Prospect</title><p>Despite the significant implications of our findings in this era of ever‐changing business, our study has certain limitations that warrant attention and suggest avenues for future research. First, the sample has limitations. In the future, the exploration of the sample in different regions, countries, and different types of enterprises can be expanded to increase the reliability of the results. Second, this study adopted the questionnaire method, which is difficult to reveal the true causal relationship. In the future, the experimental method can be used to further explore the relationship between variables, especially the possible influence relationship between EU and EL. This point needs to be clarified in the future. Third, while this study built on the findings of Cheong et al. (<xref rid="pchj70064-bib-0013" ref-type="bibr">2016</xref>) to further explore the burden process of EL, some researchers argue that this impact may not necessarily be linear. For example, Lee et al. (<xref rid="pchj70064-bib-0034" ref-type="bibr">2017</xref>) have employed a nonlinear and inverted U‐shaped model to address the too‐much‐of‐a‐good‐thing effect of EL. Therefore, future research should explore the nonlinear relationship between EL and employees' psychology and behavior.</p></sec></sec><sec id="pchj70064-sec-0018"><title>Ethics Statement</title><p>All procedures involving human participants in this study were performed in accordance with ethical standards and with the 1964 Helsinki Declaration and its later amendments or comparable ethical standards. This study was approved by Zhejiang University Ethics Review Board (No. 20220210012).</p></sec><sec sec-type="COI-statement" id="pchj70064-sec-0019"><title>Conflicts of Interest</title><p>The authors declare no conflicts of interest.</p></sec></body><back><sec sec-type="data-availability" id="pchj70064-sec-0021"><title>Data Availability Statement</title><p>The data that support the findings of this study are available from the corresponding author upon reasonable request.</p></sec><ref-list content-type="cited-references" id="pchj70064-bibl-0001"><title>References</title><ref id="pchj70064-bib-0001"><mixed-citation publication-type="journal" id="pchj70064-cit-0001">
+<string-name name-style="western">
+<surname>Ahearne</surname>, <given-names>M.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>J.</given-names>
+<surname>Mathieu</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>A.</given-names>
+<surname>Rapp</surname>
+</string-name>. <year>2005</year>. “<article-title>To Empower or Not to Empower Your Sales Force? An Empirical Examination of the Influence of Leadership Empowerment Behavior on Customer Satisfaction and Performance</article-title>.” <source>Journal of Applied Psychology</source>
+<volume>90</volume>, no. <issue>5</issue>: <fpage>945</fpage>–<lpage>955</lpage>. <pub-id pub-id-type="doi">10.1037/0021-9010.90.5.945</pub-id>.<pub-id pub-id-type="pmid">16162066</pub-id>
+</mixed-citation></ref><ref id="pchj70064-bib-0002"><mixed-citation publication-type="journal" id="pchj70064-cit-0002">
+<string-name name-style="western">
+<surname>Ahmed</surname>, <given-names>T.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Chaojun</surname>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Hongjuan</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Mahmood</surname>
+</string-name>. <year>2022</year>. “<article-title>The Impact of Empowering Leadership on Job Performance of Higher Education Institutions Employees: Mediating Role of Goal Clarity and Self‐Efficacy</article-title>.” <source>Psychology Research and Behavior Management</source>
+<volume>15</volume>: <fpage>677</fpage>–<lpage>694</lpage>. <pub-id pub-id-type="doi">10.2147/PRBM.S357083</pub-id>.<pub-id pub-id-type="pmid">35330960</pub-id>
+<pub-id pub-id-type="pmcid">PMC8938166</pub-id></mixed-citation></ref><ref id="pchj70064-bib-0003"><mixed-citation publication-type="journal" id="pchj70064-cit-0003">
+<string-name name-style="western">
+<surname>Amundsen</surname>, <given-names>S.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>Ø. L.</given-names>
+<surname>Martinsen</surname>
+</string-name>. <year>2014</year>. “<article-title>Empowering Leadership: Construct Clarification, Conceptualization, and Validation of a New Scale</article-title>.” <source>Leadership Quarterly</source>
+<volume>25</volume>, no. <issue>3</issue>: <fpage>487</fpage>–<lpage>511</lpage>. <pub-id pub-id-type="doi">10.1016/j.leaqua.2013.11.009</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0004"><mixed-citation publication-type="journal" id="pchj70064-cit-0004">
+<string-name name-style="western">
+<surname>Amundsen</surname>, <given-names>S.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>Ø. L.</given-names>
+<surname>Martinsen</surname>
+</string-name>. <year>2015</year>. “<article-title>Linking Empowering Leadership to Job Satisfaction, Work Effort, and Creativity: The Role of Self‐Leadership and Psychological Empowerment</article-title>.” <source>Journal of Leadership and Organizational Studies</source>
+<volume>22</volume>, no. <issue>3</issue>: <fpage>304</fpage>–<lpage>323</lpage>. <pub-id pub-id-type="doi">10.1177/1548051814565819</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0005"><mixed-citation publication-type="journal" id="pchj70064-cit-0005">
+<string-name name-style="western">
+<surname>Biemann</surname>, <given-names>T.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>E.</given-names>
+<surname>Kearney</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>K.</given-names>
+<surname>Marggraf</surname>
+</string-name>. <year>2015</year>. “<article-title>Empowering Leadership and Managers' Career Perceptions: Examining Effects at Both the Individual and the Team Level</article-title>.” <source>Leadership Quarterly</source>
+<volume>26</volume>, no. <issue>5</issue>: <fpage>775</fpage>–<lpage>789</lpage>. <pub-id pub-id-type="doi">10.1016/j.leaqua.2015.03.003</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0006"><mixed-citation publication-type="journal" id="pchj70064-cit-0006">
+<string-name name-style="western">
+<surname>Bryant</surname>, <given-names>W.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>S. M.</given-names>
+<surname>Merritt</surname>
+</string-name>. <year>2021</year>. “<article-title>Unethical Pro‐Organizational Behavior and Positive Leader‐Employee Relationships</article-title>.” <source>Journal of Business Ethics</source>
+<volume>168</volume>: <fpage>777</fpage>–<lpage>793</lpage>. <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.jstor.org/stable/45386741" ext-link-type="uri">https://www.jstor.org/stable/45386741</ext-link>.</mixed-citation></ref><ref id="pchj70064-bib-0007"><mixed-citation publication-type="journal" id="pchj70064-cit-0007">
+<string-name name-style="western">
+<surname>Carmeli</surname>, <given-names>A.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>J.</given-names>
+<surname>Schaubroeck</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>A.</given-names>
+<surname>Tishler</surname>
+</string-name>. <year>2011</year>. “<article-title>How CEO Empowering Leadership Shapes Top Management Team Processes: Implications for Firm Performance</article-title>.” <source>Leadership Quarterly</source>
+<volume>22</volume>, no. <issue>2</issue>: <fpage>399</fpage>–<lpage>411</lpage>. <pub-id pub-id-type="doi">10.1016/j.leaqua.2011.02.013</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0008"><mixed-citation publication-type="journal" id="pchj70064-cit-0008">
+<string-name name-style="western">
+<surname>Chen</surname>, <given-names>C.‐H. V.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>S.‐J.</given-names>
+<surname>Wang</surname>
+</string-name>, <string-name name-style="western">
+<given-names>W.‐C.</given-names>
+<surname>Chang</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>C.‐S.</given-names>
+<surname>Hu</surname>
+</string-name>. <year>2008</year>. “<article-title>The Effect of Leader‐Member Exchange, Trust, Supervisor Support on Organizational Citizenship Behavior in Nurses</article-title>.” <source>Journal of Nursing Research</source>
+<volume>16</volume>, no. <issue>4</issue>: <fpage>321</fpage>–<lpage>328</lpage>. <pub-id pub-id-type="doi">10.1097/01.JNR.0000387319.28010.5e</pub-id>.<pub-id pub-id-type="pmid">19061178</pub-id></mixed-citation></ref><ref id="pchj70064-bib-0009"><mixed-citation publication-type="journal" id="pchj70064-cit-0009">
+<string-name name-style="western">
+<surname>Chen</surname>, <given-names>Y.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>Z. X.</given-names>
+<surname>Chen</surname>
+</string-name>, <string-name name-style="western">
+<given-names>L.</given-names>
+<surname>Zhong</surname>
+</string-name>, <string-name name-style="western">
+<given-names>J.</given-names>
+<surname>Son</surname>
+</string-name>, <string-name name-style="western">
+<given-names>X.</given-names>
+<surname>Zhang</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>Z.</given-names>
+<surname>Liu</surname>
+</string-name>. <year>2015</year>. “<article-title>Social Exchange Spillover in Leader–Member Relations: A Multilevel Model</article-title>.” <source>Journal of Organizational Behavior</source>
+<volume>36</volume>, no. <issue>5</issue>: <fpage>673</fpage>–<lpage>697</lpage>. <pub-id pub-id-type="doi">10.1002/job.2030</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0011"><mixed-citation publication-type="journal" id="pchj70064-cit-0011">
+<string-name name-style="western">
+<surname>Cheng</surname>, <given-names>B. H.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>J. M.</given-names>
+<surname>McCarthy</surname>
+</string-name>. <year>2018</year>. “<article-title>Understanding the Dark and Bright Sides of Anxiety: A Theory of Workplace Anxiety</article-title>.” <source>Journal of Applied Psychology</source>
+<volume>103</volume>, no. <issue>5</issue>: <fpage>537</fpage>–<lpage>560</lpage>. <pub-id pub-id-type="doi">10.1037/apl0000266</pub-id>.<pub-id pub-id-type="pmid">29355338</pub-id>
+</mixed-citation></ref><ref id="pchj70064-bib-0012"><mixed-citation publication-type="journal" id="pchj70064-cit-0012">
+<string-name name-style="western">
+<surname>Cheng</surname>, <given-names>J.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>M.</given-names>
+<surname>Usman</surname>
+</string-name>, <string-name name-style="western">
+<given-names>H.</given-names>
+<surname>Bai</surname>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>He</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>K.</given-names>
+<surname>Mehmood</surname>
+</string-name>. <year>2024</year>. “<article-title>Too Much of a Good Thing: How to Buffer the Unintended Adverse Effects of Empowering Leadership?</article-title>” <source>Asia Pacific Journal of Management</source>: <fpage>1</fpage>–<lpage>31</lpage>. <pub-id pub-id-type="doi">10.1007/s10490-024-09988-8</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0010"><mixed-citation publication-type="journal" id="pchj70064-cit-0010">
+<string-name name-style="western">
+<surname>Cheng</surname>, <given-names>S. Y.</given-names>
+</string-name>
+<year>2017</year>. “<article-title>Leader‐Member Exchange and the Transfer of Knowledge From Taiwanese Managers to Their Chinese Subordinates: The Mediating Effect of Social Interaction</article-title>.” <source>Leadership and Organization Development Journal</source>
+<volume>38</volume>, no. <issue>6</issue>: <fpage>868</fpage>–<lpage>882</lpage>. <pub-id pub-id-type="doi">10.1108/LODJ-09-2015-0210</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0013"><mixed-citation publication-type="journal" id="pchj70064-cit-0013">
+<string-name name-style="western">
+<surname>Cheong</surname>, <given-names>M.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>S. M.</given-names>
+<surname>Spain</surname>
+</string-name>, <string-name name-style="western">
+<given-names>F. J.</given-names>
+<surname>Yammarino</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Yun</surname>
+</string-name>. <year>2016</year>. “<article-title>Two Faces of Empowering Leadership: Enabling and Burdening</article-title>.” <source>Leadership Quarterly</source>
+<volume>27</volume>, no. <issue>4</issue>: <fpage>602</fpage>–<lpage>616</lpage>. <pub-id pub-id-type="doi">10.1016/j.leaqua.2016.01.006</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0014"><mixed-citation publication-type="journal" id="pchj70064-cit-0014">
+<string-name name-style="western">
+<surname>Cheong</surname>, <given-names>M.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>F. J.</given-names>
+<surname>Yammarino</surname>
+</string-name>, <string-name name-style="western">
+<given-names>S. D.</given-names>
+<surname>Dionne</surname>
+</string-name>, <string-name name-style="western">
+<given-names>S. M.</given-names>
+<surname>Spain</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>C.‐Y.</given-names>
+<surname>Tsai</surname>
+</string-name>. <year>2019</year>. “<article-title>A Review of the Effectiveness of Empowering Leadership</article-title>.” <source>Leadership Quarterly</source>
+<volume>30</volume>, no. <issue>1</issue>: <fpage>34</fpage>–<lpage>58</lpage>. <pub-id pub-id-type="doi">10.1016/j.leaqua.2018.08.005</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0015"><mixed-citation publication-type="journal" id="pchj70064-cit-0015">
+<string-name name-style="western">
+<surname>Cicero</surname>, <given-names>L.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>A.</given-names>
+<surname>Pierro</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>D.</given-names>
+<surname>Van Knippenberg</surname>
+</string-name>. <year>2010</year>. “<article-title>Leadership and Uncertainty: How Role Ambiguity Affects the Relationship Between Leader Group Prototypicality and Leadership Effectiveness</article-title>.” <source>British Journal of Management</source>
+<volume>21</volume>, no. <issue>2</issue>: <fpage>411</fpage>–<lpage>421</lpage>. <pub-id pub-id-type="doi">10.1111/j.1467-8551.2009.00648.x</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0016"><mixed-citation publication-type="journal" id="pchj70064-cit-0016">
+<string-name name-style="western">
+<surname>Cropanzano</surname>, <given-names>R.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>M. S.</given-names>
+<surname>Mitchell</surname>
+</string-name>. <year>2005</year>. “<article-title>Social Exchange Theory: An Interdisciplinary Review</article-title>.” <source>Journal of Management</source>
+<volume>31</volume>, no. <issue>6</issue>: <fpage>874</fpage>–<lpage>900</lpage>. <pub-id pub-id-type="doi">10.1177/0149206305279602</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0017"><mixed-citation publication-type="journal" id="pchj70064-cit-0017">
+<string-name name-style="western">
+<surname>De Hoogh</surname>, <given-names>A. H. B.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>D. N.</given-names>
+<surname>Den Hartog</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>P. L.</given-names>
+<surname>Koopman</surname>
+</string-name>. <year>2005</year>. “<article-title>Linking the Big Five‐Factors of Personality to Charismatic and Transactional Leadership; Perceived Dynamic Work Environment as a Moderator</article-title>.” <source>Journal of Organizational Behavior</source>
+<volume>26</volume>, no. <issue>7</issue>: <fpage>839</fpage>–<lpage>865</lpage>. <pub-id pub-id-type="doi">10.1002/job.344</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0018"><mixed-citation publication-type="journal" id="pchj70064-cit-0018">
+<string-name name-style="western">
+<surname>Dennerlein</surname>, <given-names>T.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>B. L.</given-names>
+<surname>Kirkman</surname>
+</string-name>. <year>2022</year>. “<article-title>The Hidden Dark Side of Empowering Leadership: The Moderating Role of Hindrance Stressors in Explaining When Empowering Employees Can Promote Moral Disengagement and Unethical Pro‐Organizational Behavior</article-title>.” <source>Journal of Applied Psychology</source>
+<volume>107</volume>, no. <issue>12</issue>: <fpage>2220</fpage>–<lpage>2242</lpage>. <pub-id pub-id-type="doi">10.1037/apl0001013</pub-id>.<pub-id pub-id-type="pmid">35286112</pub-id>
+</mixed-citation></ref><ref id="pchj70064-bib-0019"><mixed-citation publication-type="journal" id="pchj70064-cit-0019">
+<string-name name-style="western">
+<surname>DeSimone</surname>, <given-names>J. A.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>P. D.</given-names>
+<surname>Harms</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>A. J.</given-names>
+<surname>DeSimone</surname>
+</string-name>. <year>2015</year>. “<article-title>Best Practice Recommendations for Data Screening</article-title>.” <source>Journal of Organizational Behavior</source>
+<volume>36</volume>, no. <issue>2</issue>: <fpage>171</fpage>–<lpage>181</lpage>. <pub-id pub-id-type="doi">10.1002/job.1962</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0020"><mixed-citation publication-type="journal" id="pchj70064-cit-0020">
+<string-name name-style="western">
+<surname>Effelsberg</surname>, <given-names>D.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>M.</given-names>
+<surname>Solga</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>J.</given-names>
+<surname>Gurt</surname>
+</string-name>. <year>2014</year>. “<article-title>Transformational Leadership and Follower's Unethical Behavior for the Benefit of the Company: A Two‐Study Investigation</article-title>.” <source>Journal of Business Ethics</source>
+<volume>120</volume>: <fpage>81</fpage>–<lpage>93</lpage>. <pub-id pub-id-type="doi">10.1007/s10551-013-1644-z</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0021"><mixed-citation publication-type="journal" id="pchj70064-cit-0021">
+<string-name name-style="western">
+<surname>Eisenberger</surname>, <given-names>R.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>G.</given-names>
+<surname>Karagonlar</surname>
+</string-name>, <string-name name-style="western">
+<given-names>F.</given-names>
+<surname>Stinglhamber</surname>
+</string-name>, et al. <year>2010</year>. “<article-title>Leader–Member Exchange and Affective Organizational Commitment: The Contribution of Supervisor's Organizational Embodiment</article-title>.” <source>Journal of Applied Psychology</source>
+<volume>95</volume>, no. <issue>6</issue>: <fpage>1085</fpage>–<lpage>1103</lpage>. <pub-id pub-id-type="doi">10.1037/a0020858</pub-id>.<pub-id pub-id-type="pmid">20718516</pub-id>
+</mixed-citation></ref><ref id="pchj70064-bib-0022"><mixed-citation publication-type="journal" id="pchj70064-cit-0022">
+<string-name name-style="western">
+<surname>Foster‐Fishman</surname>, <given-names>P. G.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>C. B.</given-names>
+<surname>Keys</surname>
+</string-name>. <year>1997</year>. “<article-title>The Person/Environment Dynamics of Employee Empowerment: An Organizational Culture Analysis</article-title>.” <source>American Journal of Community Psychology</source>
+<volume>25</volume>: <fpage>345</fpage>–<lpage>369</lpage>. <pub-id pub-id-type="doi">10.1023/A:1024628711026</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0023"><mixed-citation publication-type="book" id="pchj70064-cit-0023">
+<string-name name-style="western">
+<surname>Freidman</surname>, <given-names>T.</given-names>
+</string-name>
+<year>2005</year>. <source>The World Is Flat</source>. <publisher-name>Penguin Books</publisher-name>.</mixed-citation></ref><ref id="pchj70064-bib-0024"><mixed-citation publication-type="journal" id="pchj70064-cit-0024">
+<string-name name-style="western">
+<surname>Glambek</surname>, <given-names>M.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>M. N.</given-names>
+<surname>Arnestad</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>S. B.</given-names>
+<surname>Matthiesen</surname>
+</string-name>. <year>2023</year>. “<article-title>Perceived Job Insecurity Climate in Uncertain Times: Implications for Work‐Related Health Among Leaders Versus Non‐Leaders</article-title>.” <source>Journal of Managerial Psychology</source>
+<volume>38</volume>, no. <issue>7</issue>: <fpage>541</fpage>–<lpage>557</lpage>. <pub-id pub-id-type="doi">10.1108/JMP-10-2021-0542</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0025"><mixed-citation publication-type="journal" id="pchj70064-cit-0025">
+<string-name name-style="western">
+<surname>Guo</surname>, <given-names>Y.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Peng</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Zhu</surname>
+</string-name>. <year>2023</year>. “<article-title>How Does Empowering Leadership Motivate Employee Innovative Behavior: A Job Characteristics Perspective</article-title>.” <source>Current Psychology</source>
+<volume>42</volume>, no. <issue>21</issue>: <fpage>18280</fpage>–<lpage>18290</lpage>. <pub-id pub-id-type="doi">10.1007/s12144-022-03000-6</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0026"><mixed-citation publication-type="journal" id="pchj70064-cit-0026">
+<string-name name-style="western">
+<surname>Hao</surname>, <given-names>P.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>W.</given-names>
+<surname>He</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>L.‐R.</given-names>
+<surname>Long</surname>
+</string-name>. <year>2018</year>. “<article-title>Why and When Empowering Leadership Has Different Effects on Employee Work Performance: The Pivotal Roles of Passion for Work and Role Breadth Self‐Efficacy</article-title>.” <source>Journal of Leadership and Organizational Studies</source>
+<volume>25</volume>, no. <issue>1</issue>: <fpage>85</fpage>–<lpage>100</lpage>. <pub-id pub-id-type="doi">10.1177/1548051817707517</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0027"><mixed-citation publication-type="journal" id="pchj70064-cit-0027">
+<string-name name-style="western">
+<surname>Hassan</surname>, <given-names>S.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>R.</given-names>
+<surname>Mahsud</surname>
+</string-name>, <string-name name-style="western">
+<given-names>G.</given-names>
+<surname>Yukl</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>G. E.</given-names>
+<surname>Prussia</surname>
+</string-name>. <year>2013</year>. “<article-title>Ethical and Empowering Leadership and Leader Effectiveness</article-title>.” <source>Journal of Managerial Psychology</source>
+<volume>28</volume>, no. <issue>2</issue>: <fpage>133</fpage>–<lpage>146</lpage>. <pub-id pub-id-type="doi">10.1108/02683941311300252</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0028"><mixed-citation publication-type="journal" id="pchj70064-cit-0028">
+<string-name name-style="western">
+<surname>Hayes</surname>, <given-names>A. F.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>A. K.</given-names>
+<surname>Montoya</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>N. J.</given-names>
+<surname>Rockwood</surname>
+</string-name>. <year>2017</year>. “<article-title>The Analysis of Mechanisms and Their Contingencies: PROCESS Versus Structural Equation Modeling</article-title>.” <source>Australasian Marketing Journal</source>
+<volume>25</volume>, no. <issue>1</issue>: <fpage>76</fpage>–<lpage>81</lpage>. <pub-id pub-id-type="doi">10.1016/j.ausmj.2017.02.001</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0029"><mixed-citation publication-type="journal" id="pchj70064-cit-0029">
+<string-name name-style="western">
+<surname>Hmieleski</surname>, <given-names>K. M.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>M. D.</given-names>
+<surname>Ensley</surname>
+</string-name>. <year>2007</year>. “<article-title>A Contextual Examination of New Venture Performance: Entrepreneur Leadership Behavior, Top Management Team Heterogeneity, and Environmental Dynamism</article-title>.” <source>Journal of Organizational Behavior</source>
+<volume>28</volume>, no. <issue>7</issue>: <fpage>865</fpage>–<lpage>889</lpage>. <pub-id pub-id-type="doi">10.1002/job.479</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0030"><mixed-citation publication-type="journal" id="pchj70064-cit-0030">
+<string-name name-style="western">
+<surname>Hu</surname>, <given-names>Y.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>L.</given-names>
+<surname>Zhu</surname>
+</string-name>, <string-name name-style="western">
+<given-names>M.</given-names>
+<surname>Zhou</surname>
+</string-name>, et al. <year>2018</year>. “<article-title>Exploring the Influence of Ethical Leadership on Voice Behavior: How Leader‐Member Exchange, Psychological Safety and Psychological Empowerment Influence Employees' Willingness to Speak out</article-title>.” <source>Frontiers in Psychology</source>
+<volume>9</volume>: <elocation-id>1718</elocation-id>. <pub-id pub-id-type="doi">10.3389/fpsyg.2018.01718</pub-id>.<pub-id pub-id-type="pmid">30258392</pub-id>
+<pub-id pub-id-type="pmcid">PMC6143838</pub-id></mixed-citation></ref><ref id="pchj70064-bib-0031"><mixed-citation publication-type="journal" id="pchj70064-cit-0031">
+<string-name name-style="western">
+<surname>Kim</surname>, <given-names>M.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>T. A.</given-names>
+<surname>Beehr</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>M. S.</given-names>
+<surname>Prewett</surname>
+</string-name>. <year>2018</year>. “<article-title>Employee Responses to Empowering Leadership: A Meta‐Analysis</article-title>.” <source>Journal of Leadership and Organizational Studies</source>
+<volume>25</volume>, no. <issue>3</issue>: <fpage>257</fpage>–<lpage>276</lpage>. <pub-id pub-id-type="doi">10.1177/1548051817750538</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0032"><mixed-citation publication-type="journal" id="pchj70064-cit-0032">
+<string-name name-style="western">
+<surname>Kwak</surname>, <given-names>W. J.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>C. L.</given-names>
+<surname>Jackson</surname>
+</string-name>. <year>2015</year>. “<article-title>Relationship Building in Empowering Leadership Processes: A Test of Mediation and Moderationa</article-title>.” <source>Journal of Management &amp; Organization</source>
+<volume>21</volume>, no. <issue>4</issue>: <fpage>369</fpage>–<lpage>387</lpage>. <pub-id pub-id-type="doi">10.1017/jmo.2015.11</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0033"><mixed-citation publication-type="journal" id="pchj70064-cit-0033">
+<string-name name-style="western">
+<surname>Langfred</surname>, <given-names>C. W.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>N. A.</given-names>
+<surname>Moye</surname>
+</string-name>. <year>2004</year>. “<article-title>Effects of Task Autonomy on Performance: An Extended Model Considering Motivational, Informational, and Structural Mechanisms</article-title>.” <source>Journal of Applied Psychology</source>
+<volume>89</volume>, no. <issue>6</issue>: <fpage>934</fpage>–<lpage>945</lpage>. <pub-id pub-id-type="doi">10.1037/0021-9010.89.6.934</pub-id>.<pub-id pub-id-type="pmid">15584833</pub-id>
+</mixed-citation></ref><ref id="pchj70064-bib-0035"><mixed-citation publication-type="journal" id="pchj70064-cit-0035">
+<string-name name-style="western">
+<surname>Lee</surname>, <given-names>A.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Willis</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>A. W.</given-names>
+<surname>Tian</surname>
+</string-name>. <year>2018</year>. “<article-title>Empowering Leadership: A Meta‐Analytic Examination of Incremental Contribution, Mediation, and Moderation</article-title>.” <source>Journal of Organizational Behavior</source>
+<volume>39</volume>, no. <issue>3</issue>: <fpage>306</fpage>–<lpage>325</lpage>. <pub-id pub-id-type="doi">10.1002/job.2220</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0034"><mixed-citation publication-type="journal" id="pchj70064-cit-0034">
+<string-name name-style="western">
+<surname>Lee</surname>, <given-names>S.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>M.</given-names>
+<surname>Cheong</surname>
+</string-name>, <string-name name-style="western">
+<given-names>M.</given-names>
+<surname>Kim</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Yun</surname>
+</string-name>. <year>2017</year>. “<article-title>Never Too Much? The Curvilinear Relationship Between Empowering Leadership and Task Performance</article-title>.” <source>Group &amp; Organization Management</source>
+<volume>42</volume>, no. <issue>1</issue>: <fpage>11</fpage>–<lpage>38</lpage>. <pub-id pub-id-type="doi">10.1177/1059601116646474</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0036"><mixed-citation publication-type="journal" id="pchj70064-cit-0036">
+<string-name name-style="western">
+<surname>Li</surname>, <given-names>S.‐L.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Huo</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>L.‐R.</given-names>
+<surname>Long</surname>
+</string-name>. <year>2017</year>. “<article-title>Chinese Traditionality Matters: Effects of Differentiated Empowering Leadership on Followers' Trust in Leaders and Work Outcomes</article-title>.” <source>Journal of Business Ethics</source>
+<volume>145</volume>: <fpage>81</fpage>–<lpage>93</lpage>. <pub-id pub-id-type="doi">10.1007/s10551-015-2900-1</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0038"><mixed-citation publication-type="journal" id="pchj70064-cit-0038">
+<string-name name-style="western">
+<surname>Li</surname>, <given-names>H.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Zhang</surname>
+</string-name>, <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Mo</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>A.</given-names>
+<surname>Newman</surname>
+</string-name>. <year>2024</year>. “<article-title>Relative Leader‐Member Exchange and Unethical Pro‐Leader Behavior: The Role of Envy and Distributive Justice Climate</article-title>.” <source>Journal of Business Ethics</source>
+<volume>192</volume>, no. <issue>1</issue>: <fpage>99</fpage>–<lpage>111</lpage>. <pub-id pub-id-type="doi">10.1007/s10551-023-05492-z</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0037"><mixed-citation publication-type="journal" id="pchj70064-cit-0037">
+<string-name name-style="western">
+<surname>Li</surname>, <given-names>Y.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>G.</given-names>
+<surname>Castaño</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Li</surname>
+</string-name>. <year>2018</year>. “<article-title>Linking Leadership Styles to Work Engagement: The Role of Psychological Capital Among Chinese Knowledge Workers</article-title>.” <source>Chinese Management Studies</source>
+<volume>12</volume>, no. <issue>2</issue>: <fpage>433</fpage>–<lpage>452</lpage>. <pub-id pub-id-type="doi">10.1108/CMS-04-2017-0108</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0039"><mixed-citation publication-type="journal" id="pchj70064-cit-0039">
+<string-name name-style="western">
+<surname>Lian</surname>, <given-names>H.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>J. K.</given-names>
+<surname>Li</surname>
+</string-name>, <string-name name-style="western">
+<given-names>C.</given-names>
+<surname>Du</surname>
+</string-name>, <string-name name-style="western">
+<given-names>W.</given-names>
+<surname>Wu</surname>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Xia</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>C.</given-names>
+<surname>Lee</surname>
+</string-name>. <year>2022</year>. “<article-title>Disaster or Opportunity? How COVID‐19‐Associated Changes in Environmental Uncertainty and Job Insecurity Relate to Organizational Identification and Performance</article-title>.” <source>Journal of Applied Psychology</source>
+<volume>107</volume>, no. <issue>5</issue>: <fpage>693</fpage>. <pub-id pub-id-type="doi">10.1037/apl0001011</pub-id>.<pub-id pub-id-type="pmid">35254851</pub-id>
+</mixed-citation></ref><ref id="pchj70064-bib-0040"><mixed-citation publication-type="journal" id="pchj70064-cit-0040">
+<string-name name-style="western">
+<surname>Liang</surname>, <given-names>Y.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Liu</surname>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Park</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>L.</given-names>
+<surname>Wang</surname>
+</string-name>. <year>2022</year>. “<article-title>Treat Me Better, but Is It Really Better? Applying a Resource Perspective to Understanding Leader–Member Exchange (LMX), LMX Differentiation, and Work Stress</article-title>.” <source>Journal of Occupational Health Psychology</source>
+<volume>27</volume>, no. <issue>2</issue>: <fpage>223</fpage>–<lpage>239</lpage>. <pub-id pub-id-type="doi">10.1037/ocp0000303</pub-id>.<pub-id pub-id-type="pmid">34807679</pub-id>
+</mixed-citation></ref><ref id="pchj70064-bib-0041"><mixed-citation publication-type="journal" id="pchj70064-cit-0041">
+<string-name name-style="western">
+<surname>Liden</surname>, <given-names>R. C.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>S. J.</given-names>
+<surname>Wayne</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>D.</given-names>
+<surname>Stilwell</surname>
+</string-name>. <year>1993</year>. “<article-title>A Longitudinal Study on the Early Development of Leader‐Member Exchanges</article-title>.” <source>Journal of Applied Psychology</source>
+<volume>78</volume>, no. <issue>4</issue>: <fpage>662</fpage>–<lpage>674</lpage>. <pub-id pub-id-type="doi">10.1037/0021-9010.78.4.662</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0042"><mixed-citation publication-type="journal" id="pchj70064-cit-0042">
+<string-name name-style="western">
+<surname>López‐Gamero</surname>, <given-names>M. D.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>J. F.</given-names>
+<surname>Molina‐Azorin</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>E.</given-names>
+<surname>Claver‐Cortés</surname>
+</string-name>. <year>2011</year>. “<article-title>Environmental Uncertainty and Environmental Management Perception: A Multiple Case Study</article-title>.” <source>Journal of Business Research</source>
+<volume>64</volume>, no. <issue>4</issue>: <fpage>427</fpage>–<lpage>435</lpage>. <pub-id pub-id-type="doi">10.1016/j.jbusres.2010.11.009</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0043"><mixed-citation publication-type="journal" id="pchj70064-cit-0043">
+<string-name name-style="western">
+<surname>Manelkar</surname>, <given-names>S.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>D. K.</given-names>
+<surname>Mishra</surname>
+</string-name>. <year>2024</year>. “<article-title>A Systematic Literature Review and Bibliometric Analysis of Leadership Influence on Employee Unethical Pro‐Organisational Behaviour</article-title>.” <source>International Journal of Ethics and Systems</source>
+<volume>41</volume>: <fpage>284</fpage>–<lpage>311</lpage>. <pub-id pub-id-type="doi">10.1108/IJOES-11-2023-0250</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0044"><mixed-citation publication-type="journal" id="pchj70064-cit-0044">
+<string-name name-style="western">
+<surname>Martin</surname>, <given-names>R.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Guillaume</surname>
+</string-name>, <string-name name-style="western">
+<given-names>G.</given-names>
+<surname>Thomas</surname>
+</string-name>, <string-name name-style="western">
+<given-names>A.</given-names>
+<surname>Lee</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>O.</given-names>
+<surname>Epitropaki</surname>
+</string-name>. <year>2016</year>. “<article-title>Leader–Member Exchange (LMX) and Performance: A Meta‐Analytic Review</article-title>.” <source>Personnel Psychology</source>
+<volume>69</volume>, no. <issue>1</issue>: <fpage>67</fpage>–<lpage>121</lpage>. <pub-id pub-id-type="doi">10.1111/peps.12100</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0045"><mixed-citation publication-type="journal" id="pchj70064-cit-0045">
+<string-name name-style="western">
+<surname>Martin</surname>, <given-names>R.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>G.</given-names>
+<surname>Thomas</surname>
+</string-name>, <string-name name-style="western">
+<given-names>A.</given-names>
+<surname>Legood</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Dello Russo</surname>
+</string-name>. <year>2018</year>. “<article-title>Leader–Member Exchange (LMX) Differentiation and Work Outcomes: Conceptual Clarification and Critical Review</article-title>.” <source>Journal of Organizational Behavior</source>
+<volume>39</volume>, no. <issue>2</issue>: <fpage>151</fpage>–<lpage>168</lpage>. <pub-id pub-id-type="doi">10.1002/job.2202</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0046"><mixed-citation publication-type="journal" id="pchj70064-cit-0046">
+<string-name name-style="western">
+<surname>Matta</surname>, <given-names>F. K.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>E. L.</given-names>
+<surname>Frank</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>C. P.</given-names>
+<surname>Muir</surname>
+</string-name>. <year>2024</year>. “<article-title>“Seeing Eye to Eye” About Our Relationship Is Good for us and Everyone Else: An Examination of LMX Agreement and Views of Fair Treatment</article-title>.” <source>Organization Science</source>
+<volume>35</volume>, no. <issue>4</issue>: <fpage>1489</fpage>–<lpage>1511</lpage>. <pub-id pub-id-type="doi">10.1287/orsc.2021.15475</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0047"><mixed-citation publication-type="journal" id="pchj70064-cit-0047">
+<string-name name-style="western">
+<surname>Mishra</surname>, <given-names>M.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>K.</given-names>
+<surname>Ghosh</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>D.</given-names>
+<surname>Sharma</surname>
+</string-name>. <year>2021</year>. “<article-title>Unethical Pro‐Organizational Behavior: A Systematic Review and Future Research Agenda</article-title>.” <source>Journal of Business Ethics</source>
+<volume>179</volume>, no. <issue>1</issue>: <fpage>63</fpage>–<lpage>87</lpage>. <pub-id pub-id-type="doi">10.1007/s10551-021-04764-w</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0048"><mixed-citation publication-type="journal" id="pchj70064-cit-0048">
+<string-name name-style="western">
+<surname>Nau</surname>, <given-names>R. F.</given-names>
+</string-name>
+<year>2006</year>. “<article-title>Uncertainty Aversion With Second‐Order Utilities and Probabilities</article-title>.” <source>Management Science</source>
+<volume>52</volume>, no. <issue>1</issue>: <fpage>136</fpage>–<lpage>145</lpage>. <pub-id pub-id-type="doi">10.1287/mnsc.1050.0469</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0049"><mixed-citation publication-type="journal" id="pchj70064-cit-0049">
+<string-name name-style="western">
+<surname>O'Donoghue</surname>, <given-names>D.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>L.</given-names>
+<surname>Van Der Werff</surname>
+</string-name>. <year>2022</year>. “<article-title>Empowering Leadership: Balancing Self‐Determination and Accountability for Motivation</article-title>.” <source>Personnel Review</source>
+<volume>51</volume>, no. <issue>4</issue>: <fpage>1205</fpage>–<lpage>1220</lpage>. <pub-id pub-id-type="doi">10.1108/PR-11-2019-0619</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0050"><mixed-citation publication-type="journal" id="pchj70064-cit-0050">
+<string-name name-style="western">
+<surname>Ozolins</surname>, <given-names>U.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Hale</surname>
+</string-name>, <string-name name-style="western">
+<given-names>X.</given-names>
+<surname>Cheng</surname>
+</string-name>, <string-name name-style="western">
+<given-names>A.</given-names>
+<surname>Hyatt</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>P.</given-names>
+<surname>Schofield</surname>
+</string-name>. <year>2020</year>. “<article-title>Translation and Back‐Translation Methodology in Health Research‐A Critique</article-title>.” <source>Expert Review of Pharmacoeconomics &amp; Outcomes Research</source>
+<volume>20</volume>, no. <issue>1</issue>: <fpage>69</fpage>–<lpage>77</lpage>. <pub-id pub-id-type="doi">10.1080/14737167.2020.1734453</pub-id>.<pub-id pub-id-type="pmid">32089017</pub-id>
+</mixed-citation></ref><ref id="pchj70064-bib-0052"><mixed-citation publication-type="journal" id="pchj70064-cit-0052">
+<string-name name-style="western">
+<surname>Podsakoff</surname>, <given-names>P. M.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>S. B.</given-names>
+<surname>MacKenzie</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>N. P.</given-names>
+<surname>Podsakoff</surname>
+</string-name>. <year>2012</year>. “<article-title>Sources of Method Bias in Social Science Research and Recommendations on How to Control It</article-title>.” <source>Annual Review of Psychology</source>
+<volume>63</volume>, no. <issue>1</issue>: <fpage>539</fpage>–<lpage>569</lpage>. <pub-id pub-id-type="doi">10.1146/annurev-psych-120710-100452</pub-id>.<pub-id pub-id-type="pmid">21838546</pub-id></mixed-citation></ref><ref id="pchj70064-bib-0053"><mixed-citation publication-type="journal" id="pchj70064-cit-0053">
+<string-name name-style="western">
+<surname>Rai</surname>, <given-names>A.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>M.</given-names>
+<surname>Kim</surname>
+</string-name>. <year>2021</year>. “<article-title>Empowering Leadership and Followers' Good and Bad Behaviors: A Dual Mediation Model</article-title>.” <source>Human Resource Development Quarterly</source>
+<volume>32</volume>, no. <issue>4</issue>: <fpage>537</fpage>–<lpage>558</lpage>. <pub-id pub-id-type="doi">10.1002/hrdq.21431</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0054"><mixed-citation publication-type="journal" id="pchj70064-cit-0054">
+<string-name name-style="western">
+<surname>Rao Jada</surname>, <given-names>U.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Mukhopadhyay</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>R.</given-names>
+<surname>Titiyal</surname>
+</string-name>. <year>2019</year>. “<article-title>Empowering Leadership and Innovative Work Behavior: A Moderated Mediation Examination</article-title>.” <source>Journal of Knowledge Management</source>
+<volume>23</volume>, no. <issue>5</issue>: <fpage>915</fpage>–<lpage>930</lpage>. <pub-id pub-id-type="doi">10.1108/JKM-08-2018-0533</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0055"><mixed-citation publication-type="journal" id="pchj70064-cit-0055">
+<string-name name-style="western">
+<surname>Rast</surname>, <given-names>D. E.</given-names>, <suffix>III</suffix>
+</string-name>. <year>2015</year>. “<article-title>Leadership in Times of Uncertainty: Recent Findings, Debates, and Potential Future Research Directions</article-title>.” <source>Social and Personality Psychology Compass</source>
+<volume>9</volume>, no. <issue>3</issue>: <fpage>133</fpage>–<lpage>145</lpage>. <pub-id pub-id-type="doi">10.1111/spc3.12163</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0056"><mixed-citation publication-type="journal" id="pchj70064-cit-0056">
+<string-name name-style="western">
+<surname>Scandura</surname>, <given-names>T. A.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>G. B.</given-names>
+<surname>Graen</surname>
+</string-name>. <year>1984</year>. “<article-title>Moderating Effects of Initial Leader‐Member Exchange Status on the Effects of a Leadership Intervention</article-title>.” <source>Journal of Applied Psychology</source>
+<volume>69</volume>, no. <issue>3</issue>: <fpage>428</fpage>–<lpage>436</lpage>. <pub-id pub-id-type="doi">10.1037/0021-9010.69.3.428</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0057"><mixed-citation publication-type="journal" id="pchj70064-cit-0057">
+<string-name name-style="western">
+<surname>Sharma</surname>, <given-names>P. N.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>B. L.</given-names>
+<surname>Kirkman</surname>
+</string-name>. <year>2015</year>. “<article-title>Leveraging Leaders: A Literature Review and Future Lines of Inquiry for Empowering Leadership Research</article-title>.” <source>Group &amp; Organization Management</source>
+<volume>40</volume>, no. <issue>2</issue>: <fpage>193</fpage>–<lpage>237</lpage>. <pub-id pub-id-type="doi">10.1177/1059601115574906</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0058"><mixed-citation publication-type="journal" id="pchj70064-cit-0058">
+<string-name name-style="western">
+<surname>Shirokova</surname>, <given-names>G.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>K.</given-names>
+<surname>Bogatyreva</surname>
+</string-name>, <string-name name-style="western">
+<given-names>T.</given-names>
+<surname>Beliaeva</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>S.</given-names>
+<surname>Puffer</surname>
+</string-name>. <year>2016</year>. “<article-title>Entrepreneurial Orientation and Firm Performance in Different Environmental Settings: Contingency and Configurational Approaches</article-title>.” <source>Journal of Small Business and Enterprise Development</source>
+<volume>23</volume>, no. <issue>3</issue>: <fpage>703</fpage>–<lpage>727</lpage>. <pub-id pub-id-type="doi">10.1108/JSBED-09-2015-0132</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0059"><mixed-citation publication-type="journal" id="pchj70064-cit-0059">
+<string-name name-style="western">
+<surname>Su</surname>, <given-names>Z.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>E.</given-names>
+<surname>Xie</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>J.</given-names>
+<surname>Peng</surname>
+</string-name>. <year>2010</year>. “<article-title>Impacts of Environmental Uncertainty and Firms' Capabilities on R&amp;D Investment: Evidence From China</article-title>.” <source>Innovation</source>
+<volume>12</volume>, no. <issue>3</issue>: <fpage>269</fpage>–<lpage>282</lpage>. <pub-id pub-id-type="doi">10.5172/impp.12.3.269</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0060"><mixed-citation publication-type="journal" id="pchj70064-cit-0060">
+<string-name name-style="western">
+<surname>Twyford</surname>, <given-names>K.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>D.</given-names>
+<surname>Le Fevre</surname>
+</string-name>. <year>2019</year>. “<article-title>Leadership, Uncertainty and Risk: How Leaders Influence Teachers</article-title>.” <source>Journal of Professional Capital and Community</source>
+<volume>4</volume>, no. <issue>4</issue>: <fpage>309</fpage>–<lpage>324</lpage>. <pub-id pub-id-type="doi">10.1108/JPCC-02-2019-0002</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0061"><mixed-citation publication-type="journal" id="pchj70064-cit-0061">
+<string-name name-style="western">
+<surname>Umphress</surname>, <given-names>E. E.</given-names>
+</string-name>, and <string-name name-style="western">
+<given-names>J. B.</given-names>
+<surname>Bingham</surname>
+</string-name>. <year>2011</year>. “<article-title>When Employees Do Bad Things for Good Reasons: Examining Unethical Pro‐Organizational Behaviors</article-title>.” <source>Organization Science</source>
+<volume>22</volume>, no. <issue>3</issue>: <fpage>621</fpage>–<lpage>640</lpage>. <pub-id pub-id-type="doi">10.1287/orsc.1100.0559</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0062"><mixed-citation publication-type="journal" id="pchj70064-cit-0062">
+<string-name name-style="western">
+<surname>Venkatesh</surname>, <given-names>V.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>J. Y.</given-names>
+<surname>Thong</surname>
+</string-name>, <string-name name-style="western">
+<given-names>K.</given-names>
+<surname>Spohrer</surname>
+</string-name>, et al. <year>2023</year>. “<article-title>Equality Does Not Make You Happy: Effects of Differentiated Leader‐Member Exchange and Team Member Exchange on Developer Satisfaction in Agile Development Teams</article-title>.” <source>MIS Quarterly</source>
+<volume>47</volume>, no. <issue>3</issue>: <fpage>1239</fpage>–<lpage>1270</lpage>. <pub-id pub-id-type="doi">10.25300/MISQ/2022/15358</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0063"><mixed-citation publication-type="journal" id="pchj70064-cit-0063">
+<string-name name-style="western">
+<surname>Viscusi</surname>, <given-names>W. K.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>W. A.</given-names>
+<surname>Magat</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>J.</given-names>
+<surname>Huber</surname>
+</string-name>. <year>1991</year>. “<article-title>Communication of Ambiguous Risk Information</article-title>.” <source>Theory and Decision</source>
+<volume>31</volume>, no. <issue>2</issue>: <fpage>159</fpage>–<lpage>173</lpage>. <pub-id pub-id-type="doi">10.1007/BF00132991</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0064"><mixed-citation publication-type="journal" id="pchj70064-cit-0064">
+<string-name name-style="western">
+<surname>Volmer</surname>, <given-names>J.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>D.</given-names>
+<surname>Spurk</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>C.</given-names>
+<surname>Niessen</surname>
+</string-name>. <year>2012</year>. “<article-title>Leader–Member Exchange (LMX), Job Autonomy, and Creative Work Involvement</article-title>.” <source>Leadership Quarterly</source>
+<volume>23</volume>, no. <issue>3</issue>: <fpage>456</fpage>–<lpage>465</lpage>. <pub-id pub-id-type="doi">10.1016/j.leaqua.2011.10.005</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0066"><mixed-citation publication-type="journal" id="pchj70064-cit-0066">
+<string-name name-style="western">
+<surname>Wang</surname>, <given-names>S.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>I. E.</given-names>
+<surname>De Pater</surname>
+</string-name>, <string-name name-style="western">
+<given-names>M.</given-names>
+<surname>Yi</surname>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Zhang</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>T.‐P.</given-names>
+<surname>Yang</surname>
+</string-name>. <year>2022</year>. “<article-title>Empowering Leadership: Employee‐Related Antecedents and Consequences</article-title>.” <source>Asia Pacific Journal of Management</source>
+<volume>39</volume>, no. <issue>2</issue>: <fpage>457</fpage>–<lpage>481</lpage>. <pub-id pub-id-type="doi">10.1007/s10490-020-09734-w</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0065"><mixed-citation publication-type="journal" id="pchj70064-cit-0065">
+<string-name name-style="western">
+<surname>Wang</surname>, <given-names>T.</given-names>
+</string-name>, <string-name name-style="western">
+<given-names>L.</given-names>
+<surname>Long</surname>
+</string-name>, <string-name name-style="western">
+<given-names>Y.</given-names>
+<surname>Zhang</surname>
+</string-name>, and <string-name name-style="western">
+<given-names>W.</given-names>
+<surname>He</surname>
+</string-name>. <year>2019</year>. “<article-title>A Social Exchange Perspective of Employee–Organization Relationships and Employee Unethical Pro‐Organizational Behavior: The Moderating Role of Individual Moral Identity</article-title>.” <source>Journal of Business Ethics</source>
+<volume>159</volume>: <fpage>473</fpage>–<lpage>489</lpage>. <pub-id pub-id-type="doi">10.1007/s10551-018-3782-9</pub-id>.</mixed-citation></ref><ref id="pchj70064-bib-0067"><mixed-citation publication-type="journal" id="pchj70064-cit-0067">
+<string-name name-style="western">
+<surname>Zhang</surname>, <given-names>S.</given-names>
+</string-name>
+<year>2020</year>. “<article-title>Impact of Workplace Ostracism on Unethical Pro‐Organizational Behaviors</article-title>.” <source>Personnel Review</source>
+<volume>49</volume>, no. <issue>8</issue>: <fpage>1537</fpage>–<lpage>1551</lpage>. <pub-id pub-id-type="doi">10.1108/PR-05-2019-0245</pub-id>.</mixed-citation></ref></ref-list><app-group><app id="pchj70064-app-0001" content-type="Appendix"><label>Appendix A</label><table-wrap position="anchor" id="pchj70064-tbl-0003" content-type="TABLE" orientation="portrait"><label>TABLE A1</label><caption><p>Participant demographics.</p></caption><table frame="hsides" rules="groups"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><thead valign="bottom"><tr style="border-bottom:solid 1px #000000"><th align="left" rowspan="2" valign="bottom" colspan="1">Variables</th><th align="center" colspan="2" valign="bottom" rowspan="1">Total</th></tr><tr style="border-bottom:solid 1px #000000"><th align="center" valign="bottom" rowspan="1" colspan="1">No</th><th align="center" valign="bottom" rowspan="1" colspan="1">%</th></tr></thead><tbody valign="top"><tr><td align="left" valign="top" rowspan="1" colspan="1">Gender</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Male</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">282</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">65.4</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Female</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">149</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">34.6</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">Age group</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Between 18 and 25 years</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">42</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">9.7</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Between 26 and 30 years</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">65</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">15.1</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Between 31 and 40 years</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">189</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">43.9</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Between 41 and 50 years</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">76</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">17.6</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">51 years and more</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">59</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">13.7</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">Education</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Secondary education and below</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">15</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">3.5</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Senior high school education</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">255</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">59.2</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Bachelor education and above</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">161</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">37.4</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">Position</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">No title</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">84</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">19.5</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Primary title</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">121</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">28.1</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Intermediate title</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">146</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">33.9</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Senior title</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">80</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">18.6</td></tr><tr><td align="left" valign="top" rowspan="1" colspan="1">Working duration with the superior</td><td align="center" valign="top" rowspan="1" colspan="1"/><td align="center" valign="top" rowspan="1" colspan="1"/></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Less than 1 years</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">126</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">29.2</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Between 1 and 3 years</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">153</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">35.5</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">Between 3 and 5 years</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">137</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">31.7</td></tr><tr><td align="left" style="padding-left:10%; background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">More than 5 years</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">15</td><td align="center" style="background-color:#E7E6E6" valign="top" rowspan="1" colspan="1">3.6</td></tr></tbody></table></table-wrap></app></app-group></back></article>

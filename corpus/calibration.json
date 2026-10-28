@@ -1,0 +1,70 @@
+{
+  "version": "3.13.0",
+  "domain": "english_academic",
+  "calibrated_at": "2026-10-28",
+  "note": "基于 52 篇真实人类学术文献（Europe PMC 45 篇 + PLOS 7 篇，共 33 万词）重拟合。旧标定仅基于 6 篇小样本，换到真实发表文献域后系统性漂移，导致不同文献出现「不明显的变化」。本配置用于吸收跨文献差异，避免把正式学术写作误判为 AI。",
+  "corpus": {
+    "n": 52,
+    "total_words": 330734,
+    "sources": {"europepmc": 45, "plos": 7},
+    "topics": ["graduate employability", "employment", "business management", "organizational behavior", "career development", "human resource management", "job satisfaction", "work motivation"]
+  },
+  "pseudo_perplexity": {
+    "pivot": 700.0,
+    "scale": 450.0,
+    "old_pivot": 1650.0,
+    "old_scale": 1950.0,
+    "formula": "ai_score = 1 / (1 + exp((pp - pivot) / scale))",
+    "human_distribution": {"min": 493, "p10": 1295, "p25": 3888, "median": 11660, "p90": 55380, "max": 212836},
+    "ai_range_reference": [152, 451],
+    "calibration_anchors": {
+      "pp_450_ai_upper": 0.64,
+      "pp_700_pivot": 0.50,
+      "pp_726_human_2nd_lowest": 0.49,
+      "pp_1295_human_p10": 0.21
+    },
+    "reasoning": "旧 PIVOT=1650 使真人文献中 pp<1650 的 7/52（13%）被映射到 >0.5 的 AI 分，属于跨文献误判。将 PIVOT 下移至 700、SCALE 设为 450 后：AI 文本（pp 152~451）映射到 0.64~0.77（可触发反向锚定阈值 0.50/0.60）；真人文献主体（pp≥726）映射到 ≤0.49（不触发）；仅 1 篇极端离群（pp=493，2%）仍会触发，属可接受的方法学密集文本。"
+  },
+  "engine_adjustments": {
+    "compressibility": {
+      "old_weight": 0.03, "new_weight": 0.0,
+      "human_mean": 0.740, "human_p90": 0.841,
+      "reason": "真人学术文献压缩率均值高达 0.74，高压缩是学术写作的天然特征而非 AI 信号，方向失效，权重归零。"
+    },
+    "linguistic-markers": {
+      "old_weight": 0.12, "new_weight": 0.05,
+      "human_mean": 0.460, "human_p75": 0.644, "human_p90": 0.763,
+      "reason": "学术词汇（therefore/moreover/nuanced 等）与 AI 高频词表天然重叠，真人文献 p75 已达 0.64，降权避免误伤正式学术写作。"
+    },
+    "statistical-baseline": {
+      "old_weight": 0.06, "new_weight": 0.03,
+      "human_mean": 0.487, "human_p90": 0.670,
+      "reason": "接近 0.5 无区分力，p90 偏高，降权。"
+    },
+    "burstiness-stat": {
+      "old_weight": 0.07, "new_weight": 0.05,
+      "human_mean": 0.350, "human_p90": 0.550,
+      "reason": "真人 p90=0.55 略高，微降。"
+    },
+    "vocabulary-richness": {
+      "old_weight": 0.05, "new_weight": 0.03,
+      "human_mean": 0.497,
+      "reason": "真人均值 0.497，几乎无区分力，降权。"
+    },
+    "ngram-perplexity": {
+      "old_weight": 0.02, "new_weight": 0.0,
+      "human_mean": 0.100,
+      "reason": "恒定输出 0.1，无区分力，权重归零。"
+    }
+  },
+  "engines_kept_strong": {
+    "formulaic-patterns": {"human_mean": 0.062, "note": "真人低分，区分力强，保持 0.12"},
+    "sentence-length": {"human_mean": 0.041, "note": "真人低分，区分力强，保持 0.07"},
+    "sentiment-hedging": {"human_mean": 0.185, "note": "保持 0.08"},
+    "transition-density": {"human_mean": 0.272, "note": "保持 0.08"},
+    "starter-patterns": {"human_mean": 0.205, "note": "保持 0.04"},
+    "paragraph-rhythm": {"human_mean": 0.184, "note": "保持 0.07"},
+    "emotion-curve": {"human_mean": 0.306, "note": "保持 0.10"},
+    "human-imperfection": {"human_mean": 0.396, "note": "真人低分，保持 0.06"}
+  }
+}

@@ -506,7 +506,8 @@ class CheckReport:
                      background: #fffbfb; border-left: 4px solid {color}; border-radius: 6px; }}
         .s-text mark {{ background: rgba(231, 76, 60, 0.16); color: #c0392b; padding: 0 2px;
                         text-decoration: underline; text-decoration-color: #e74c3c;
-                        text-decoration-thickness: 2px; text-underline-offset: 3px; }}
+                        text-decoration-thickness: 2px; text-underline-offset: 3px;
+                        word-break: break-word; line-height: 1.8; }}
         .bubble {{ display: none; position: absolute; left: 12px; bottom: calc(100% + 8px);
                    max-width: 420px; background: #333; color: #fff; padding: 8px 12px;
                    border-radius: 8px; font-size: 12px; line-height: 1.5; z-index: 10;
@@ -858,6 +859,74 @@ def _mock_rewrite_sentence(sentence: str) -> str:
     return s
 
 
+# —— 真·AI 降维改写（本地 Qwen2.5-0.5b，替代纯规则 Mock）——
+# Mock 规则改写虽稳但会生硬。这里用本地已下载的小模型直接生成通顺自然、
+# 更接近「英语 90 分大一新生」口吻的改写。关键工程细节：
+#   1) lru_cache：同一句话只跑一次模型（CPU 上生成很慢，缓存收益巨大）。
+#   2) try-except 全兜底：模型崩溃/显存不足/生成异常一律回退 Mock，绝不卡死。
+#   3) 无本地模型时直接回退 Mock，不报错。
+@lru_cache(maxsize=512)
+def _llm_rewrite_cached(sentence: str) -> str:
+    """实际生成逻辑（被 lru_cache 包裹，异常不缓存）。"""
+    try:
+        model, tok = _load_ppl_model()
+        if model is None or tok is None:
+            return _mock_rewrite_sentence(sentence)
+        import torch
+
+        prompt = (
+            "你是一个英语 90 分的大一新生，请把下面这句高级/模板化的话，"
+            "改写得更像口语，不要用高级词汇（如 delve, crucial），"
+            "可以拆短句，可以加 I think。只输出改写后的句子。\n\n"
+            f"原句：{sentence}\n改写："
+        )
+        enc = tok(prompt, return_tensors="pt", truncation=True, max_length=256)
+        ids = enc["input_ids"]
+        pad = getattr(tok, "pad_token_id", None) or tok.eos_token_id
+        with torch.no_grad():
+            out = model.generate(
+                ids,
+                max_new_tokens=80,
+                do_sample=False,
+                pad_token_id=pad,
+                eos_token_id=tok.eos_token_id,
+            )
+        gen = tok.decode(out[0][ids.shape[1]:], skip_special_tokens=True).strip()
+        # 只取第一段、去掉包裹引号
+        gen = re.split(r"[\n\r]+", gen)[0].strip().strip('"').strip("'").strip()
+        # 防跑偏护栏：小模型有时会输出「好的，下面是我改写的句子：…」这类自我介绍，
+        # 或啰嗦到把原句扩写好几倍，这种情况原样输出反而误导学生，一律判为跑偏回退 Mock。
+        _intro_markers = (
+            "好的", "下面", "以下", "改写后", "译文", "答案是", "可以的",
+            "sure", "here", "okay", "ok", "certainly", "of course",
+        )
+        if not gen:
+            return _mock_rewrite_sentence(sentence)
+        if len(gen.split()) > len(sentence.split()) * 3:
+            return _mock_rewrite_sentence(sentence)
+        if any(gen.lower().lstrip().startswith(m) for m in _intro_markers):
+            return _mock_rewrite_sentence(sentence)
+        if gen != sentence and len(gen.split()) >= 3:
+            return gen
+    except Exception:
+        pass
+    return _mock_rewrite_sentence(sentence)
+
+
+def _llm_rewrite_sentence(sentence: str) -> str:
+    """对外入口：LLM 改写，返回改写句；无模型/异常时回退 Mock；无需改写则空串。"""
+    if not sentence:
+        return ""
+    key = sentence.strip()
+    if not key:
+        return ""
+    result = _llm_rewrite_cached(key)
+    # 与原句一致或空 => 无需改写，返回空串（调用方据此决定是否展示）
+    if not result or result == key:
+        return ""
+    return result
+
+
 def _high_pressure_warning(score: float) -> str:
     """strict 模式下，综合 AI 率 > 40% 时在报告顶部吼出来的高压预警。"""
     if score <= 0.40:
@@ -1019,6 +1088,54 @@ def _detect_transition_density(text: str) -> float:
     # 打磨：每 100 词 3 个过渡词 = 0.5
     density = transition_hits / word_count * 100
     return max(0.0, min(1.0, density / 6.0))
+
+
+# —— 翻译腔 / DeepL 机翻检测器（3.14.0 新增）——
+# 专治「中文丢进 DeepL 直翻成英文」的洗稿手法：这种文本有极强的机翻味，
+# 典型特征是被动语态堆叠 + 介词前置从句（of which / in which…）。
+# 直译会把中文的「……的 / 被……」机械地转成这些结构，人类英语母语者很少这么写。
+_TRANSLATIONESE_PREP_CLAUSES = [
+    "of which", "of what", "in which", "for which", "to which",
+    "by which", "with which", "from which", "on which", "at which",
+    "among which", "through which", "upon which", "in what", "at what",
+]
+
+_TRANSLATIONESE_PASSIVE = [
+    r"\b(?:is|are|was|were)\s+being\s+\w+ed\b",       # is being done
+    r"\b(?:has|have|had)\s+been\s+\w+ed\b",            # has been made
+    r"\b(?:can|could|should|would|may|might|must)\s+be\s+\w+ed\b",  # can be done
+    r"\b(?:is|are|was|were)\s+\w+ed\s+by\b",           # is affected by
+    r"\bit\s+(?:is|was)\s+\w+ed\s+that\b",             # it is said that
+    r"\b(?:is|are)\s+to\s+be\s+\w+ed\b",               # is to be done
+    r"\b(?:has|have)\s+been\s+being\s+\w+ed\b",        # has been being done
+]
+
+
+def _detect_translationese(text: str) -> float:
+    """翻译腔 / 机翻特征检测：介词前置从句频率 + 冗长被动语态频率。
+
+    返回 0~1（越高越像机翻）。中英文均按特征计数（英文机翻特征为主）。
+    短文本（<50 词）返回 0.3（中性，同 transition-density 处理）。
+    """
+    words = text.lower().split()
+    wc = len(words)
+    if wc < 50:
+        return 0.3
+
+    low = text.lower()
+    # 信号 1：介词前置从句（of which / in which / for which …）
+    prep_hits = sum(low.count(p) for p in _TRANSLATIONESE_PREP_CLAUSES)
+    prep_density = prep_hits / wc * 100.0
+
+    # 信号 2：冗长被动语态（is being done / has been made …）
+    passive_hits = sum(len(re.findall(p, text, re.IGNORECASE))
+                       for p in _TRANSLATIONESE_PASSIVE)
+    passive_density = passive_hits / wc * 100.0
+
+    # 综合：两种信号各占一半。机翻文本两者常同时升高。
+    # 每 100 词 1.5 个介词前置 ≈ 强信号；每 100 词 3 个冗长被动 ≈ 强信号。
+    score = prep_density / 1.5 * 0.5 + passive_density / 3.0 * 0.5
+    return max(0.0, min(1.0, score))
 
 
 def _detect_compressibility(text: str) -> float:
@@ -1893,6 +2010,32 @@ _mlm_model = None
 _mlm_tokenizer = None
 _mlm_load_done = False
 _MLM_MODEL_NAME = os.environ.get("AURORA_PPL_MODEL", "answerdotai/ModernBERT-base")
+
+
+# —— 语料校准参数：基于真实人类学术文献重拟合（3.13.0）——
+# 旧标定仅基于 6 篇小样本，换到真实发表文献域后系统性漂移，
+# 导致不同文献出现「不明显的变化」。corpus/calibration.json 记录 52 篇
+# 真实人类文献（Europe PMC + PLOS）上的伪困惑度分布与各引擎基线，
+# 检测时自动加载，吸收跨文献差异、避免把正式学术写作误判为 AI。
+_corpus_calibration = None
+_corpus_calibration_loaded = False
+
+
+def _load_corpus_calibration() -> Optional[dict]:
+    """加载 corpus/calibration.json（若有），无则返回 None 走默认标定。"""
+    global _corpus_calibration, _corpus_calibration_loaded
+    if _corpus_calibration_loaded:
+        return _corpus_calibration
+    _corpus_calibration_loaded = True
+    try:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            "corpus", "calibration.json")
+        if os.path.exists(path):
+            with open(path, encoding="utf-8") as f:
+                _corpus_calibration = json.load(f)
+    except Exception:
+        _corpus_calibration = None
+    return _corpus_calibration
 
 
 # 模型候选链（用 | 分隔，全部尝试加载；可用 AURORA_AI_MODEL 覆盖）。
@@ -2835,8 +2978,13 @@ def _detect_mlm_perplexity(text: str) -> Optional[Tuple[float, float]]:
     #   现代 AI 散文 pp ≈ 152~451，真人学生稿 pp ≈ 9200 —— 分离度达 20 倍以上。
     #   取 PIVOT≈1650 / SCALE≈1950：AI 样本映射到 0.65~0.68，真人映射到 ≈0.02。
     # 注意：该标定基于 6 篇英文学术语料的小样本，换领域请重新校准。
-    PIVOT = float(os.environ.get("AURORA_PPL_PIVOT", "1650.0"))
-    SCALE = float(os.environ.get("AURORA_PPL_SCALE", "1950.0"))
+    # 标定参数优先级：环境变量 > corpus/calibration.json > 默认值。
+    # 3.13 起默认值被校准文件覆盖（PIVOT 1650→700、SCALE 1950→450），
+    # 依据 52 篇真实人类学术文献的 pp 分布（AI 152~451 vs 真人中位 11660）。
+    _calib = _load_corpus_calibration() or {}
+    _pp_calib = _calib.get("pseudo_perplexity", {}) or {}
+    PIVOT = float(os.environ.get("AURORA_PPL_PIVOT", str(_pp_calib.get("pivot", 1650.0))))
+    SCALE = float(os.environ.get("AURORA_PPL_SCALE", str(_pp_calib.get("scale", 1950.0))))
     ai_score = 1.0 / (1.0 + math.exp((pseudo_pp - PIVOT) / SCALE))
     return round(float(ai_score), 3), round(float(pseudo_pp), 2)
 
@@ -3209,6 +3357,7 @@ def _compute_engine_scores(prose_text: str) -> Tuple[dict, list, list, dict]:
     engine_scores["transition-density"] = _detect_transition_density(prose_text)
     engine_scores["compressibility"] = _detect_compressibility(prose_text)
     engine_scores["structured-shape"] = _detect_structured_shape(prose_text)
+    engine_scores["translationese"] = _detect_translationese(prose_text)
 
     # 引擎 10: sloptotal 逆向集成的 Formulaic 公式化检测
     engine_scores["formulaic-patterns"] = _detect_formulaic(prose_text)
@@ -3357,29 +3506,30 @@ def _run_ai_detection_cached(text: str, mode: str = "normal") -> AIResult:
         "ml-detector":          EngineSpec(+1, 0.25, "ML 检测器（ModernBERT 主力，需联网下载）"),
         "mlm-perplexity":       EngineSpec(+1, 0.15, "MLM 伪困惑度（专攻表演式不完美拟人 AI，需本地 ModernBERT-base）"),
         "lmscan":                EngineSpec(+1, 0.15, "外部 CLI"),
-        "linguistic-markers":    EngineSpec(+1, 0.12, "AI 高频词表"),
+        "linguistic-markers":    EngineSpec(+1, 0.05, "AI 高频词表（3.13 校准：学术词汇与 AI 词表重叠，降权）"),
         "formulaic-patterns":    EngineSpec(+1, 0.12, "公式化表达"),
         "emotion-curve":         EngineSpec(+1, 0.10, "情感曲线平坦度"),
         "transition-density":    EngineSpec(+1, 0.08, "过渡词密度"),
         "sentiment-hedging":     EngineSpec(+1, 0.08, "对冲语密度"),
         # —— 中等 ——
         "sentence-length":       EngineSpec(+1, 0.07, "句长分布"),
-        "burstiness-stat":       EngineSpec(+1, 0.07, "突发度"),
-        "statistical-baseline":  EngineSpec(+1, 0.06, "统计基线"),
+        "burstiness-stat":       EngineSpec(+1, 0.05, "突发度（3.13 校准：真人 p90=0.55，微降）"),
+        "statistical-baseline":  EngineSpec(+1, 0.03, "统计基线（3.13 校准：近 0.5 无区分力，降权）"),
         "sliding-window":        EngineSpec(+1, 0.06, "段落滑动窗口"),
         "human-imperfection":    EngineSpec(+1, 0.06, "人味特征（v2 重写）"),
         "paragraph-rhythm":      EngineSpec(+1, 0.07, "段落长度均匀度（跨语言）"),
         "zh-char-entropy":       EngineSpec(+0, 0.0, "仅中文启用，见语言自适应"),
         "lm-perplexity":         EngineSpec(+1, 0.22, "语言模型困惑度（需本地模型）"),
         "formulaic-markers":     EngineSpec(+1, 0.05, "套话标记"),
-        "vocabulary-richness":   EngineSpec(+1, 0.05, "词汇丰富度"),
+        "vocabulary-richness":   EngineSpec(+1, 0.03, "词汇丰富度（3.13 校准：真人均值 0.497，降权）"),
         # —— 弱 ——
         "starter-patterns":      EngineSpec(+1, 0.04, "句首模式"),
         "specific-details":      EngineSpec(+1, 0.02, "具体细节密度（LLM 已普遍生成数值，弱信号）"),
         "adversarial-perturbation": EngineSpec(+1, 0.04, "对抗扰动"),
-        "compressibility":       EngineSpec(+1, 0.03, "压缩率"),
+        "translationese":        EngineSpec(+1, 0.06, "翻译腔检测（介词前置从句 + 冗长被动，专治 DeepL 洗稿）"),
+        "compressibility":       EngineSpec(+1, 0.0, "压缩率（3.13 校准：真人学术文献均值 0.74，方向失效，归零）"),
         "pawn-perplexity":       EngineSpec(+1, 0.03, "PAWN"),
-        "ngram-perplexity":      EngineSpec(+1, 0.02, "对短文本不可靠，仅作参考"),
+        "ngram-perplexity":      EngineSpec(+1, 0.0, "对短文本不可靠（3.13 校准：恒定输出 0.1，无区分力，归零）"),
         # —— 已实测失效，权重置 0（仍显示，便于对照）——
         "self-references":       EngineSpec(0, 0.0, "AI 同样高频使用 I think，无区分力"),
         "logical-connectors":    EngineSpec(0, 0.0, "几乎恒为 1.0"),
@@ -3401,7 +3551,7 @@ def _run_ai_detection_cached(text: str, mode: str = "normal") -> AIResult:
         _EN_ONLY = ("linguistic-markers", "formulaic-markers", "formulaic-patterns",
                     "sentiment-hedging", "transition-density", "starter-patterns",
                     "self-references", "logical-connectors", "ngram-perplexity",
-                    "pawn-perplexity", "adversarial-perturbation")
+                    "pawn-perplexity", "adversarial-perturbation", "translationese")
         for _k in _EN_ONLY:
             if _k in ENGINE_SPEC:
                 _d, _w, _n = ENGINE_SPEC[_k]
@@ -3650,7 +3800,9 @@ def _run_ai_detection_cached(text: str, mode: str = "normal") -> AIResult:
                 _strategy = _strict_sentence_strategy(s, prose_text, engine_scores)
                 if _strategy:
                     _entry["strategy"] = _strategy
-                # 闭环"扫雷"：给一条「直接抄」的降维改写建议（Mock 规则版）
+                # 闭环"扫雷"：给一条「直接抄」的降维改写建议。
+                # 3.15 起查重阶段只用 Mock 规则版（瞬时、不调模型，保住 7 秒体验）；
+                # 真·AI 改写改为前端按钮按需触发（见 server.py 的 /api/rewrite）。
                 _rewrite = _mock_rewrite_sentence(s)
                 if _rewrite:
                     _entry["rewrite_suggestion"] = _rewrite
@@ -3673,6 +3825,19 @@ def _run_ai_detection_cached(text: str, mode: str = "normal") -> AIResult:
             "典型形态为「AI 生成后人工改写」或改写工具处理，"
             "此类文本的总分通常会被压低，需单独判断。"
         )
+
+    # —— 翻译腔 / DeepL 机翻特征提示（3.14.0）——
+    # 机翻文本（中文直翻英文）有极强的「翻译腔」：介词前置从句 + 冗长被动。
+    # 这类文本不是「AI 生成」，但同样是学术不端的洗稿手法，需要单独点名。
+    _tse = engine_scores.get("translationese")
+    if _lang == "en" and _tse is not None and _tse >= 0.5:
+        _tse_hint = (
+            f"检测到明显的机器翻译特征（translationese {_tse:.0%}："
+            "长被动句 / of which、in which 等介词前置从句堆叠）。"
+            "建议用中文思维重新组织语言，不要直翻——先想清楚这句话中文想说什么，"
+            "再用你自己的英文表达出来，而不是逐字对照翻译。"
+        )
+        rewrite_hint = (rewrite_hint + " " + _tse_hint).strip() if rewrite_hint else _tse_hint
 
     # —— 自检找茬（strict）模式的向学生解读 / 高压预警 ——
     student_verdict = _student_verdict(final_score, label) if strict else ""

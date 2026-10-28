@@ -1,0 +1,25 @@
+# 排除进镜像的无用文件
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.git/
+.gitignore
+.gitattributes
+
+# 本地大模型权重不进镜像（改由 HF 缓存卷挂载加载）
+models/
+*.safetensors
+*.bin
+
+# 中间产物与历史数据
+*.db
+*.db-journal
+*.zip
+corpus/raw/
+examples/benchmark/
+
+# 本地测试文件
+test_*.txt
+test_*.py
+*_body.txt
